@@ -60,7 +60,7 @@ function Login() {
                         {profile ? (
                             <div>
                                 <div className='mb-5'>
-                                    <img className="rounded" src={profile.picture} alt="user" />
+                                    <img className="rounded" src={profile.picture} alt="Utente" />
                                     <h3>{profile.name}</h3>
                                     <p>Email: {profile.email}</p>
 
