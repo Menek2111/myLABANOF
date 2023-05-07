@@ -43,6 +43,7 @@ function Login() {
     // log out function to log the user out of google and set the profile array to null
     const logOut = () => {
         googleLogout();
+        localStorage.removeItem('profile')
         setProfile(null);
     };
 
