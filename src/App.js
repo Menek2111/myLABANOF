@@ -2,6 +2,9 @@ import React, { useState } from "react";
 import { fetchTest } from "./api/fetchTest";
 import InstallPWA from "./InstallPWA";
 
+import { GoogleLogin } from '@react-oauth/google';
+
+
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const App = () => {
