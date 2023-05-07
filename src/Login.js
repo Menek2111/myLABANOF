@@ -3,7 +3,6 @@ import React, { useState, useEffect } from 'react';
 import { googleLogout, useGoogleLogin } from '@react-oauth/google';
 import axios from 'axios';
 import logo from './images/logo.png'
-import App from './App'
 
 import InstallPWA from "./InstallPWA";
 import 'bootstrap/dist/css/bootstrap.min.css';
