@@ -30,7 +30,7 @@ const InstallPWA = () => {
     return (
         <div className="row justify-content-center">
             <div className="d-flex flex-column text-center col-4 border rounded p-1 shadow">
-                <img src={logo} className="w-100"></img>
+                <img src={logo} className="w-100" alt="logo"></img>
                 <button
                     className="link-button btn btn-primary"
                     id="setup_button"
