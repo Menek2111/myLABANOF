@@ -49,9 +49,9 @@ function Login() {
     return (
         <div className='bg-info' style={{ width: '100vw', height: '100vh' }}>
 
-            <div className='container p-5  '>
+            <div className='container p-3'>
                 <div className='row justify-content-center'>
-                    <div className='col-5 bg-white shadow rounded p-2 text-center'>
+                    <div className='col-lg-5 bg-white shadow rounded p-2 text-center'>
                         <img src={logo} className='w-25' alt="logo"></img>
                         <h2>Applicazione LABANOF</h2>
                         <div className='border border-bottom'></div>
