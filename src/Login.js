@@ -52,7 +52,7 @@ function Login() {
             <div className='container p-5  '>
                 <div className='row justify-content-center'>
                     <div className='col-5 bg-white shadow rounded p-2 text-center'>
-                        <img src={logo} className='w-25'></img>
+                        <img src={logo} className='w-25' alt="logo"></img>
                         <h2>Applicazione LABANOF</h2>
                         <div className='border border-bottom'></div>
                         <br />
