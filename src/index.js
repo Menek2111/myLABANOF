@@ -1,6 +1,5 @@
 import React from "react";
 import { createRoot } from 'react-dom/client';
-import App from './App'
 
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import Login from "./Login";
