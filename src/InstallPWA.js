@@ -7,9 +7,9 @@ const InstallPWA = () => {
     return (
         <div>
             {install && <div className="row justify-content-center">
-                <div className="d-flex flex-column text-center col-10 border rounded p-1 shadow">
+                <div className="d-flex flex-column text-center col-10 border rounded p-1 shadow bg-white">
                     <div className="d-flex">
-                        <img src={logo} className="w-25" alt="logo"></img>
+                        <img src={logo} style={{ height: '10vh' }} alt="logo"></img>
                         <p className="m-2">Il tuo browser supporta le applicazioni PWA, installala per poter utilizzare l'applicazione anche in offline</p>
                     </div>
                     <button

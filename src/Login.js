@@ -3,12 +3,16 @@ import React, { useState, useEffect } from 'react';
 import { googleLogout, useGoogleLogin } from '@react-oauth/google';
 import axios from 'axios';
 import logo from './images/logo.png'
+import google from './images/google-logo.png'
+import { registerRequest } from './api/registerRequest';
+import { useNavigate } from 'react-router-dom'
 
 import InstallPWA from "./InstallPWA";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 function Login() {
 
+    const navigate = useNavigate();
 
     const [user, setUser] = useState([]);
     const [profile, setProfile] = useState([]);
@@ -22,6 +26,12 @@ function Login() {
         setProfile(JSON.parse(localStorage.getItem('profile')));
     }, []);
 
+    const register = async (e) => {
+        const data = await registerRequest(JSON.stringify(e));
+        //alert(data.response)
+        console.log(data)
+    }
+
     useEffect(() => {
         if (user) {
             axios.get(`https://www.googleapis.com/oauth2/v1/userinfo?access_token=${user.access_token}`, {
@@ -33,6 +43,7 @@ function Login() {
                 .then((res) => {
                     localStorage.setItem('profile', JSON.stringify(res.data))
                     setProfile(res.data);
+                    register(res.data).then(navigate('/'))
                 })
                 .catch((err) => console.log(err));
         }
@@ -53,7 +64,7 @@ function Login() {
             <div className='container p-3'>
                 <div className='row justify-content-center'>
                     <div className='col-lg-5 bg-white shadow rounded p-2 text-center'>
-                        <img src={logo} className='w-25' alt="logo"></img>
+                        <img src={logo} style={{ height: '10vh' }} alt="logo"></img>
                         <h2>Applicazione LABANOF</h2>
                         <div className='border border-bottom'></div>
                         <br />
@@ -67,18 +78,23 @@ function Login() {
 
                                     <button className='btn btn-danger' onClick={logOut}>Log out</button>
                                 </div>
-                                <div className='p-1'>
-                                    <InstallPWA />
-                                </div>
+
                             </div>
 
                         ) : (
-                            <button className='btn btn-primary' onClick={() => login()}>Accedi con Google 🚀 </button>
+                            <button className='btn border' onClick={() => login()}>
+                                <img src={google} style={{ height: '3vh' }} /> Accedi con Google
+                            </button>
                         )}
                     </div>
                 </div>
-
             </div>
+            <div className='row justify-content-center mt-5'>
+                <div className='col-lg-5'>
+                    <InstallPWA />
+                </div>
+            </div>
+
 
 
 
