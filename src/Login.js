@@ -33,7 +33,6 @@ function Login() {
     }
 
     useEffect(() => {
-        navigate = useNavigate();
         if (user) {
             axios.get(`https://www.googleapis.com/oauth2/v1/userinfo?access_token=${user.access_token}`, {
                 headers: {
@@ -44,7 +43,8 @@ function Login() {
                 .then((res) => {
                     localStorage.setItem('profile', JSON.stringify(res.data))
                     setProfile(res.data);
-                    register(res.data).then(navigate('/'))
+                    register(res.data)
+                    navigate('/')
                 })
                 .catch((err) => console.log(err));
         }
