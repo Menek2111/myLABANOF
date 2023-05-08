@@ -33,6 +33,7 @@ function Login() {
     }
 
     useEffect(() => {
+        navigate = useNavigate();
         if (user) {
             axios.get(`https://www.googleapis.com/oauth2/v1/userinfo?access_token=${user.access_token}`, {
                 headers: {
@@ -83,7 +84,7 @@ function Login() {
 
                         ) : (
                             <button className='btn border' onClick={() => login()}>
-                                <img src={google} style={{ height: '3vh' }} /> Accedi con Google
+                                <img src={google} style={{ height: '3vh' }} alt="google logo" /> Accedi con Google
                             </button>
                         )}
                     </div>
