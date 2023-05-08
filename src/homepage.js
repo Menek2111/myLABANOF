@@ -7,7 +7,7 @@ import labanof from './images/labanof-logo.png'
 import { useNavigate } from 'react-router-dom'
 
 
-import { googleLogout, useGoogleLogin } from '@react-oauth/google';
+import { googleLogout } from '@react-oauth/google';
 
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';

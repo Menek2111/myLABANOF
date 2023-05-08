@@ -49,7 +49,7 @@ function Login() {
                 .catch((err) => console.log(err));
         }
     },
-        [user]
+        []
     );
 
     // log out function to log the user out of google and set the profile array to null
