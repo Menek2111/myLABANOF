@@ -14,8 +14,6 @@ const App = () => {
         settest(data)
     }
 
-
-
     return (
         <div className="bg-info p-3" style={{ height: '100vh', width: '100vw' }}>
             <div className="container bg-white rounded text-center">

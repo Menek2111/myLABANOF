@@ -6,7 +6,6 @@ import logo from './images/logo.png'
 import google from './images/google-logo.png'
 import { registerRequest } from './api/registerRequest';
 import { useNavigate } from 'react-router-dom'
-
 import InstallPWA from "./InstallPWA";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -23,7 +22,7 @@ function Login() {
     });
 
     useEffect(() => {
-        setProfile(JSON.parse(localStorage.getItem('profile')));
+        setProfile(JSON.parse(sessionStorage.getItem('profile')));
     }, []);
 
     const register = async (e) => {
@@ -41,7 +40,7 @@ function Login() {
                 }
             })
                 .then((res) => {
-                    localStorage.setItem('profile', JSON.stringify(res.data))
+                    sessionStorage.setItem('profile', JSON.stringify(res.data))
                     setProfile(res.data);
                     register(res.data)
                     navigate('/')
@@ -55,50 +54,52 @@ function Login() {
     // log out function to log the user out of google and set the profile array to null
     const logOut = () => {
         googleLogout();
-        localStorage.removeItem('profile')
+        sessionStorage.removeItem('profile')
         setProfile(null);
     };
 
     return (
         <div className='bg-info' style={{ width: '100vw', height: '100vh' }}>
-
-            <div className='container p-3'>
-                <div className='row justify-content-center'>
-                    <div className='col-lg-5 bg-white shadow rounded p-2 text-center'>
-                        <img src={logo} style={{ height: '10vh' }} alt="logo"></img>
-                        <h2>Applicazione LABANOF</h2>
-                        <div className='border border-bottom'></div>
-                        <br />
-                        <br />
-                        {profile ? (
-                            <div>
-                                <div className='mb-5'>
-                                    <img className="rounded" src={profile.picture} alt="user" />
-                                    <h3>{profile.name}</h3>
-                                    <p>Email: {profile.email}</p>
-
+            <div className='container p-3 h-100'>
+                <div className=' h-100 d-flex align-items-center justify-content-center'>
+                    <div className='row bg-white shadow rounded text-center d-flex'>
+                        <div className='col-lg col-sm-12'>
+                            <img src={logo} style={{ height: '39vh' }} alt="logo"></img>
+                        </div>
+                        <div className='col-lg col-sm-12'>
+                            <h2 className='p-3'>Applicazione LABANOF</h2>
+                            <div className='border border-bottom'></div>
+                            {profile ? (
+                                <div>
+                                    <p className='py-2 p-0 m-0 text-start'>Hai efettuato l'accesso come:</p>
+                                    <div className='d-flex'>
+                                        <div>
+                                            <img className="rounded" src={profile.picture} alt="user" />
+                                        </div>
+                                        <div className='mx-2 text-start'>
+                                            <h3>{profile.name}</h3>
+                                            <p>Email: {profile.email}</p>
+                                        </div>
+                                    </div>
                                     <button className='btn btn-danger' onClick={logOut}>Log out</button>
                                 </div>
 
-                            </div>
+                            ) : (
 
-                        ) : (
-                            <button className='btn border' onClick={() => login()}>
-                                <img src={google} style={{ height: '3vh' }} alt="google logo" /> Accedi con Google
-                            </button>
-                        )}
+                                <div>
+                                    <p>Per poter utilizzare quest'applicazione è necessario effettuare l'accesso tramite Google</p>
+                                    <p>Non possiedi un account Google?<br />Crealo ora gratuitamente: <a href='#'>Crea account Google</a></p>
+
+                                    <button className='btn border btn-primary' onClick={() => login()}>
+                                        <img className='bg-white p-1 rounded rounded-circle' src={google} style={{ height: '5vh' }} alt="google logo" /> Accedi con Google
+                                    </button>
+                                </div>
+                            )}
+                        </div>
+
                     </div>
                 </div>
             </div>
-            <div className='row justify-content-center mt-5'>
-                <div className='col-lg-5'>
-                    <InstallPWA />
-                </div>
-            </div>
-
-
-
-
         </div>
     );
 }

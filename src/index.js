@@ -5,6 +5,7 @@ import { GoogleOAuthProvider } from '@react-oauth/google';
 import Homepage from "./homepage";
 import Login from './Login'
 import { HashRouter, Route, Routes } from 'react-router-dom'
+import PaginaUtente from "./schede/paginaUtente";
 
 
 
