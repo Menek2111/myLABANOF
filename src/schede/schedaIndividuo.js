@@ -40,7 +40,7 @@ function SchedaIndividuo() {
             setIndividuo(res)
             console.log(res)
         })
-    }, []);
+    }, [state.individuo]);
 
 
     // backgroundColor: '#F7F9FC'
