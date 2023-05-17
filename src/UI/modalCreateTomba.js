@@ -58,15 +58,15 @@ function ModalCreateTomba() {
                     <Form>
                         <Form.Group className="mb-3" controlId="formBasicPassword">
                             <Form.Label>Nome tomba</Form.Label>
-                            <Form.Control type="text" onChange={(e) => setNome(e.target.value)} />
+                            <Form.Control type="text" />
                         </Form.Group>
                         <Form.Group className="mb-3" controlId="formBasicPassword">
                             <Form.Label>Numero minimo di individui</Form.Label>
-                            <Form.Control type="number" onChange={(e) => setNum(e.target.value)} />
+                            <Form.Control type="number" />
                         </Form.Group>
                         <Form.Group className="mb-3" controlId="formBasicPassword">
                             <Form.Label>Coordinate tomba</Form.Label>
-                            <Form.Control type="text" onChange={(e) => setCoord(e.target.value)} />
+                            <Form.Control type="text" />
                         </Form.Group>
                     </Form>
                 </Modal.Body>
