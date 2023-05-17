@@ -29,6 +29,7 @@ function ModalCreateTomba() {
     const handleShow = () => setShow(true);
 
     //Chiamate API
+    /*
     const creaIndividuo = async (tomba, nome, creatore) => {
         alert('Faccio una chiamata con questi valori' + tomba + nome + creatore)
         let cm = new ConnectionManager();
@@ -36,7 +37,7 @@ function ModalCreateTomba() {
         let res = await cm.createIndividuo(JSON.stringify(params));
         alert(res.response);
     }
-
+*/
 
     return (
         <div>

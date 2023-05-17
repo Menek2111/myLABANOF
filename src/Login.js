@@ -85,7 +85,7 @@ function Login() {
 
                             <div>
                                 <p>Per poter utilizzare quest'applicazione è necessario effettuare l'accesso tramite Google</p>
-                                <p>Non possiedi un account Google?<br />Crealo ora gratuitamente: <a href='#'>Crea account Google</a></p>
+                                <p>Non possiedi un account Google?<br />Crealo ora gratuitamente: Crea account Google</p>
 
                                 <button className='btn border btn-primary' onClick={() => login()}>
                                     <img className='bg-white p-1 rounded rounded-circle' src={google} style={{ height: '5vh' }} alt="google logo" /> Accedi con Google

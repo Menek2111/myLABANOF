@@ -3,10 +3,6 @@ import axios from "axios";
 
 export default class ConnectionManager {
 
-    constructor() {
-
-    }
-
     checkJWT = async function (params) {
         var token = sessionStorage.getItem('access_token')
         var URL = "https://applabanof.altervista.org/applabanof/data/checkJWT.php"

@@ -73,7 +73,7 @@ function ModalCreateIndividuo() {
                     <Modal.Body>
 
                         <Form.Group className="mb-3" controlId="formBasicEmail">
-                            <p className='p-2 rounded' style={{ backgroundColor: '#F7F9FC' }}>Non esiste la tomba che stai cercando? <a>Creala</a></p>
+                            <p className='p-2 rounded' style={{ backgroundColor: '#F7F9FC' }}>Non esiste la tomba che stai cercando? Creala </p>
                             <Form.Label>Tomba di appartenenza:</Form.Label>
                             <Form.Select aria-label="Default select example" onChange={(e) => setTomba(e.target.value)}>
                                 {tombe ? (tombe.map(tomba => <option key={tomba.id} value={tomba.id}>{tomba.nome}</option>))
