@@ -41,7 +41,7 @@ function SchedaIndividuo() {
             setIndividuo(res)
             console.log(res)
         })
-    }, [this.getIndividuoById()]);
+    }, [getIndividuoById()]);
 
 
     // backgroundColor: '#F7F9FC'

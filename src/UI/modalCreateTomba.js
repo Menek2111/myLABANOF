@@ -8,7 +8,6 @@ import Nav from 'react-bootstrap/Nav';
 
 
 //Import classi
-import ConnectionManager from '../api/ConnectionManager';
 
 import '../App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
