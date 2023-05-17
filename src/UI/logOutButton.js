@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { googleLogout, useGoogleLogin } from '@react-oauth/google';
+import React from 'react';
+import { googleLogout } from '@react-oauth/google';
 import { useNavigate } from 'react-router-dom'
 
 import '../App.css';

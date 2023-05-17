@@ -4,21 +4,14 @@ import Button from 'react-bootstrap/Button';
 import ConnectionManager from '../api/ConnectionManager';
 import { useLocation } from 'react-router-dom';
 
-
-import skele from '../images/skele.jpg'
-import skeleretro from '../images/skeleretro.jpg'
-
 import '../App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 import indThumb from '../images/individuo.jpg'
 
-import ListaIndividui from '../component/listaIndividui'
-import SideNav from '../component/sideNav';
 import { Dna } from 'react-loader-spinner'
 import Table from 'react-bootstrap/Table';
 
-import Carousel from 'react-bootstrap/Carousel';
 
 import placeholder from '../images/placeholder.png'
 
