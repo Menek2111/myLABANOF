@@ -29,19 +29,18 @@ function SchedaIndividuo() {
 
     const [individuo, setIndividuo] = useState()
 
-    const getIndividuoById = async () => {
-        let cm = new ConnectionManager();
-        let res = await cm.getIndividuoById(JSON.stringify({ id: state.individuo }));
-
-        return res;
-    }
-
     useEffect(() => {
+        const getIndividuoById = async () => {
+            let cm = new ConnectionManager();
+            let res = await cm.getIndividuoById(JSON.stringify({ id: state.individuo }));
+
+            return res;
+        }
         getIndividuoById().then(res => {
             setIndividuo(res)
             console.log(res)
         })
-    }, [getIndividuoById()]);
+    }, []);
 
 
     // backgroundColor: '#F7F9FC'
