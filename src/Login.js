@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
-import { googleLogout, useGoogleLogin } from '@react-oauth/google';
+import { useGoogleLogin } from '@react-oauth/google';
 import axios from 'axios';
 import logo from './images/logo.png'
 import google from './images/google-logo.png'
@@ -24,7 +24,7 @@ function Login() {
         //Controllo se il token è ancora valido, se lo è impedisco la visualizzazione della pagina
         checkJWT().then(
             res => {
-                if (res.response == 'success') {
+                if (res.response === 'success') {
                     navigate('/home')
                 }
             }
@@ -40,7 +40,7 @@ function Login() {
                 .then((res) => {
                     localStorage.setItem('profile', JSON.stringify(res.data))
                     sessionStorage.setItem('access_token', user.access_token)
-                    register(res.data)
+                    register(res.data).then(res => localStorage.setItem('userID', JSON.stringify(res.userId.id)))
                     navigate('/home')
                 })
                 .catch((err) => console.log(err));
@@ -50,16 +50,17 @@ function Login() {
     );
 
     // log out function to log the user out of google and set the profile array to null
+    /*
     const logOut = () => {
         googleLogout();
         localStorage.removeItem('profile')
         sessionStorage.removeItem('access_token')
     };
+    */
 
     const register = async (e) => {
         let cm = new ConnectionManager();
         const res = await cm.register(JSON.stringify(e));
-        console.log(res)
         return res;
     }
 

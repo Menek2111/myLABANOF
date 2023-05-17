@@ -40,7 +40,7 @@ function ModalCreateTomba() {
 
     return (
         <div>
-            <Nav.Link className='w-100' variant="primary" onClick={handleShow}>
+            <Nav.Link className='w-100' variant="primary" onClick={handleShow} disabled>
                 Crea nuova tomba
             </Nav.Link >
             <Modal

@@ -9,10 +9,9 @@ import labanof from '../images/labanof-logo.png'
 
 import search from '../images/search.png'
 
-import { googleLogout } from '@react-oauth/google';
-
 import '../App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import LogOutButton from './logOutButton';
 
 function NavBar() {
     const navigate = useNavigate();
@@ -72,13 +71,10 @@ function NavBar() {
                                     <Dropdown.Item>Permessi</Dropdown.Item>
                                     <Dropdown.Item>Tema</Dropdown.Item>
 
+
+
                                     <div className='mt-3 w-100 text-center'>
-                                        <button className='btn btn-danger' onClick={() => {
-                                            googleLogout();
-                                            sessionStorage.removeItem('profile')
-                                            setProfile(null)
-                                            navigate('/login')
-                                        }}>Log out</button>
+                                        <LogOutButton />
                                     </div>
                                 </Dropdown.Menu>
                             </Dropdown>

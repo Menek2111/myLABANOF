@@ -49,8 +49,7 @@ function Homepage() {
                         <div className='col-2'>
                             <SideNav />
                         </div>
-                        <div className='col-10 bg-white border rounded'>
-
+                        <div className='col-10 bg-white border rounded h-100'>
                             <ListaIndividui individui={individui} navigator={navigate} />
                         </div>
                     </div>

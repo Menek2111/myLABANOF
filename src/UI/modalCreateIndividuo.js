@@ -15,7 +15,6 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 function ModalCreateIndividuo() {
     const navigate = useNavigate();
 
-
     const [tomba, setTomba] = useState('');
     const [nome, setNome] = useState('');
     const [tombe, setTombe] = useState([]);
@@ -24,9 +23,10 @@ function ModalCreateIndividuo() {
     const [profile, setProfile] = useState([]);
 
     useEffect(() => {
-        setProfile(JSON.parse(sessionStorage.getItem('profile')));
+        setProfile(JSON.parse(localStorage.getItem('userID')));
         getTombe().then(res => {
             setTombe(res)
+            setTomba(res[0].id)
         })
     }, []);
 
@@ -37,11 +37,16 @@ function ModalCreateIndividuo() {
 
     //Chiamate API
     const creaIndividuo = async (tomba, nome, creatore) => {
-        let cm = new ConnectionManager();
-        var params = { tomba: tomba, nome: nome, creatore: creatore }
-        let res = await cm.createIndividuo(JSON.stringify(params)).then(
-            navigate('/')
-        );
+
+        if (tomba != '' && nome != '') {
+            let cm = new ConnectionManager();
+            var params = { tomba: tomba, nome: nome, creatore: creatore }
+            let res = await cm.createIndividuo(JSON.stringify(params)).then(
+                navigate('/')
+            );
+        }
+
+
     }
     const getTombe = async (e) => {
         let cm = new ConnectionManager();
@@ -64,8 +69,9 @@ function ModalCreateIndividuo() {
                 <Modal.Header closeButton>
                     <Modal.Title>Creazione nuovo individuo</Modal.Title>
                 </Modal.Header>
-                <Modal.Body>
-                    <Form>
+                <Form>
+                    <Modal.Body>
+
                         <Form.Group className="mb-3" controlId="formBasicEmail">
                             <p className='p-2 rounded' style={{ backgroundColor: '#F7F9FC' }}>Non esiste la tomba che stai cercando? <a href="#">Creala</a></p>
                             <Form.Label>Tomba di appartenenza:</Form.Label>
@@ -76,16 +82,17 @@ function ModalCreateIndividuo() {
                         </Form.Group>
                         <Form.Group className="mb-3" controlId="formBasicPassword">
                             <Form.Label>Identificativo individuo</Form.Label>
-                            <Form.Control type="text" onChange={(e) => setNome(e.target.value)} />
+                            <Form.Control required type="text" onChange={(e) => setNome(e.target.value)} />
                         </Form.Group>
-                    </Form>
-                </Modal.Body>
-                <Modal.Footer>
-                    <Button variant="secondary" onClick={handleClose}>
-                        Chiudi senza salvare
-                    </Button>
-                    <Button variant="primary" onClick={(e) => creaIndividuo(tomba, nome, 14)}>Salva</Button>
-                </Modal.Footer>
+
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <Button variant="secondary" onClick={handleClose}>
+                            Chiudi senza salvare
+                        </Button>
+                        <Button variant="primary" type="submit" onClick={(e) => creaIndividuo(tomba, nome, profile)}>Salva</Button>
+                    </Modal.Footer>
+                </Form>
             </Modal>
         </div >
     );

@@ -17,10 +17,10 @@ class ListaIndividui extends React.Component {
 
     render() {
         return (
-            <div className="row d-flex flex-row pt-4">
+            <div className="row d-flex flex-row pt-4 h-100" style={{ overflowY: 'auto' }} >
                 {this.props.individui ? (
                     this.props.individui.map(ind =>
-                        <div className="col-3" onClick={() => this.props.navigator('/individuo', { state: { individuo: ind.id } })}>
+                        <div key={ind.id} className="col-3" onClick={() => this.props.navigator('/individuo', { state: { individuo: ind.id } })}>
                             <div className="p-2  rounded m-2 indCard" style={{ backgroundColor: '#F2F6FC' }}>
                                 <div className="">
                                     💀 {ind.nome}

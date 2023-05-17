@@ -52,7 +52,7 @@ function SchedaIndividuo() {
                     <div className='row h-100'>
                         <div className='col bg-white h-100 w-100 rounded border'>
                             <div className='row border-bottom rounded-top justify-content-between'>
-                                <div className='col-3 py-2 d-flex'>
+                                <div className='col-11 py-2 d-flex'>
                                     <div style={centerMiddle}>
                                         <img src={indThumb} style={{ height: '10vh' }} alt="individuo" />
                                     </div>
