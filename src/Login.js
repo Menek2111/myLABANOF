@@ -4,17 +4,15 @@ import { googleLogout, useGoogleLogin } from '@react-oauth/google';
 import axios from 'axios';
 import logo from './images/logo.png'
 import google from './images/google-logo.png'
-import { registerRequest } from './api/registerRequest';
 import { useNavigate } from 'react-router-dom'
-import InstallPWA from "./InstallPWA";
 import 'bootstrap/dist/css/bootstrap.min.css';
+import ConnectionManager from './api/ConnectionManager';
 
 function Login() {
 
     const navigate = useNavigate();
 
     const [user, setUser] = useState([]);
-    const [profile, setProfile] = useState([]);
 
     const login = useGoogleLogin({
         onSuccess: (codeResponse) => setUser(codeResponse),
@@ -22,16 +20,16 @@ function Login() {
     });
 
     useEffect(() => {
-        setProfile(JSON.parse(sessionStorage.getItem('profile')));
-    }, []);
 
-    const register = async (e) => {
-        const data = await registerRequest(JSON.stringify(e));
-        //alert(data.response)
-        console.log(data)
-    }
+        //Controllo se il token è ancora valido, se lo è impedisco la visualizzazione della pagina
+        checkJWT().then(
+            res => {
+                if (res.response == 'success') {
+                    navigate('/home')
+                }
+            }
+        )
 
-    useEffect(() => {
         if (user) {
             axios.get(`https://www.googleapis.com/oauth2/v1/userinfo?access_token=${user.access_token}`, {
                 headers: {
@@ -40,10 +38,10 @@ function Login() {
                 }
             })
                 .then((res) => {
-                    sessionStorage.setItem('profile', JSON.stringify(res.data))
-                    setProfile(res.data);
+                    localStorage.setItem('profile', JSON.stringify(res.data))
+                    sessionStorage.setItem('access_token', user.access_token)
                     register(res.data)
-                    navigate('/')
+                    navigate('/home')
                 })
                 .catch((err) => console.log(err));
         }
@@ -54,9 +52,23 @@ function Login() {
     // log out function to log the user out of google and set the profile array to null
     const logOut = () => {
         googleLogout();
-        sessionStorage.removeItem('profile')
-        setProfile(null);
+        localStorage.removeItem('profile')
+        sessionStorage.removeItem('access_token')
     };
+
+    const register = async (e) => {
+        let cm = new ConnectionManager();
+        const res = await cm.register(JSON.stringify(e));
+        console.log(res)
+        return res;
+    }
+
+    const checkJWT = async (e) => {
+        let cm = new ConnectionManager();
+        const res = await cm.checkJWT();
+        console.log(res)
+        return res;
+    }
 
     return (
         <div className='bg-info' style={{ width: '100vw', height: '100vh' }}>
@@ -69,32 +81,16 @@ function Login() {
                         <div className='col-lg col-sm-12'>
                             <h2 className='p-3'>Applicazione LABANOF</h2>
                             <div className='border border-bottom'></div>
-                            {profile ? (
-                                <div>
-                                    <p className='py-2 p-0 m-0 text-start'>Hai efettuato l'accesso come:</p>
-                                    <div className='d-flex'>
-                                        <div>
-                                            <img className="rounded" src={profile.picture} alt="user" />
-                                        </div>
-                                        <div className='mx-2 text-start'>
-                                            <h3>{profile.name}</h3>
-                                            <p>Email: {profile.email}</p>
-                                        </div>
-                                    </div>
-                                    <button className='btn btn-danger' onClick={logOut}>Log out</button>
-                                </div>
 
-                            ) : (
+                            <div>
+                                <p>Per poter utilizzare quest'applicazione è necessario effettuare l'accesso tramite Google</p>
+                                <p>Non possiedi un account Google?<br />Crealo ora gratuitamente: <a href='#'>Crea account Google</a></p>
 
-                                <div>
-                                    <p>Per poter utilizzare quest'applicazione è necessario effettuare l'accesso tramite Google</p>
-                                    <p>Non possiedi un account Google?<br />Crealo ora gratuitamente: <a href='#'>Crea account Google</a></p>
+                                <button className='btn border btn-primary' onClick={() => login()}>
+                                    <img className='bg-white p-1 rounded rounded-circle' src={google} style={{ height: '5vh' }} alt="google logo" /> Accedi con Google
+                                </button>
+                            </div>
 
-                                    <button className='btn border btn-primary' onClick={() => login()}>
-                                        <img className='bg-white p-1 rounded rounded-circle' src={google} style={{ height: '5vh' }} alt="google logo" /> Accedi con Google
-                                    </button>
-                                </div>
-                            )}
                         </div>
 
                     </div>
@@ -103,4 +99,5 @@ function Login() {
         </div>
     );
 }
+
 export default Login;

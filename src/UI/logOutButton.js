@@ -11,7 +11,8 @@ function LogOutButton() {
 
     const logOut = () => {
         googleLogout();
-        sessionStorage.removeItem('profile')
+        localStorage.removeItem('profile')
+        sessionStorage.removeItem('access_token')
         navigate('/login')
     };
 

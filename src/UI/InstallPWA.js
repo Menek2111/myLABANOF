@@ -1,5 +1,5 @@
 import React from "react";
-import logo from './images/logo.png'
+import logo from '../images/logo.png'
 
 import { usePWAInstall } from 'react-use-pwa-install'
 const InstallPWA = () => {

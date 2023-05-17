@@ -7,12 +7,15 @@ import NavItem from 'react-bootstrap/NavItem';
 import NavLink from 'react-bootstrap/NavLink';
 import labanof from '../images/labanof-logo.png'
 
+import search from '../images/search.png'
+
 import { googleLogout } from '@react-oauth/google';
 
 import '../App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 function NavBar() {
+    const navigate = useNavigate();
 
     const [profile, setProfile] = useState([]);
 
@@ -24,18 +27,17 @@ function NavBar() {
     };
 
     useEffect(() => {
-        setProfile(JSON.parse(sessionStorage.getItem('profile')));
+        setProfile(JSON.parse(localStorage.getItem('profile')));
     }, []);
 
-    const navigate = useNavigate();
 
     return (
         <div>
             <Nav
                 activeKey="/home"
                 onSelect={(selectedKey) => alert(selectedKey)}
-                className='bg-white'
-                style={{ height: '7vh' }}
+                className=''
+                style={{ height: '7vh', backgroundColor: '#F7F9FC' }}
             >
                 <div className='d-flex justify-content-between w-100'>
                     <div className='d-flex'>
@@ -44,18 +46,18 @@ function NavBar() {
                                 <img src={labanof} alt='Labanof logo' style={{ height: '5vh' }} />
                             </Nav.Link>
                         </Nav.Item>
-                        <Nav.Item style={centerMiddle} >
-                            <Nav.Link eventKey="link-1">Link</Nav.Link>
-                        </Nav.Item>
-                        <Nav.Item style={centerMiddle}>
-                            <Nav.Link eventKey="link-2">Link</Nav.Link>
-                        </Nav.Item>
+                        <div className='py-2'>
+                            <div className="bar text-center mx-3 p-0" style={centerMiddle}>
+                                <img className='p-0 mx-3' src={search} alt="search" style={{ height: '2vh' }}></img>
+                                <input className="searchbar bg-transparent" type="text"></input>
+                            </div>
+                        </div>
                     </div>
                     <div>
                         {profile ? (
                             <Dropdown as={NavItem} style={centerMiddle}>
                                 <Dropdown.Toggle as={NavLink} >
-                                    <img style={{ height: '4vh' }} className="rounded" src={profile.picture} alt="user" />
+                                    <img style={{ height: '4vh' }} className="rounded rounded-circle" src={profile.picture} alt="user" />
                                 </Dropdown.Toggle>
                                 <Dropdown.Menu className='rounded-0 border' style={{ marginRight: '2vw', width: '20vw' }}>
                                     <div className='w-100 text-center'>
@@ -88,7 +90,7 @@ function NavBar() {
                     </div>
                 </div>
             </Nav >
-        </div>
+        </div >
     );
 }
 export default NavBar;

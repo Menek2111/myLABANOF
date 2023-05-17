@@ -4,3 +4,27 @@
     justify-content: 'center' !important;
     height: '100%' !important;
 }
+.bar{
+    margin: 0 auto !important;
+    width: 30vw !important;
+    border-radius: 30px !important;
+    background-color: #EDF2FC !important;
+  }
+  .bar:hover{
+    box-shadow: 1px 1px 5px 1px #dcdcdc !important;
+  }
+  .bar:focus-within{
+    box-shadow: 1px 1px 5px 1px #dcdcdc !important;
+    outline:none !important;
+  }
+.searchbar{
+  height: 5vh !important;
+  border:none !important;
+  width: 26vw !important;
+  outline: none !important;
+}
+
+
+.indCard:hover{
+  background-color: #E1E5EA !important;
+}
