@@ -15,7 +15,6 @@ function Homepage() {
 
     const [individui, setIndividui] = useState()
 
-    const [selezione, setSelezione] = useState()
 
 
     const getIndividui = async (e) => {
@@ -36,7 +35,7 @@ function Homepage() {
             }
 
         })
-    }, []);
+    }, [navigate]);
 
     // backgroundColor: '#F7F9FC'
     return (

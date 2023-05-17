@@ -38,10 +38,10 @@ function ModalCreateIndividuo() {
     //Chiamate API
     const creaIndividuo = async (tomba, nome, creatore) => {
 
-        if (tomba != '' && nome != '') {
+        if (tomba !== '' && nome !== '') {
             let cm = new ConnectionManager();
             var params = { tomba: tomba, nome: nome, creatore: creatore }
-            let res = await cm.createIndividuo(JSON.stringify(params)).then(
+            await cm.createIndividuo(JSON.stringify(params)).then(
                 navigate('/')
             );
         }
@@ -73,7 +73,7 @@ function ModalCreateIndividuo() {
                     <Modal.Body>
 
                         <Form.Group className="mb-3" controlId="formBasicEmail">
-                            <p className='p-2 rounded' style={{ backgroundColor: '#F7F9FC' }}>Non esiste la tomba che stai cercando? <a href="#">Creala</a></p>
+                            <p className='p-2 rounded' style={{ backgroundColor: '#F7F9FC' }}>Non esiste la tomba che stai cercando? <a>Creala</a></p>
                             <Form.Label>Tomba di appartenenza:</Form.Label>
                             <Form.Select aria-label="Default select example" onChange={(e) => setTomba(e.target.value)}>
                                 {tombe ? (tombe.map(tomba => <option key={tomba.id} value={tomba.id}>{tomba.nome}</option>))

@@ -1,16 +1,12 @@
 import React from "react";
 import Nav from 'react-bootstrap/Nav';
-import Button from 'react-bootstrap/Button';
 
 import ModalCreateIndividuo from "../UI/modalCreateIndividuo";
 import ModalCreateTomba from "../UI/modalCreateTomba";
 
 class SideNav extends React.Component {
 
-    constructor(props) {
-        super(props);
-        //this.state = { individui: props.individui };
-    }
+
 
     componentDidMount() {
 

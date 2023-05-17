@@ -15,9 +15,9 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 function ModalCreateTomba() {
 
-    const [nome, setNome] = useState('');
-    const [num, setNum] = useState('');
-    const [coord, setCoord] = useState('');
+    //const [nome, setNome] = useState('');
+    //const [num, setNum] = useState('');
+    //const [coord, setCoord] = useState('');
 
     useEffect(() => {
 
