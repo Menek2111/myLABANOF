@@ -29,13 +29,10 @@ function ModalDeleteIndividuo(props) {
         event.preventDefault();
         event.stopPropagation();
 
-        if (testo == deleteText) {
-            alert('si')
+        if (testo === deleteText) {
             deleteAPi().then(res => console.log('Eliminazione: ' + res))
             navigate('/home')
         } else {
-            alert('no')
-            alert(text)
             var text = document.getElementById('formText')
             text.classList.add('border-danger')
 
@@ -50,13 +47,9 @@ function ModalDeleteIndividuo(props) {
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
-    const eliminaIndividuo = async () => {
-
-    }
-
     const deleteAPi = async () => {
         let cm = new ConnectionManager();
-        var params = { id: props.individuo }
+        var params = { id: props.individuo.id }
         await cm.deleteIndividuo(JSON.stringify(params)).then(res => {
             if (res.error == null) {
                 navigate('/')
@@ -91,9 +84,9 @@ function ModalDeleteIndividuo(props) {
                                 <img src={thumb} alt="thumb" style={{ height: '15vh' }} />
                             </div>
                             <div>
-                                <p>Individuo: ---</p>
-                                <p>Creato da: </p>
-                                <p>Creato il:</p>
+                                <p>Individuo: {props.individuo.nome}</p>
+                                <p>Creato da: {props.utente.email}</p>
+                                <p>Creato il: {props.individuo.dataCreazione}</p>
                             </div>
                         </div>
 

@@ -158,7 +158,7 @@ function SchedaIndividuo() {
                                     </div>
 
                                     <div className='d-flex justify-content-end'>
-                                        <ModalDeleteIndividuo individuo={individuo.individuo.id} />
+                                        <ModalDeleteIndividuo individuo={individuo.individuo} utente={individuo.utente} />
                                     </div>
                                 </div>
                             ) : (
