@@ -72,7 +72,7 @@ function ModalDeleteIndividuo(props) {
             >
                 <Modal.Header closeButton>
                     <Modal.Title>
-                        <h4 className='text-danger'>Sei sicuro di voler eliminare l'individuo: --- ?</h4>
+                        <h4 className='text-danger'>Sei sicuro di voler eliminare l'individuo ?</h4>
                         <p className=' p-0 m-0 text-warning'>Questa operazione sarà irreversibile</p>
                     </Modal.Title>
                 </Modal.Header>
