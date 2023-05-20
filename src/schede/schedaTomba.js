@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import Button from 'react-bootstrap/Button';
 
 import ConnectionManager from '../api/ConnectionManager';
 import { useLocation } from 'react-router-dom';
@@ -12,11 +11,6 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import indThumb from '../images/tomblogo.png'
 
 import { Dna } from 'react-loader-spinner'
-import Table from 'react-bootstrap/Table';
-
-import placeholder from '../images/placeholder.png'
-
-import ModalDeleteIndividuo from '../UI/modalDeleteIndividuo'
 import { useNavigate } from 'react-router-dom'
 
 import ModalEditTomba from '../UI/modalEditTomba'
@@ -52,7 +46,9 @@ function SchedaTomba() {
                     setIndividui(null)
                     break
                 case 'error':
-                //---
+                    break
+                default:
+                    break
             }
         })
     }, [state.tomba]);

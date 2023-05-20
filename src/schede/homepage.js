@@ -37,7 +37,7 @@ function Homepage() {
                 alert('errore')
                 navigate('/')
             } else {
-                if (res != '0 risultati') {
+                if (res !== '0 risultati') {
                     setIndividui(res)
                 }
             }

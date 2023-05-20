@@ -4,7 +4,6 @@ import React, { useState, useEffect } from 'react';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
-import Nav from 'react-bootstrap/Nav';
 
 //Import classi
 import ConnectionManager from '../api/ConnectionManager';
@@ -24,7 +23,7 @@ function ModalEditTomba({ tomba }) {
         setNome(tomba.nome)
         setNum(tomba.nMinIndividui)
         setCoord(tomba.coordinate)
-    }, []);
+    }, [tomba.nome, tomba.nMinIndividui, tomba.coordinate]);
 
     //Gestione modal
     const [show, setShow] = useState(false);
@@ -36,7 +35,7 @@ function ModalEditTomba({ tomba }) {
         let cm = new ConnectionManager();
         var params = { id: tomba.id, nome: nome, nMinIndividui: nMinIndividui, coordinate: coordinate }
         await cm.editTomba(JSON.stringify(params)).then(res => {
-            if (res.response != 'error') {
+            if (res.response !== 'error') {
                 navigate('/')
             }
         })
