@@ -33,15 +33,15 @@ function NavBar() {
     return (
         <div>
             <Nav
-                activeKey="/home"
-                onSelect={(selectedKey) => alert(selectedKey)}
+                activeKey="/"
+                //onSelect={(selectedKey) => alert(selectedKey)}
                 className=''
                 style={{ height: '7vh', backgroundColor: '#F7F9FC' }}
             >
                 <div className='d-flex justify-content-between w-100'>
                     <div className='d-flex'>
                         <Nav.Item style={centerMiddle}>
-                            <Nav.Link href="/home">
+                            <Nav.Link href="/">
                                 <img src={labanof} alt='Labanof logo' style={{ height: '5vh' }} />
                             </Nav.Link>
                         </Nav.Item>

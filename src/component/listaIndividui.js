@@ -1,6 +1,7 @@
 import React from "react";
 
 import anteprima from '../images/screen.PNG'
+import doc from '../images/documents.png'
 import { Dna } from 'react-loader-spinner'
 
 class ListaIndividui extends React.Component {
@@ -22,8 +23,8 @@ class ListaIndividui extends React.Component {
                     this.props.individui.map(ind =>
                         <div key={ind.id} className="col-3" onClick={() => this.props.navigator('/individuo', { state: { individuo: ind.id } })}>
                             <div className="p-2  rounded m-2 indCard" style={{ backgroundColor: '#F2F6FC' }}>
-                                <div className="">
-                                    💀 {ind.nome}
+                                <div className="pb-1">
+                                    <img src={doc} alt="doc" style={{ height: '3vh' }} /> {ind.nome}
                                 </div>
                                 <div className="text-center">
                                     <img className="rounded w-100" alt="anteprima" src={anteprima} style={{ width: '15vw' }} />
