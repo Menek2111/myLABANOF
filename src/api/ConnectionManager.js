@@ -74,4 +74,25 @@ export default class ConnectionManager {
         })
         return data
     }
+    createTomba = async function (params) {
+        var tomba = JSON.parse(params)
+        var URL = "https://applabanof.altervista.org/applabanof/data/creazione/createTomba.php"
+        const { data } = await axios.post(URL, {
+            nome: tomba.nome,
+            nMinIndividui: tomba.nMinIndividui,
+            coordinate: tomba.coordinate,
+        })
+        return data
+    }
+
+
+    deleteIndividuo = async function (params) {
+        var json = JSON.parse(params)
+        var URL = "https://applabanof.altervista.org/applabanof/data/delete/deleteIndividuo.php"
+        const { data } = await axios.post(URL, {
+            id: json.id
+        })
+        return data
+    }
+
 }

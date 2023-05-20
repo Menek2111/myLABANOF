@@ -12,8 +12,9 @@ import indThumb from '../images/individuo.jpg'
 import { Dna } from 'react-loader-spinner'
 import Table from 'react-bootstrap/Table';
 
-
 import placeholder from '../images/placeholder.png'
+
+import ModalDeleteIndividuo from '../UI/modalDeleteIndividuo'
 
 
 function SchedaIndividuo() {
@@ -33,7 +34,6 @@ function SchedaIndividuo() {
         const getIndividuoById = async () => {
             let cm = new ConnectionManager();
             let res = await cm.getIndividuoById(JSON.stringify({ id: state.individuo }));
-
             return res;
         }
         getIndividuoById().then(res => {
@@ -41,7 +41,6 @@ function SchedaIndividuo() {
             console.log(res)
         })
     }, [state.individuo]);
-
 
     // backgroundColor: '#F7F9FC'
     return (
@@ -158,7 +157,9 @@ function SchedaIndividuo() {
 
                                     </div>
 
-
+                                    <div className='d-flex justify-content-end'>
+                                        <ModalDeleteIndividuo individuo={individuo.individuo.id} />
+                                    </div>
                                 </div>
                             ) : (
                                 <div className='d-flex flex-column justify-content-center text-center'>

@@ -6,17 +6,20 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Nav from 'react-bootstrap/Nav';
 
-
 //Import classi
+import ConnectionManager from '../api/ConnectionManager';
+import { useNavigate } from 'react-router-dom'
+
 
 import '../App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 function ModalCreateTomba() {
+    const navigate = useNavigate();
 
-    //const [nome, setNome] = useState('');
-    //const [num, setNum] = useState('');
-    //const [coord, setCoord] = useState('');
+    const [nome, setNome] = useState('');
+    const [num, setNum] = useState('');
+    const [coord, setCoord] = useState('');
 
     useEffect(() => {
 
@@ -28,19 +31,22 @@ function ModalCreateTomba() {
     const handleShow = () => setShow(true);
 
     //Chiamate API
-    /*
-    const creaIndividuo = async (tomba, nome, creatore) => {
-        alert('Faccio una chiamata con questi valori' + tomba + nome + creatore)
+
+    const creaTomba = async (nome, nMinIndividui, coordinate) => {
         let cm = new ConnectionManager();
-        var params = { tomba: tomba, nome: nome, creatore: creatore }
-        let res = await cm.createIndividuo(JSON.stringify(params));
-        alert(res.response);
+        var params = { nome: nome, nMinIndividui: nMinIndividui, coordinate: coordinate }
+        await cm.createTomba(JSON.stringify(params)).then(res => {
+            if (res.error == null) {
+                navigate('/')
+            }
+        })
+
     }
-*/
+
 
     return (
         <div>
-            <Nav.Link className='w-100' variant="primary" onClick={handleShow} disabled>
+            <Nav.Link className='w-100' variant="primary" onClick={handleShow}>
                 Crea nuova tomba
             </Nav.Link >
             <Modal
@@ -58,15 +64,15 @@ function ModalCreateTomba() {
                     <Form>
                         <Form.Group className="mb-3" controlId="formBasicPassword">
                             <Form.Label>Nome tomba</Form.Label>
-                            <Form.Control type="text" />
+                            <Form.Control type="text" onChange={(e) => setNome(e.target.value)} />
                         </Form.Group>
                         <Form.Group className="mb-3" controlId="formBasicPassword">
                             <Form.Label>Numero minimo di individui</Form.Label>
-                            <Form.Control type="number" />
+                            <Form.Control type="number" onChange={(e) => setNum(e.target.value)} />
                         </Form.Group>
                         <Form.Group className="mb-3" controlId="formBasicPassword">
                             <Form.Label>Coordinate tomba</Form.Label>
-                            <Form.Control type="text" />
+                            <Form.Control type="text" onChange={(e) => setCoord(e.target.value)} />
                         </Form.Group>
                     </Form>
                 </Modal.Body>
@@ -74,7 +80,7 @@ function ModalCreateTomba() {
                     <Button variant="secondary" onClick={handleClose}>
                         Chiudi senza salvare
                     </Button>
-                    <Button variant="primary">Salva</Button>
+                    <Button variant="primary" onClick={(e) => creaTomba(nome, num, coord)}>Salva</Button>
                 </Modal.Footer>
             </Modal>
         </div >

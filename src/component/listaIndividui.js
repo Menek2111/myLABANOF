@@ -17,6 +17,7 @@ class ListaIndividui extends React.Component {
     }
 
     render() {
+
         return (
             <div className="row d-flex flex-row pt-4 h-100" style={{ overflowY: 'auto' }} >
                 {this.props.individui ? (
