@@ -9,7 +9,6 @@ class ListaIndividui extends React.Component {
     constructor(props) {
         super(props);
         this.state = { individui: props.individui, navigator: props.navigator };
-
     }
 
     componentDidMount() {
@@ -17,13 +16,12 @@ class ListaIndividui extends React.Component {
     }
 
     render() {
-
         return (
-            <div className="row d-flex flex-row pt-4 h-100" style={{ overflowY: 'auto' }} >
-                {this.props.individui ? (
-                    this.props.individui.map(ind =>
-                        <div key={ind.id} className="col-3" onClick={() => this.props.navigator('/individuo', { state: { individuo: ind.id } })}>
-                            <div className="p-2  rounded m-2 indCard" style={{ backgroundColor: '#F2F6FC' }}>
+            <div className="row d-flex flex-row  h-100" style={{ overflowY: 'auto' }} >
+                {this.state.individui ? (
+                    this.state.individui.map(ind =>
+                        <div key={ind.id} className="col-3" onClick={() => this.state.navigator('/individuo', { state: { individuo: ind.id } })}>
+                            <div className="p-2  rounded m-2 indCard border" style={{ backgroundColor: '#F2F6FC' }}>
                                 <div className="pb-1">
                                     <img src={doc} alt="doc" style={{ height: '3vh' }} /> {ind.nome}
                                 </div>

@@ -8,27 +8,33 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import ListaIndividui from '../component/listaIndividui'
 import SideNav from '../component/sideNav';
 
+
 import { Dna } from 'react-loader-spinner'
 
 import { useNavigate } from 'react-router-dom'
+import ListaTombe from '../component/listaTombe';
 
 function Homepage() {
     const navigate = useNavigate();
 
     const [individui, setIndividui] = useState()
+    const [tombe, setTombe] = useState()
 
     const getIndividui = async (e) => {
         let cm = new ConnectionManager();
         let res = await cm.getIndividui();
         return res.response;
     }
+    const getTombe = async (e) => {
+        let cm = new ConnectionManager();
+        let res = await cm.getTombe();
+        return res.response;
+    }
 
     useEffect(() => {
         getIndividui().then(res => {
-
             if (res.error != null) {
                 alert('errore')
-
                 navigate('/')
             } else {
                 if (res != '0 risultati') {
@@ -37,6 +43,10 @@ function Homepage() {
             }
 
         })
+        getTombe().then(res => {
+            setTombe(res)
+        })
+
     }, [navigate]);
 
     // backgroundColor: '#F7F9FC'
@@ -51,6 +61,15 @@ function Homepage() {
                             <SideNav />
                         </div>
                         <div className='col-10 bg-white border rounded h-100'>
+                            <h5 className='pt-3 border-bottom'>Tombe</h5>
+
+                            {tombe ? (
+                                <ListaTombe tombe={tombe} navigator={navigate} />
+                            ) : (
+                                <div>NO</div>
+                            )}
+
+                            <h5 className='pt-3 border-bottom'>Individui</h5>
 
                             {individui ?
                                 (

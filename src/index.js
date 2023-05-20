@@ -10,6 +10,7 @@ import NavBar from "./UI/Navbar";
 
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import reportWebVitals from './reportWebVitals';
+import SchedaTomba from "./schede/schedaTomba";
 
 
 const container = document.getElementById('root');
@@ -39,6 +40,15 @@ root.render(
                         <div>
                             <NavBar />
                             <SchedaIndividuo />
+                        </div>
+                    }
+                />
+                <Route
+                    path="/tomba"
+                    element={
+                        <div>
+                            <NavBar />
+                            <SchedaTomba />
                         </div>
                     }
                 />

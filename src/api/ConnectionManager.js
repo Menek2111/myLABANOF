@@ -24,6 +24,8 @@ export default class ConnectionManager {
         return data
     }
 
+    //GET
+
     getTombe = async function (params) {
         var URL = "https://applabanof.altervista.org/applabanof/data/getTombe.php"
         const { data } = await axios.post(URL, {})
@@ -46,6 +48,14 @@ export default class ConnectionManager {
         })
         return data
     }
+    getIndividuiByTomba = async function (params) {
+        var json = JSON.parse(params)
+        var URL = "https://applabanof.altervista.org/applabanof/data/getIndividuiByTomba.php"
+        const { data } = await axios.post(URL, {
+            tomba: json.tomba
+        })
+        return data
+    }
     getOssaIndividuoByDistretto = async function (params) {
         var json = JSON.parse(params)
         var URL = "https://applabanof.altervista.org/applabanof/data/getOssaIndividuoByDistretto.php"
@@ -63,6 +73,8 @@ export default class ConnectionManager {
         })
         return data
     }
+
+    //CREATE 
 
     createIndividuo = async function (params) {
         var ind = JSON.parse(params)
@@ -86,11 +98,27 @@ export default class ConnectionManager {
     }
 
 
+    //DELETE
+
     deleteIndividuo = async function (params) {
         var json = JSON.parse(params)
         var URL = "https://applabanof.altervista.org/applabanof/data/delete/deleteIndividuo.php"
         const { data } = await axios.post(URL, {
             id: json.id
+        })
+        return data
+    }
+
+
+    //EDIT
+    editTomba = async function (params) {
+        var tomba = JSON.parse(params)
+        var URL = "https://applabanof.altervista.org/applabanof/data/edit/editTomba.php"
+        const { data } = await axios.post(URL, {
+            id: tomba.id,
+            nome: tomba.nome,
+            nMinIndividui: tomba.nMinIndividui,
+            coordinate: tomba.coordinate,
         })
         return data
     }

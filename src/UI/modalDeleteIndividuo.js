@@ -93,7 +93,15 @@ function ModalDeleteIndividuo(props) {
 
                         <Form.Group controlId="formText">
                             <Form.Label>Scrivere <b>'{deleteText}'</b> per eliminare l'individuo</Form.Label>
-                            <Form.Control required type="text" onChange={(e) => setText(e.target.value)} />
+                            <Form.Control required type="text" onChange={(e) => setText(e.target.value)}
+                                onClick={(e) => {
+                                    var text = document.getElementById('formText')
+                                    text.classList.remove('border-danger')
+
+                                    var feedback = document.getElementById('formFeedback')
+                                    feedback.classList.remove('d-block')
+                                    feedback.classList.add('d-none')
+                                }} />
                             <p className='p-0 m-o text-danger d-none' id="formFeedback">Incorretto</p>
                         </Form.Group>
 
