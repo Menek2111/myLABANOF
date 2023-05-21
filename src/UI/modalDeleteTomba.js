@@ -12,8 +12,6 @@ import { useNavigate } from 'react-router-dom'
 import '../App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-import thumb from '../images/individuo.jpg'
-
 
 function ModalDeleteTomba(props) {
     const navigate = useNavigate();
