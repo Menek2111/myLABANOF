@@ -10,6 +10,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import indThumb from '../images/individuo.jpg'
 
 import { Dna } from 'react-loader-spinner'
+import ModalDeleteIndividuo from '../UI/modalDeleteIndividuo'
 import ProfiloBiologicoIndividuo from '../tabelle/profiloBiologicoIndividuo';
 
 
@@ -43,10 +44,11 @@ function SchedaIndividuo() {
                 </Button>
             </div>)
         } else {
-            return (<div>
-                <Button className='w-100' variant="primary" onClick={() => changeEditable()}>
+            return (<div className='d-flex justify-content-around'>
+                <Button variant="primary" onClick={() => changeEditable()}>
                     Modifica
                 </Button>
+                <ModalDeleteIndividuo individuo={individuo.individuo} utente={individuo.utente} />
             </div>)
         }
     }
@@ -80,9 +82,11 @@ function SchedaIndividuo() {
                                         <p style={centerMiddle} className=''>{individuo.tomba.nome + ' ' + individuo.individuo.nome} <br /> Creato da: {individuo.utente.email} <br /> Il: {individuo.individuo.dataCreazione} </p>
                                     ) : (<div></div>)}
                                 </div>
-                                <div className='col-2 d-flex flex-column justify-content-center'>
+
+                                {individuo ? (<div className='col-2 d-flex flex-column justify-content-center'>
                                     {editButton()}
-                                </div>
+                                </div>) : (<div></div>)}
+
                             </div>
 
 
