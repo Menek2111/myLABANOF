@@ -15,15 +15,11 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import thumb from '../images/individuo.jpg'
 
 
-function ModalDeleteIndividuo(props) {
+function ModalDeleteTomba(props) {
     const navigate = useNavigate();
 
     const deleteText = 'Si sono sicuro'
     const [testo, setText] = useState('')
-
-    useEffect(() => {
-        //alert(props.individuo)
-    }, []);
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -42,6 +38,9 @@ function ModalDeleteIndividuo(props) {
         }
     };
 
+    useEffect(() => {
+    }, []);
+
     //Gestione modal
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
@@ -49,8 +48,8 @@ function ModalDeleteIndividuo(props) {
 
     const deleteAPi = async () => {
         let cm = new ConnectionManager();
-        var params = { id: props.individuo.id }
-        await cm.deleteIndividuo(JSON.stringify(params)).then(res => {
+        var params = { id: props.tomba.id }
+        await cm.deleteTomba(JSON.stringify(params)).then(res => {
             if (res.error == null) {
                 navigate('/')
             }
@@ -72,27 +71,18 @@ function ModalDeleteIndividuo(props) {
             >
                 <Modal.Header closeButton>
                     <Modal.Title>
-                        <h4 className='text-danger'>Sei sicuro di voler eliminare l'individuo ?</h4>
-                        <p className=' p-0 m-0 text-warning'>Questa operazione sarà irreversibile</p>
+                        <p>Vuoi eliminare questa tomba?</p>
                     </Modal.Title>
                 </Modal.Header>
                 <Form onSubmit={handleSubmit}>
                     <Modal.Body>
 
-                        <div className='d-flex border border-danger rounded p-2 my-4' style={{ backgroundColor: '#F7F9FC' }}>
-                            <div>
-                                <img src={thumb} alt="thumb" style={{ height: '15vh' }} />
-                            </div>
-                            <div>
-                                <p>Individuo: {props.individuo.nome}</p>
-                                <p>Creato da: {props.utente.email}</p>
-                                <p>Creato il: {props.individuo.dataCreazione}</p>
-                            </div>
+                        <div className='my-5'>
+                            Non sarà possibile eliminare la tomba finché questa non sarà completemante vuota, se vuoi eliminare la tomba dovrai spostare o eliminare gli individui appartenenti a questa tomba
                         </div>
 
-
                         <Form.Group controlId="formText">
-                            <Form.Label>Scrivere <b>'{deleteText}'</b> per eliminare l'individuo</Form.Label>
+                            <Form.Label>Scrivere <b>'{deleteText}'</b> per eliminare la tomba</Form.Label>
                             <Form.Control required type="text" onChange={(e) => setText(e.target.value)}
                                 onClick={(e) => {
                                     var text = document.getElementById('formText')
@@ -117,4 +107,4 @@ function ModalDeleteIndividuo(props) {
         </div >
     );
 }
-export default ModalDeleteIndividuo;
+export default ModalDeleteTomba;

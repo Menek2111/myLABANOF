@@ -108,6 +108,14 @@ export default class ConnectionManager {
         })
         return data
     }
+    deleteTomba = async function (params) {
+        var json = JSON.parse(params)
+        var URL = "https://applabanof.altervista.org/applabanof/data/delete/deleteTomba.php"
+        const { data } = await axios.post(URL, {
+            id: json.id
+        })
+        return data
+    }
 
 
     //EDIT

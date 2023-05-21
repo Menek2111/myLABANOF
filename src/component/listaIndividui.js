@@ -17,7 +17,7 @@ class ListaIndividui extends React.Component {
 
     render() {
         return (
-            <div className="row d-flex flex-row  h-100" style={{ overflowY: 'auto' }} >
+            <div className="row d-flex flex-row" style={{ overflowY: 'auto' }} >
                 {this.state.individui ? (
                     this.state.individui.map(ind =>
                         <div key={ind.id} className="col-3" onClick={() => this.state.navigator('/individuo', { state: { individuo: ind.id } })}>

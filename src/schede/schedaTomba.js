@@ -14,6 +14,7 @@ import { Dna } from 'react-loader-spinner'
 import { useNavigate } from 'react-router-dom'
 
 import ModalEditTomba from '../UI/modalEditTomba'
+import ModalDeleteTomba from '../UI/modalDeleteTomba';
 
 
 function SchedaTomba() {
@@ -61,9 +62,9 @@ function SchedaTomba() {
             <div className='rounded h-100'>
                 <div className='container-fluid h-100'>
                     <div className='row h-100'>
-                        <div className='col bg-white h-100 w-100 rounded border'>
+                        <div className='col h-100 bg-white w-100 rounded border'>
                             <div className='row border-bottom rounded-top justify-content-between'>
-                                <div className='col-11 py-2 d-flex'>
+                                <div className='col-10 py-2 d-flex'>
                                     <div style={centerMiddle}>
                                         <img src={indThumb} style={{ height: '10vh' }} alt="individuo" />
                                     </div>
@@ -73,30 +74,33 @@ function SchedaTomba() {
                                     ) : (<div></div>)}
 
                                 </div>
-                                <div className='col-1 d-flex flex-column justify-content-center'>
-                                    <ModalEditTomba tomba={state.tomba} />
+                                <div className='col-2 d-flex flex-column justify-content-center'>
+
+                                    <div className='d-flex justify-content-around'>
+                                        <ModalEditTomba tomba={state.tomba} />
+                                        <ModalDeleteTomba tomba={state.tomba} />
+                                    </div>
                                 </div>
                             </div>
 
+                            {individui ? (
+                                <ListaIndividui individui={individui} navigator={navigate} />
+                            ) : (
+                                <div className=' h-75 d-flex flex-column justify-content-center text-center'>
+                                    <div>
+                                        <Dna
+                                            visible={true}
+                                            ariaLabel="dna-loading"
+                                            wrapperStyle={{}}
+                                            wrapperClass="dna-wrapper"
+                                        />
+                                    </div>
 
-                            {individui ? (<ListaIndividui individui={individui} navigator={navigate} />) : (<div className=' h-100 d-flex flex-column justify-content-center text-center'>
-                                <div>
-                                    <Dna
-                                        visible={true}
-                                        ariaLabel="dna-loading"
-                                        wrapperStyle={{}}
-                                        wrapperClass="dna-wrapper"
-                                    />
-                                </div>
+                                    <div>
+                                        Non sono stati trovati individui...
+                                    </div>
 
-                                <div>
-                                    Non sono stati trovati individui...
-                                </div>
-
-                            </div>)}
-
-
-
+                                </div>)}
 
 
                         </div>
