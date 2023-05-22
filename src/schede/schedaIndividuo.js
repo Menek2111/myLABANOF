@@ -16,7 +16,6 @@ import GeneralitàIndividuo from '../tabelle/generalitàIndividuo';
 import { useNavigate } from 'react-router-dom'
 
 function SchedaIndividuo() {
-    const navigate = useNavigate();
     const { state } = useLocation();
 
     const centerMiddle = {

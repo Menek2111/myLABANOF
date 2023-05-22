@@ -3,7 +3,6 @@ import Table from 'react-bootstrap/Table';
 import { useNavigate } from 'react-router-dom'
 
 function GeneralitàIndividuo(props) {
-    const navigate = useNavigate();
 
     function checkEditableValue() {
         if (props.editable) {
@@ -19,7 +18,7 @@ function GeneralitàIndividuo(props) {
 
     useEffect(() => {
         saveMod()
-    }, [nome, luogo, data]);
+    }, [nome, luogo, data, saveMod]);
 
     const saveMod = () => {
         props.onIndividuoChange(nome, luogo, data)

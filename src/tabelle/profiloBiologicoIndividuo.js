@@ -20,7 +20,7 @@ function ProfiloBiologicoIndividuo(props) {
 
     useEffect(() => {
         saveMod()
-    }, [sessoBiologico, classeDiEtà, origineBiologica, origineGeografica]);
+    }, [sessoBiologico, classeDiEtà, origineBiologica, origineGeografica, saveMod]);
 
     const saveMod = () => {
         props.onIndividuoChange(sessoBiologico, classeDiEtà, origineBiologica, origineGeografica)
