@@ -15,13 +15,14 @@ function GeneralitàIndividuo(props) {
     const [luogo, setLuogo] = useState(props.individuo.luogoRinvenimento)
     const [data, setData] = useState(props.individuo.dataRinvenimento)
 
-    const saveMod = () => {
-        props.onIndividuoChange(nome, luogo, data)
-    }
+
 
     useEffect(() => {
+        const saveMod = () => {
+            props.onIndividuoChange(nome, luogo, data)
+        }
         saveMod()
-    }, [nome, luogo, data]);
+    }, [nome, luogo, data, saveMod]);
 
     function editableTable() {
         return (<div>
