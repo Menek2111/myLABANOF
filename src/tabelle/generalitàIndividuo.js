@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import Table from 'react-bootstrap/Table';
-import { useNavigate } from 'react-router-dom'
 
 function GeneralitàIndividuo(props) {
 
@@ -16,13 +15,13 @@ function GeneralitàIndividuo(props) {
     const [luogo, setLuogo] = useState(props.individuo.luogoRinvenimento)
     const [data, setData] = useState(props.individuo.dataRinvenimento)
 
-    useEffect(() => {
-        saveMod()
-    }, [nome, luogo, data, saveMod]);
-
     const saveMod = () => {
         props.onIndividuoChange(nome, luogo, data)
     }
+
+    useEffect(() => {
+        saveMod()
+    }, [nome, luogo, data]);
 
     function editableTable() {
         return (<div>

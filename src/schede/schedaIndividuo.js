@@ -13,7 +13,6 @@ import { Dna } from 'react-loader-spinner'
 import ModalDeleteIndividuo from '../UI/modalDeleteIndividuo'
 import ProfiloBiologicoIndividuo from '../tabelle/profiloBiologicoIndividuo';
 import GeneralitàIndividuo from '../tabelle/generalitàIndividuo';
-import { useNavigate } from 'react-router-dom'
 
 function SchedaIndividuo() {
     const { state } = useLocation();
