@@ -18,10 +18,7 @@ function GeneralitàIndividuo(props) {
 
 
     useEffect(() => {
-        const saveMod = () => {
-            props.onIndividuoChange(nome, luogo, data)
-        }
-        saveMod()
+        props.onIndividuoChange(nome, luogo, data)
     }, [nome, luogo, data, props]);
 
     function editableTable() {
