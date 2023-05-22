@@ -1,5 +1,7 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Table from 'react-bootstrap/Table';
+import Form from 'react-bootstrap/Form';
+
 
 function ProfiloBiologicoIndividuo(props) {
 
@@ -11,6 +13,19 @@ function ProfiloBiologicoIndividuo(props) {
         }
     }
 
+    const [sessoBiologico, setSessoBiologico] = useState(props.individuo.sessoBiologico)
+    const [classeDiEtà, setClasseDiEtà] = useState(props.individuo.classeDiEta)
+    const [origineBiologica, setOrigineBiologica] = useState(props.individuo.origineBiologica)
+    const [origineGeografica, setOrigineGeografica] = useState(props.individuo.origineGeografica)
+
+    useEffect(() => {
+        saveMod()
+    }, [sessoBiologico, classeDiEtà, origineBiologica, origineGeografica]);
+
+    const saveMod = () => {
+        props.onIndividuoChange(sessoBiologico, classeDiEtà, origineBiologica, origineGeografica)
+    }
+
     function editableTable() {
         return (<div>
             <h5 className='border-bottom mb-4'>Profilo biologico</h5>
@@ -18,37 +33,51 @@ function ProfiloBiologicoIndividuo(props) {
                 <tbody>
                     <tr>
                         <th className='w-25'>Sesso biologioco</th>
-                        <td><input className="form-control" value={props.individuo.sessoBiologico} /></td>
+                        <td>
+                            <Form.Select required aria-label="Default select example" defaultValue={props.individuo.sessoBiologico} onChange={(e) => setSessoBiologico(e.target.value)}>
+                                <option></option>
+                                <option value="Femminile">Femminile</option>
+                                <option value="Maschile">Maschile</option>
+                                <option value="Incerto">Incerto</option>
+                            </Form.Select>
+                        </td>
                     </tr>
                     <tr>
                         <th>Classe di età</th>
-                        <td><input className="form-control" value={props.individuo.classeDiEtà} /></td>
+                        <td><input className="form-control" defaultValue={props.individuo.classeDiEta} onChange={(e) => setClasseDiEtà(e.target.value)} /></td>
 
                     </tr>
                     <tr>
                         <th>Età stimata (MIN)</th>
-                        <td><input className="form-control" /></td>
+                        <td>---</td>
                     </tr>
                     <tr>
                         <th>Età stimata (MAX)</th>
-                        <td><input className="form-control" /></td>
+                        <td>---</td>
                     </tr>
                     <tr>
                         <th>Origine biologica</th>
-                        <td><input className="form-control" value={props.individuo.origineBiologica} /></td>
-
+                        <td>
+                            <Form.Select required aria-label="Default select example" defaultValue={props.individuo.origineBiologica} onChange={(e) => setOrigineBiologica(e.target.value)}>
+                                <option></option>
+                                <option value="Europea">Europea</option>
+                                <option value="Africano">Africano</option>
+                                <option value="Asiatico">Asiatico</option>
+                                <option value="Indeterminato">Indeterminato</option>
+                            </Form.Select>
+                        </td>
                     </tr>
                     <tr>
                         <th>Origine geografica</th>
-                        <td><input className="form-control" value={props.individuo.origineGeografica} /></td>
+                        <td><input className="form-control" defaultValue={props.individuo.origineGeografica} onChange={(e) => setOrigineGeografica(e.target.value)} /></td>
                     </tr>
                     <tr>
                         <th>Statura (MIN)</th>
-                        <td><input className="form-control" /></td>
+                        <td>---</td>
                     </tr>
                     <tr>
                         <th>Statura (MAX)</th>
-                        <td><input className="form-control" /></td>
+                        <td>---</td>
                     </tr>
                 </tbody>
             </Table>
@@ -67,7 +96,7 @@ function ProfiloBiologicoIndividuo(props) {
                     </tr>
                     <tr>
                         <th>Classe di età</th>
-                        <td>{props.individuo.classeDiEtà}</td>
+                        <td>{props.individuo.classeDiEta}</td>
                     </tr>
                     <tr>
                         <th>Età stimata (MIN)</th>
@@ -83,7 +112,7 @@ function ProfiloBiologicoIndividuo(props) {
                     </tr>
                     <tr>
                         <th>Origine geografica</th>
-                        <td>{props.individuo.origineBiologica}</td>
+                        <td>{props.individuo.origineGeografica}</td>
                     </tr>
                     <tr>
                         <th>Statura (MIN)</th>
@@ -99,53 +128,10 @@ function ProfiloBiologicoIndividuo(props) {
     }
 
 
-    return checkEditableValue()
+    return <div className="col-6">
+        {checkEditableValue()}
+    </div>
 
-    /*
-    return (
-        <div>
-            <h6 className=''>Profilo biologico</h6>
-            <Table bordered striped hover size="sm">
-                <tbody>
-                    <tr>
-                        <th className='w-25'>Sesso biologioco</th>
-                        <td>{individuo.individuo.sessoBiologico}</td>
-                    </tr>
-                    <tr>
-                        <th>Classe di età</th>
-                        <td>{individuo.individuo.classeDiEtà}</td>
-                    </tr>
-                    <tr>
-                        <th>Età stimata (MIN)</th>
-                        <td>---</td>
-                    </tr>
-                    <tr>
-                        <th>Età stimata (MAX)</th>
-                        <td>---</td>
-                    </tr>
-                    <tr>
-                        <th>Origine biologica</th>
-                        <td>{individuo.individuo.origineBiologica}</td>
-                    </tr>
-                    <tr>
-                        <th>Origine geografica</th>
-                        <td>{individuo.individuo.origineBiologica}</td>
-                    </tr>
-                    <tr>
-                        <th>Statura (MIN)</th>
-                        <td>---</td>
-                    </tr>
-                    <tr>
-                        <th>Statura (MAX)</th>
-                        <td>---</td>
-                    </tr>
-
-                </tbody>
-            </Table>
-        </div>
-
-    );
-    */
 };
 
 export default ProfiloBiologicoIndividuo;

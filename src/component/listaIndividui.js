@@ -15,13 +15,35 @@ class ListaIndividui extends React.Component {
 
     }
 
+    parseTimeStamp(timeStamp) {
+
+        if (timeStamp == null) {
+            return 'Nessuna modifica'
+        }
+
+        var now = new Date(timeStamp * 1000);
+        const formattedDate = new Date(now).toLocaleString(
+            "it-IT",
+            {
+                month: "short",
+                day: "2-digit",
+                year: "numeric",
+            }
+        )
+        return 'Modificato: ' + formattedDate
+    }
+
+
     render() {
+
+
+
         return (
             <div className="row d-flex flex-row" style={{ overflowY: 'auto' }} >
                 {this.state.individui ? (
                     this.state.individui.map(ind =>
-                        <div key={ind.id} className="col-3" onClick={() => this.state.navigator('/individuo', { state: { individuo: ind.id } })}>
-                            <div className="p-2  rounded m-2 indCard border" style={{ backgroundColor: '#F2F6FC' }}>
+                        <div key={ind.id} className="col-3" >
+                            <div className="p-2  rounded m-2 indCard border" style={{ backgroundColor: '#F2F6FC' }} onClick={() => this.state.navigator('/individuo', { state: { individuo: ind.id } })}>
                                 <div className="pb-1">
                                     <img src={doc} alt="doc" style={{ height: '3vh' }} /> {ind.nome}
                                 </div>
@@ -29,7 +51,7 @@ class ListaIndividui extends React.Component {
                                     <img className="rounded w-100" alt="anteprima" src={anteprima} style={{ width: '15vw' }} />
                                 </div>
                                 <div>
-                                    <p className="p-0 m-0">Modificato ieri</p>
+                                    <p className="p-0 m-0">{this.parseTimeStamp(ind.ultimaModifica)}</p>
                                 </div>
                             </div>
                         </div>

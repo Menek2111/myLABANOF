@@ -131,4 +131,20 @@ export default class ConnectionManager {
         return data
     }
 
+    editIndividuo = async function (params) {
+        var json = JSON.parse(params)
+        var URL = "https://applabanof.altervista.org/applabanof/data/edit/editIndividuo.php"
+        const { data } = await axios.post(URL, {
+            id: json.id,
+            nome: json.nome,
+            luogoRinvenimento: json.luogoRinvenimento,
+            dataRinvenimento: json.dataRinvenimento,
+            classeDiEta: json.classeDiEta,
+            origineBiologica: json.origineBiologica,
+            origineGeografica: json.origineGeografica,
+            sessoBiologico: json.sessoBiologico
+        })
+        return data
+    }
+
 }

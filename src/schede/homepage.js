@@ -1,24 +1,28 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom'
 
+
+//Classe per gestire le API
 import ConnectionManager from '../api/ConnectionManager';
 
-import '../App.css';
-import 'bootstrap/dist/css/bootstrap.min.css';
-
+//Componenti
 import ListaIndividui from '../component/listaIndividui'
 import SideNav from '../component/sideNav';
+import ListaTombe from '../component/listaTombe';
 
-
+//Componenti grafici
 import { Dna } from 'react-loader-spinner'
 
-import { useNavigate } from 'react-router-dom'
-import ListaTombe from '../component/listaTombe';
 
 function Homepage() {
     const navigate = useNavigate();
 
+    //Individui -> Elenco individui presenti nel DB
+    //Tombe -> Elenco tombe presenti nel DB
     const [individui, setIndividui] = useState()
     const [tombe, setTombe] = useState()
+
+    const [loading, setLoading] = useState(false)
 
     const getIndividui = async (e) => {
         let cm = new ConnectionManager();
@@ -32,6 +36,7 @@ function Homepage() {
     }
 
     useEffect(() => {
+        //Ottengo sia gli individui che le tombe
         getIndividui().then(res => {
             if (res.error != null) {
                 alert('errore')
@@ -40,8 +45,9 @@ function Homepage() {
                 if (res !== '0 risultati') {
                     setIndividui(res)
                 }
-            }
 
+                setLoading(true)
+            }
         })
         getTombe().then(res => {
             setTombe(res)
@@ -49,55 +55,42 @@ function Homepage() {
 
     }, [navigate]);
 
-    // backgroundColor: '#F7F9FC'
     return (
-        <div className='p-4' style={{ height: '93vh', backgroundColor: '#F7F9FC' }}>
-
-            <div className='rounded h-100'>
-                <div className='container-fluid h-100'>
-
-                    <div className='row d-flex h-100'>
+        <div>
+            {loading ? (
+                <div className='p-4' style={{ heigh: '93vh', backgroundColor: '#F7F9FC' }}>
+                    <div className='row d-flex'>
                         <div className='col-2'>
                             <SideNav />
                         </div>
-                        <div className='col-10 bg-white border rounded h-100'>
-                            <h5 className='pt-3 border-bottom'>Tombe</h5>
+                        <div className='col-10 bg-white border rounded' style={{ height: '85vh', overflowY: 'scroll' }}>
 
-                            {tombe ? (
-                                <ListaTombe tombe={tombe} navigator={navigate} />
-                            ) : (
-                                <div>NO</div>
-                            )}
+                            <h5 className='pt-3 border-bottom'>Tombe</h5>
+                            <ListaTombe tombe={tombe} navigator={navigate} />
+
 
                             <h5 className='pt-3 border-bottom'>Individui</h5>
+                            <ListaIndividui individui={individui} navigator={navigate} />
 
-                            {individui ?
-                                (
-                                    <ListaIndividui individui={individui} navigator={navigate} />
-                                ) : (
-                                    <div className=' h-100 d-flex flex-column justify-content-center text-center'>
-                                        <div>
-                                            <Dna
-                                                visible={true}
-                                                ariaLabel="dna-loading"
-                                                wrapperStyle={{}}
-                                                wrapperClass="dna-wrapper"
-                                            />
-                                        </div>
-
-                                        <div>
-                                            Non sono stati trovati individui...
-                                        </div>
-
-                                    </div>
-
-                                )
-                            }
                         </div>
                     </div>
                 </div>
-            </div>
+            ) : (
+                <div style={{ height: '93vh', backgroundColor: '#F7F9FC' }} className='d-flex flex-column justify-content-center text-center '>
+                    <div>
+                        <Dna
+                            visible={true}
+                            ariaLabel="dna-loading"
+                            wrapperStyle={{}}
+                            wrapperClass="dna-wrapper"
+                        />
+                    </div>
+                    <div>
+                        Caricamento in corso...
+                    </div>
+                </div>)}
         </div>
+
     );
 }
 export default Homepage;

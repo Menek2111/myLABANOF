@@ -1,16 +1,27 @@
 import React from "react";
 import { createRoot } from 'react-dom/client';
-
-import { GoogleOAuthProvider } from '@react-oauth/google';
-import Homepage from "./schede/homepage";
-import Login from './Login'
 import { HashRouter, Route, Routes } from 'react-router-dom'
-import SchedaIndividuo from "./schede/schedaIndividuo";
-import NavBar from "./UI/Navbar";
-
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import reportWebVitals from './reportWebVitals';
+
+//importo gli stili
+import './App.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
+
+//SCHEDE
+import Homepage from "./schede/homepage";
 import SchedaTomba from "./schede/schedaTomba";
+import SchedaIndividuo from "./schede/schedaIndividuo";
+
+//SCHEDA LOGIN
+import Login from './Login'
+import { GoogleOAuthProvider } from '@react-oauth/google';
+
+
+//UI
+import NavBar from "./UI/Navbar";
+
+
 
 
 const container = document.getElementById('root');
