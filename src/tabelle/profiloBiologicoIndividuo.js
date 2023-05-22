@@ -19,12 +19,9 @@ function ProfiloBiologicoIndividuo(props) {
     const [origineGeografica, setOrigineGeografica] = useState(props.individuo.origineGeografica)
 
     useEffect(() => {
-        saveMod()
-    }, [sessoBiologico, classeDiEtà, origineBiologica, origineGeografica, saveMod]);
-
-    const saveMod = () => {
         props.onIndividuoChange(sessoBiologico, classeDiEtà, origineBiologica, origineGeografica)
-    }
+
+    }, [sessoBiologico, classeDiEtà, origineBiologica, origineGeografica, saveMod]);
 
     function editableTable() {
         return (<div>
