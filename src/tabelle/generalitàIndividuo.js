@@ -22,7 +22,7 @@ function GeneralitàIndividuo(props) {
             props.onIndividuoChange(nome, luogo, data)
         }
         saveMod()
-    }, [nome, luogo, data]);
+    }, [nome, luogo, data, props]);
 
     function editableTable() {
         return (<div>
