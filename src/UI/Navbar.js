@@ -5,7 +5,7 @@ import Nav from 'react-bootstrap/Nav'
 import Dropdown from 'react-bootstrap/Dropdown';
 import NavItem from 'react-bootstrap/NavItem';
 import NavLink from 'react-bootstrap/NavLink';
-import labanof from '../images/labanof-logo.png'
+import labanof from '../images/logoMyLabanof.PNG'
 
 import search from '../images/search.png'
 
