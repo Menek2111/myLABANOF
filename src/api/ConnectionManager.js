@@ -74,6 +74,15 @@ export default class ConnectionManager {
         return data
     }
 
+    getIndividuiByUser = async function (params) {
+        var json = JSON.parse(params)
+        var URL = "https://applabanof.altervista.org/applabanof/data/getIndividuiByUser.php"
+        const { data } = await axios.post(URL, {
+            creatore: json.user
+        })
+        return data
+    }
+
     //CREATE 
 
     createIndividuo = async function (params) {

@@ -67,7 +67,10 @@ function NavBar() {
                                         <div className='border border-bottom'></div>
                                     </div>
 
-                                    <Dropdown.Item>Profilo</Dropdown.Item>
+                                    <Dropdown.Item href='#/utente' >
+                                        Profilo
+
+                                    </Dropdown.Item >
                                     <Dropdown.Item>Permessi</Dropdown.Item>
                                     <Dropdown.Item>Tema</Dropdown.Item>
 

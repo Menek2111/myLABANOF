@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom'
 
-
 //Classe per gestire le API
 import ConnectionManager from '../api/ConnectionManager';
 
@@ -12,7 +11,6 @@ import ListaTombe from '../component/listaTombe';
 
 //Componenti grafici
 import { Dna } from 'react-loader-spinner'
-
 
 function Homepage() {
     const navigate = useNavigate();
@@ -58,12 +56,12 @@ function Homepage() {
     return (
         <div>
             {loading ? (
-                <div className='p-4' style={{ heigh: '93vh', backgroundColor: '#F1E3E3' }}>
+                <div className='px-4 py-2' style={{ height: '93vh', backgroundColor: '#F1E3E3' }}>
                     <div className='row d-flex'>
                         <div className='col-2'>
                             <SideNav />
                         </div>
-                        <div className='col-10 bg-white border rounded' style={{ height: '85vh', overflowY: 'scroll' }}>
+                        <div className='col-10 bg-white border rounded' style={{ height: '89vh', overflowY: 'scroll' }}>
 
                             <h5 className='pt-3 border-bottom'>Tombe</h5>
                             <ListaTombe tombe={tombe} navigator={navigate} />

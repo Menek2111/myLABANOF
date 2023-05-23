@@ -19,6 +19,7 @@ import { GoogleOAuthProvider } from '@react-oauth/google';
 
 //UI
 import NavBar from "./UI/Navbar";
+import SchedaUtente from "./schede/schedaUtente";
 
 const container = document.getElementById('root');
 const root = createRoot(container);
@@ -35,7 +36,7 @@ root.render(
                 <Route
                     path="/home"
                     element={
-                        <div className="user-select-none">
+                        <div className="user-select-none" >
                             <NavBar />
                             <Homepage />
                         </div>
@@ -56,6 +57,15 @@ root.render(
                         <div className="user-select-none">
                             <NavBar />
                             <SchedaTomba />
+                        </div>
+                    }
+                />
+                <Route
+                    path="/utente"
+                    element={
+                        <div className="user-select-none">
+                            <NavBar />
+                            <SchedaUtente />
                         </div>
                     }
                 />
