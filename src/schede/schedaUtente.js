@@ -16,8 +16,6 @@ import ListaIndividui from '../component/listaIndividui';
 function SchedaUtente() {
     const navigate = useNavigate();
 
-    const { state } = useLocation();
-
     const profile = JSON.parse(localStorage.getItem('profile'))
 
     const centerMiddle = {
