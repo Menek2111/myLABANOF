@@ -1,9 +1,9 @@
 {
-    "short_name": "LABANOF APP",
-    "name": "LABANOF PWA",
+    "short_name": "myLABANOF",
+    "name": "myLABANOF",
     "icons": [
         {
-            "src": "/images/logo.png",
+            "src": "/images/myLabanof.PNG",
             "type": "image/png",
             "sizes": "1024x1024"
         }
