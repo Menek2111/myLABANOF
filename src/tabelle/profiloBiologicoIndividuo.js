@@ -40,7 +40,7 @@ function ProfiloBiologicoIndividuo(props) {
                     </tr>
                     <tr>
                         <th>Classe di età</th>
-                        <td><input className="form-control" defaultValue={props.individuo.classeDiEta} onChange={(e) => setClasseDiEtà(e.target.value)} /></td>
+                        <td><input className="form-control" type="number" defaultValue={props.individuo.classeDiEta} onChange={(e) => setClasseDiEtà(e.target.value)} /></td>
 
                     </tr>
                     <tr>

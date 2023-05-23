@@ -2,11 +2,13 @@
 import React, { useState, useEffect } from 'react';
 import { useGoogleLogin } from '@react-oauth/google';
 import axios from 'axios';
-import logo from './images/logo.png'
+import logo from './images/myLabanof.PNG'
 import google from './images/google-logo.png'
 import { useNavigate } from 'react-router-dom'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import ConnectionManager from './api/ConnectionManager';
+import Form from 'react-bootstrap/Form';
+
 
 function Login() {
 
@@ -75,21 +77,35 @@ function Login() {
         <div className='bg-info' style={{ width: '100vw', height: '100vh' }}>
             <div className='container p-3 h-100'>
                 <div className=' h-100 d-flex align-items-center justify-content-center'>
-                    <div className='row bg-white shadow rounded text-center d-flex'>
+                    <img className='m-4' src={logo} style={{ height: '25vh' }} alt="logo"></img>
+
+                    <div className='row bg-white w-50 shadow rounded text-center d-flex'>
                         <div className='col-lg col-sm-12'>
-                            <img src={logo} style={{ height: '39vh' }} alt="logo"></img>
-                        </div>
-                        <div className='col-lg col-sm-12'>
-                            <h2 className='p-3'>Applicazione LABANOF</h2>
-                            <div className='border border-bottom'></div>
 
                             <div>
-                                <p>Per poter utilizzare quest'applicazione è necessario effettuare l'accesso tramite Google</p>
-                                <p>Non possiedi un account Google?<br />Crealo ora gratuitamente: Crea account Google</p>
+                                <h4>Accedi a MyLabanof</h4>
+                                <p>
+                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam nulla augue, imperdiet vel maximus id, mattis pulvinar massa. Proin non mi molestie, fermentum diam nec, malesuada sapien.
+                                </p>
+                            </div>
 
-                                <button className='btn border btn-primary' onClick={() => login()}>
-                                    <img className='bg-white p-1 rounded rounded-circle' src={google} style={{ height: '5vh' }} alt="google logo" /> Accedi con Google
-                                </button>
+
+                            <div className='border border-bottom'></div>
+                            <p>Per poter utilizzare quest'applicazione è necessario effettuare l'accesso tramite Google</p>
+
+                            <div className='pb-3 text-center justify-content-center d-flex'>
+                                <div className='d-flex flex-column'>
+                                    <button className='btn border btn-primary' onClick={() => login()}>
+                                        <img className='bg-white p-1 rounded rounded-circle' src={google} style={{ height: '5vh' }} alt="google logo" /> Accedi con Google
+                                    </button>
+                                    <Form.Check // prettier-ignore
+                                        className='pt-2'
+                                        type="switch"
+                                        id="custom-switch"
+                                        label="Ricordami"
+                                    />
+                                </div>
+
                             </div>
 
                         </div>
