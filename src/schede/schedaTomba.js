@@ -58,7 +58,7 @@ function SchedaTomba() {
 
 
     return (
-        <div className='px-4 py-2' style={{ height: '93vh', backgroundColor: '#F7F9FC' }} >
+        <div className='px-4 py-2' style={{ height: '93vh', backgroundColor: '#F1E3E3' }} >
             <div className='rounded h-100'>
                 <div className='container-fluid h-100'>
                     <div className='row h-100'>

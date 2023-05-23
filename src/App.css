@@ -24,6 +24,24 @@
   outline: none !important;
 }
 
+.colore1{
+  background-color: #D9C2B4 !important;
+}
+.colore2{
+  background-color: #FFF4ED !important;
+}
+.colore3{
+  background-color: #EDD4C5 !important;
+}
+.colore4{
+  background-color: #659FA1 !important;
+}
+.colore5{
+  background-color: #C5ECED !important;
+} 
+.colore6{
+ background-color:   #ECECEC !important;
+}
 
 .indCard:hover{
   background-color: #E1E5EA !important;

@@ -74,13 +74,13 @@ function Login() {
     }
 
     return (
-        <div className='bg-info' style={{ width: '100vw', height: '100vh' }}>
+        <div style={{ width: '100vw', height: '100vh', backgroundColor: '#F1E3E3' }}>
             <div className='container p-3 h-100'>
                 <div className=' h-100 d-flex align-items-center justify-content-center'>
-                    <img className='m-4' src={logo} style={{ height: '25vh' }} alt="logo"></img>
 
                     <div className='row bg-white w-50 shadow rounded text-center d-flex'>
                         <div className='col-lg col-sm-12'>
+                            <img className='my-3' src={logo} style={{ height: '25vh' }} alt="logo"></img>
 
                             <div>
                                 <h4>Accedi a MyLabanof</h4>
@@ -90,7 +90,7 @@ function Login() {
                             </div>
 
 
-                            <div className='border border-bottom'></div>
+                            <div className='border border-bottom my-4'></div>
                             <p>Per poter utilizzare quest'applicazione è necessario effettuare l'accesso tramite Google</p>
 
                             <div className='pb-3 text-center justify-content-center d-flex'>
@@ -102,7 +102,7 @@ function Login() {
                                         className='pt-2'
                                         type="switch"
                                         id="custom-switch"
-                                        label="Ricordami"
+                                        label="Ricorda questo dispositivo"
                                     />
                                 </div>
 

@@ -58,7 +58,7 @@ function Homepage() {
     return (
         <div>
             {loading ? (
-                <div className='p-4' style={{ heigh: '93vh', backgroundColor: '#F7F9FC' }}>
+                <div className='p-4' style={{ heigh: '93vh', backgroundColor: '#F1E3E3' }}>
                     <div className='row d-flex'>
                         <div className='col-2'>
                             <SideNav />
