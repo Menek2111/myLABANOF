@@ -9,6 +9,8 @@ import ListaIndividui from '../component/listaIndividui'
 import SideNav from '../component/sideNav';
 import ListaTombe from '../component/listaTombe';
 
+import bg from '../images/background/bg2.png'
+
 //Componenti grafici
 import { Dna } from 'react-loader-spinner'
 
@@ -56,7 +58,7 @@ function Homepage() {
     return (
         <div>
             {loading ? (
-                <div className='px-4 py-2' style={{ height: '93vh', backgroundColor: '#F1E3E3' }}>
+                <div className='px-4 py-2 containerPrincipale'>
                     <div className='row d-flex'>
                         <div className='col-2'>
                             <SideNav />
@@ -86,8 +88,9 @@ function Homepage() {
                     <div>
                         Caricamento in corso...
                     </div>
-                </div>)}
-        </div>
+                </div>)
+            }
+        </div >
 
     );
 }

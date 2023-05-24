@@ -46,3 +46,10 @@
 .indCard:hover{
   background-color: #E1E5EA !important;
 }
+
+.containerPrincipale{
+  height: 93vh;
+  background-color: #F1E3E3;
+  background-image: url('images/background/bg2.png');
+  background-size: cover
+}

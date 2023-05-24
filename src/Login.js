@@ -9,6 +9,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import ConnectionManager from './api/ConnectionManager';
 import Form from 'react-bootstrap/Form';
 
+import bg from './images/background/bg2.png'
+
 
 function Login() {
 
@@ -74,7 +76,7 @@ function Login() {
     }
 
     return (
-        <div style={{ width: '100vw', height: '100vh', backgroundColor: '#F1E3E3' }}>
+        <div style={{ width: '100vw', height: '100vh', backgroundColor: '#F1E3E3', backgroundImage: `url(${bg})`, backgroundSize: 'cover' }} >
             <div className='container p-3 h-100'>
                 <div className=' h-100 d-flex align-items-center justify-content-center'>
 
@@ -113,7 +115,7 @@ function Login() {
                     </div>
                 </div>
             </div>
-        </div>
+        </ div>
     );
 }
 
