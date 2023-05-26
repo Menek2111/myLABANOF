@@ -49,46 +49,64 @@ function Cranio(props) {
                     <td>{ossa.map(osso => {
                         if (osso.tipoOsso === tipoOsso.id) {
                             return osso.lato
+                        } else {
+                            return ''
                         }
                     })}</td>
                     <td>{ossa.map(osso => {
                         if (osso.tipoOsso === tipoOsso.id) {
                             return osso.integro
+                        } else {
+                            return ''
                         }
                     })}</td>
                     <td>{ossa.map(osso => {
                         if (osso.tipoOsso === tipoOsso.id) {
                             return osso.lvlIntegrita
+                        } else {
+                            return ''
                         }
                     })}</td>
                     <td>{ossa.map(osso => {
                         if (osso.tipoOsso === tipoOsso.id) {
                             return osso.lvlQualita
+                        } else {
+                            return ''
                         }
                     })}</td>
                     <td>{ossa.map(osso => {
                         if (osso.tipoOsso === tipoOsso.id) {
                             return osso.restaurato
+                        } else {
+                            return ''
                         }
                     })}</td>
                     <td>{ossa.map(osso => {
                         if (osso.tipoOsso === tipoOsso.id) {
                             return osso.catalogazioneDescrizione
+                        } else {
+                            return ''
                         }
                     })}</td>
                     <td>{ossa.map(osso => {
                         if (osso.tipoOsso === tipoOsso.id) {
                             return osso.indagineRadiologica
+                        } else {
+                            return ''
                         }
                     })}</td>
                     <td>{ossa.map(osso => {
                         if (osso.tipoOsso === tipoOsso.id) {
                             return osso.campionamento
+                        } else {
+                            return ''
                         }
                     })}</td>
                     <td>{ossa.map(osso => {
                         if (osso.tipoOsso === tipoOsso.id) {
                             return osso.altreAnalisi
+                        } else {
+                            return ''
                         }
                     })}</td>
                 </tr>)}

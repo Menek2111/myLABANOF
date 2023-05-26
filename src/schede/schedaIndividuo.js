@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import Button from 'react-bootstrap/Button';
 
 import ConnectionManager from '../api/ConnectionManager';
-import { useLocation } from 'react-router-dom';
 
 import '../App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
