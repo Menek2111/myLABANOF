@@ -8,19 +8,12 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import ind from '../images/individuo.jpg'
 
 import skull from '../images/skull (4).jpg'
-import denti from '../images/teeth.png'
-import colonna from '../images/colonna.png'
-import torace from '../images/torace.png'
-import artisup from '../images/artisup.png'
+//import denti from '../images/teeth.png'
+//import colonna from '../images/colonna.png'
+//import torace from '../images/torace.png'
+//import artisup from '../images/artisup.png'
 
 function DropDownDistretti(props) {
-
-    const centerMiddle = {
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        height: "100%"
-    };
 
     useEffect(() => {
     }, []);

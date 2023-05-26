@@ -16,7 +16,6 @@ import GeneralitàIndividuo from '../tabelle/generalitàIndividuo';
 import DropdownDistretti from '../UI/dropDownDistretti';
 
 function SchedaIndividuo() {
-    const { state } = useLocation();
 
     const centerMiddle = {
         display: "flex",

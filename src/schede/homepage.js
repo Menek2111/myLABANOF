@@ -9,7 +9,6 @@ import ListaIndividui from '../component/listaIndividui'
 import SideNav from '../component/sideNav';
 import ListaTombe from '../component/listaTombe';
 
-import bg from '../images/background/bg2.png'
 
 //Componenti grafici
 import { Dna } from 'react-loader-spinner'
