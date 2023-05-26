@@ -15,11 +15,9 @@ function GeneralitàIndividuo(props) {
     const [luogo, setLuogo] = useState(props.individuo.luogoRinvenimento)
     const [data, setData] = useState(props.individuo.dataRinvenimento)
 
-
-
     useEffect(() => {
         props.onIndividuoChange(nome, luogo, data)
-    }, [nome, luogo, data, props]);
+    }, [nome, luogo, data]);
 
     function editableTable() {
         return (<div>

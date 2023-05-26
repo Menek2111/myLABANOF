@@ -83,6 +83,23 @@ export default class ConnectionManager {
         return data
     }
 
+    getCaratteriMetriciByDistretto = async function (params) {
+        var json = JSON.parse(params)
+        var URL = "https://applabanof.altervista.org/applabanof/data/getCaratteriMetriciByDistretto.php"
+        const { data } = await axios.post(URL, {
+            distretto: json.distretto
+        })
+        return data
+    }
+    getCaratteriNonMetriciByDistretto = async function (params) {
+        var json = JSON.parse(params)
+        var URL = "https://applabanof.altervista.org/applabanof/data/getCaratteriNonMetriciByDistretto.php"
+        const { data } = await axios.post(URL, {
+            distretto: json.distretto
+        })
+        return data
+    }
+
     //CREATE 
 
     createIndividuo = async function (params) {

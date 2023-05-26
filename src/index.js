@@ -13,6 +13,8 @@ import Homepage from "./schede/homepage";
 import SchedaTomba from "./schede/schedaTomba";
 import SchedaIndividuo from "./schede/schedaIndividuo";
 
+import SchedaCranio from './schede/distretti/schedaCranio'
+
 //SCHEDA LOGIN
 import Login from './Login'
 import { GoogleOAuthProvider } from '@react-oauth/google';
@@ -48,6 +50,15 @@ root.render(
                         <div className="user-select-none">
                             <NavBar />
                             <SchedaIndividuo />
+                        </div>
+                    }
+                />
+                <Route
+                    path="/individuo/cranio"
+                    element={
+                        <div className="user-select-none">
+                            <NavBar />
+                            <SchedaCranio />
                         </div>
                     }
                 />

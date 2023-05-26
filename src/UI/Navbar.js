@@ -69,7 +69,6 @@ function NavBar() {
 
                                     <Dropdown.Item href='#/utente' >
                                         Profilo
-
                                     </Dropdown.Item >
                                     <Dropdown.Item>Permessi</Dropdown.Item>
                                     <Dropdown.Item>Tema</Dropdown.Item>

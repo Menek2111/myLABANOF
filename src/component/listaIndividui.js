@@ -41,7 +41,10 @@ class ListaIndividui extends React.Component {
                 {this.state.individui ? (
                     this.state.individui.map(ind =>
                         <div key={ind.id} className="col-3" >
-                            <div className="p-2  rounded m-2 indCard border" style={{ backgroundColor: '#F2F6FC' }} onClick={() => this.state.navigator('/individuo', { state: { individuo: ind.id } })}>
+                            <div className="p-2  rounded m-2 indCard border" style={{ backgroundColor: '#F2F6FC' }} onClick={() => {
+                                sessionStorage.setItem('individuoSelezionato', ind.id)
+                                this.state.navigator('/individuo')
+                            }}>
                                 <div className="pb-1">
                                     <img src={doc} alt="doc" style={{ height: '3vh' }} /> {ind.nome}
                                 </div>

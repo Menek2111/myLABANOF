@@ -7,12 +7,13 @@ import { useLocation } from 'react-router-dom';
 import '../App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-import indThumb from '../images/individuo.jpg'
 
 import { Dna } from 'react-loader-spinner'
 import ModalDeleteIndividuo from '../UI/modalDeleteIndividuo'
 import ProfiloBiologicoIndividuo from '../tabelle/profiloBiologicoIndividuo';
 import GeneralitàIndividuo from '../tabelle/generalitàIndividuo';
+
+import DropdownDistretti from '../UI/dropDownDistretti';
 
 function SchedaIndividuo() {
     const { state } = useLocation();
@@ -31,7 +32,7 @@ function SchedaIndividuo() {
     useEffect(() => {
         const getIndividuoById = async () => {
             let cm = new ConnectionManager();
-            let res = await cm.getIndividuoById(JSON.stringify({ id: state.individuo }));
+            let res = await cm.getIndividuoById(JSON.stringify({ id: sessionStorage.getItem('individuoSelezionato') }));
             return res;
         }
         getIndividuoById().then(res => {
@@ -39,7 +40,7 @@ function SchedaIndividuo() {
             setLoading(true)
             console.log(res)
         })
-    }, [state.individuo]);
+    }, []);
 
 
     function changeEditable() {
@@ -95,7 +96,7 @@ function SchedaIndividuo() {
         setLoading(false)
 
         let modifiche = {
-            id: state.individuo,
+            id: sessionStorage.getItem('individuoSelezionato'),
             nome: modGeneralità.nome,
             luogoRinvenimento: modGeneralità.luogoRinvenimento,
             dataRinvenimento: modGeneralità.dataRinvenimento,
@@ -123,11 +124,11 @@ function SchedaIndividuo() {
                 <div className='rounded h-100'>
                     <div className='container-fluid h-100'>
                         <div className='row h-100'>
-                            <div className='col bg-white h-100 w-100 rounded border'>
+                            <div className='col bg-white h-100 w-100 rounded border' style={{ overflowY: 'scroll' }}>
                                 <div className='row border-bottom rounded-top justify-content-between'>
                                     <div className='col-10 py-2 d-flex'>
                                         <div style={centerMiddle}>
-                                            <img src={indThumb} style={{ height: '10vh' }} alt="individuo" />
+                                            <DropdownDistretti scheda='Individuo' id={individuo.individuo.id} />
                                         </div>
 
                                         <p style={centerMiddle} className=''>{individuo.tomba.nome + ' ' + individuo.individuo.nome} <br /> Creato da: {individuo.utente.email} <br /> Il: {individuo.individuo.dataCreazione} </p>
@@ -160,6 +161,10 @@ function SchedaIndividuo() {
                 </div>
             </div>
             )}
+
+
+
+
 
         </div>
 
