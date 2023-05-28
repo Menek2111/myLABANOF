@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import Button from 'react-bootstrap/Button';
 
 import '../../App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';

@@ -68,7 +68,7 @@ function Cranio(props) {
     }
     function isPresent(int) {
         for (let i = 0; i < ossaPresenti.length; i++) {
-            if (ossaPresenti[i] == int) {
+            if (ossaPresenti[i] === int) {
                 return true
             }
         }

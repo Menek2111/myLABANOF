@@ -22,7 +22,7 @@ function ProfiloBiologicoIndividuo(props) {
     const propsLink = props
     useEffect(() => {
         propsLink.onIndividuoChange(sessoBiologico, classeDiEtà, origineBiologica, origineGeografica)
-    }, []);
+    }, [classeDiEtà, origineBiologica, origineGeografica, propsLink, sessoBiologico]);
 
     function editableTable() {
         return (<div>
