@@ -14,7 +14,7 @@ import GeneralitàIndividuo from '../tabelle/generalitàIndividuo';
 
 import DropdownDistretti from '../UI/dropDownDistretti';
 
-function SchedaIndividuo(props) {
+function SchedaIndividuo() {
 
     const centerMiddle = {
         display: "flex",
@@ -27,17 +27,19 @@ function SchedaIndividuo(props) {
     const [individuo, setIndividuo] = useState()
     const [editable, setEditable] = useState(false)
 
-    const getIndividuoById = async () => {
-        let cm = new ConnectionManager();
-        let res = await cm.getIndividuoById(JSON.stringify({ id: sessionStorage.getItem('individuoSelezionato') }));
-        return res
-    }
     useEffect(() => {
+        const getIndividuoById = async () => {
+            let cm = new ConnectionManager();
+            let res = await cm.getIndividuoById(JSON.stringify({ id: sessionStorage.getItem('individuoSelezionato') }));
+            return res;
+        }
         getIndividuoById().then(res => {
             setIndividuo(res)
             setLoading(true)
+            console.log(res)
         })
     }, []);
+
 
     function changeEditable() {
         if (editable) setEditable(false)

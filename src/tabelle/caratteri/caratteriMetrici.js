@@ -35,9 +35,11 @@ function CaratteriMetrici(props) {
 
                 <tr>
                     <th className="w-25">Caratteri metrici</th>
-                    <th>Valore</th>
-                    <th>Lato</th>
-                    <th>Unità di misura</th>
+                    <th>Sinistro</th>
+                    <th>Destro</th>
+                    <th>Unico</th>
+                    <th>Incerto</th>
+                    <th className="w-25">Unità di misura</th>
                 </tr>
 
                 {caratteriMetrici ? (
@@ -45,6 +47,12 @@ function CaratteriMetrici(props) {
                         <tr key={car.id}>
                             <td>
                                 {car.nome}
+                            </td>
+                            <td>
+                                ---
+                            </td>
+                            <td>
+                                ---
                             </td>
                             <td>
                                 ---

@@ -42,12 +42,6 @@ function SchedaIndividuo() {
 
                                 <div className='col-2 d-flex flex-column justify-content-center'>
                                     <div className='d-flex justify-content-around'>
-                                        <Button variant="secondary">
-                                            Annulla
-                                        </Button>
-                                        <Button className='w-100 mx-2' variant="primary">
-                                            Salva
-                                        </Button>
                                     </div>
                                 </div>
                             </div>

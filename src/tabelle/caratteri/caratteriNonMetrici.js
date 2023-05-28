@@ -36,8 +36,11 @@ function CaratteriNonMetrici(props) {
             <tbody>
 
                 <tr>
-                    <th className="w-25">Caratteri non metrici</th>
-                    <th>Valore</th>
+                    <th className="w-50">Caratteri non metrici</th>
+                    <th>Sinistro</th>
+                    <th>Destro</th>
+                    <th>Unico</th>
+                    <th>Incerto</th>
                 </tr>
 
                 {caratteriNonMetrici ? (
@@ -45,6 +48,15 @@ function CaratteriNonMetrici(props) {
                         <tr key={car.id}>
                             <td>
                                 {car.nome}
+                            </td>
+                            <td>
+                                ---
+                            </td>
+                            <td>
+                                ---
+                            </td>
+                            <td>
+                                ---
                             </td>
                             <td>
                                 ---

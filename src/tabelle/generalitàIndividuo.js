@@ -19,7 +19,7 @@ function GeneralitàIndividuo(props) {
 
     useEffect(() => {
         propsLink.onIndividuoChange(nome, luogo, data)
-    }, [nome, luogo, data, propsLink]);
+    }, []);
 
     function editableTable() {
         return (<div>
