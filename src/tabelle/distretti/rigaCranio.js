@@ -24,7 +24,7 @@ function RigaCranio(props) {
     }, []);
 
     const valueToBoolean = (val) => {
-        if (val === 1) {
+        if (val === '1') {
             return true
         } else {
             return false
