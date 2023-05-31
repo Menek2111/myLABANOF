@@ -5,15 +5,13 @@ import { Table } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import ConnectionManager from '../../api/ConnectionManager';
 
-
-
 import '../../App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 function DettagliOsso(props) {
 
     function checkValue(value) {
-        if (value == 0) {
+        if (value === 0) {
             //alert('false')
             return false
         } else {

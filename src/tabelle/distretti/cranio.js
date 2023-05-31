@@ -4,9 +4,6 @@ import ConnectionManager from "../../api/ConnectionManager";
 
 import RigaCranio from './rigaCranio'
 import ModalCreateOsso from "../../UI/modalCreateOsso";
-import { Form, Tab } from "react-bootstrap";
-import Button from 'react-bootstrap/Button';
-
 
 
 function Cranio(props) {
@@ -16,14 +13,6 @@ function Cranio(props) {
     const [ossaPresenti, setOssaPresenti] = useState([])
 
     const [loading, setLoading] = useState(false)
-
-    const centerMiddle = {
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "end",
-        height: "100%"
-    };
-
 
     const getOssaIndividuoByDistretto = async (e) => {
         let cm = new ConnectionManager();
@@ -43,7 +32,7 @@ function Cranio(props) {
             setTipoOssa(res.results.sort(compareTipoOssa))
 
             getOssaIndividuoByDistretto().then(res2 => {
-                if (res2.response == 'success') {
+                if (res2.response === 'success') {
                     console.log('OssaIndividuo', res2.results)
                     setOssa(res2.results.sort(compare))
 
@@ -59,7 +48,6 @@ function Cranio(props) {
         })
 
     }, []);
-
 
     function compare(a, b) {
         if (a.id < b.id) {
@@ -79,22 +67,7 @@ function Cranio(props) {
         }
         return 0;
     }
-    function isPresent(int) {
-        for (let i = 0; i < ossaPresenti.length; i++) {
-            if (ossaPresenti[i] === int) {
-                return true
-            }
-        }
-        return false
-    }
 
-    /*
-    function ao(tipoOsso) {
-        if (!isPresent(tipoOsso.id)) {
-            return <RigaCranioVuota tipoOsso={tipoOsso} key={tipoOsso.id} individuo={sessionStorage.getItem('individuoSelezionato')} />
-        }
-    }
-*/
     return (<div>
         {loading ? (
             <div>
