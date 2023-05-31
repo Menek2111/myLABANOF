@@ -67,7 +67,6 @@ function Homepage() {
                             <h5 className='pt-3 border-bottom'>Tombe</h5>
                             <ListaTombe tombe={tombe} navigator={navigate} />
 
-
                             <h5 className='pt-3 border-bottom'>Individui</h5>
                             <ListaIndividui individui={individui} navigator={navigate} />
 

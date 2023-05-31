@@ -35,8 +35,7 @@ function SchedaIndividuo() {
                                     <div style={centerMiddle}>
                                         <DropDownDistretti scheda='Cranio' />
                                     </div>
-
-                                    <h5 style={centerMiddle} className=''>IND A <br />Cranio</h5>
+                                    <h5 style={centerMiddle} className=''>CRANIO</h5>
                                 </div>
 
                                 <div className='col-2 d-flex flex-column justify-content-center'>

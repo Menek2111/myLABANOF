@@ -122,6 +122,25 @@ export default class ConnectionManager {
         })
         return data
     }
+    createOsso = async function (params) {
+        var osso = JSON.parse(params)
+        var URL = "https://applabanof.altervista.org/applabanof/data/creazione/createOsso.php"
+        const { data } = await axios.post(URL, {
+            tipoOsso: osso.tipoOsso,
+            lato: osso.lato,
+            integro: osso.integro,
+            lvlIntegrita: osso.lvlIntegrita,
+            lvlQualita: osso.lvlQualita,
+            restaurato: osso.restaurato,
+            catalogazioneDescrizione: osso.catalogazioneDescrizione,
+            indagineRadiologica: osso.indagineRadiologica,
+            campionamento: osso.campionamento,
+            altreAnalisi: osso.altreAnalisi,
+            individuo: osso.individuo
+        })
+        return data
+    }
+
 
 
     //DELETE
@@ -169,6 +188,26 @@ export default class ConnectionManager {
             origineBiologica: json.origineBiologica,
             origineGeografica: json.origineGeografica,
             sessoBiologico: json.sessoBiologico
+        })
+        return data
+    }
+
+    editOsso = async function (params) {
+        var osso = JSON.parse(params)
+        var URL = "https://applabanof.altervista.org/applabanof/data/edit/editOsso.php"
+        const { data } = await axios.post(URL, {
+            //tipoOsso: osso.tipoOsso,
+            lato: osso.lato,
+            integro: osso.integro,
+            lvlIntegrita: osso.lvlIntegrita,
+            lvlQualita: osso.lvlQualita,
+            restaurato: osso.restaurato,
+            catalogazioneDescrizione: osso.catalogazioneDescrizione,
+            indagineRadiologica: osso.indagineRadiologica,
+            campionamento: osso.campionamento,
+            altreAnalisi: osso.altreAnalisi,
+            id: osso.id
+            //individuo: osso.individuo
         })
         return data
     }

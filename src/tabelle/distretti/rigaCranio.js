@@ -2,18 +2,18 @@ import React, { useState, useEffect } from 'react';
 
 //Import componenti
 import Modal from 'react-bootstrap/Modal';
-import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 
 import '../../App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Table } from 'react-bootstrap';
+import Form from 'react-bootstrap/Form';
+
+import DettagliOsso from './dettagliOsso';
+
 
 function RigaCranio(props) {
 
-    const handleSubmit = (event) => {
-
-    };
     //Gestione modal
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
@@ -23,98 +23,108 @@ function RigaCranio(props) {
 
     }, []);
 
+    const valueToBoolean = (val) => {
+        if (val == 1) {
+            return true
+        } else {
+            return false
+        }
+    }
+
+    //<td><Button onClick={handleShow}>Modifica</Button></td>
+
     return (
         <tr onClick={handleShow}>
             <td>{props.osso.nome}</td>
             <td>{props.osso.lato}</td>
-            <td>{props.osso.integro}</td>
+            <td>
+                <Form.Check
+                    type="checkbox"
+                    defaultChecked={valueToBoolean(props.osso.integro)}
+                    disabled
+                /></td>
             <td>{props.osso.lvlIntegrita}</td>
             <td>{props.osso.lvlQualita}</td>
-            <td>{props.osso.restaurato}</td>
+            <td>
+                <Form.Check
+                    type="checkbox"
+                    defaultChecked={valueToBoolean(props.osso.restaurato)}
+                    disabled
+                /></td>
             <td>{props.osso.catalogazioneDescrizione}</td>
             <td>{props.osso.indagineRadiologica}</td>
             <td>{props.osso.campionamento}</td>
             <td>{props.osso.altreAnalisi}</td>
 
-            <div onClick={e => e.stopPropagation()}>
-                <Modal
-                    show={show}
-                    onHide={handleClose}
-                    backdrop="static"
-                    keyboard={false}
-                    size='xl'
-                >
-                    <Modal.Header closeButton>
-                        <Modal.Title>
-                            <p>{props.osso.nome}</p>
-                        </Modal.Title>
-                    </Modal.Header>
-                    <Form onSubmit={handleSubmit}>
-                        <Modal.Body>
-                            <Table bordered striped hover size="sm">
-                                <tbody>
-                                    <tr>
-                                        <th>Osso</th>
-                                        <th>Materiale rivenuto</th>
-                                        <th>Integro</th>
-                                        <th>Livello di integrità</th>
-                                        <th>Livello di qualità</th>
-                                        <th>Restaurato</th>
-                                        <th>Catalogazione e descrizione</th>
-                                        <th>Indagine radiologica</th>
-                                        <th>Campionamento</th>
-                                        <th>Altre analisi</th>
-                                    </tr>
-                                    <tr>
+            <Modal
+                onClick={e => e.stopPropagation()}
+                show={show}
+                onHide={handleClose}
+                backdrop="static"
+                keyboard={false}
+                dialogClassName='my-modal'
+                size='xl'
+            >
+                <Modal.Header closeButton>
+                    <Modal.Title>
+                        <p>{props.osso.nome}</p>
+                    </Modal.Title>
+                </Modal.Header>
+                <Modal.Body className='row'>
 
+                    <DettagliOsso osso={props.osso} />
 
-                                        <td>
-                                            <input className='form-control' defaultValue={props.osso.nome} />
-                                        </td>
-                                        <td>
-                                            <input className='form-control' defaultValue={props.osso.lato} />
-                                        </td>
-                                        <td>
-                                            <input className='form-control' defaultValue={props.osso.integro} />
-                                        </td>
-                                        <td>
-                                            <input className='form-control' defaultValue={props.osso.lvlIntegrita} />
-                                        </td>
-                                        <td>
-                                            <input className='form-control' defaultValue={props.osso.lvlQualita} />
-                                        </td>
-                                        <td>
-                                            <input className='form-control' defaultValue={props.osso.restaurato} />
-                                        </td>
-                                        <td>
-                                            <input className='form-control' defaultValue={props.osso.catalogazioneDescrizione} />
-                                        </td>
-                                        <td>
-                                            <input className='form-control' defaultValue={props.osso.indagineRadiologica} />
-                                        </td>
-                                        <td>
-                                            <input className='form-control' defaultValue={props.osso.campionamento} />
-                                        </td>
-                                        <td>
-                                            <input className='form-control' defaultValue={props.osso.altreAnalisi} />
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </Table>
+                    <div className='col'>
+                        <div className='border-bottom mb-2 d-flex justify-content-between'>
+                            <h5 className=''>Traumi</h5>
+                            <Button className='p-1'>Aggiungi</Button>
+                        </div>
+                        <Table bordered striped hover size="sm">
+                            <tbody>
+                                <tr>
+                                    <th>Trauma</th>
+                                    <th>Datazione</th>
+                                    <th>Descrizione</th>
+                                </tr>
+                                <tr>
+                                    <td>---</td>
+                                    <td>---</td>
+                                    <td>---</td>
+                                </tr>
+                            </tbody>
+                        </Table>
 
+                        <div className='border-bottom mb-2 d-flex justify-content-between'>
+                            <h5 className=''>Patologie</h5>
+                            <Button className='p-1'>Aggiungi</Button>
+                        </div>
+                        <Table bordered striped hover size="sm">
+                            <tbody>
+                                <tr>
+                                    <th>Patologia</th>
+                                    <th>Descrizione</th>
+                                    <th>Litica</th>
+                                    <th>Proliferativa</th>
+                                </tr>
+                                <tr>
+                                    <td>---</td>
+                                    <td>---</td>
+                                    <td>---</td>
+                                    <td>---</td>
+                                </tr>
+                            </tbody>
+                        </Table>
+                    </div>
+                </Modal.Body>
 
-
-                        </Modal.Body>
-                        <Modal.Footer>
-                            <Button variant="secondary" onClick={handleClose}>
-                                Annulla
-                            </Button>
-                            <Button variant="danger" type="submit">ELIMINA</Button>
-                        </Modal.Footer>
-                    </Form>
-                </Modal>
-            </div>
-        </tr>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={handleClose} >
+                        Annulla
+                    </Button>
+                    <Button variant="primary" type='submit'>MODIFICA</Button>
+                </Modal.Footer>
+            </Modal>
+        </tr >
     )
 
     /*

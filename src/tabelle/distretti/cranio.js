@@ -3,7 +3,10 @@ import Table from 'react-bootstrap/Table';
 import ConnectionManager from "../../api/ConnectionManager";
 
 import RigaCranio from './rigaCranio'
-import RigaCranioVuota from "./rigaCranioVuota";
+import ModalCreateOsso from "../../UI/modalCreateOsso";
+import { Form, Tab } from "react-bootstrap";
+import Button from 'react-bootstrap/Button';
+
 
 
 function Cranio(props) {
@@ -13,6 +16,14 @@ function Cranio(props) {
     const [ossaPresenti, setOssaPresenti] = useState([])
 
     const [loading, setLoading] = useState(false)
+
+    const centerMiddle = {
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "end",
+        height: "100%"
+    };
+
 
     const getOssaIndividuoByDistretto = async (e) => {
         let cm = new ConnectionManager();
@@ -31,17 +42,19 @@ function Cranio(props) {
             console.log('NomeTipoOssa', res.results)
             setTipoOssa(res.results.sort(compareTipoOssa))
 
-
             getOssaIndividuoByDistretto().then(res2 => {
-                console.log('OssaIndividuo', res2.results)
-                setOssa(res2.results.sort(compare))
+                if (res2.response == 'success') {
+                    console.log('OssaIndividuo', res2.results)
+                    setOssa(res2.results.sort(compare))
 
-                let output = []
-                res2.results.map(osso => output.push(osso.tipoOsso))
-                console.log('ossaPresenti', output)
-                setOssaPresenti(output)
-
-                setLoading(true)
+                    let output = []
+                    res2.results.map(osso => output.push(osso.tipoOsso))
+                    console.log('ossaPresenti', output)
+                    setOssaPresenti(output)
+                    setLoading(true)
+                } else {
+                    setLoading(true)
+                }
             })
         })
 
@@ -75,45 +88,70 @@ function Cranio(props) {
         return false
     }
 
+    /*
     function ao(tipoOsso) {
         if (!isPresent(tipoOsso.id)) {
-            return <RigaCranioVuota tipoOsso={tipoOsso} key={tipoOsso.id} />
+            return <RigaCranioVuota tipoOsso={tipoOsso} key={tipoOsso.id} individuo={sessionStorage.getItem('individuoSelezionato')} />
         }
     }
-
-
+*/
     return (<div>
-        {loading ? (<Table bordered striped hover size="sm">
-            <tbody>
-                <tr>
-                    <th>Osso</th>
-                    <th>Materiale rivenuto</th>
-                    <th>Integro</th>
-                    <th>Livello di integrità</th>
-                    <th>Livello di qualità</th>
-                    <th>Restaurato</th>
-                    <th>Catalogazione e descrizione</th>
-                    <th>Indagine radiologica</th>
-                    <th>Campionamento</th>
-                    <th>Altre analisi</th>
-                </tr>
+        {loading ? (
+            <div>
+                <Table bordered striped hover size="sm">
+                    <tbody>
+                        <tr>
+                            <th>Osso</th>
+                            <th>Materiale rivenuto</th>
+                            <th>Integro</th>
+                            <th>Livello di integrità</th>
+                            <th>Livello di qualità</th>
+                            <th>Restaurato</th>
+                            <th>Catalogazione e descrizione</th>
+                            <th>Indagine radiologica</th>
+                            <th>Campionamento</th>
+                            <th>Altre analisi</th>
+                        </tr>
 
-                {ossa.map(osso => <RigaCranio key={osso.id} osso={osso} />)}
-                {tipoOssa.map(tipoOsso =>
-                    ao(tipoOsso)
-                )}
-            </tbody>
-        </Table>) : (
+                        {ossa.map(osso => <RigaCranio key={osso.id} osso={osso} individuo={sessionStorage.getItem('individuoSelezionato')} />)}
+
+                    </tbody>
+                </Table>
+                <div className="d-flex justify-content-end">
+                    <ModalCreateOsso tipoOssa={tipoOssa} individuo={sessionStorage.getItem('individuoSelezionato')} />
+                </div>
+            </div >
+        ) : (
             <div>NO</div>
-        )}
-    </div>)
+        )
+        }
+    </div >)
 
 
     /*
-    return (<div>
-       
+    
+                <div className="my-2"></div>
+                
+                <Table bordered hover size="sm">
+                    <tbody>
+                        <tr>
+                            <th>Osso</th>
+                            <th>Materiale rivenuto</th>
+                            <th>Integro</th>
+                            <th>Livello di integrità</th>
+                            <th>Livello di qualità</th>
+                            <th>Restaurato</th>
+                            <th>Catalogazione e descrizione</th>
+                            <th>Indagine radiologica</th>
+                            <th>Campionamento</th>
+                            <th>Altre analisi</th>
+                        </tr>
+                        {tipoOssa.map(tipoOsso =>
+                            ao(tipoOsso)
+                        )}
+                    </tbody>
 
-    </div>)
+                </Table>
 */
 }
 export default Cranio;

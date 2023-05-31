@@ -53,3 +53,10 @@
   background-image: url('images/background/bg2.png');
   background-size: cover
 }
+
+.my-modal {
+  width: 95vw !important;  /* Occupy the 90% of the screen width */
+  max-width: 95vw !important  ;
+  height: 90vh !important;
+  max-height: 90vh !important;
+} 
