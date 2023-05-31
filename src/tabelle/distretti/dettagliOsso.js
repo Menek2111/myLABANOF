@@ -12,7 +12,7 @@ function DettagliOsso(props) {
 
     function checkValue(value) {
         if (value === 0) {
-            //alert('false')
+            //alert(' false')
             return false
         } else {
             return true
