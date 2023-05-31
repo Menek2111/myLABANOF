@@ -10,7 +10,7 @@ function Cranio(props) {
     const [ossa, setOssa] = useState([])
     const [tipoOssa, setTipoOssa] = useState([])
 
-    const [ossaPresenti, setOssaPresenti] = useState([])
+    //const [ossaPresenti, setOssaPresenti] = useState([])
 
     const [loading, setLoading] = useState(false)
 
@@ -39,7 +39,7 @@ function Cranio(props) {
                     let output = []
                     res2.results.map(osso => output.push(osso.tipoOsso))
                     console.log('ossaPresenti', output)
-                    setOssaPresenti(output)
+                    //setOssaPresenti(output)
                     setLoading(true)
                 } else {
                     setLoading(true)
