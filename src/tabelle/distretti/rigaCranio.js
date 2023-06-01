@@ -6,10 +6,11 @@ import Button from 'react-bootstrap/Button';
 
 import '../../App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Table } from 'react-bootstrap';
+import { Alert, Table } from 'react-bootstrap';
 import Form from 'react-bootstrap/Form';
 
 import DettagliOsso from './dettagliOsso';
+import ModalDeleteOsso from '../../UI/modalDeleteOsso';
 
 
 function RigaCranio(props) {
@@ -20,7 +21,6 @@ function RigaCranio(props) {
     const handleShow = () => setShow(true);
 
     useEffect(() => {
-
     }, []);
 
     const valueToBoolean = (val) => {
@@ -119,9 +119,9 @@ function RigaCranio(props) {
 
                 <Modal.Footer>
                     <Button variant="secondary" onClick={handleClose} >
-                        Annulla
+                        Chiudi
                     </Button>
-                    <Button variant="primary" type='submit'>MODIFICA</Button>
+                    <ModalDeleteOsso osso={props.osso.id} />
                 </Modal.Footer>
             </Modal>
         </tr >

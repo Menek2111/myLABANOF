@@ -161,6 +161,14 @@ export default class ConnectionManager {
         })
         return data
     }
+    deleteOsso = async function (params) {
+        var json = JSON.parse(params)
+        var URL = "https://applabanof.altervista.org/applabanof/data/delete/deleteOsso.php"
+        const { data } = await axios.post(URL, {
+            id: json.id
+        })
+        return data
+    }
 
 
     //EDIT
