@@ -104,9 +104,6 @@ function NavBar() {
                                     <Dropdown.Item>Permessi</Dropdown.Item>
                                     <Dropdown.Item>Tema</Dropdown.Item>
 
-                                    <div>
-                                        <InstallPWA />
-                                    </div>
 
                                     <div className='mt-3 w-100 text-center'>
                                         <LogOutButton />
