@@ -12,6 +12,25 @@ import { Table } from 'react-bootstrap';
 import ConnectionManager from '../api/ConnectionManager';
 
 function ModalCreateOsso(props) {
+    useEffect(() => {
+
+    }, []);
+
+    //Gestione modal
+    const [show, setShow] = useState(false);
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
+
+    const [nome, setNome] = useState()
+    const [lato, setLato] = useState()
+    const [integro, setIntegro] = useState()
+    const [lvlIntegrita, setLvlIntegrita] = useState()
+    const [lvlQualita, setLvlQualita] = useState()
+    const [restaurato, setRestaurato] = useState()
+    const [catalogazioneDescrizione, setCatalogazioneDescrizione] = useState()
+    const [indagineRadiologica, setIndagineRadiologica] = useState()
+    const [campionamento, setCampionamento] = useState()
+    const [altreAnalisi, setAltreAnalisi] = useState()
 
     const createOsso = async () => {
         let cm = new ConnectionManager();
@@ -35,26 +54,6 @@ function ModalCreateOsso(props) {
             }
         })
     }
-
-    useEffect(() => {
-
-    }, []);
-
-    //Gestione modal
-    const [show, setShow] = useState(false);
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
-
-    const [nome, setNome] = useState()
-    const [lato, setLato] = useState()
-    const [integro, setIntegro] = useState()
-    const [lvlIntegrita, setLvlIntegrita] = useState()
-    const [lvlQualita, setLvlQualita] = useState()
-    const [restaurato, setRestaurato] = useState()
-    const [catalogazioneDescrizione, setCatalogazioneDescrizione] = useState()
-    const [indagineRadiologica, setIndagineRadiologica] = useState()
-    const [campionamento, setCampionamento] = useState()
-    const [altreAnalisi, setAltreAnalisi] = useState()
 
     return (
         <div onClick={handleShow} >
