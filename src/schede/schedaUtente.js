@@ -48,9 +48,6 @@ function SchedaUtente() {
         })
     }, []);
 
-    // backgroundColor: '#F7F9FC'
-
-
     return (
         <div className='px-4 py-2 containerPrincipale' >
             <div className='rounded h-100'>
@@ -74,8 +71,7 @@ function SchedaUtente() {
                                     </div>
                                 </div>
                             </div>
-
-                            <div>
+                            <div style={{ height: '75vh', overflowY: 'scroll', overflowX: 'hidden' }}>
                                 {individui ? (
                                     <ListaIndividui individui={individui} navigator={navigate} />) : (<div></div>)}
                             </div>

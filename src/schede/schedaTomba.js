@@ -54,9 +54,6 @@ function SchedaTomba() {
         })
     }, [state.tomba]);
 
-    // backgroundColor: '#F7F9FC'
-
-
     return (
         <div className='px-4 py-2 containerPrincipale' >
             <div className='rounded h-100'>

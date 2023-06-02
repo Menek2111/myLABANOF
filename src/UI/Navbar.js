@@ -6,6 +6,9 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import NavItem from 'react-bootstrap/NavItem';
 import NavLink from 'react-bootstrap/NavLink';
 import labanof from '../images/logoMyLabanof.PNG'
+import InstallPWA from './InstallPWA'
+
+import ConnectionManager from '../api/ConnectionManager';
 
 import search from '../images/search.png'
 
@@ -18,6 +21,8 @@ function NavBar() {
 
     const [profile, setProfile] = useState([]);
 
+    const [result, setResult] = useState();
+
     const centerMiddle = {
         display: "flex",
         alignItems: "center",
@@ -27,8 +32,18 @@ function NavBar() {
 
     useEffect(() => {
         setProfile(JSON.parse(localStorage.getItem('profile')));
+        getIndividuiByQuery('')
     }, []);
 
+    const getIndividuiByQuery = async (query) => {
+        let cm = new ConnectionManager();
+        var params = { query: query }
+        await cm.getIndividuoByQuery(JSON.stringify(params)).then(res => {
+            console.log('queer:', query)
+            console.log('Risultato ricerca', res)
+            setResult(res.results)
+        })
+    }
 
     return (
         <div>
@@ -46,9 +61,25 @@ function NavBar() {
                             </Nav.Link>
                         </Nav.Item>
                         <div className='py-2'>
+
                             <div className="bar text-center mx-3 p-0" style={centerMiddle}>
                                 <img className='p-0 mx-3' src={search} alt="search" style={{ height: '2vh' }}></img>
-                                <input className="searchbar bg-transparent" type="text"></input>
+                                <Dropdown>
+                                    <Dropdown.Toggle className='bg-transparent searchbar removeArrow'>
+                                        <input className="searchbar2 bg-transparent" onChange={(e) => getIndividuiByQuery(e.target.value)} type="text" ></input>
+                                    </Dropdown.Toggle>
+                                    <Dropdown.Menu className='rounded border mt-0' style={{ width: '26vw' }}>
+                                        {
+                                            result ? (result.map(res => <Dropdown.Item onClick={
+                                                () => {
+                                                    sessionStorage.setItem('individuoSelezionato', res.id)
+                                                    navigate('/individuo')
+                                                    window.location.reload(false)
+                                                }
+                                            }>{res.tomba} - {res.nome} - {res.creatore}</Dropdown.Item>)) : (<Dropdown.Item disabled>Nessun risultato...</Dropdown.Item>)
+                                        }
+                                    </Dropdown.Menu>
+                                </Dropdown>
                             </div>
                         </div>
                     </div>
@@ -73,7 +104,9 @@ function NavBar() {
                                     <Dropdown.Item>Permessi</Dropdown.Item>
                                     <Dropdown.Item>Tema</Dropdown.Item>
 
-
+                                    <div>
+                                        <InstallPWA />
+                                    </div>
 
                                     <div className='mt-3 w-100 text-center'>
                                         <LogOutButton />

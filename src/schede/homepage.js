@@ -9,7 +9,6 @@ import ListaIndividui from '../component/listaIndividui'
 import SideNav from '../component/sideNav';
 import ListaTombe from '../component/listaTombe';
 
-
 //Componenti grafici
 import { Dna } from 'react-loader-spinner'
 
@@ -21,8 +20,10 @@ function Homepage() {
     const [individui, setIndividui] = useState()
     const [tombe, setTombe] = useState()
 
+    //Loading --> quando la variabile è true mostro la scheda
     const [loading, setLoading] = useState(false)
 
+    //Chiamate Connection Manager
     const getIndividui = async (e) => {
         let cm = new ConnectionManager();
         let res = await cm.getIndividui();

@@ -6,12 +6,6 @@ import ModalCreateTomba from "../UI/modalCreateTomba";
 
 class SideNav extends React.Component {
 
-
-
-    componentDidMount() {
-
-    }
-
     render() {
         return (
             <div className="">

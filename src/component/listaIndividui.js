@@ -11,15 +11,10 @@ class ListaIndividui extends React.Component {
         this.state = { individui: props.individui, navigator: props.navigator };
     }
 
-    componentDidMount() {
-
-    }
-
+    //Creo la scritta con l'ultima modifica
     parseTimeStamp(timeStamp) {
 
-        if (timeStamp == null) {
-            return 'Nessuna modifica'
-        }
+        if (timeStamp == null) return 'Nessuna modifica'
 
         var now = new Date(timeStamp * 1000);
         const formattedDate = new Date(now).toLocaleString(
@@ -33,9 +28,7 @@ class ListaIndividui extends React.Component {
         return 'Modificato: ' + formattedDate
     }
 
-
     render() {
-
         return (
             <div className="row d-flex flex-row" style={{ overflowY: 'auto' }} >
                 {this.state.individui ? (
@@ -58,7 +51,6 @@ class ListaIndividui extends React.Component {
                         </div>
                     )
                 ) : (
-
                     <div className=' h-100 d-flex flex-column justify-content-center text-center'>
                         <div>
                             <Dna
@@ -68,16 +60,12 @@ class ListaIndividui extends React.Component {
                                 wrapperClass="dna-wrapper"
                             />
                         </div>
-
                         <div>
                             Caricamento in corso...
                         </div>
-
                     </div>
-
                 )}
             </div>
-
         );
     }
 }

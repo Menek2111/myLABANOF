@@ -23,6 +23,12 @@
   width: 26vw !important;
   outline: none !important;
 }
+.searchbar2{
+  height: 100% !important;
+  border:none !important;
+  width: 100% !important;
+  outline: none !important;
+}
 
 .colore1{
   background-color: #D9C2B4 !important;
@@ -60,3 +66,7 @@
   height: 90vh !important;
   max-height: 90vh !important;
 } 
+
+.removeArrow::after {
+  display: none !important; 
+}

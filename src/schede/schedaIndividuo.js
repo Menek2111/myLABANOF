@@ -68,7 +68,6 @@ function SchedaIndividuo(props) {
     const [modProfiloBiologico, setModProfiloBiologico] = useState()
 
     const addModificheGeneralità = (nome, luogo, data) => {
-        //console.log(nome, luogo, data)
         var mod = {
             nome: nome,
             luogoRinvenimento: luogo,
@@ -77,7 +76,6 @@ function SchedaIndividuo(props) {
         setModGeneralità(mod)
     }
     const addModificheProfiloBiologio = (sesso, classeEta, origineBiologica, origineGeografica) => {
-        //console.log(nome, luogo, data)
         var mod = {
             sessoBiologico: sesso,
             classeDiEta: classeEta,
@@ -112,9 +110,7 @@ function SchedaIndividuo(props) {
         })
     }
 
-    // backgroundColor: '#F7F9FC'
     return (
-
         <div>
             {loading ? (<div className='px-4 py-2 containerPrincipale'>
                 <div className='rounded h-100'>
@@ -157,15 +153,7 @@ function SchedaIndividuo(props) {
                 </div>
             </div>
             )}
-
-
-
-
-
         </div>
-
-
-
     );
 }
 export default SchedaIndividuo;

@@ -24,8 +24,18 @@ export default class ConnectionManager {
         return data
     }
 
-    //GET
 
+    //SEARCH 
+    getIndividuoByQuery = async function (params) {
+        var json = JSON.parse(params)
+        var URL = "https://applabanof.altervista.org/applabanof/data/search/getIndividuoByQuery.php"
+        const { data } = await axios.post(URL, {
+            query: json.query
+        })
+        return data
+    }
+
+    //GET
     getTombe = async function (params) {
         var URL = "https://applabanof.altervista.org/applabanof/data/getTombe.php"
         const { data } = await axios.post(URL, {})
@@ -100,6 +110,27 @@ export default class ConnectionManager {
         return data
     }
 
+    getCaratteriMetriciByDistrettoAndIndividuo = async function (params) {
+        var json = JSON.parse(params)
+        var URL = "https://applabanof.altervista.org/applabanof/data/getCaratteriMetriciByDistrettoAndIndividuo.php"
+        const { data } = await axios.post(URL, {
+            distretto: json.distretto,
+            individuo: json.individuo
+        })
+        return data
+    }
+
+    getCaratteriNonMetriciByDistrettoAndIndividuo = async function (params) {
+        var json = JSON.parse(params)
+        var URL = "https://applabanof.altervista.org/applabanof/data/getCaratteriNonMetriciByDistrettoAndIndividuo.php"
+        const { data } = await axios.post(URL, {
+            distretto: json.distretto,
+            individuo: json.individuo
+        })
+        return data
+    }
+
+
     //CREATE 
 
     createIndividuo = async function (params) {
@@ -140,8 +171,29 @@ export default class ConnectionManager {
         })
         return data
     }
-
-
+    createCarattereMetricoSpecifico = async function (params) {
+        var json = JSON.parse(params)
+        var URL = "https://applabanof.altervista.org/applabanof/data/creazione/createCarattereMetricoSpecifico.php"
+        const { data } = await axios.post(URL, {
+            individuo: json.individuo,
+            tipoCarattereMetrico: json.tipoCarattereMetrico,
+            lato: json.lato,
+            valore: json.valore,
+            unitaMisura: json.unitaMisura,
+        })
+        return data
+    }
+    createCarattereNonMetricoSpecifico = async function (params) {
+        var json = JSON.parse(params)
+        var URL = "https://applabanof.altervista.org/applabanof/data/creazione/createCarattereNonMetricoSpecifico.php"
+        const { data } = await axios.post(URL, {
+            individuo: json.individuo,
+            tipoCarattereNonMetrico: json.tipoCarattereNonMetrico,
+            lato: json.lato,
+            valore: json.valore
+        })
+        return data
+    }
 
     //DELETE
 
@@ -216,6 +268,33 @@ export default class ConnectionManager {
             altreAnalisi: osso.altreAnalisi,
             id: osso.id
             //individuo: osso.individuo
+        })
+        return data
+    }
+
+    editCarattereMetricoSpecifico = async function (params) {
+        var json = JSON.parse(params)
+        var URL = "https://applabanof.altervista.org/applabanof/data/edit/editCarattereMetricoSpecifico.php"
+        const { data } = await axios.post(URL, {
+            individuo: json.individuo,
+            tipoCarattereMetrico: json.tipoCarattereMetrico,
+            lato: json.lato,
+            valore: json.valore,
+            unitaMisura: json.unitaMisura,
+            id: json.id
+        })
+        return data
+    }
+
+    editCarattereNonMetricoSpecifico = async function (params) {
+        var json = JSON.parse(params)
+        var URL = "https://applabanof.altervista.org/applabanof/data/edit/editCarattereNonMetricoSpecifico.php"
+        const { data } = await axios.post(URL, {
+            individuo: json.individuo,
+            tipoCarattereMetrico: json.tipoCarattereMetrico,
+            lato: json.lato,
+            valore: json.valore,
+            id: json.id
         })
         return data
     }

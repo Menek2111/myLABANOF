@@ -1,23 +1,16 @@
 import React from "react";
 
 import tomb from '../images/tomblogo.png'
-
+import { Dna } from 'react-loader-spinner'
 
 class ListaTombe extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = { tombe: props.tombe, navigator: props.navigator };
-
-    }
-
-    componentDidMount() {
-
     }
 
     render() {
-
-
         return (
             <div className="d-flex" style={{ overflowX: 'auto' }} >
                 {this.state.tombe ? (
@@ -30,23 +23,22 @@ class ListaTombe extends React.Component {
                         </div>
                     )
                 ) : (
-                    <div>NO</div>
+                    <div className='d-flex flex-column justify-content-center text-center'>
+                        <div>
+                            <Dna
+                                visible={true}
+                                ariaLabel="dna-loading"
+                                wrapperStyle={{}}
+                                wrapperClass="dna-wrapper"
+                            />
+                        </div>
+                        <div>
+                            Caricamento in corso...
+                        </div>
+                    </div>
                 )}
             </div>
         );
     }
 }
-
-/*
-<div className='row'>
-               
-                <div className='d-flex flex-column col-1  text-center rounded m-2 border p-2' style={{ backgroundColor: '#F2F6FC' }}>
-                    <img src={tomb} />
-                    <p className='p-0 m-0'>
-                        <b>Tb04</b>
-                    </p>
-                </div>
-            </div>
-*/
-
 export default ListaTombe

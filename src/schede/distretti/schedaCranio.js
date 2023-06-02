@@ -10,7 +10,6 @@ import CaratteriMetrici from '../../tabelle/caratteri/caratteriMetrici';
 import CaratteriNonMetrici from '../../tabelle/caratteri/caratteriNonMetrici';
 
 
-
 function SchedaIndividuo() {
 
     const centerMiddle = {
@@ -20,10 +19,6 @@ function SchedaIndividuo() {
         height: "100%"
     };
 
-    useEffect(() => {
-    }, []);
-
-    // backgroundColor: '#F7F9FC'
     return (
         <div className='px-4 py-2 containerPrincipale'>
             <div className='rounded h-100'>
@@ -37,7 +32,6 @@ function SchedaIndividuo() {
                                     </div>
                                     <h5 style={centerMiddle} className=''>CRANIO</h5>
                                 </div>
-
                                 <div className='col-2 d-flex flex-column justify-content-center'>
                                     <div className='d-flex justify-content-around'>
                                     </div>
@@ -47,24 +41,14 @@ function SchedaIndividuo() {
                                 <Cranio />
                             </div>
                             <div className='row py-3'>
-                                <CaratteriMetrici />
-                                <CaratteriNonMetrici />
+                                <CaratteriMetrici distretto='1' />
+                                <CaratteriNonMetrici distretto='1' />
                             </div>
-
                         </div>
                     </div>
                 </div>
             </div>
         </div >
-
-
-
-
-
-
-
-
-
     );
 }
 export default SchedaIndividuo;
