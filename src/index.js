@@ -26,6 +26,11 @@ import SchedaUtente from "./schede/schedaUtente";
 const container = document.getElementById('root');
 const root = createRoot(container);
 
+if (sessionStorage.getItem('tema') == null) {
+    sessionStorage.setItem('tema', 'tema1')
+}
+const theme = sessionStorage.getItem('tema')
+
 root.render(
     <GoogleOAuthProvider clientId="893808787073-9euu770ju7ncbmbbgbdedn9tdj5t3296.apps.googleusercontent.com">
         <HashRouter>
@@ -33,12 +38,14 @@ root.render(
                 <Route
                     path="/"
                     element={
-                        <Login />
+                        <div className={theme}>
+                            <Login />
+                        </div>
                     } />
                 <Route
                     path="/home"
                     element={
-                        <div className="user-select-none" >
+                        <div className={theme} >
                             <NavBar />
                             <Homepage />
                         </div>
@@ -47,7 +54,7 @@ root.render(
                 <Route
                     path="/individuo"
                     element={
-                        <div className="user-select-none">
+                        <div className={theme} >
                             <NavBar />
                             <SchedaIndividuo />
                         </div>
@@ -56,7 +63,7 @@ root.render(
                 <Route
                     path="/individuo/cranio"
                     element={
-                        <div className="user-select-none">
+                        <div className={theme} >
                             <NavBar />
                             <SchedaCranio />
                         </div>
@@ -65,7 +72,7 @@ root.render(
                 <Route
                     path="/tomba"
                     element={
-                        <div className="user-select-none">
+                        <div className={theme} >
                             <NavBar />
                             <SchedaTomba />
                         </div>
@@ -74,7 +81,7 @@ root.render(
                 <Route
                     path="/utente"
                     element={
-                        <div className="user-select-none">
+                        <div className={theme} >
                             <NavBar />
                             <SchedaUtente />
                         </div>

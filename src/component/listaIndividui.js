@@ -1,7 +1,6 @@
 import React from "react";
+import indLogo from '../images/icons/skull.png'
 
-import anteprima from '../images/screen.PNG'
-import doc from '../images/documents.png'
 import { Dna } from 'react-loader-spinner'
 
 class ListaIndividui extends React.Component {
@@ -28,25 +27,36 @@ class ListaIndividui extends React.Component {
         return 'Modificato: ' + formattedDate
     }
 
+    //#F2F6FC
+
     render() {
         return (
-            <div className="row d-flex flex-row" style={{ overflowY: 'auto' }} >
+            <div className="row w-100 d-flex flex-row" style={{ overflowY: 'auto' }} >
                 {this.state.individui ? (
                     this.state.individui.map(ind =>
-                        <div key={ind.id} className="col-3" >
-                            <div className="p-2  rounded m-2 indCard border" style={{ backgroundColor: '#F2F6FC' }} onClick={() => {
+                        <div key={ind.id} className={this.props.colonna} >
+                            <div className="d-flex rounded m-1 indCard border" style={{ backgroundColor: '', cursor: 'pointer' }} onClick={() => {
                                 sessionStorage.setItem('individuoSelezionato', ind.id)
                                 this.state.navigator('/individuo')
                             }}>
-                                <div className="pb-1">
-                                    <img src={doc} alt="doc" style={{ height: '3vh' }} /> {ind.nome}
+                                <div className="w-25">
+                                    <img src={indLogo} className="w-100 p-2" />
                                 </div>
-                                <div className="text-center">
-                                    <img className="rounded w-100" alt="anteprima" src={anteprima} style={{ width: '15vw' }} />
+                                <div className="p-1 w-75">
+                                    <span >
+                                        {ind.nome}
+                                    </span>
+                                    <br />
+                                    <span style={{ fontSize: '0.8em' }}>
+                                        {ind.email}
+                                    </span>
+                                    <br />
+                                    <span style={{ fontSize: '0.7em' }}>
+                                        {this.parseTimeStamp(ind.ultimaModifica)}
+                                    </span>
                                 </div>
-                                <div>
-                                    <p className="p-0 m-0">{this.parseTimeStamp(ind.ultimaModifica)}</p>
-                                </div>
+
+
                             </div>
                         </div>
                     )
@@ -64,7 +74,8 @@ class ListaIndividui extends React.Component {
                             Caricamento in corso...
                         </div>
                     </div>
-                )}
+                )
+                }
             </div>
         );
     }

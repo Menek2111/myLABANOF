@@ -48,6 +48,7 @@ function ModalCreateOsso(props) {
             individuo: props.individuo
         }
         await cm.createOsso(JSON.stringify(params)).then(res => {
+
             if (res.response === 'success') {
                 console.log('sql', res.sql)
                 window.location.reload(false);

@@ -37,6 +37,17 @@ function RigaCaratteriMetrici(props) {
         })
     }
 
+    const deleteCarattereMetricoSpecifico = async () => {
+        let cm = new ConnectionManager();
+        var params = { id: props.carattere.id }
+        await cm.deleteCarattereMetricoSpecifico(JSON.stringify(params)).then(res => {
+            if (res.response === 'success') {
+                window.location.reload(false);
+            }
+        })
+    }
+
+
     return (
         <tr key={props.carattere.id} onClick={handleShow}>
             <td>
@@ -90,11 +101,14 @@ function RigaCaratteriMetrici(props) {
                         </div>
 
                     </Modal.Body>
-                    <Modal.Footer>
-                        <Button variant="secondary" onClick={handleClose}>
-                            Chiudi senza salvare
-                        </Button>
-                        <Button variant="primary" type="submit">Salva</Button>
+                    <Modal.Footer className='d-flex justify-content-between'>
+                        <Button variant="outline-danger" onClick={() => deleteCarattereMetricoSpecifico()}>Elimina</Button>
+                        <div>
+                            <Button variant="secondary" onClick={handleClose}>
+                                Chiudi senza salvare
+                            </Button>
+                            <Button className='mx-1' variant="primary" type="submit">Salva</Button>
+                        </div>
                     </Modal.Footer>
                 </Form>
             </Modal>

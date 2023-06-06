@@ -81,7 +81,7 @@ function SchedaTomba() {
                             </div>
 
                             {individui ? (
-                                <ListaIndividui individui={individui} navigator={navigate} />
+                                <ListaIndividui colonna="col-3" individui={individui} navigator={navigate} />
                             ) : (
                                 <div className=' h-75 d-flex flex-column justify-content-center text-center'>
                                     <div>

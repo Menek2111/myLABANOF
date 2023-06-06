@@ -5,6 +5,7 @@ import Form from 'react-bootstrap/Form';
 import ConnectionManager from "../../api/ConnectionManager";
 import RigaCaratteriNonMetrici from "./rigaCaratteriNonMetrici";
 import ModalCreateCarattereNonMetrico from "../../UI/modalCreateCarattereNonMetrico";
+import Loading from "../../UI/loading";
 
 function CaratteriNonMetrici(props) {
 
@@ -59,26 +60,23 @@ function CaratteriNonMetrici(props) {
 
     return (<div className="col-6">
         <Table bordered striped hover size="sm">
-            <tbody>
-
+            <thead>
                 <tr>
                     <th className="w-50">Caratteri non metrici</th>
                     <th>Lato</th>
                     <th>Valore</th>
                 </tr>
-
-
+            </thead>
+            <tbody>
                 {caratteriNonMetriciIndividuo ? (
                     caratteriNonMetriciIndividuo.map(car => (
                         <RigaCaratteriNonMetrici carattere={car} caratteri={caratteriNonMetrici} />
                     ))
                 ) : (<tr></tr>)}
-
-
             </tbody>
         </Table>
         <div className="d-flex justify-content-end">
-            {caratteriNonMetrici ? (<ModalCreateCarattereNonMetrico caratteri={caratteriNonMetrici} />) : (<div></div>)}
+            {caratteriNonMetrici ? (<ModalCreateCarattereNonMetrico caratteri={caratteriNonMetrici} />) : (<Loading />)}
 
         </div>
     </div >)

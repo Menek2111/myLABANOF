@@ -11,6 +11,7 @@ import Form from 'react-bootstrap/Form';
 
 import DettagliOsso from './dettagliOsso';
 import ModalDeleteOsso from '../../UI/modalDeleteOsso';
+import Traumi from './traumi/traumi';
 
 
 function RigaCranio(props) {
@@ -75,24 +76,8 @@ function RigaCranio(props) {
                     <DettagliOsso osso={props.osso} />
 
                     <div className='col'>
-                        <div className='border-bottom mb-2 d-flex justify-content-between'>
-                            <h5 className=''>Traumi</h5>
-                            <Button className='p-1'>Aggiungi</Button>
-                        </div>
-                        <Table bordered striped hover size="sm">
-                            <tbody>
-                                <tr>
-                                    <th>Trauma</th>
-                                    <th>Datazione</th>
-                                    <th>Descrizione</th>
-                                </tr>
-                                <tr>
-                                    <td>---</td>
-                                    <td>---</td>
-                                    <td>---</td>
-                                </tr>
-                            </tbody>
-                        </Table>
+
+                        <Traumi osso={props.osso.id} />
 
                         <div className='border-bottom mb-2 d-flex justify-content-between'>
                             <h5 className=''>Patologie</h5>

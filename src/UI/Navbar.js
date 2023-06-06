@@ -6,6 +6,7 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import NavItem from 'react-bootstrap/NavItem';
 import NavLink from 'react-bootstrap/NavLink';
 import labanof from '../images/logoMyLabanof.PNG'
+import Table from 'react-bootstrap/Table'
 import InstallPWA from './InstallPWA'
 
 import ConnectionManager from '../api/ConnectionManager';
@@ -15,6 +16,8 @@ import search from '../images/search.png'
 import '../App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import LogOutButton from './logOutButton';
+
+import ModalChangeTheme from './modalChangeTheme'
 
 function NavBar() {
     const navigate = useNavigate();
@@ -65,18 +68,20 @@ function NavBar() {
                             <div className="bar text-center mx-3 p-0" style={centerMiddle}>
                                 <img className='p-0 mx-3' src={search} alt="search" style={{ height: '2vh' }}></img>
                                 <Dropdown>
-                                    <Dropdown.Toggle className='bg-transparent searchbar removeArrow'>
+                                    <Dropdown.Toggle variant="success" className='bg-transparent searchbar removeArrow'>
                                         <input className="searchbar2 bg-transparent" onChange={(e) => getIndividuiByQuery(e.target.value)} type="text" ></input>
                                     </Dropdown.Toggle>
-                                    <Dropdown.Menu className='rounded border mt-0' style={{ width: '26vw' }}>
+                                    <Dropdown.Menu className='rounded border mt-0' style={{ width: '26vw', inlineSize: '26vw' }}>
                                         {
-                                            result ? (result.map(res => <Dropdown.Item onClick={
+                                            result ? (result.map(res => <Dropdown.Item key={res.id} onClick={
                                                 () => {
                                                     sessionStorage.setItem('individuoSelezionato', res.id)
                                                     navigate('/individuo')
                                                     window.location.reload(false)
                                                 }
-                                            }>{res.tomba} - {res.nome} - {res.creatore}</Dropdown.Item>)) : (<Dropdown.Item disabled>Nessun risultato...</Dropdown.Item>)
+                                            }>
+                                                {res.nome} - {res.tomba} - {res.creatore}
+                                            </Dropdown.Item>)) : (<Dropdown.Item disabled>Nessun risultato...</Dropdown.Item>)
                                         }
                                     </Dropdown.Menu>
                                 </Dropdown>
@@ -102,7 +107,8 @@ function NavBar() {
                                         Profilo
                                     </Dropdown.Item >
                                     <Dropdown.Item>Permessi</Dropdown.Item>
-                                    <Dropdown.Item>Tema</Dropdown.Item>
+
+                                    <ModalChangeTheme />
 
 
                                     <div className='mt-3 w-100 text-center'>

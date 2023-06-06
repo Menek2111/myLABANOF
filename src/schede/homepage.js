@@ -46,14 +46,16 @@ function Homepage() {
                     setIndividui(res)
                 }
 
-                setLoading(true)
+
+                getTombe().then(res => {
+                    setTombe(res)
+                    setLoading(true)
+                })
             }
         })
-        getTombe().then(res => {
-            setTombe(res)
-        })
 
-    }, [navigate]);
+
+    }, []);
 
     return (
         <div>
@@ -66,10 +68,10 @@ function Homepage() {
                         <div className='col-10 bg-white border rounded' style={{ height: '89vh', overflowY: 'scroll' }}>
 
                             <h5 className='pt-3 border-bottom'>Tombe</h5>
-                            <ListaTombe tombe={tombe} navigator={navigate} />
+                            <ListaTombe colonna="col-2" tombe={tombe} navigator={navigate} />
 
                             <h5 className='pt-3 border-bottom'>Individui</h5>
-                            <ListaIndividui individui={individui} navigator={navigate} />
+                            <ListaIndividui colonna="col-4" individui={individui} navigator={navigate} />
 
                         </div>
                     </div>

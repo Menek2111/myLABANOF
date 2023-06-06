@@ -32,12 +32,12 @@ function ModalCreateTomba() {
 
     //Chiamate API
 
-    const creaTomba = async (nome, nMinIndividui, coordinate) => {
+    const creaTomba = async () => {
         let cm = new ConnectionManager();
-        var params = { nome: nome, nMinIndividui: nMinIndividui, coordinate: coordinate }
+        var params = { nome: nome, nMinIndividui: num, coordinate: coord }
         await cm.createTomba(JSON.stringify(params)).then(res => {
             if (res.error == null) {
-                navigate('/')
+                window.location.reload(false)
             }
         })
 
@@ -57,14 +57,15 @@ function ModalCreateTomba() {
                 size="lg"
                 centered
             >
-                <Modal.Header closeButton>
-                    <Modal.Title>Creazione nuova tomba</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                    <Form>
+                <Form onSubmit={creaTomba}>
+                    <Modal.Header closeButton>
+                        <Modal.Title>Creazione nuova tomba</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+
                         <Form.Group className="mb-3" controlId="formBasicPassword">
                             <Form.Label>Nome tomba</Form.Label>
-                            <Form.Control type="text" onChange={(e) => setNome(e.target.value)} />
+                            <Form.Control type="text" onChange={(e) => setNome(e.target.value)} required />
                         </Form.Group>
                         <Form.Group className="mb-3" controlId="formBasicPassword">
                             <Form.Label>Numero minimo di individui</Form.Label>
@@ -74,14 +75,14 @@ function ModalCreateTomba() {
                             <Form.Label>Coordinate tomba</Form.Label>
                             <Form.Control type="text" onChange={(e) => setCoord(e.target.value)} />
                         </Form.Group>
-                    </Form>
-                </Modal.Body>
-                <Modal.Footer>
-                    <Button variant="secondary" onClick={handleClose}>
-                        Chiudi senza salvare
-                    </Button>
-                    <Button variant="primary" onClick={(e) => creaTomba(nome, num, coord)}>Salva</Button>
-                </Modal.Footer>
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <Button variant="secondary" onClick={handleClose}>
+                            Chiudi senza salvare
+                        </Button>
+                        <Button variant="primary" type='submit'>Salva</Button>
+                    </Modal.Footer>
+                </Form>
             </Modal>
         </div >
     );

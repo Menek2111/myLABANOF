@@ -55,9 +55,9 @@
 
 .containerPrincipale{
   height: 93vh;
-  background-color: #F1E3E3;
+  /*background-color: #F1E3E3;
   background-image: url('images/background/bg2.png');
-  background-size: cover
+  background-size: cover*/
 }
 
 .my-modal {
@@ -70,3 +70,131 @@
 .removeArrow::after {
   display: none !important; 
 }
+
+/*BARRA SCORRIMENTO*/
+::-webkit-scrollbar {
+  width: 10px;
+  height: 5px;
+}
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 15px;
+}
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+.temaMyLabanof{
+  height: 100vh;
+  background: rgb(231,206,206);
+  background: linear-gradient(360deg, rgba(231,206,206,1) 0%,rgb(247, 249, 252, 1) 90%, rgb(247, 249, 252, 1) 100%);
+  background-size: cover;
+  user-select: none;
+}
+
+.temaPastelloArancio{
+  height: 100vh;
+  background: #FED6A5;
+background: linear-gradient(360deg, rgba(254,214,165,1) 0%, rgb(247, 249, 252, 1) 90%, rgb(247, 249, 252, 1) 100%);
+ background-size: cover;
+  user-select: none;
+}
+.temaPastelloArancio .btn-primary{
+  background-color: #a5cdfe!important;
+  border-color: #a5cdfe !important;
+}
+.temaPastelloArancio .form-check-input:checked{
+  background-color: #a5cdfe !important;
+  border-color: #a5cdfe !important;
+}
+
+.temaPastelloVerde{
+  height: 100vh;
+  background: #CEE5B7;
+  background: linear-gradient(360deg, rgba(206,229,183,1) 0%, rgb(247, 249, 252, 1) 90%, rgb(247, 249, 252, 1) 100%);
+  user-select: none;
+}
+.temaPastelloVerde .btn-primary{
+  background-color: #ceb7e5!important;
+  border-color: #ceb7e5 !important;
+}
+.temaPastelloVerde .form-check-input:checked{
+  background-color: #ceb7e5 !important;
+  border-color: #ceb7e5 !important;
+}
+.temaPastelloAzzurro{
+  height: 100vh;
+  background: #A9DFEB;
+  background: linear-gradient(360deg, rgba(169,223,235,1) 0%, rgb(247, 249, 252, 1) 90%, rgb(247, 249, 252, 1) 100%);  
+  user-select: none;
+}
+.temaPastelloAzzurro .btn-primary{
+  background-color: #ebb5a9!important;
+  border-color: #ebb5a9 !important;
+}
+.temaPastelloAzzurro .form-check-input:checked{
+  background-color: #ebb5a9 !important;
+  border-color: #ebb5a9 !important;
+}
+
+.temaPastelloBlue{
+  height: 100vh;
+  background: #A5C1E6;
+  background: linear-gradient(360deg, rgba(165,193,230,1) 0%, rgb(247, 249, 252, 1) 90%, rgb(247, 249, 252, 1) 100%);
+  background-size: cover;
+  user-select: none;
+} 
+.temaPastelloBlue .btn-primary{
+  background-color: #e6caa5!important;
+  border-color: #e6caa5 !important;
+}
+.temaPastelloBlue .form-check-input:checked{
+  background-color: #e6caa5 !important;
+  border-color: #e6caa5 !important;
+}
+
+.temaPastelloRosa{
+  height: 100vh;
+  background: #EBC8DE;
+  background: linear-gradient(360deg, rgba(235,200,222,1) 0%, rgb(247, 249, 252, 1) 90%, rgb(247, 249, 252, 1) 100%);
+  background-size: cover;
+  user-select: none;
+}
+.temaPastelloRosa .btn-primary{
+  background-color: #ADCCB9!important;
+  border-color: #ADCCB9 !important;
+}
+.temaPastelloRosa .form-check-input:checked{
+  background-color: #ADCCB9 !important;
+  border-color: #ADCCB9 !important;
+}
+.temaPastelloRosa .indCard:hover{
+  background-color: #ADCCB9 !important;
+}
+
+/*
+#f7abad
+#fed6a5
+#faf6b7
+#CEE5B7
+
+#A9DFEB
+
+
+#A5C1E6
+
+#EBC8DE
+
+
+
+
+
+
+
+*/

@@ -12,14 +12,24 @@ class ListaTombe extends React.Component {
 
     render() {
         return (
-            <div className="d-flex" style={{ overflowX: 'auto' }} >
+            <div className="row" style={{ overflowX: 'auto' }} >
                 {this.state.tombe ? (
                     this.state.tombe.map(tomba =>
-                        <div key={tomba.id} className='d-flex flex-column indCard col-1  text-center rounded m-2 border p-2' style={{ backgroundColor: '#F2F6FC' }} onClick={() => this.props.navigator('/tomba', { state: { tomba: tomba } })}>
-                            <img src={tomb} alt="tomba" />
-                            <p className='p-0 m-0'>
-                                <b>{tomba.nome}</b>
-                            </p>
+                        <div key={tomba.id} className={this.props.colonna} >
+                            <div className='d-flex indCard text-center rounded my-1 border p-2' style={{ backgroundColor: '' }} onClick={() => this.props.navigator('/tomba', { state: { tomba: tomba } })}>
+                                <div className="w-25" >
+                                    <img className="w-100" src={tomb} alt="tomba" />
+                                </div>
+                                <div className="w-75">
+                                    <span style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }} className='w-75 p-0 m-0'>
+                                        {tomba.nome}
+
+                                    </span><br />
+                                    <span style={{ fontSize: '0.8em' }}>
+                                        N° Individui: {tomba.nIndividui}
+                                    </span>
+                                </div>
+                            </div>
                         </div>
                     )
                 ) : (

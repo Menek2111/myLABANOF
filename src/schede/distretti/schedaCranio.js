@@ -44,6 +44,8 @@ function SchedaIndividuo() {
                                 <CaratteriMetrici distretto='1' />
                                 <CaratteriNonMetrici distretto='1' />
                             </div>
+
+                            <div className='py-5'></div>
                         </div>
                     </div>
                 </div>

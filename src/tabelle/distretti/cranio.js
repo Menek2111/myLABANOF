@@ -5,6 +5,7 @@ import ConnectionManager from "../../api/ConnectionManager";
 import RigaCranio from './rigaCranio'
 import ModalCreateOsso from "../../UI/modalCreateOsso";
 
+import Loading from '../../UI/loading'
 
 function Cranio(props) {
     const [ossa, setOssa] = useState([])
@@ -72,7 +73,7 @@ function Cranio(props) {
         {loading ? (
             <div>
                 <Table bordered striped hover size="sm">
-                    <tbody>
+                    <thead>
                         <tr>
                             <th>Osso</th>
                             <th>Materiale rivenuto</th>
@@ -85,9 +86,9 @@ function Cranio(props) {
                             <th>Campionamento</th>
                             <th>Altre analisi</th>
                         </tr>
-
+                    </thead>
+                    <tbody>
                         {ossa.map(osso => <RigaCranio key={osso.id} osso={osso} individuo={sessionStorage.getItem('individuoSelezionato')} />)}
-
                     </tbody>
                 </Table>
                 <div className="d-flex justify-content-end">
@@ -95,7 +96,7 @@ function Cranio(props) {
                 </div>
             </div >
         ) : (
-            <div>NO</div>
+            <Loading />
         )
         }
     </div >)

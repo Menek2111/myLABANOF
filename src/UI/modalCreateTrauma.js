@@ -1,0 +1,110 @@
+import React, { useState, useEffect } from 'react';
+
+//Import componenti
+import Modal from 'react-bootstrap/Modal';
+import Form from 'react-bootstrap/Form';
+import Button from 'react-bootstrap/Button';
+
+//Import classi
+import ConnectionManager from '../api/ConnectionManager';
+import { useNavigate } from 'react-router-dom'
+
+
+import '../App.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
+
+function ModalCreateTrauma(props) {
+    const navigate = useNavigate();
+
+    const [trauma, setTrauma] = useState()
+    const [descrizione, setDescrizione] = useState()
+    const [datazione, setDatazione] = useState()
+
+    const [listaTraumi, setListaTraumi] = useState()
+
+    useEffect(() => {
+        getTraumaGeneraleByDistretto()
+    }, []);
+
+    //Gestione modal
+    const [show, setShow] = useState(false);
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
+
+    //Chiamate API
+
+    const getTraumaGeneraleByDistretto = async () => {
+        let cm = new ConnectionManager();
+        var params = { distretto: props.distretto }
+        await cm.getTraumaGeneraleByDistretto(JSON.stringify(params)).then(res => {
+            if (res.response == 'success') {
+                setListaTraumi(res.results)
+            }
+        })
+    }
+
+    const createTraumaSpecifico = async () => {
+        let cm = new ConnectionManager();
+        var params = { tipoTrauma: trauma, osso: props.osso, datazione: datazione, descrizione: descrizione }
+        await cm.createTraumaSpecifico(JSON.stringify(params)).then(res => {
+            if (res.response === 'success') {
+                handleClose()
+            }
+        })
+    }
+
+    return (
+        <div>
+            <Button className='w-100 p-1' variant="primary" onClick={handleShow}>
+                Aggiungi
+            </Button >
+            <Modal
+                show={show}
+                onHide={handleClose}
+                backdrop="static"
+                keyboard={false}
+                size="lg"
+                centered
+            >
+                <Modal.Header closeButton>
+                    <Modal.Title>Creazione nuova tomba</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <Form onSubmit={createTraumaSpecifico}>
+                        <Form.Group className="mb-3" controlId="formBasicPassword">
+                            <Form.Label>Truma</Form.Label>
+                            <Form.Select onChange={(e) => setTrauma(e.target.value)} required>
+                                <option></option>
+                                {listaTraumi ? (
+                                    listaTraumi.map(tr => <option key={tr.id} value={tr.id}>{tr.nome}</option>)
+                                ) : (<option></option>)}
+                            </Form.Select>
+                        </Form.Group>
+                        <Form.Group className="mb-3" controlId="formBasicPassword">
+                            <Form.Label>Descrizione</Form.Label>
+                            <Form.Control type="text" onChange={(e) => setDescrizione(e.target.value)} />
+                        </Form.Group>
+                        <Form.Group className="mb-3" controlId="formBasicPassword">
+                            <Form.Label>Datazione</Form.Label>
+                            <Form.Select onChange={(e) => setDatazione(e.target.value)} required>
+                                <option></option>
+                                <option>Ante-mortem</option>
+                                <option>Peri-mortem</option>
+                                <option>Scavenging</option>
+                                <option>Post-mortem</option>
+                                <option>ND</option>
+                            </Form.Select>
+                        </Form.Group>
+                    </Form>
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={handleClose}>
+                        Chiudi senza salvare
+                    </Button>
+                    <Button variant="primary" onClick={() => createTraumaSpecifico()}>Salva</Button>
+                </Modal.Footer>
+            </Modal>
+        </div >
+    );
+}
+export default ModalCreateTrauma;

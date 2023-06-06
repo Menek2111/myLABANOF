@@ -31,6 +31,8 @@ function DettagliOsso(props) {
 
     const [editable, setEditable] = useState(false)
 
+    const [modifica, setModifica] = useState(false)
+
     const editOsso = async () => {
 
         //alert(integro)
@@ -74,7 +76,7 @@ function DettagliOsso(props) {
     useEffect(() => {
 
 
-    }, [lato, integro, lvlIntegrita, lvlQualita, restaurato, catalogazioneDescrizione, indagineRadiologica, campionamento, altreAnalisi]);
+    }, []);
 
 
     return (
@@ -172,6 +174,7 @@ function DettagliOsso(props) {
                     </div>
 
                     <Table bordered striped hover size="sm">
+
                         <tbody>
                             <tr>
                                 <th className='w-25'>Osso</th>

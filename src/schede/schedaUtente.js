@@ -10,6 +10,7 @@ import { useNavigate } from 'react-router-dom'
 import LogOutButton from '../UI/logOutButton'
 import ListaIndividui from '../component/listaIndividui';
 
+import Loading from '../UI/loading'
 
 function SchedaUtente() {
     const navigate = useNavigate();
@@ -25,12 +26,13 @@ function SchedaUtente() {
 
     const [individui, setIndividui] = useState()
 
+    const getIndividuiByUser = async () => {
+        let cm = new ConnectionManager();
+        let res = await cm.getIndividuiByUser(JSON.stringify({ user: localStorage.getItem('userID') }));
+        return res;
+    }
+
     useEffect(() => {
-        const getIndividuiByUser = async () => {
-            let cm = new ConnectionManager();
-            let res = await cm.getIndividuiByUser(JSON.stringify({ user: localStorage.getItem('userID') }));
-            return res;
-        }
         getIndividuiByUser().then(res => {
             console.log(res.results)
             switch (res.response) {
@@ -73,7 +75,7 @@ function SchedaUtente() {
                             </div>
                             <div style={{ height: '75vh', overflowY: 'scroll', overflowX: 'hidden' }}>
                                 {individui ? (
-                                    <ListaIndividui individui={individui} navigator={navigate} />) : (<div></div>)}
+                                    <ListaIndividui colonna="col-3" individui={individui} navigator={navigate} />) : (<Loading />)}
                             </div>
                         </div>
                     </div>

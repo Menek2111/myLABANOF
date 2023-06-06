@@ -4,6 +4,7 @@ import Button from 'react-bootstrap/Button';
 import ConnectionManager from "../../api/ConnectionManager";
 import ModalCreateCarattereMetrico from "../../UI/modalCreateCarattereMetrico";
 import RigaCaratteriMetrici from "./rigaCaratteriMetrici";
+import Loading from "../../UI/loading";
 
 function CaratteriMetrici(props) {
 
@@ -71,20 +72,24 @@ function CaratteriMetrici(props) {
 
     return (<div className="col-6">
         <Table bordered striped hover size="sm">
-            <tbody>
-
+            <thead>
                 <tr>
                     <th>Caratteri metrici</th>
                     <th>Lato</th>
                     <th>Valore</th>
                     <th>Unità di misura</th>
                 </tr>
-
+            </thead>
+            <tbody>
                 {caratteriMetriciIndividuo ? (
                     caratteriMetriciIndividuo.map(car => (
                         <RigaCaratteriMetrici carattere={car} caratteri={caratteriMetrici} />
                     ))
-                ) : (<tr></tr>)}
+                ) : (<tr>
+                    <td colSpan={4}>
+                        <Loading />
+                    </td>
+                </tr>)}
             </tbody>
         </Table>
         <div className="d-flex justify-content-end">

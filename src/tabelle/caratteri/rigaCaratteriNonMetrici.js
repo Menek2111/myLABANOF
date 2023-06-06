@@ -57,6 +57,19 @@ function RigaCaratteriNonMetrici(props) {
         })
     }
 
+
+    const deleteCarattereNonMetricoSpecifico = async () => {
+        let cm = new ConnectionManager();
+        var params = { id: props.carattere.id }
+        await cm.deleteCarattereNonMetricoSpecifico(JSON.stringify(params)).then(res => {
+            if (res.response === 'success') {
+                window.location.reload(false);
+            }
+        })
+    }
+
+
+
     return (
         <tr key={props.carattere.id} onClick={handleShow}>
             <td>
@@ -113,11 +126,15 @@ function RigaCaratteriNonMetrici(props) {
                         </div>
 
                     </Modal.Body>
-                    <Modal.Footer>
-                        <Button variant="secondary" onClick={handleClose}>
-                            Chiudi senza salvare
-                        </Button>
-                        <Button variant="primary" type="submit">Salva</Button>
+                    <Modal.Footer className='d-flex justify-content-between'>
+                        <Button variant="outline-danger" onClick={() => deleteCarattereNonMetricoSpecifico()}>Elimina</Button>
+                        <div>
+                            <Button variant="secondary" onClick={handleClose}>
+                                Chiudi senza salvare
+                            </Button>
+                            <Button className='mx-1' variant="primary" type="submit">Salva</Button>
+                        </div>
+
                     </Modal.Footer>
                 </Form>
             </Modal>

@@ -26,7 +26,7 @@ function ProfiloBiologicoIndividuo(props) {
     function editableTable() {
         return (<div>
             <h5 className='border-bottom mb-4'>Profilo biologico</h5>
-            <Table bordered striped hover size="sm">
+            <Table bordered striped size="sm">
                 <tbody>
                     <tr>
                         <th className='w-25'>Sesso biologioco</th>
@@ -85,7 +85,7 @@ function ProfiloBiologicoIndividuo(props) {
     function uneditableTable() {
         return (<div>
             <h5 className='border-bottom mb-4'>Profilo biologico</h5>
-            <Table bordered striped hover size="sm">
+            <Table bordered striped size="sm">
                 <tbody>
                     <tr>
                         <th className='w-25'>Sesso biologioco</th>
