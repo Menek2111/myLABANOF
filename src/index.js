@@ -27,7 +27,7 @@ const container = document.getElementById('root');
 const root = createRoot(container);
 
 if (sessionStorage.getItem('tema') == null) {
-    sessionStorage.setItem('tema', 'tema1')
+    sessionStorage.setItem('tema', 'temaMyLabanof')
 }
 const theme = sessionStorage.getItem('tema')
 
