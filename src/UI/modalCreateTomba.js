@@ -36,8 +36,9 @@ function ModalCreateTomba() {
         let cm = new ConnectionManager();
         var params = { nome: nome, nMinIndividui: num, coordinate: coord }
         await cm.createTomba(JSON.stringify(params)).then(res => {
+            console.log('CreateTomba', res)
             if (res.error == null) {
-                window.location.reload(false)
+                //window.location.reload(false)
             }
         })
 

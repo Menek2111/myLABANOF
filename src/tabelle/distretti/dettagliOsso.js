@@ -67,8 +67,8 @@ function DettagliOsso(props) {
         await cm.editOsso(JSON.stringify(params)).then(res => {
             console.log(res)
             if (res.response === 'success') {
-                console.log('sql', res.sql)
-                window.location.reload(false);
+                props.callback()
+                setEditable(false)
             }
         })
     }
@@ -77,6 +77,14 @@ function DettagliOsso(props) {
 
 
     }, []);
+
+    let checkUser = () => {
+        if (localStorage.getItem('userID') != sessionStorage.getItem('individuoSelezionatoCreatore')) {
+            return (<div></div>)
+        } else {
+            return <Button className='p-1 mb-1' onClick={() => setEditable((state) => !state)}>Modifica</Button>
+        }
+    }
 
 
     return (
@@ -91,142 +99,151 @@ function DettagliOsso(props) {
                         </div>
                     </div>
 
-                    <Table bordered striped hover size="sm">
-                        <tbody>
-                            <tr>
-                                <th className='w-25'>Osso</th>
-                                <td><input className='form-control' defaultValue={props.osso.nome} disabled /></td>
-                            </tr>
-                            <tr>
-                                <th>Materiale rivenuto</th>
-                                <td>
-                                    <Form.Select defaultValue={props.osso.lato} onChange={(e) => setLato(e.target.value)}>
-                                        <option></option>
-                                        <option>Destro</option>
-                                        <option>Sinistro</option>
-                                        <option>Unico</option>
-                                        <option>Incerto</option>
-                                    </Form.Select>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>Integro</th>
-                                <td>
-                                    <Form.Check
-                                        type="checkbox"
-                                        defaultChecked={integro}
-                                        onChange={() => {
-                                            setIntegro((state) => !state)
-                                        }}
-                                    />
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>Livello di integrità</th>
-                                <td><input type='number' className='form-control' defaultValue={props.osso.lvlIntegrita} onChange={(e) => setLvlIntegrita(e.target.value)} /></td>
-                            </tr>
-                            <tr>
-                                <th>Livello di qualità</th>
-                                <td><input type='number' className='form-control' defaultValue={props.osso.lvlQualita} onChange={(e) => setLvlQualita(e.target.value)} /></td>
-                            </tr>
-                            <tr>
-                                <th>Restaurato</th>
-                                <td>
-                                    <Form.Check
-                                        type="checkbox"
-                                        defaultChecked={restaurato}
-                                        onChange={() => setRestaurato((state) => !state)} />
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>Catalogazione e descrizione</th>
-                                <td><input className='form-control' defaultValue={props.osso.catalogazioneDescrizione} onChange={(e) => setCatalogazioneDescrizione(e.target.value)} /></td>
-                            </tr>
-                            <tr>
-                                <th>Indagine radiologica</th>
-                                <td>
-                                    <Form.Select defaultValue={props.osso.indagineRadiologica} onChange={(e) => setIndagineRadiologica(e.target.value)}>
-                                        <option></option>
-                                        <option>RX</option>
-                                        <option>TAC</option>
-                                        <option>RMN</option>
-                                        <option>ECO</option>
-                                        <option>microTAC</option>
-                                    </Form.Select>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>Campionamento</th>
-                                <td><input className='form-control' defaultValue={props.osso.campionamento} onChange={(e) => setCampionamento(e.target.value)} /></td>
-                            </tr>
-                            <tr>
-                                <th>Altre analisi</th>
-                                <td><input className='form-control' defaultValue={props.osso.altreAnalisi} onChange={(e) => setAltreAnalisi(e.target.value)} /></td>
-                            </tr>
-                        </tbody>
-                    </Table>
-                </div>
+                    <div className='border rounded p-2'>
+                        <Table bordered striped hover size="sm">
+                            <tbody>
+                                <tr>
+                                    <th className='w-25'>Osso</th>
+                                    <td><input className='form-control' defaultValue={props.osso.nome} disabled /></td>
+                                </tr>
+                                <tr>
+                                    <th>Materiale rivenuto</th>
+                                    <td>
+                                        <Form.Select defaultValue={props.osso.lato} onChange={(e) => setLato(e.target.value)}>
+                                            <option></option>
+                                            <option>Destro</option>
+                                            <option>Sinistro</option>
+                                            <option>Unico</option>
+                                            <option>Incerto</option>
+                                        </Form.Select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Integro</th>
+                                    <td>
+                                        <Form.Check
+                                            type="checkbox"
+                                            defaultChecked={integro}
+                                            onChange={() => {
+                                                setIntegro((state) => !state)
+                                            }}
+                                        />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Livello di integrità</th>
+                                    <td><input type='number' className='form-control' defaultValue={props.osso.lvlIntegrita} onChange={(e) => setLvlIntegrita(e.target.value)} /></td>
+                                </tr>
+                                <tr>
+                                    <th>Livello di qualità</th>
+                                    <td><input type='number' className='form-control' defaultValue={props.osso.lvlQualita} onChange={(e) => setLvlQualita(e.target.value)} /></td>
+                                </tr>
+                                <tr>
+                                    <th>Restaurato</th>
+                                    <td>
+                                        <Form.Check
+                                            type="checkbox"
+                                            defaultChecked={restaurato}
+                                            onChange={() => setRestaurato((state) => !state)} />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Catalogazione e descrizione</th>
+                                    <td><input className='form-control' defaultValue={props.osso.catalogazioneDescrizione} onChange={(e) => setCatalogazioneDescrizione(e.target.value)} /></td>
+                                </tr>
+                                <tr>
+                                    <th>Indagine radiologica</th>
+                                    <td>
+                                        <Form.Select defaultValue={props.osso.indagineRadiologica} onChange={(e) => setIndagineRadiologica(e.target.value)}>
+                                            <option></option>
+                                            <option>RX</option>
+                                            <option>TAC</option>
+                                            <option>RMN</option>
+                                            <option>ECO</option>
+                                            <option>microTAC</option>
+                                        </Form.Select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Campionamento</th>
+                                    <td><input className='form-control' defaultValue={props.osso.campionamento} onChange={(e) => setCampionamento(e.target.value)} /></td>
+                                </tr>
+                                <tr>
+                                    <th>Altre analisi</th>
+                                    <td><input className='form-control' defaultValue={props.osso.altreAnalisi} onChange={(e) => setAltreAnalisi(e.target.value)} /></td>
+                                </tr>
+                            </tbody >
+                        </Table >
+                    </div >
+
+
+
+                </div >
             ) : (
                 <div>
                     <div className='border-bottom mb-2 d-flex justify-content-between'>
                         <h5 className=''>Informazioni</h5>
-                        <Button className='p-1 mb-1' onClick={() => setEditable((state) => !state)}>Modifica</Button>
+                        {checkUser()}
                     </div>
 
-                    <Table bordered striped hover size="sm">
+                    <div className='border rounded p-2'>
+                        <Table bordered striped hover size="sm">
 
-                        <tbody>
-                            <tr>
-                                <th className='w-25'>Osso</th>
-                                <td>{props.osso.nome}</td>
-                            </tr>
-                            <tr>
-                                <th>Materiale rivenuto</th>
-                                <td>{props.osso.lato}</td>
-                            </tr>
-                            <tr>
-                                <th>Integro</th>
-                                <td><Form.Check
-                                    type="checkbox"
-                                    defaultChecked={integro}
-                                    disabled /></td>
-                            </tr>
-                            <tr>
-                                <th>Livello di integrità</th>
-                                <td>{props.osso.lvlIntegrita}</td>
-                            </tr>
-                            <tr>
-                                <th>Livello di qualità</th>
-                                <td>{props.osso.lvlQualita}</td>
-                            </tr>
-                            <tr>
-                                <th>Restaurato</th>
-                                <td><Form.Check
-                                    type="checkbox"
-                                    defaultChecked={restaurato}
-                                    disabled /></td>
-                            </tr>
-                            <tr>
-                                <th>Catalogazione e descrizione</th>
-                                <td>{props.osso.catalogazioneDescrizione}</td>
-                            </tr>
-                            <tr>
-                                <th>Indagine radiologica</th>
-                                <td>{props.osso.indagineRadiologica}</td>
-                            </tr>
-                            <tr>
-                                <th>Campionamento</th>
-                                <td>{props.osso.campionamento}</td>
-                            </tr>
-                            <tr>
-                                <th>Altre analisi</th>
-                                <td>{props.osso.altreAnalisi}</td>
-                            </tr>
-                        </tbody>
-                    </Table>
+                            <tbody>
+                                <tr>
+                                    <th className='w-25'>Osso</th>
+                                    <td>{props.osso.nome}</td>
+                                </tr>
+                                <tr>
+                                    <th>Materiale rivenuto</th>
+                                    <td>{props.osso.lato}</td>
+                                </tr>
+                                <tr>
+                                    <th>Integro</th>
+                                    <td><Form.Check
+                                        type="checkbox"
+                                        defaultChecked={integro}
+                                        disabled /></td>
+                                </tr>
+                                <tr>
+                                    <th>Livello di integrità</th>
+                                    <td>{props.osso.lvlIntegrita}</td>
+                                </tr>
+                                <tr>
+                                    <th>Livello di qualità</th>
+                                    <td>{props.osso.lvlQualita}</td>
+                                </tr>
+                                <tr>
+                                    <th>Restaurato</th>
+                                    <td><Form.Check
+                                        type="checkbox"
+                                        defaultChecked={restaurato}
+                                        disabled /></td>
+                                </tr>
+                                <tr>
+                                    <th>Catalogazione e descrizione</th>
+                                    <td>{props.osso.catalogazioneDescrizione}</td>
+                                </tr>
+                                <tr>
+                                    <th>Indagine radiologica</th>
+                                    <td>{props.osso.indagineRadiologica}</td>
+                                </tr>
+                                <tr>
+                                    <th>Campionamento</th>
+                                    <td>{props.osso.campionamento}</td>
+                                </tr>
+                                <tr>
+                                    <th>Altre analisi</th>
+                                    <td>{props.osso.altreAnalisi}</td>
+                                </tr>
+                            </tbody>
+                        </Table>
+                    </div>
+
                 </div>
-            )}
-        </Form>
+            )
+            }
+        </Form >
     )
 }
 export default DettagliOsso;

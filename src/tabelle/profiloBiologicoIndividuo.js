@@ -25,7 +25,7 @@ function ProfiloBiologicoIndividuo(props) {
 
     function editableTable() {
         return (<div>
-            <h5 className='border-bottom mb-4'>Profilo biologico</h5>
+            <h5 className='border-bottom mb-2'>Profilo biologico</h5>
             <Table bordered striped size="sm">
                 <tbody>
                     <tr>
@@ -84,7 +84,7 @@ function ProfiloBiologicoIndividuo(props) {
 
     function uneditableTable() {
         return (<div>
-            <h5 className='border-bottom mb-4'>Profilo biologico</h5>
+            <h5 className='border-bottom mb-2'>Profilo biologico</h5>
             <Table bordered striped size="sm">
                 <tbody>
                     <tr>
@@ -126,7 +126,10 @@ function ProfiloBiologicoIndividuo(props) {
 
 
     return <div className="col-6">
-        {checkEditableValue()}
+        <div className="border rounded p-2">
+            {checkEditableValue()}
+
+        </div>
     </div>
 
 };

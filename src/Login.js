@@ -44,7 +44,7 @@ function Login() {
                 .then((res) => {
                     localStorage.setItem('profile', JSON.stringify(res.data))
                     sessionStorage.setItem('access_token', user.access_token)
-                    register(res.data).then(res => localStorage.setItem('userID', JSON.stringify(res.userId.id)))
+                    register(res.data).then(res => localStorage.setItem('userID', res.userId.id))
                     navigate('/home')
                 })
                 .catch((err) => console.log(err));
@@ -80,7 +80,7 @@ function Login() {
             <div className='container p-3 h-100'>
                 <div className=' h-100 d-flex align-items-center justify-content-center'>
 
-                    <div className='row bg-white w-50 shadow rounded text-center d-flex'>
+                    <div className='row bg-white w-75 shadow rounded text-center d-flex'>
                         <div className='col-lg col-sm-12'>
                             <img className='my-3' src={logo} style={{ height: '25vh' }} alt="logo"></img>
 

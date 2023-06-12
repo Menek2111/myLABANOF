@@ -63,6 +63,7 @@ function CaratteriMetrici(props) {
                     setCaratteriMetriciIndividuo(null)
                     break
                 case 'error':
+                    setCaratteriMetriciIndividuo(null)
                     break
                 default:
                     break
@@ -70,31 +71,57 @@ function CaratteriMetrici(props) {
         })
     }, []);
 
+    let checkCarattereMetricoIndividuo = () => {
+        if (caratteriMetriciIndividuo == null) {
+            return <div>Non sono presenti caratteri metrici...</div>
+        } else {
+            return (<Table bordered striped hover size="sm">
+                <thead>
+                    <tr>
+                        <th>Caratteri metrici</th>
+                        <th>Lato</th>
+                        <th>Valore</th>
+                        <th>Unità di misura</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {caratteriMetriciIndividuo ? (
+                        caratteriMetriciIndividuo.map(car => (
+                            <RigaCaratteriMetrici carattere={car} caratteri={caratteriMetrici} />
+                        ))
+                    ) : (<tr>
+                        <td colSpan={4}>
+                            <Loading />
+                        </td>
+                    </tr>)}
+                </tbody>
+            </Table>)
+        }
+    }
+
+
+    let checkUser = () => {
+        if (localStorage.getItem('userID') != sessionStorage.getItem('individuoSelezionatoCreatore')) {
+            return (<div></div>)
+        } else {
+            return <ModalCreateCarattereMetrico caratteri={caratteriMetrici} />
+        }
+    }
+
+
     return (<div className="col-6">
-        <Table bordered striped hover size="sm">
-            <thead>
-                <tr>
-                    <th>Caratteri metrici</th>
-                    <th>Lato</th>
-                    <th>Valore</th>
-                    <th>Unità di misura</th>
-                </tr>
-            </thead>
-            <tbody>
-                {caratteriMetriciIndividuo ? (
-                    caratteriMetriciIndividuo.map(car => (
-                        <RigaCaratteriMetrici carattere={car} caratteri={caratteriMetrici} />
-                    ))
-                ) : (<tr>
-                    <td colSpan={4}>
-                        <Loading />
-                    </td>
-                </tr>)}
-            </tbody>
-        </Table>
-        <div className="d-flex justify-content-end">
-            {caratteriMetrici ? (<ModalCreateCarattereMetrico caratteri={caratteriMetrici} />) : (<div></div>)}
+        <h5 className='border-bottom mb-2'>Caratteri metrici</h5>
+
+        <div className="border rounded p-2">
+            {checkCarattereMetricoIndividuo()}
+
+
+            <div className="d-flex justify-content-end">
+                {caratteriMetrici ? (checkUser()) : (<div></div>)}
+            </div>
+
         </div>
+
 
     </div >)
 }

@@ -49,7 +49,7 @@ function ModalCreateIndividuo() {
     }
     const getTombe = async (e) => {
         let cm = new ConnectionManager();
-        let res = await cm.getTombe();
+        let res = await cm.getAllTombe();
         return res.response;
     }
     return (

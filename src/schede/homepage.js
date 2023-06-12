@@ -60,18 +60,18 @@ function Homepage() {
     return (
         <div>
             {loading ? (
-                <div className='px-4 py-2 containerPrincipale'>
+                <div className='px-4 py-2 containerPrincipale '>
                     <div className='row d-flex'>
-                        <div className='col-2'>
+                        <div className='col-2 d-none d-sm-block d-md-none d-lg-block 	d-sm-none d-md-block' >
                             <SideNav />
                         </div>
-                        <div className='col-10 bg-white border rounded' style={{ height: '89vh', overflowY: 'scroll' }}>
+                        <div className='col-sm-12 col-lg-10 bg-white border rounded' style={{ height: '89vh', overflowY: 'scroll' }}>
 
                             <h5 className='pt-3 border-bottom'>Tombe</h5>
-                            <ListaTombe colonna="col-2" tombe={tombe} navigator={navigate} />
+                            <ListaTombe colonna="col-lg-2 col-sm-6" tombe={tombe} navigator={navigate} />
 
                             <h5 className='pt-3 border-bottom'>Individui</h5>
-                            <ListaIndividui colonna="col-4" individui={individui} navigator={navigate} />
+                            <ListaIndividui colonna="col-lg-4 col-sm-5" individui={individui} navigator={navigate} />
 
                         </div>
                     </div>

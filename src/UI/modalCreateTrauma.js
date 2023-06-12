@@ -23,7 +23,7 @@ function ModalCreateTrauma(props) {
     const [listaTraumi, setListaTraumi] = useState()
 
     useEffect(() => {
-        getTraumaGeneraleByDistretto()
+
     }, []);
 
     //Gestione modal
@@ -33,21 +33,13 @@ function ModalCreateTrauma(props) {
 
     //Chiamate API
 
-    const getTraumaGeneraleByDistretto = async () => {
-        let cm = new ConnectionManager();
-        var params = { distretto: props.distretto }
-        await cm.getTraumaGeneraleByDistretto(JSON.stringify(params)).then(res => {
-            if (res.response == 'success') {
-                setListaTraumi(res.results)
-            }
-        })
-    }
 
     const createTraumaSpecifico = async () => {
         let cm = new ConnectionManager();
         var params = { tipoTrauma: trauma, osso: props.osso, datazione: datazione, descrizione: descrizione }
         await cm.createTraumaSpecifico(JSON.stringify(params)).then(res => {
             if (res.response === 'success') {
+                props.callback()
                 handleClose()
             }
         })
@@ -55,7 +47,7 @@ function ModalCreateTrauma(props) {
 
     return (
         <div>
-            <Button className='w-100 p-1' variant="primary" onClick={handleShow}>
+            <Button className='w-100 p-1 mb-1' variant="primary" onClick={handleShow}>
                 Aggiungi
             </Button >
             <Modal
@@ -66,17 +58,18 @@ function ModalCreateTrauma(props) {
                 size="lg"
                 centered
             >
-                <Modal.Header closeButton>
-                    <Modal.Title>Creazione nuova tomba</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                    <Form onSubmit={createTraumaSpecifico}>
+                <Form onSubmit={createTraumaSpecifico}>
+                    <Modal.Header closeButton>
+                        <Modal.Title>Creazione nuovo trauma</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+
                         <Form.Group className="mb-3" controlId="formBasicPassword">
                             <Form.Label>Truma</Form.Label>
                             <Form.Select onChange={(e) => setTrauma(e.target.value)} required>
                                 <option></option>
-                                {listaTraumi ? (
-                                    listaTraumi.map(tr => <option key={tr.id} value={tr.id}>{tr.nome}</option>)
+                                {props.listaTraumi ? (
+                                    props.listaTraumi.map(tr => <option key={tr.id} value={tr.id}>{tr.nome}</option>)
                                 ) : (<option></option>)}
                             </Form.Select>
                         </Form.Group>
@@ -86,7 +79,7 @@ function ModalCreateTrauma(props) {
                         </Form.Group>
                         <Form.Group className="mb-3" controlId="formBasicPassword">
                             <Form.Label>Datazione</Form.Label>
-                            <Form.Select onChange={(e) => setDatazione(e.target.value)} required>
+                            <Form.Select onChange={(e) => setDatazione(e.target.value)} >
                                 <option></option>
                                 <option>Ante-mortem</option>
                                 <option>Peri-mortem</option>
@@ -95,14 +88,15 @@ function ModalCreateTrauma(props) {
                                 <option>ND</option>
                             </Form.Select>
                         </Form.Group>
-                    </Form>
-                </Modal.Body>
-                <Modal.Footer>
-                    <Button variant="secondary" onClick={handleClose}>
-                        Chiudi senza salvare
-                    </Button>
-                    <Button variant="primary" onClick={() => createTraumaSpecifico()}>Salva</Button>
-                </Modal.Footer>
+
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <Button variant="secondary" onClick={handleClose}>
+                            Chiudi senza salvare
+                        </Button>
+                        <Button variant="primary" type="submit">Salva</Button>
+                    </Modal.Footer>
+                </Form>
             </Modal>
         </div >
     );

@@ -97,6 +97,9 @@
   background-size: cover;
   user-select: none;
 }
+.temaMyLabanof .indCard:hover{
+  background-color: #7FBDFF !important;
+}
 
 .temaPastelloArancio{
   height: 100vh;
@@ -113,6 +116,10 @@ background: linear-gradient(360deg, rgba(254,214,165,1) 0%, rgb(247, 249, 252, 1
   background-color: #a5cdfe !important;
   border-color: #a5cdfe !important;
 }
+.temaPastelloArancio .indCard:hover{
+  background-color: #a5cdfe !important;
+}
+
 
 .temaPastelloVerde{
   height: 100vh;

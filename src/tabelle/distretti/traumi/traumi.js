@@ -21,40 +21,76 @@ function Traumi(props) {
         return res;
     }
 
+    const aggiorna = () => {
+        getTraumaSpecifico().then(res => {
+            if (res.response === 'success') {
+                setTraumi(res.results)
+            }
+        })
+    }
+
     useEffect(() => {
         getTraumaSpecifico().then(res => {
             if (res.response === 'success') {
                 setTraumi(res.results)
-            } else {
-                setTraumi(null)
             }
         })
 
         getTraumaGeneraleByDistretto().then(res => setListaTraumi(res.results))
-    }, [traumi]);
+    }, []);
+
+    let getTraumi = () => {
+        if (traumi.length == 0) {
+            return <div className="border rounded p-2 mb-4">Non sono presenti traumi...</div>
+        } else {
+            return (
+                <div className="border rounded p-2 mb-4">
+                    <Table bordered striped hover size="sm">
+                        <thead>
+                            <tr>
+                                <th>Trauma</th>
+                                <th>Descrizione</th>
+                                <th>Datazione</th>
+                                {checkUser2()}
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {traumi ? (traumi.map(trauma =>
+                                <RigaTraumi key={trauma.id} trauma={trauma} traumi={listaTraumi} callback={aggiorna} />
+                            )) : (<tr></tr>)}
+                        </tbody>
+                    </Table>
+                </div>
+            )
+        }
+    }
+    let checkUser2 = () => {
+        if (localStorage.getItem('userID') != sessionStorage.getItem('individuoSelezionatoCreatore')) {
+            return
+        } else {
+            return <th></th>
+        }
+    }
+
+    let checkUser = () => {
+        if (localStorage.getItem('userID') != sessionStorage.getItem('individuoSelezionatoCreatore')) {
+            return (<div></div>)
+        } else {
+            return <ModalCreateTrauma listaTraumi={listaTraumi} distretto={1} osso={props.osso} callback={aggiorna} />
+
+        }
+    }
+
 
     return (<div className="">
         <div className='border-bottom mb-2 d-flex justify-content-between'>
             <h5 className=''>Traumi</h5>
-            <ModalCreateTrauma traumi={traumi} distretto={1} osso={props.osso} />
+            {checkUser()}
         </div>
-        <Table bordered striped hover size="sm">
-            <thead>
-                <tr>
-                    <th>Trauma</th>
-                    <th>Descrizione</th>
-                    <th>Datazione</th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
 
-                {traumi ? (traumi.map(trauma =>
-                    <RigaTraumi key={trauma.id} trauma={trauma} traumi={listaTraumi} />
-                )) : (<tr></tr>)}
 
-            </tbody>
-        </Table>
+        {getTraumi()}
+
         <div className="d-flex justify-content-end">
         </div>
 

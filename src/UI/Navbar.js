@@ -26,6 +26,9 @@ function NavBar() {
 
     const [result, setResult] = useState();
 
+    const [tipoRicerca, setTipoRicerca] = useState('Individuo');
+
+
     const centerMiddle = {
         display: "flex",
         alignItems: "center",
@@ -35,17 +38,91 @@ function NavBar() {
 
     useEffect(() => {
         setProfile(JSON.parse(localStorage.getItem('profile')));
-        getIndividuiByQuery('')
-    }, []);
+        getResultsByQuery('')
 
-    const getIndividuiByQuery = async (query) => {
+    }, [tipoRicerca]);
+
+    const getResultsByQuery = async (query) => {
         let cm = new ConnectionManager();
         var params = { query: query }
-        await cm.getIndividuoByQuery(JSON.stringify(params)).then(res => {
-            console.log('queer:', query)
-            console.log('Risultato ricerca', res)
-            setResult(res.results)
-        })
+
+        switch (tipoRicerca) {
+            case 'Individuo':
+                await cm.getIndividuoByQuery(JSON.stringify(params)).then(res => {
+                    setResult(res.results)
+                })
+                break
+            case 'Tomba':
+                await cm.getTombaByQuery(JSON.stringify(params)).then(res => {
+                    setResult(res.results)
+                })
+                break
+            case 'Utente':
+                await cm.getUtenteByQuery(JSON.stringify(params)).then(res => {
+                    setResult(res.results)
+                })
+                break
+        }
+    }
+
+    let getDropdownItem = () => {
+        let array = []
+        switch (tipoRicerca) {
+            case 'Individuo':
+                array.push('Tomba')
+                array.push('Utente')
+                break
+            case 'Tomba':
+                array.push('Individuo')
+                array.push('Utente')
+                break
+            case 'Utente':
+                array.push('Individuo')
+                array.push('Tomba')
+                break
+        }
+        return array
+    }
+
+    let getResultsItem = (res) => {
+        switch (tipoRicerca) {
+
+            case 'Individuo':
+                return (<Dropdown.Item key={res.id} onClick={
+                    () => {
+                        sessionStorage.setItem('individuoSelezionato', res.id)
+                        sessionStorage.setItem('individuoSelezionatoCreatore', res.creatoreID)
+                        navigate('/individuo')
+                        window.location.reload(false)
+                    }
+                }>
+                    {res.nome}
+                </Dropdown.Item>)
+            case 'Tomba':
+                return (<Dropdown.Item key={res.id} onClick={() => {
+                    sessionStorage.setItem('tombaSelezionata', res.id)
+                    navigate('/tomba')
+                    window.location.reload(false)
+                }
+                }
+                >
+                    {res.nome}
+                </Dropdown.Item >)
+            case 'Utente':
+                return (<Dropdown.Item key={res.id} onClick={() => {
+                    sessionStorage.setItem('profiloSelezionato', res.id)
+                    navigate('/utente')
+                    window.location.reload(false)
+                }
+                }
+                >
+                    {res.email} - {res.name}
+                </Dropdown.Item >)
+        }
+    }
+
+    let aggiornaResults = (opt) => {
+        setTipoRicerca(opt)
     }
 
     return (
@@ -64,28 +141,36 @@ function NavBar() {
                             </Nav.Link>
                         </Nav.Item>
                         <div className='py-2'>
+                            <div className='bar border'>
+                                <div className="text-center" style={centerMiddle}>
 
-                            <div className="bar text-center mx-3 p-0" style={centerMiddle}>
-                                <img className='p-0 mx-3' src={search} alt="search" style={{ height: '2vh' }}></img>
-                                <Dropdown>
-                                    <Dropdown.Toggle variant="success" className='bg-transparent searchbar removeArrow'>
-                                        <input className="searchbar2 bg-transparent" onChange={(e) => getIndividuiByQuery(e.target.value)} type="text" ></input>
-                                    </Dropdown.Toggle>
-                                    <Dropdown.Menu className='rounded border mt-0' style={{ width: '26vw', inlineSize: '26vw' }}>
-                                        {
-                                            result ? (result.map(res => <Dropdown.Item key={res.id} onClick={
-                                                () => {
-                                                    sessionStorage.setItem('individuoSelezionato', res.id)
-                                                    navigate('/individuo')
-                                                    window.location.reload(false)
+                                    <div className='px-2' style={{ borderRight: 'solid', borderWidth: '1px', borderColor: '#DEE2E6' }}>
+                                        <Dropdown>
+                                            <Dropdown.Toggle variant="" className='searchbar text-dark p-0 w-100'>
+                                                <span className='text-dark p-1'>{tipoRicerca}</span>
+                                            </Dropdown.Toggle>
+                                            <Dropdown.Menu className='rounded border mt-0 w-100'>
+                                                {getDropdownItem().map(opt => <Dropdown.Item key={opt} onClick={() => {
+                                                    aggiornaResults(opt)
                                                 }
-                                            }>
-                                                {res.nome} - {res.tomba} - {res.creatore}
-                                            </Dropdown.Item>)) : (<Dropdown.Item disabled>Nessun risultato...</Dropdown.Item>)
-                                        }
-                                    </Dropdown.Menu>
-                                </Dropdown>
+                                                }>{opt}</Dropdown.Item>)}
+                                            </Dropdown.Menu>
+                                        </Dropdown>
+                                    </div>
+
+                                    <Dropdown className='border-left w-100'>
+                                        <Dropdown.Toggle variant="success" className='bg-transparent searchbar removeArrow p-0 w-100'>
+                                            <input placeholder='Cerca...' className="w-100 searchbar2 bg-transparent rounded" onChange={(e) => getResultsByQuery(e.target.value)}  ></input>
+                                        </Dropdown.Toggle>
+                                        <Dropdown.Menu className='rounded border mt-0 w-100'>
+                                            {
+                                                result ? (result.map(res => getResultsItem(res))) : (<Dropdown.Item disabled>Nessun risultato...</Dropdown.Item>)
+                                            }
+                                        </Dropdown.Menu>
+                                    </Dropdown>
+                                </div>
                             </div>
+
                         </div>
                     </div>
                     <div>
@@ -103,7 +188,11 @@ function NavBar() {
                                         <div className='border border-bottom'></div>
                                     </div>
 
-                                    <Dropdown.Item href='#/utente' >
+                                    <Dropdown.Item onClick={() => {
+                                        sessionStorage.setItem('profiloSelezionato', localStorage.getItem('userID'))
+                                        navigate('/utente')
+                                        window.location.reload(false)
+                                    }}>
                                         Profilo
                                     </Dropdown.Item >
                                     <Dropdown.Item>Permessi</Dropdown.Item>

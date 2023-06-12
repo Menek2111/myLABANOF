@@ -50,6 +50,7 @@ function CaratteriNonMetrici(props) {
                     setCaratteriNonMetriciIndividuo(null)
                     break
                 case 'error':
+                    setCaratteriNonMetriciIndividuo(null)
                     break
                 default:
                     break
@@ -58,27 +59,51 @@ function CaratteriNonMetrici(props) {
         })
     }, []);
 
-    return (<div className="col-6">
-        <Table bordered striped hover size="sm">
-            <thead>
-                <tr>
-                    <th className="w-50">Caratteri non metrici</th>
-                    <th>Lato</th>
-                    <th>Valore</th>
-                </tr>
-            </thead>
-            <tbody>
-                {caratteriNonMetriciIndividuo ? (
-                    caratteriNonMetriciIndividuo.map(car => (
-                        <RigaCaratteriNonMetrici carattere={car} caratteri={caratteriNonMetrici} />
-                    ))
-                ) : (<tr></tr>)}
-            </tbody>
-        </Table>
-        <div className="d-flex justify-content-end">
-            {caratteriNonMetrici ? (<ModalCreateCarattereNonMetrico caratteri={caratteriNonMetrici} />) : (<Loading />)}
+    let checkCarattereNonMetricoIndividuo = () => {
+        if (caratteriNonMetriciIndividuo == null) {
+            return <div>Non sono presenti caratteri non metrici...</div>
+        }
+        else {
+            return (<Table bordered striped hover size="sm">
+                <thead>
+                    <tr>
+                        <th className="w-50">Caratteri non metrici</th>
+                        <th>Lato</th>
+                        <th>Valore</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {caratteriNonMetriciIndividuo ? (
+                        caratteriNonMetriciIndividuo.map(car => (
+                            <RigaCaratteriNonMetrici carattere={car} caratteri={caratteriNonMetrici} />
+                        ))
+                    ) : (<tr></tr>)}
+                </tbody>
+            </Table>)
+        }
+    }
 
+
+    let checkUser = () => {
+        if (localStorage.getItem('userID') != sessionStorage.getItem('individuoSelezionatoCreatore')) {
+            return (<div></div>)
+        } else {
+            return <ModalCreateCarattereNonMetrico caratteri={caratteriNonMetrici} />
+        }
+    }
+
+    return (<div className="col-6">
+        <h5 className='border-bottom mb-2'>Caratteri non metrici</h5>
+
+        <div className="border rounded p-2">
+            {checkCarattereNonMetricoIndividuo()}
+
+            <div className="d-flex justify-content-end">
+                {caratteriNonMetrici ? (checkUser()) : (<div></div>)}
+            </div>
         </div>
+
+
     </div >)
 }
 export default CaratteriNonMetrici;

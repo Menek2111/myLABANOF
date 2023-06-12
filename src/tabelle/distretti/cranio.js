@@ -31,24 +31,29 @@ function Cranio(props) {
         getOssaByDistretto().then(res => {
             console.log('NomeTipoOssa', res.results)
             setTipoOssa(res.results.sort(compareTipoOssa))
+        })
 
-            getOssaIndividuoByDistretto().then(res2 => {
-                if (res2.response === 'success') {
-                    console.log('OssaIndividuo', res2.results)
-                    setOssa(res2.results.sort(compare))
+        getOssaIndividuoByDistretto().then(res => {
+            if (res.response === 'success') {
+                console.log('OssaIndividuo', res.results)
+                setOssa(res.results.sort(compare))
 
-                    let output = []
-                    res2.results.map(osso => output.push(osso.tipoOsso))
-                    console.log('ossaPresenti', output)
-                    //setOssaPresenti(output)
-                    setLoading(true)
-                } else {
-                    setLoading(true)
-                }
-            })
+                setLoading(true)
+            }
         })
 
     }, []);
+
+    let aggiorna = () => {
+        getOssaIndividuoByDistretto().then(res => {
+            if (res.response === 'success') {
+                console.log('OssaIndividuo', res.results)
+                setOssa(res.results.sort(compare))
+
+                setLoading(true)
+            }
+        })
+    }
 
     function compare(a, b) {
         if (a.id < b.id) {
@@ -69,63 +74,60 @@ function Cranio(props) {
         return 0;
     }
 
-    return (<div>
-        {loading ? (
-            <div>
-                <Table bordered striped hover size="sm">
-                    <thead>
-                        <tr>
-                            <th>Osso</th>
-                            <th>Materiale rivenuto</th>
-                            <th>Integro</th>
-                            <th>Livello di integrità</th>
-                            <th>Livello di qualità</th>
-                            <th>Restaurato</th>
-                            <th>Catalogazione e descrizione</th>
-                            <th>Indagine radiologica</th>
-                            <th>Campionamento</th>
-                            <th>Altre analisi</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {ossa.map(osso => <RigaCranio key={osso.id} osso={osso} individuo={sessionStorage.getItem('individuoSelezionato')} />)}
-                    </tbody>
-                </Table>
-                <div className="d-flex justify-content-end">
-                    <ModalCreateOsso tipoOssa={tipoOssa} individuo={sessionStorage.getItem('individuoSelezionato')} />
-                </div>
-            </div >
-        ) : (
-            <Loading />
-        )
+    let checkOssa = () => {
+        if (ossa.length == 0) {
+            return <div>Non sono presenti ossa...</div>
+        } else {
+            return (<Table bordered striped hover size="sm">
+                <thead>
+                    <tr>
+                        <th>Osso</th>
+                        <th>Materiale rivenuto</th>
+                        <th>Integro</th>
+                        <th>Livello di integrità</th>
+                        <th>Livello di qualità</th>
+                        <th>Restaurato</th>
+                        <th>Catalogazione e descrizione</th>
+                        <th>Indagine radiologica</th>
+                        <th>Campionamento</th>
+                        <th>Altre analisi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {ossa.map(osso => <RigaCranio key={osso.id} osso={osso} individuo={sessionStorage.getItem('individuoSelezionato')} callback={aggiorna} />)}
+                </tbody>
+            </Table>)
         }
+    }
+
+    let checkUser = () => {
+        if (localStorage.getItem('userID') != sessionStorage.getItem('individuoSelezionatoCreatore')) {
+            return (<div></div>)
+        } else {
+            return (<div className="d-flex justify-content-end">
+                <ModalCreateOsso tipoOssa={tipoOssa} individuo={sessionStorage.getItem('individuoSelezionato')} callback={aggiorna} />
+            </div>)
+        }
+    }
+
+
+    return (<div>
+
+        <h5 className='border-bottom mb-2'>Ossa</h5>
+
+        <div className="border rounded p-2">
+            {checkOssa()}
+
+            {tipoOssa ? (
+                <div>
+                    {checkUser()}
+                </div >
+            ) : (
+                <div></div>
+            )
+            }
+        </div>
     </div >)
 
-
-    /*
-    
-                <div className="my-2"></div>
-                
-                <Table bordered hover size="sm">
-                    <tbody>
-                        <tr>
-                            <th>Osso</th>
-                            <th>Materiale rivenuto</th>
-                            <th>Integro</th>
-                            <th>Livello di integrità</th>
-                            <th>Livello di qualità</th>
-                            <th>Restaurato</th>
-                            <th>Catalogazione e descrizione</th>
-                            <th>Indagine radiologica</th>
-                            <th>Campionamento</th>
-                            <th>Altre analisi</th>
-                        </tr>
-                        {tipoOssa.map(tipoOsso =>
-                            ao(tipoOsso)
-                        )}
-                    </tbody>
-
-                </Table>
-*/
 }
 export default Cranio;

@@ -6,6 +6,8 @@ import ConnectionManager from '../api/ConnectionManager';
 import '../App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
+import ind from '../images/individuo.jpg'
+
 
 import { Dna } from 'react-loader-spinner'
 import ModalDeleteIndividuo from '../UI/modalDeleteIndividuo'
@@ -44,6 +46,20 @@ function SchedaIndividuo(props) {
         else setEditable(true)
     }
 
+    let checkUser = () => {
+        if (localStorage.getItem('userID') != individuo.utente.id) {
+            return (<div></div>)
+        } else {
+            return (<div className='d-flex justify-content-around'>
+                <Button variant="primary" onClick={() => changeEditable()}>
+                    Modifica
+                </Button>
+                <ModalDeleteIndividuo individuo={individuo.individuo} utente={individuo.utente} />
+
+            </div>)
+        }
+    }
+
     function editButton() {
         if (editable) {
             return (<div className='d-flex justify-content-around'>
@@ -55,12 +71,7 @@ function SchedaIndividuo(props) {
                 </Button>
             </div>)
         } else {
-            return (<div className='d-flex justify-content-around'>
-                <Button variant="primary" onClick={() => changeEditable()}>
-                    Modifica
-                </Button>
-                <ModalDeleteIndividuo individuo={individuo.individuo} utente={individuo.utente} />
-            </div>)
+            return checkUser()
         }
     }
 
@@ -122,8 +133,12 @@ function SchedaIndividuo(props) {
                                         <div style={centerMiddle}>
                                             <DropdownDistretti scheda='Individuo' id={individuo.individuo.id} />
                                         </div>
+                                        <div className='d-flex w-100 justify-content-center'>
+                                            <img className='mx-2' src={ind} style={{ height: '10vh' }} />
+                                            <p style={centerMiddle} className=''>{individuo.tomba.nome + ' ' + individuo.individuo.nome} <br /> Creato da: {individuo.utente.email} <br /> Il: {individuo.individuo.dataCreazione} </p>
+                                        </div>
 
-                                        <p style={centerMiddle} className=''>{individuo.tomba.nome + ' ' + individuo.individuo.nome} <br /> Creato da: {individuo.utente.email} <br /> Il: {individuo.individuo.dataCreazione} </p>
+
                                     </div>
 
                                     <div className='col-2 d-flex flex-column justify-content-center'>

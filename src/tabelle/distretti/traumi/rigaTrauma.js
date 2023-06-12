@@ -9,10 +9,7 @@ import ConnectionManager from '../../../api/ConnectionManager';
 
 function RigaTrauma(props) {
 
-    //Gestione modal
-    const [show, setShow] = useState(false);
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
+
 
     const [editable, setEditable] = useState(false);
 
@@ -32,7 +29,8 @@ function RigaTrauma(props) {
         await cm.editTraumaSpecifico(JSON.stringify(params)).then(res => {
             console.log('rigatrauma', res)
             if (res.response === 'success') {
-                window.location.reload(false);
+                props.callback()
+                setEditable(false)
             }
         })
     }
@@ -44,7 +42,8 @@ function RigaTrauma(props) {
         }
         await cm.deleteTraumaSpecifico(JSON.stringify(params)).then(res => {
             if (res.response === 'success') {
-
+                props.callback()
+                setEditable(false)
             }
         })
     }
@@ -52,6 +51,18 @@ function RigaTrauma(props) {
     useEffect(() => {
         console.log('mucca', props.trauma)
     }, []);
+
+
+    let checkUser = () => {
+        if (localStorage.getItem('userID') != sessionStorage.getItem('individuoSelezionatoCreatore')) {
+            return
+        } else {
+            return (<td style={{ whiteSpace: 'nowrap', width: '1%' }}>
+                <Button className='p-1' onClick={() => setEditable((state) => !state)}>Modifica</Button>
+                <Button className='p-1 mx-1' variant='danger' onClick={() => deleteTraumaSpecifico()}>Elimina</Button>
+            </td>)
+        }
+    }
 
     return editable ? (
         <tr>
@@ -77,7 +88,6 @@ function RigaTrauma(props) {
             <td className='text-center' style={{ whiteSpace: 'nowrap', width: '1%' }}>
                 <Button variant="secondary" className='p-1' onClick={() => setEditable((state) => !state)}>Annulla</Button>
                 <Button variant="primary" className='p-1 mx-1' onClick={() => editTraumaSpecifico()}>Salva</Button>
-
             </td>
         </tr >
     ) : (
@@ -86,10 +96,7 @@ function RigaTrauma(props) {
             }</td >
             <td>{props.trauma.descrizione}</td>
             <td>{props.trauma.datazione}</td>
-            <td style={{ whiteSpace: 'nowrap', width: '1%' }}>
-                <Button className='p-1' onClick={() => setEditable((state) => !state)}>Modifica</Button>
-                <Button className='p-1 mx-1' variant='danger' onClick={() => deleteTraumaSpecifico()}>Elimina</Button>
-            </td>
+            {checkUser()}
         </tr >
     )
 }

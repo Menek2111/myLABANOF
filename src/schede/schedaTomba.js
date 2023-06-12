@@ -8,7 +8,7 @@ import ListaIndividui from '../component/listaIndividui'
 import '../App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-import indThumb from '../images/tomblogo.png'
+import indThumb from '../images/icons/tomb.png'
 
 import { Dna } from 'react-loader-spinner'
 import { useNavigate } from 'react-router-dom'
@@ -23,6 +23,7 @@ function SchedaTomba() {
     const { state } = useLocation();
 
     const [individui, setIndividui] = useState()
+    const [tombaInfo, setTombaInfo] = useState()
 
     const centerMiddle = {
         display: "flex",
@@ -31,14 +32,38 @@ function SchedaTomba() {
         height: "100%"
     };
 
+    const getIndividuiByTomba = async () => {
+        let cm = new ConnectionManager();
+        let res = await cm.getIndividuiByTomba(JSON.stringify({ tomba: sessionStorage.getItem('tombaSelezionata') }));
+        return res;
+    }
+
+    const getTombaById = async () => {
+        let cm = new ConnectionManager();
+        let res = await cm.getTombaById(JSON.stringify({ id: sessionStorage.getItem('tombaSelezionata') }));
+        return res;
+    }
+
     useEffect(() => {
-        const getIndividuiByTomba = async () => {
-            let cm = new ConnectionManager();
-            let res = await cm.getIndividuiByTomba(JSON.stringify({ tomba: state.tomba.id }));
-            return res;
-        }
+        getTombaById().then(res => {
+            console.log('getTombaById', res)
+            switch (res.response) {
+                case 'success':
+                    setTombaInfo(res.results[0])
+                    break
+                case 'empty':
+                    setTombaInfo(null)
+                    break
+                case 'error':
+                    setTombaInfo(null)
+                    break
+                default:
+                    break
+            }
+        })
+
+
         getIndividuiByTomba().then(res => {
-            console.log(res.response)
             switch (res.response) {
                 case 'success':
                     setIndividui(res.results)
@@ -52,7 +77,7 @@ function SchedaTomba() {
                     break
             }
         })
-    }, [state.tomba]);
+    }, []);
 
     return (
         <div className='px-4 py-2 containerPrincipale' >
@@ -66,22 +91,24 @@ function SchedaTomba() {
                                         <img src={indThumb} style={{ height: '10vh' }} alt="individuo" />
                                     </div>
 
-                                    {state.tomba ? (
-                                        <p style={centerMiddle} className=''>Identificativo tomba: {state.tomba.nome} <br />Numero minimo di individui: {state.tomba.nMinIndividui} <br />Coordinate: {state.tomba.coordinate}</p>
+                                    {tombaInfo ? (
+                                        <p style={centerMiddle} className=''>Identificativo tomba: {tombaInfo.nome} <br />Numero minimo di individui: {tombaInfo.nMinIndividui} <br />Coordinate: {tombaInfo.coordinate}</p>
                                     ) : (<div></div>)}
 
                                 </div>
                                 <div className='col-2 d-flex flex-column justify-content-center'>
 
-                                    <div className='d-flex justify-content-around'>
-                                        <ModalEditTomba tomba={state.tomba} />
-                                        <ModalDeleteTomba tomba={state.tomba} />
+                                    <div>
+                                        {tombaInfo ? (<div className='d-flex justify-content-around'>
+                                            <ModalEditTomba tomba={tombaInfo} />
+                                            <ModalDeleteTomba tomba={tombaInfo} />
+                                        </div>) : (<div></div>)}
                                     </div>
                                 </div>
                             </div>
 
                             {individui ? (
-                                <ListaIndividui colonna="col-3" individui={individui} navigator={navigate} />
+                                <ListaIndividui colonna="col-lg-3 col-sm-6" individui={individui} navigator={navigate} />
                             ) : (
                                 <div className=' h-75 d-flex flex-column justify-content-center text-center'>
                                     <div>

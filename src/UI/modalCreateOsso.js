@@ -49,10 +49,18 @@ function ModalCreateOsso(props) {
         }
         await cm.createOsso(JSON.stringify(params)).then(res => {
 
-            if (res.response === 'success') {
-                console.log('sql', res.sql)
-                window.location.reload(false);
+            switch (res.response) {
+                case 'success':
+                    props.callback()
+                    handleClose()
+                    break
+                case 'alreadyExist':
+                    alert('Questo osso è già presente...')
+                    break
+                default:
+                    break
             }
+
         })
     }
 

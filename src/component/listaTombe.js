@@ -1,6 +1,6 @@
 import React from "react";
 
-import tomb from '../images/tomblogo.png'
+import tomb from '../images/icons/tomb.png'
 import { Dna } from 'react-loader-spinner'
 
 class ListaTombe extends React.Component {
@@ -16,14 +16,17 @@ class ListaTombe extends React.Component {
                 {this.state.tombe ? (
                     this.state.tombe.map(tomba =>
                         <div key={tomba.id} className={this.props.colonna} >
-                            <div className='d-flex indCard text-center rounded my-1 border p-2' style={{ backgroundColor: '' }} onClick={() => this.props.navigator('/tomba', { state: { tomba: tomba } })}>
+                            <div className='d-flex indCard text-center rounded my-1 border p-2' style={{ backgroundColor: '', cursor: 'pointer' }} onClick={() => {
+                                sessionStorage.setItem('tombaSelezionata', tomba.id)
+                                this.props.navigator('/tomba')
+                            }
+                            }>
                                 <div className="w-25" >
                                     <img className="w-100" src={tomb} alt="tomba" />
                                 </div>
                                 <div className="w-75">
                                     <span style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }} className='w-75 p-0 m-0'>
                                         {tomba.nome}
-
                                     </span><br />
                                     <span style={{ fontSize: '0.8em' }}>
                                         N° Individui: {tomba.nIndividui}

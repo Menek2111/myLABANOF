@@ -23,7 +23,7 @@ function GeneralitàIndividuo(props) {
 
     function editableTable() {
         return (<div>
-            <h5 className='border-bottom mb-4'>Generalità</h5>
+            <h5 className='border-bottom mb-2'>Generalità</h5>
             <Table bordered striped size="sm">
                 <tbody>
                     <tr>
@@ -41,7 +41,7 @@ function GeneralitàIndividuo(props) {
 
                 </tbody>
             </Table>
-            <h5 className='border-bottom my-4'>Tomba di appartenenza</h5>
+            <h5 className='border-bottom my-2'>Tomba di appartenenza</h5>
             <Table bordered striped size="sm">
                 <tbody>
                     <tr>
@@ -63,7 +63,7 @@ function GeneralitàIndividuo(props) {
 
     function uneditableTable() {
         return (<div>
-            <h5 className='border-bottom mb-4'>Generalità</h5>
+            <h5 className='border-bottom mb-2'>Generalità</h5>
             <Table bordered striped size="sm">
                 <tbody>
                     <tr>
@@ -81,7 +81,7 @@ function GeneralitàIndividuo(props) {
 
                 </tbody>
             </Table>
-            <h5 className='border-bottom my-4'>Tomba di appartenenza</h5>
+            <h5 className='border-bottom my-2'>Tomba di appartenenza</h5>
             <Table bordered striped size="sm">
                 <tbody>
                     <tr>
@@ -102,7 +102,10 @@ function GeneralitàIndividuo(props) {
     }
 
     return <div className="col-6">
-        {checkEditableValue()}
+        <div className="border rounded p-2">
+            {checkEditableValue()}
+
+        </div>
     </div>
 }
 

@@ -37,9 +37,18 @@ function ModalCreateCarattereMetrico(props) {
         var params = { individuo: sessionStorage.getItem('individuoSelezionato'), tipoCarattereMetrico: tipoCarattereMetrico, lato: lato, valore: valore, unitaMisura: unitaMisura }
         await cm.createCarattereMetricoSpecifico(JSON.stringify(params)).then(res => {
             console.log('Creazione carattere metrico', res)
-            if (res.response === 'success') {
-                window.location.reload(false);
+
+            switch (res.response) {
+                case 'success':
+                    window.location.reload(false)
+                    break
+                case 'alreadyExist':
+                    alert('Questo carattere metrico è già presente...')
+                    break
+                default:
+                    break
             }
+
         })
     }
 

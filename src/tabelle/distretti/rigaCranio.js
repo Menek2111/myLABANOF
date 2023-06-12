@@ -12,6 +12,7 @@ import Form from 'react-bootstrap/Form';
 import DettagliOsso from './dettagliOsso';
 import ModalDeleteOsso from '../../UI/modalDeleteOsso';
 import Traumi from './traumi/traumi';
+import Patologie from './patologie/patologie';
 
 
 function RigaCranio(props) {
@@ -73,32 +74,13 @@ function RigaCranio(props) {
                 </Modal.Header>
                 <Modal.Body className='row'>
 
-                    <DettagliOsso osso={props.osso} />
+                    <DettagliOsso osso={props.osso} callback={props.callback} />
 
                     <div className='col'>
 
                         <Traumi osso={props.osso.id} />
 
-                        <div className='border-bottom mb-2 d-flex justify-content-between'>
-                            <h5 className=''>Patologie</h5>
-                            <Button className='p-1'>Aggiungi</Button>
-                        </div>
-                        <Table bordered striped hover size="sm">
-                            <tbody>
-                                <tr>
-                                    <th>Patologia</th>
-                                    <th>Descrizione</th>
-                                    <th>Litica</th>
-                                    <th>Proliferativa</th>
-                                </tr>
-                                <tr>
-                                    <td>---</td>
-                                    <td>---</td>
-                                    <td>---</td>
-                                    <td>---</td>
-                                </tr>
-                            </tbody>
-                        </Table>
+                        <Patologie osso={props.osso.id} />
                     </div>
                 </Modal.Body>
 
@@ -106,52 +88,12 @@ function RigaCranio(props) {
                     <Button variant="secondary" onClick={handleClose} >
                         Chiudi
                     </Button>
+
                     <ModalDeleteOsso osso={props.osso.id} />
                 </Modal.Footer>
             </Modal>
         </tr >
     )
 
-    /*
-
-    return (
-        <div>
-            <Button variant="outline-danger" onClick={handleShow}>
-                Elimina
-            </Button>
-            <Modal
-                show={show}
-                onHide={handleClose}
-                backdrop="static"
-                keyboard={false}
-                size="lg"
-                centered
-            >
-                <Modal.Header closeButton>
-                    <Modal.Title>
-                        <p>Vuoi eliminare questa tomba?</p>
-                    </Modal.Title>
-                </Modal.Header>
-                <Form onSubmit={handleSubmit}>
-                    <Modal.Body>
-
-                        <div className='my-5'>
-                            Non sarà possibile eliminare la tomba finché questa non sarà completemante vuota, se vuoi eliminare la tomba dovrai spostare o eliminare gli individui appartenenti a questa tomba
-                        </div>
-
-                        <Form.Group controlId="formText"> </Form.Group>
-
-                    </Modal.Body>
-                    <Modal.Footer>
-                        <Button variant="secondary" onClick={handleClose}>
-                            Annulla
-                        </Button>
-                        <Button variant="danger" type="submit">ELIMINA</Button>
-                    </Modal.Footer>
-                </Form>
-            </Modal>
-        </div >
-    );
-    */
 }
 export default RigaCranio;

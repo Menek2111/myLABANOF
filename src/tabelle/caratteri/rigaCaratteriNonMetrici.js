@@ -70,8 +70,18 @@ function RigaCaratteriNonMetrici(props) {
 
 
 
+    let checkUser = () => {
+        if (localStorage.getItem('userID') != sessionStorage.getItem('individuoSelezionatoCreatore')) {
+            return (<div></div>)
+        } else {
+            return handleShow()
+        }
+    }
+
+
+
     return (
-        <tr key={props.carattere.id} onClick={handleShow}>
+        <tr key={props.carattere.id} onClick={() => checkUser()}>
             <td>
                 {props.carattere.nome}
             </td>

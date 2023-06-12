@@ -46,8 +46,15 @@ function ModalCreateCarattereNonMetrico(props) {
         }
         await cm.createCarattereNonMetricoSpecifico(JSON.stringify(params)).then(res => {
             console.log('Creazione carattere metrico', res)
-            if (res.response === 'success') {
-                window.location.reload(false);
+            switch (res.response) {
+                case 'success':
+                    window.location.reload(false)
+                    break
+                case 'alreadyExist':
+                    alert('Questo carattere non metrico è già presente...')
+                    break
+                default:
+                    break
             }
         })
     }

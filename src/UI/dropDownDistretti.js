@@ -7,7 +7,7 @@ import Dropdown from 'react-bootstrap/Dropdown';
 
 import ind from '../images/individuo.jpg'
 
-import skull from '../images/skull (4).jpg'
+import skull from '../images/skull (3).jpg'
 //import denti from '../images/teeth.png'
 //import colonna from '../images/colonna.png'
 //import torace from '../images/torace.png'
@@ -21,50 +21,45 @@ function DropDownDistretti(props) {
     function setMain() {
         switch (props.scheda) {
             case 'Individuo':
-                return <img src={ind} style={{ height: '10vh' }} alt="individuo" />
+                return 'DATI GENERALI'
             case 'Cranio':
-                return <img src={skull} style={{ height: '10vh' }} alt="individuo" />
+                return 'CRANIO'
             default:
                 return <div></div>
         }
     }
 
-
     let dpCranio = (
         <Dropdown.Item href="#/individuo/cranio">
-            <img className='' src={skull} style={{ height: '5vh' }} alt="Cranio" />Cranio
+            CRANIO
         </Dropdown.Item>
     )
 
     let dpIndividuo = (
         <Dropdown.Item href="#/individuo">
-            <img className='' src={ind} style={{ height: '5vh' }} alt="Generalità" />Generalità
+            DATI GENERALI
         </Dropdown.Item>
     )
-
 
     function setItems() {
         switch (props.scheda) {
             case 'Individuo':
-                return (<Dropdown.Menu>
-                    {dpCranio}
-                </Dropdown.Menu>)
+                return dpCranio
             case 'Cranio':
-                return (<Dropdown.Menu>
-                    {dpIndividuo}
-                </Dropdown.Menu>)
+                return dpIndividuo
             default:
                 return <div></div>
         }
     }
 
     return (
-        <Dropdown>
-            <Dropdown.Toggle variant="" id="dropdown-basic">
+        <Dropdown className='mx-3'>
+            <Dropdown.Toggle variant="outline-primary" id="dropdown-basic">
                 {setMain()}
             </Dropdown.Toggle>
-
-            {setItems()}
+            <Dropdown.Menu>
+                {setItems()}
+            </Dropdown.Menu>
         </Dropdown>
     );
 }

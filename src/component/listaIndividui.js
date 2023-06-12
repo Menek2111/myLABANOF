@@ -37,6 +37,7 @@ class ListaIndividui extends React.Component {
                         <div key={ind.id} className={this.props.colonna} >
                             <div className="d-flex rounded m-1 indCard border" style={{ backgroundColor: '', cursor: 'pointer' }} onClick={() => {
                                 sessionStorage.setItem('individuoSelezionato', ind.id)
+                                sessionStorage.setItem('individuoSelezionatoCreatore', ind.creatore)
                                 this.state.navigator('/individuo')
                             }}>
                                 <div className="w-25">
