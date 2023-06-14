@@ -83,7 +83,7 @@ function RigaPatologia(props) {
     return editable ? (
         <tr>
             <td>
-                <Form.Select defaultValue={tipoPatologia} onChange={(e) => setTipoPatologia(e.target.value)} required>
+                <Form.Select defaultValue={tipoPatologia} onChange={(e) => setTipoPatologia(e.target.value)} disabled>
                     <option></option>
                     {props.patologie.map(pato => <option key={pato.id} value={pato.id}>{pato.nome}</option>)}
                 </Form.Select>

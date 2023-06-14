@@ -67,7 +67,7 @@ function RigaTrauma(props) {
     return editable ? (
         <tr>
             <td>
-                <Form.Select defaultValue={props.trauma.tipoTrauma} onChange={(e) => setTipoTrauma(e.target.value)} required>
+                <Form.Select defaultValue={props.trauma.tipoTrauma} onChange={(e) => setTipoTrauma(e.target.value)} disabled>
                     <option></option>
                     {props.traumi.map(tr => <option key={tr.id} value={tr.id}>{tr.nome}</option>)}
                 </Form.Select>
@@ -101,74 +101,5 @@ function RigaTrauma(props) {
     )
 }
 
-/*
-
-*/
-
-
-/*
-<Modal
-                onClick={e => e.stopPropagation()}
-                show={show}
-                onHide={handleClose}
-                backdrop="static"
-                keyboard={false}
-                size='xl'
-            >
-                <Modal.Header closeButton>
-                    <Modal.Title>
-                    </Modal.Title>
-                </Modal.Header>
-                <Modal.Body className='row'>
-                    <div className='col'>
-                        <div className='border-bottom mb-2 d-flex justify-content-between'>
-                            <h5 className=''>Traumi</h5>
-                            <Button className='p-1'>Aggiungi</Button>
-                        </div>
-                        <Table bordered striped hover size="sm">
-                            <tbody>
-                                <tr>
-                                    <th>Trauma</th>
-                                    <th>Datazione</th>
-                                    <th>Descrizione</th>
-                                </tr>
-                                <tr>
-                                    <td>---</td>
-                                    <td>---</td>
-                                    <td>---</td>
-                                </tr>
-                            </tbody>
-                        </Table>
-
-                        <div className='border-bottom mb-2 d-flex justify-content-between'>
-                            <h5 className=''>Patologie</h5>
-                            <Button className='p-1'>Aggiungi</Button>
-                        </div>
-                        <Table bordered striped hover size="sm">
-                            <tbody>
-                                <tr>
-                                    <th>Patologia</th>
-                                    <th>Descrizione</th>
-                                    <th>Litica</th>
-                                    <th>Proliferativa</th>
-                                </tr>
-                                <tr>
-                                    <td>---</td>
-                                    <td>---</td>
-                                    <td>---</td>
-                                    <td>---</td>
-                                </tr>
-                            </tbody>
-                        </Table>
-                    </div>
-                </Modal.Body>
-
-                <Modal.Footer>
-                    <Button variant="secondary" onClick={handleClose} >
-                        Chiudi
-                    </Button>
-                </Modal.Footer>
-            </Modal>
-*/
 
 export default RigaTrauma;

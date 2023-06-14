@@ -12,10 +12,7 @@ function ListaIndividui(props) {
 
     //Chiamate Connection Manager
 
-
-
     useEffect(() => {
-
 
     }, [props.individui])
 
