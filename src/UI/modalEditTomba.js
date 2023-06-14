@@ -12,18 +12,16 @@ import { useNavigate } from 'react-router-dom'
 import '../App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-function ModalEditTomba({ tomba }) {
+function ModalEditTomba(props) {
     const navigate = useNavigate();
 
-    const [nome, setNome] = useState('');
-    const [num, setNum] = useState('');
-    const [coord, setCoord] = useState('');
+    const [nome, setNome] = useState(props.tomba.nome);
+    const [num, setNum] = useState(props.tomba.nMinIndividui);
+    const [coord, setCoord] = useState(props.tomba.coordinate);
 
     useEffect(() => {
-        setNome(tomba.nome)
-        setNum(tomba.nMinIndividui)
-        setCoord(tomba.coordinate)
-    }, [tomba.nome, tomba.nMinIndividui, tomba.coordinate]);
+        console.log('ricevuto', props)
+    }, []);
 
     //Gestione modal
     const [show, setShow] = useState(false);
@@ -31,19 +29,21 @@ function ModalEditTomba({ tomba }) {
     const handleShow = () => setShow(true);
 
     //Chiamate API
-    const modificaTomba = async (nome, nMinIndividui, coordinate) => {
+    const modificaTomba = async () => {
         let cm = new ConnectionManager();
-        var params = { id: tomba.id, nome: nome, nMinIndividui: nMinIndividui, coordinate: coordinate }
+        var params = { id: props.tomba.id, nome: nome, nMinIndividui: num, coordinate: coord }
         await cm.editTomba(JSON.stringify(params)).then(res => {
-            if (res.response !== 'error') {
-                navigate('/')
+            console.log('EditTomba', res)
+            if (res.response === 'success') {
+                props.callback()
+                handleClose()
             }
         })
     }
 
     return (
         <div>
-            <Button variant="primary" onClick={handleShow}>
+            <Button className='mx-2' variant="primary" onClick={handleShow}>
                 MODIFICA
             </Button >
             <Modal
@@ -54,32 +54,35 @@ function ModalEditTomba({ tomba }) {
                 size="lg"
                 centered
             >
-                <Modal.Header closeButton>
-                    <Modal.Title>Modifica tomba</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                    <Form>
+                <Form onSubmit={modificaTomba}>
+                    <Modal.Header closeButton>
+                        <Modal.Title>Modifica tomba</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+
                         <Form.Group className="mb-3" controlId="formBasicPassword">
                             <Form.Label>Nome tomba</Form.Label>
-                            <Form.Control type="text" value={nome} onChange={(e) => setNome(e.target.value)} />
+                            <Form.Control type="text" defaultValue={nome} onChange={(e) => setNome(e.target.value)} required />
                         </Form.Group>
                         <Form.Group className="mb-3" controlId="formBasicPassword">
                             <Form.Label>Numero minimo di individui</Form.Label>
-                            <Form.Control type="number" value={num} onChange={(e) => setNum(e.target.value)} />
+                            <Form.Control min='0' type="number" defaultValue={num} onChange={(e) => setNum(e.target.value)} />
                         </Form.Group>
                         <Form.Group className="mb-3" controlId="formBasicPassword">
                             <Form.Label>Coordinate tomba</Form.Label>
-                            <Form.Control type="text" value={coord} onChange={(e) => setCoord(e.target.value)} />
+                            <Form.Control type="text" defaultValue={coord} onChange={(e) => setCoord(e.target.value)} />
                         </Form.Group>
-                    </Form>
-                </Modal.Body>
-                <Modal.Footer>
-                    <Button variant="secondary" onClick={handleClose}>
-                        Chiudi senza salvare
-                    </Button>
-                    <Button variant="primary" onClick={(e) => modificaTomba(nome, num, coord)}>Salva</Button>
-                </Modal.Footer>
+
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <Button variant="secondary" onClick={handleClose}>
+                            Chiudi senza salvare
+                        </Button>
+                        <Button variant="primary" type="submit">Salva</Button>
+                    </Modal.Footer>
+                </Form>
             </Modal>
+
         </div >
     );
 }

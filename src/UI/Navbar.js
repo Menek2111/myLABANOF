@@ -6,12 +6,9 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import NavItem from 'react-bootstrap/NavItem';
 import NavLink from 'react-bootstrap/NavLink';
 import labanof from '../images/logoMyLabanof.PNG'
-import Table from 'react-bootstrap/Table'
-import InstallPWA from './InstallPWA'
-
 import ConnectionManager from '../api/ConnectionManager';
 
-import search from '../images/search.png'
+import { useLocation } from 'react-router-dom';
 
 import '../App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -28,7 +25,6 @@ function NavBar() {
 
     const [tipoRicerca, setTipoRicerca] = useState('Individuo');
 
-
     const centerMiddle = {
         display: "flex",
         alignItems: "center",
@@ -36,11 +32,12 @@ function NavBar() {
         height: "100%"
     };
 
+    const location = useLocation();
+
     useEffect(() => {
         setProfile(JSON.parse(localStorage.getItem('profile')));
         getResultsByQuery('')
-
-    }, [tipoRicerca]);
+    }, [tipoRicerca, location]);
 
     const getResultsByQuery = async (query) => {
         let cm = new ConnectionManager();
@@ -86,14 +83,12 @@ function NavBar() {
 
     let getResultsItem = (res) => {
         switch (tipoRicerca) {
-
             case 'Individuo':
                 return (<Dropdown.Item key={res.id} onClick={
                     () => {
                         sessionStorage.setItem('individuoSelezionato', res.id)
                         sessionStorage.setItem('individuoSelezionatoCreatore', res.creatoreID)
                         navigate('/individuo')
-                        window.location.reload(false)
                     }
                 }>
                     {res.nome}
@@ -102,7 +97,6 @@ function NavBar() {
                 return (<Dropdown.Item key={res.id} onClick={() => {
                     sessionStorage.setItem('tombaSelezionata', res.id)
                     navigate('/tomba')
-                    window.location.reload(false)
                 }
                 }
                 >
@@ -112,11 +106,10 @@ function NavBar() {
                 return (<Dropdown.Item key={res.id} onClick={() => {
                     sessionStorage.setItem('profiloSelezionato', res.id)
                     navigate('/utente')
-                    window.location.reload(false)
                 }
                 }
                 >
-                    {res.email} - {res.name}
+                    {res.name} - <span style={{ fontSize: '0.8em' }}>{res.email}</span>
                 </Dropdown.Item >)
         }
     }
@@ -136,7 +129,7 @@ function NavBar() {
                 <div className='d-flex justify-content-between w-100'>
                     <div className='d-flex'>
                         <Nav.Item style={centerMiddle}>
-                            <Nav.Link href="/">
+                            <Nav.Link onClick={() => navigate('/home')}>
                                 <img src={labanof} alt='Labanof logo' style={{ height: '5vh' }} />
                             </Nav.Link>
                         </Nav.Item>
@@ -182,7 +175,7 @@ function NavBar() {
                                 <Dropdown.Menu className='rounded-0 border' style={{ marginRight: '2vw', width: '20vw' }}>
                                     <div className='w-100 text-center'>
                                         <div>
-                                            <img style={{ height: '10vh' }} className="rounded" src={profile.picture} alt="user" referrerpolicy="no-referrer" />
+                                            <img style={{ height: '10vh' }} className="rounded" src={profile.picture} alt="user" referrerPolicy="no-referrer" />
                                             <h6>{profile.name}</h6>
                                         </div>
                                         <div className='border border-bottom'></div>
@@ -191,11 +184,10 @@ function NavBar() {
                                     <Dropdown.Item onClick={() => {
                                         sessionStorage.setItem('profiloSelezionato', localStorage.getItem('userID'))
                                         navigate('/utente')
-                                        window.location.reload(false)
                                     }}>
                                         Profilo
                                     </Dropdown.Item >
-                                    <Dropdown.Item>Permessi</Dropdown.Item>
+                                    <Dropdown.Item disabled>Permessi</Dropdown.Item>
 
                                     <ModalChangeTheme />
 

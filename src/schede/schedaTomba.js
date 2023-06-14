@@ -15,15 +15,18 @@ import { useNavigate } from 'react-router-dom'
 
 import ModalEditTomba from '../UI/modalEditTomba'
 import ModalDeleteTomba from '../UI/modalDeleteTomba';
+import ModalCreateIndividuo from '../UI/modalCreateIndividuo';
+import Loading from '../UI/loading';
+
 
 
 function SchedaTomba() {
     const navigate = useNavigate();
 
-    const { state } = useLocation();
-
     const [individui, setIndividui] = useState()
     const [tombaInfo, setTombaInfo] = useState()
+
+
 
     const centerMiddle = {
         display: "flex",
@@ -37,14 +40,30 @@ function SchedaTomba() {
         let res = await cm.getIndividuiByTomba(JSON.stringify({ tomba: sessionStorage.getItem('tombaSelezionata') }));
         return res;
     }
-
     const getTombaById = async () => {
         let cm = new ConnectionManager();
         let res = await cm.getTombaById(JSON.stringify({ id: sessionStorage.getItem('tombaSelezionata') }));
         return res;
     }
 
+
+    const location = useLocation();
     useEffect(() => {
+        getIndividuiByTomba().then(res => {
+            switch (res.response) {
+                case 'success':
+                    setIndividui(res.results)
+                    break
+                case 'empty':
+                    setIndividui([])
+                    break
+                case 'error':
+                    break
+                default:
+                    break
+            }
+        })
+
         getTombaById().then(res => {
             console.log('getTombaById', res)
             switch (res.response) {
@@ -63,21 +82,27 @@ function SchedaTomba() {
         })
 
 
-        getIndividuiByTomba().then(res => {
+    }, [location]);
+
+    let aggiorna = () => {
+        getTombaById().then(res => {
+            console.log('getTombaById', res)
             switch (res.response) {
                 case 'success':
-                    setIndividui(res.results)
+                    setTombaInfo(res.results[0])
                     break
                 case 'empty':
-                    setIndividui(null)
+                    setTombaInfo(null)
                     break
                 case 'error':
+                    setTombaInfo(null)
                     break
                 default:
                     break
             }
         })
-    }, []);
+    }
+
 
     return (
         <div className='px-4 py-2 containerPrincipale' >
@@ -86,7 +111,7 @@ function SchedaTomba() {
                     <div className='row h-100'>
                         <div className='col h-100 bg-white w-100 rounded border'>
                             <div className='row border-bottom rounded-top justify-content-between'>
-                                <div className='col-10 py-2 d-flex'>
+                                <div className='col py-2 d-flex'>
                                     <div style={centerMiddle}>
                                         <img src={indThumb} style={{ height: '10vh' }} alt="individuo" />
                                     </div>
@@ -96,36 +121,25 @@ function SchedaTomba() {
                                     ) : (<div></div>)}
 
                                 </div>
-                                <div className='col-2 d-flex flex-column justify-content-center'>
 
-                                    <div>
-                                        {tombaInfo ? (<div className='d-flex justify-content-around'>
-                                            <ModalEditTomba tomba={tombaInfo} />
-                                            <ModalDeleteTomba tomba={tombaInfo} />
-                                        </div>) : (<div></div>)}
-                                    </div>
+                                <div className='col d-flex flex-column justify-content-center'>
+                                    <ModalCreateIndividuo tomba={tombaInfo} />
+                                </div>
+
+                                <div className='col d-flex flex-column justify-content-center'>
+                                    {tombaInfo ? (<div className='d-flex justify-content-end'>
+                                        <ModalEditTomba tomba={tombaInfo} callback={aggiorna} />
+                                        <ModalDeleteTomba tomba={tombaInfo} />
+                                    </div>) : (<div></div>)}
+
                                 </div>
                             </div>
 
-                            {individui ? (
-                                <ListaIndividui colonna="col-lg-3 col-sm-6" individui={individui} navigator={navigate} />
-                            ) : (
-                                <div className=' h-75 d-flex flex-column justify-content-center text-center'>
-                                    <div>
-                                        <Dna
-                                            visible={true}
-                                            ariaLabel="dna-loading"
-                                            wrapperStyle={{}}
-                                            wrapperClass="dna-wrapper"
-                                        />
-                                    </div>
+                            <div className='h-50'>
+                                {individui ? (<ListaIndividui colonna="col-lg-3 col-sm-6" individui={individui} />
+                                ) : (<Loading />)}
 
-                                    <div>
-                                        Non sono stati trovati individui...
-                                    </div>
-
-                                </div>)}
-
+                            </div>
 
                         </div>
                     </div>

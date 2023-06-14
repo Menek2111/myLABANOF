@@ -2,7 +2,7 @@ import React from "react";
 import { Dna } from 'react-loader-spinner'
 
 function Loading() {
-    return (<div className=' h-100 d-flex flex-column justify-content-center text-center'>
+    return (<div className='h-100 d-flex flex-column justify-content-center text-center'>
         <div>
             <Dna
                 visible={true}

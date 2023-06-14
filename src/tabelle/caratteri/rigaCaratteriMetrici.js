@@ -32,7 +32,8 @@ function RigaCaratteriMetrici(props) {
         var params = { individuo: sessionStorage.getItem('individuoSelezionato'), tipoCarattereMetrico: props.carattere.tipoCarattereMetrico, lato: lato, valore: valore, unitaMisura: unitaMisura, id: props.carattere.id }
         await cm.editCarattereMetricoSpecifico(JSON.stringify(params)).then(res => {
             if (res.response === 'success') {
-                window.location.reload(false);
+                props.callback()
+                handleClose()
             }
         })
     }
@@ -42,7 +43,8 @@ function RigaCaratteriMetrici(props) {
         var params = { id: props.carattere.id }
         await cm.deleteCarattereMetricoSpecifico(JSON.stringify(params)).then(res => {
             if (res.response === 'success') {
-                window.location.reload(false);
+                props.callback()
+                handleClose()
             }
         })
     }
@@ -54,8 +56,6 @@ function RigaCaratteriMetrici(props) {
             return handleShow()
         }
     }
-
-
 
     return (
         <tr key={props.carattere.id} onClick={() => checkUser()}>
@@ -105,7 +105,11 @@ function RigaCaratteriMetrici(props) {
                             </Form.Group>
                             <Form.Group className="mb-2" >
                                 <Form.Label>Unita di misura</Form.Label>
-                                <Form.Control defaultValue={unitaMisura} onChange={(e) => setUnitaMisura(e.target.value)} type="text" />
+                                <Form.Select defaultValue={unitaMisura} onChange={(e) => setUnitaMisura(e.target.value)}>
+                                    <option></option>
+                                    <option>cm</option>
+                                    <option>mm</option>
+                                </Form.Select>
                             </Form.Group>
                         </div>
 

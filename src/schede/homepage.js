@@ -11,6 +11,8 @@ import ListaTombe from '../component/listaTombe';
 
 //Componenti grafici
 import { Dna } from 'react-loader-spinner'
+import Loading from '../UI/loading';
+import { useLocation } from 'react-router-dom';
 
 function Homepage() {
     const navigate = useNavigate();
@@ -20,77 +22,63 @@ function Homepage() {
     const [individui, setIndividui] = useState()
     const [tombe, setTombe] = useState()
 
-    //Loading --> quando la variabile è true mostro la scheda
-    const [loading, setLoading] = useState(false)
 
-    //Chiamate Connection Manager
     const getIndividui = async (e) => {
         let cm = new ConnectionManager();
         let res = await cm.getIndividui();
-        return res.response;
+        return res;
     }
+
     const getTombe = async (e) => {
         let cm = new ConnectionManager();
         let res = await cm.getTombe();
-        return res.response;
+        return res;
     }
 
+    const location = useLocation();
+
     useEffect(() => {
-        //Ottengo sia gli individui che le tombe
         getIndividui().then(res => {
-            if (res.error != null) {
-                alert('errore')
-                navigate('/')
-            } else {
-                if (res !== '0 risultati') {
-                    setIndividui(res)
-                }
-
-
-                getTombe().then(res => {
-                    setTombe(res)
-                    setLoading(true)
-                })
+            console.log('getIndividui', res)
+            switch (res.response) {
+                case 'success':
+                    setIndividui(res.results)
+                    break
+                case 'error':
+                    setIndividui([])
+                    break
+                default:
+                    break
             }
         })
-
-
-    }, []);
+        getTombe().then(res => {
+            if (res.response === 'success') {
+                setTombe(res.results)
+            } else {
+                setTombe([])
+            }
+        })
+    }, [location]);
 
     return (
         <div>
-            {loading ? (
-                <div className='px-4 py-2 containerPrincipale '>
-                    <div className='row d-flex'>
-                        <div className='col-2 d-none d-sm-block d-md-none d-lg-block 	d-sm-none d-md-block' >
-                            <SideNav />
-                        </div>
-                        <div className='col-sm-12 col-lg-10 bg-white border rounded' style={{ height: '89vh', overflowY: 'scroll' }}>
+            <div className='px-4 py-2 containerPrincipale '>
+                <div className='row d-flex'>
+                    <div className='col-2 d-none d-sm-block d-md-none d-lg-block 	d-sm-none d-md-block' >
+                        <SideNav />
+                    </div>
+                    <div className='col-sm-12 col-lg-10 bg-white border rounded' style={{ height: '89vh', overflowY: 'scroll' }}>
 
-                            <h5 className='pt-3 border-bottom'>Tombe</h5>
-                            <ListaTombe colonna="col-lg-2 col-sm-6" tombe={tombe} navigator={navigate} />
+                        <h5 className='pt-3 border-bottom'>Tombe <span style={{ fontSize: '0.7em' }} className='text-secondary'>(Solo quelle contenenti almeno un individuo)</span></h5>
 
-                            <h5 className='pt-3 border-bottom'>Individui</h5>
-                            <ListaIndividui colonna="col-lg-4 col-sm-5" individui={individui} navigator={navigate} />
+                        {tombe ? (<ListaTombe colonna="col-lg-4 col-sm-5" tombe={tombe} />) : (<div></div>)}
 
-                        </div>
+                        <h5 className='pt-3 border-bottom'>Individui</h5>
+                        {individui ? (<ListaIndividui colonna="col-lg-4 col-sm-5" individui={individui} />) : (<Loading />)}
+
                     </div>
                 </div>
-            ) : (
-                <div style={{ height: '93vh', backgroundColor: '#F7F9FC' }} className='d-flex flex-column justify-content-center text-center '>
-                    <div>
-                        <Dna
-                            visible={true}
-                            ariaLabel="dna-loading"
-                            wrapperStyle={{}}
-                            wrapperClass="dna-wrapper"
-                        />
-                    </div>
-                    <div>
-                        Caricamento in corso...
-                    </div>
-                </div>)
-            }
+            </div>
         </div >
 
     );

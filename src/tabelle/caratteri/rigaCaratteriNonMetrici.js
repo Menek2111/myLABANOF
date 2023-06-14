@@ -50,20 +50,20 @@ function RigaCaratteriNonMetrici(props) {
             id: props.carattere.id
         }
         await cm.editCarattereNonMetricoSpecifico(JSON.stringify(params)).then(res => {
-            console.log('OOOO', res)
             if (res.response === 'success') {
-                window.location.reload(false);
+                props.callback()
+                handleClose()
             }
         })
     }
-
 
     const deleteCarattereNonMetricoSpecifico = async () => {
         let cm = new ConnectionManager();
         var params = { id: props.carattere.id }
         await cm.deleteCarattereNonMetricoSpecifico(JSON.stringify(params)).then(res => {
             if (res.response === 'success') {
-                window.location.reload(false);
+                props.callback()
+                handleClose()
             }
         })
     }
@@ -91,7 +91,7 @@ function RigaCaratteriNonMetrici(props) {
             <td>
                 <Form.Check
                     type="checkbox"
-                    defaultChecked={valore}
+                    checked={checkValue(props.carattere.valore)}
                     disabled
                 />
             </td>

@@ -48,7 +48,8 @@ function ModalCreateCarattereNonMetrico(props) {
             console.log('Creazione carattere metrico', res)
             switch (res.response) {
                 case 'success':
-                    window.location.reload(false)
+                    props.callback()
+                    handleClose()
                     break
                 case 'alreadyExist':
                     alert('Questo carattere non metrico è già presente...')

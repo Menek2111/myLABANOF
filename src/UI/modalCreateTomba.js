@@ -37,8 +37,11 @@ function ModalCreateTomba() {
         var params = { nome: nome, nMinIndividui: num, coordinate: coord }
         await cm.createTomba(JSON.stringify(params)).then(res => {
             console.log('CreateTomba', res)
-            if (res.error == null) {
-                //window.location.reload(false)
+
+            if (res.response == 'success') {
+
+                sessionStorage.setItem('tombaSelezionata', res.results)
+                navigate('/tomba')
             }
         })
 

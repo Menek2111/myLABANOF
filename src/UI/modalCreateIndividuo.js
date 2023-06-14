@@ -12,20 +12,31 @@ import { useNavigate } from 'react-router-dom'
 import '../App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-function ModalCreateIndividuo() {
+function ModalCreateIndividuo(props) {
     const navigate = useNavigate();
 
-    const [tomba, setTomba] = useState('');
+    const [tomba, setTomba] = useState();
     const [nome, setNome] = useState('');
     const [tombe, setTombe] = useState([]);
 
     //Stato per il profilo
     const [profile, setProfile] = useState([]);
 
+    const getTombe = async (e) => {
+        let cm = new ConnectionManager();
+        let res = await cm.getAllTombe();
+        return res;
+    }
+
     useEffect(() => {
         setProfile(JSON.parse(localStorage.getItem('userID')));
         getTombe().then(res => {
-            setTombe(res)
+            console.log('GetTombe', res)
+            if (res.response === 'success') {
+                setTombe(res.results)
+            } else {
+                setTombe([])
+            }
         })
     }, []);
 
@@ -36,22 +47,41 @@ function ModalCreateIndividuo() {
 
     //Chiamate API
     const creaIndividuo = async (tomba, nome, creatore) => {
-
         if (tomba !== '' && nome !== '') {
             let cm = new ConnectionManager();
-            var params = { tomba: tomba, nome: nome, creatore: creatore }
+            var params
+            if (props.tomba != null) {
+                params = { tomba: props.tomba.id, nome: nome, creatore: creatore }
+            } else {
+                params = { tomba: tomba, nome: nome, creatore: creatore }
+            }
             await cm.createIndividuo(JSON.stringify(params)).then(
-                navigate('/')
+                res => {
+                    console.log('CreateIndividuo', res)
+                    if (res.response === 'success') {
+                        sessionStorage.setItem('individuoSelezionato', res.results)
+                        sessionStorage.setItem('individuoSelezionatoCreatore', localStorage.getItem('userID'))
+                        navigate('/individuo')
+                    }
+                }
             );
         }
-
-
     }
-    const getTombe = async (e) => {
-        let cm = new ConnectionManager();
-        let res = await cm.getAllTombe();
-        return res.response;
+
+    let checkProps = () => {
+        if (props.tomba != null) {
+            return (<Form.Select required aria-label="Default select example" disabled>
+                <option value={props.tomba.id}>{props.tomba.nome}</option>
+            </Form.Select>)
+        } else {
+            return (<Form.Select required aria-label="Default select example" onChange={(e) => setTomba(e.target.value)}>
+                <option></option>
+                {tombe ? (tombe.map(tomba => <option key={tomba.id} value={tomba.id}>{tomba.nome}</option>))
+                    : (<option></option>)}
+            </Form.Select>)
+        }
     }
+
     return (
         <div>
             <Button className='w-100' variant="primary" onClick={handleShow}>
@@ -72,13 +102,11 @@ function ModalCreateIndividuo() {
                     <Modal.Body>
 
                         <Form.Group className="mb-3" controlId="formBasicEmail">
-                            <p className='p-2 rounded' style={{ backgroundColor: '#F7F9FC' }}>Non esiste la tomba che stai cercando? Creala </p>
                             <Form.Label>Tomba di appartenenza:</Form.Label>
-                            <Form.Select required aria-label="Default select example" onChange={(e) => setTomba(e.target.value)}>
-                                <option></option>
-                                {tombe ? (tombe.map(tomba => <option key={tomba.id} value={tomba.id}>{tomba.nome}</option>))
-                                    : (<option></option>)}
-                            </Form.Select>
+
+                            {checkProps()}
+
+
                         </Form.Group>
                         <Form.Group className="mb-3" controlId="formBasicPassword">
                             <Form.Label>Identificativo individuo</Form.Label>

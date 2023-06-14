@@ -25,6 +25,8 @@ function Traumi(props) {
         getTraumaSpecifico().then(res => {
             if (res.response === 'success') {
                 setTraumi(res.results)
+            } else {
+                setTraumi([])
             }
         })
     }
@@ -35,7 +37,6 @@ function Traumi(props) {
                 setTraumi(res.results)
             }
         })
-
         getTraumaGeneraleByDistretto().then(res => setListaTraumi(res.results))
     }, []);
 
@@ -60,7 +61,7 @@ function Traumi(props) {
                             )) : (<tr></tr>)}
                         </tbody>
                     </Table>
-                </div>
+                </div >
             )
         }
     }
@@ -77,7 +78,6 @@ function Traumi(props) {
             return (<div></div>)
         } else {
             return <ModalCreateTrauma listaTraumi={listaTraumi} distretto={1} osso={props.osso} callback={aggiorna} />
-
         }
     }
 

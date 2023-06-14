@@ -7,6 +7,7 @@ import '../App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 import ind from '../images/individuo.jpg'
+import { useNavigate } from 'react-router-dom'
 
 
 import { Dna } from 'react-loader-spinner'
@@ -17,6 +18,7 @@ import GeneralitàIndividuo from '../tabelle/generalitàIndividuo';
 import DropdownDistretti from '../UI/dropDownDistretti';
 
 function SchedaIndividuo(props) {
+    const navigate = useNavigate();
 
     const centerMiddle = {
         display: "flex",
@@ -25,7 +27,6 @@ function SchedaIndividuo(props) {
         height: "100%"
     };
 
-    const [loading, setLoading] = useState(false)
     const [individuo, setIndividuo] = useState()
     const [editable, setEditable] = useState(false)
 
@@ -36,8 +37,17 @@ function SchedaIndividuo(props) {
     }
     useEffect(() => {
         getIndividuoById().then(res => {
-            setIndividuo(res)
-            setLoading(true)
+            console.log('GetIndividuoById', res)
+            switch (res.response) {
+                case 'success':
+                    setIndividuo(res)
+                    break
+                case 'error':
+                    break
+                default:
+                    break
+            }
+
         })
     }, []);
 
@@ -98,7 +108,7 @@ function SchedaIndividuo(props) {
 
     const salva = async () => {
         let cm = new ConnectionManager();
-        setLoading(false)
+
 
         let modifiche = {
             id: sessionStorage.getItem('individuoSelezionato'),
@@ -114,16 +124,22 @@ function SchedaIndividuo(props) {
         await cm.editIndividuo(JSON.stringify(modifiche)).then(res => {
             console.log(res)
             if (res.response === 'success') {
-                window.location.reload(false);
+                aggiorna()
                 setEditable(false)
-                setLoading(true)
             }
+        })
+    }
+
+
+    let aggiorna = () => {
+        getIndividuoById().then(res => {
+            setIndividuo(res)
         })
     }
 
     return (
         <div>
-            {loading ? (<div className='px-4 py-2 containerPrincipale'>
+            <div className='px-4 py-2 containerPrincipale'>
                 <div className='rounded h-100'>
                     <div className='container-fluid h-100'>
                         <div className='row h-100'>
@@ -131,44 +147,34 @@ function SchedaIndividuo(props) {
                                 <div className='row border-bottom rounded-top justify-content-between'>
                                     <div className='col-10 py-2 d-flex'>
                                         <div style={centerMiddle}>
-                                            <DropdownDistretti scheda='Individuo' id={individuo.individuo.id} />
+                                            {individuo ? (<DropdownDistretti scheda='Individuo' id={individuo.individuo.id} />) : (<div></div>)}
+
                                         </div>
                                         <div className='d-flex w-100 justify-content-center'>
                                             <img className='mx-2' src={ind} style={{ height: '10vh' }} />
-                                            <p style={centerMiddle} className=''>{individuo.tomba.nome + ' ' + individuo.individuo.nome} <br /> Creato da: {individuo.utente.email} <br /> Il: {individuo.individuo.dataCreazione} </p>
+                                            {individuo ? (<p style={centerMiddle} className=''>{individuo.tomba.nome + ' ' + individuo.individuo.nome} <br /> Creato da: {individuo.utente.email} <br /> Il: {individuo.individuo.dataCreazione} </p>
+                                            ) : (<div></div>)}
                                         </div>
-
 
                                     </div>
 
                                     <div className='col-2 d-flex flex-column justify-content-center'>
-                                        {editButton()}
+                                        {individuo ? (editButton()) : (<div></div>)}
                                     </div>
                                 </div>
-                                <div className='row py-3'>
-                                    <GeneralitàIndividuo editable={editable} individuo={individuo.individuo} tomba={individuo.tomba} onIndividuoChange={addModificheGeneralità} />
-                                    <ProfiloBiologicoIndividuo editable={editable} individuo={individuo.individuo} tomba={individuo.tomba} onIndividuoChange={addModificheProfiloBiologio} />
-                                </div>
+
+                                {individuo ? (<div className='row py-3'>
+                                    <GeneralitàIndividuo editable={editable} individuo={individuo.individuo} tomba={individuo.tomba} onIndividuoChange={addModificheGeneralità} callback={aggiorna} />
+                                    <ProfiloBiologicoIndividuo editable={editable} individuo={individuo.individuo} tomba={individuo.tomba} onIndividuoChange={addModificheProfiloBiologio} callback={aggiorna} />
+                                </div>) : (<div></div>)}
+
                             </div>
                         </div>
                     </div>
                 </div>
             </div >
-            ) : (<div style={{ height: '93vh', backgroundColor: '#F7F9FC' }} className='d-flex flex-column justify-content-center text-center '>
-                <div>
-                    <Dna
-                        visible={true}
-                        ariaLabel="dna-loading"
-                        wrapperStyle={{}}
-                        wrapperClass="dna-wrapper"
-                    />
-                </div>
-                <div>
-                    Caricamento in corso...
-                </div>
-            </div>
-            )}
-        </div>
+
+        </div >
     );
 }
 export default SchedaIndividuo;

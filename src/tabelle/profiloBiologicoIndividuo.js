@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import Table from 'react-bootstrap/Table';
 import Form from 'react-bootstrap/Form';
 
-
 function ProfiloBiologicoIndividuo(props) {
 
     function checkEditableValue() {
@@ -41,15 +40,15 @@ function ProfiloBiologicoIndividuo(props) {
                     </tr>
                     <tr>
                         <th>Classe di età</th>
-                        <td><input className="form-control" type="number" defaultValue={props.individuo.classeDiEta} onChange={(e) => setClasseDiEtà(e.target.value)} /></td>
+                        <td><input min='0' max='3' className="form-control" type="number" defaultValue={props.individuo.classeDiEta} onChange={(e) => setClasseDiEtà(e.target.value)} /></td>
 
                     </tr>
                     <tr>
-                        <th>Età stimata (MIN)</th>
+                        <td>Età stimata (MIN)</td>
                         <td>---</td>
                     </tr>
                     <tr>
-                        <th>Età stimata (MAX)</th>
+                        <td>Età stimata (MAX)</td>
                         <td>---</td>
                     </tr>
                     <tr>
@@ -69,11 +68,11 @@ function ProfiloBiologicoIndividuo(props) {
                         <td><input className="form-control" defaultValue={props.individuo.origineGeografica} onChange={(e) => setOrigineGeografica(e.target.value)} /></td>
                     </tr>
                     <tr>
-                        <th>Statura (MIN)</th>
+                        <td>Statura (MIN)</td>
                         <td>---</td>
                     </tr>
                     <tr>
-                        <th>Statura (MAX)</th>
+                        <td>Statura (MAX)</td>
                         <td>---</td>
                     </tr>
                 </tbody>
@@ -96,11 +95,11 @@ function ProfiloBiologicoIndividuo(props) {
                         <td>{props.individuo.classeDiEta}</td>
                     </tr>
                     <tr>
-                        <th>Età stimata (MIN)</th>
+                        <td>Età stimata (MIN)</td>
                         <td>---</td>
                     </tr>
                     <tr>
-                        <th>Età stimata (MAX)</th>
+                        <td>Età stimata (MAX)</td>
                         <td>---</td>
                     </tr>
                     <tr>
@@ -112,11 +111,11 @@ function ProfiloBiologicoIndividuo(props) {
                         <td>{props.individuo.origineGeografica}</td>
                     </tr>
                     <tr>
-                        <th>Statura (MIN)</th>
+                        <td>Statura (MIN)</td>
                         <td>---</td>
                     </tr>
                     <tr>
-                        <th>Statura (MAX)</th>
+                        <td>Statura (MAX)</td>
                         <td>---</td>
                     </tr>
                 </tbody>
@@ -128,7 +127,6 @@ function ProfiloBiologicoIndividuo(props) {
     return <div className="col-6">
         <div className="border rounded p-2">
             {checkEditableValue()}
-
         </div>
     </div>
 

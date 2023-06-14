@@ -7,7 +7,7 @@ import ConnectionManager from '../api/ConnectionManager';
 import Button from 'react-bootstrap/Button';
 
 import { useNavigate } from 'react-router-dom'
-
+import { useLocation } from 'react-router-dom';
 import LogOutButton from '../UI/logOutButton'
 import ListaIndividui from '../component/listaIndividui';
 
@@ -17,6 +17,7 @@ function SchedaUtente() {
     const navigate = useNavigate();
 
     const [profile, setProfile] = useState()
+    const [individui, setIndividui] = useState()
 
     const centerMiddle = {
         display: "flex",
@@ -25,20 +26,18 @@ function SchedaUtente() {
         height: "100%"
     };
 
-    const [individui, setIndividui] = useState([])
-
+    const getUserInfo = async () => {
+        let cm = new ConnectionManager();
+        let res = await cm.getUserInfo(JSON.stringify({ id: sessionStorage.getItem('profiloSelezionato') }));
+        return res;
+    }
     const getIndividuiByUser = async () => {
         let cm = new ConnectionManager();
         let res = await cm.getIndividuiByUser(JSON.stringify({ user: sessionStorage.getItem('profiloSelezionato') }));
         return res;
     }
 
-    const getUserInfo = async () => {
-        let cm = new ConnectionManager();
-        let res = await cm.getUserInfo(JSON.stringify({ id: sessionStorage.getItem('profiloSelezionato') }));
-        return res;
-    }
-
+    const location = useLocation();
     useEffect(() => {
         getIndividuiByUser().then(res => {
             console.log('getIndividuiByUser', res.results)
@@ -73,22 +72,14 @@ function SchedaUtente() {
                     break
             }
         })
-    }, []);
+
+    }, [location]);
 
     let checkLogOut = () => {
         if (profile.id == localStorage.getItem('userID')) {
             return <Button variant='outline-danger' disabled>Elimina profilo</Button>
         } else {
             return <div></div>
-        }
-    }
-
-    let checkArrayIndividui = () => {
-        if (individui.length == 0) {
-            return <div className=' h-100 d-flex flex-column justify-content-center text-center'>Non sono presenti individui...</div>
-        } else {
-            return (individui ? (
-                <ListaIndividui colonna="col-3" individui={individui} navigator={navigate} />) : (<Loading />))
         }
     }
 
@@ -103,27 +94,23 @@ function SchedaUtente() {
                                     <div style={centerMiddle}>
 
                                         {profile ? (<div className='d-flex'>
-                                            <img referrerpolicy="no-referrer" className='rounded' src={profile.picture} style={{ height: '10vh' }} alt="individuo" />
+                                            <img referrerPolicy="no-referrer" className='rounded' src={profile.picture} style={{ height: '10vh' }} alt="individuo" />
 
                                             <div className='mx-2'>
                                                 <h5>{profile.name}</h5>
                                                 <p>{profile.email}</p>
                                             </div>
                                         </div>) : (<div></div>)}
-
-
                                     </div>
                                 </div>
                                 <div className='col-2 d-flex flex-column justify-content-center'>
                                     <div className='d-flex justify-content-around'>
-
                                         {profile ? (checkLogOut()) : (<div></div>)}
-
                                     </div>
                                 </div>
                             </div>
                             <div style={{ height: '75vh', overflowY: 'scroll', overflowX: 'hidden' }}>
-                                {checkArrayIndividui()}
+                                {individui ? (<ListaIndividui colonna="col-3" individui={individui} />) : (<Loading />)}
                             </div>
                         </div>
                     </div>

@@ -25,7 +25,6 @@ function ModalDeleteTomba(props) {
 
         if (testo === deleteText) {
             deleteAPi().then(res => console.log('Eliminazione: ' + res))
-            navigate('/home')
         } else {
             var text = document.getElementById('formText')
             text.classList.add('border-danger')
@@ -48,8 +47,17 @@ function ModalDeleteTomba(props) {
         let cm = new ConnectionManager();
         var params = { id: props.tomba.id }
         await cm.deleteTomba(JSON.stringify(params)).then(res => {
-            if (res.error == null) {
-                navigate('/')
+            console.log('DeleteTomba', res)
+            switch (res.response) {
+                case 'success':
+                    navigate('/home')
+                    break
+                case 'error':
+                    alert('Impossibile eliminare la tomba, verificare che questa sia vuota')
+                    handleClose()
+                    break
+                default:
+                    break
             }
         })
     }

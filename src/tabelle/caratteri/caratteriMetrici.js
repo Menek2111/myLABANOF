@@ -14,7 +14,6 @@ function CaratteriMetrici(props) {
     const getCaratteriMetriciByDistretto = async () => {
         let cm = new ConnectionManager();
         let res = await cm.getCaratteriMetriciByDistretto(JSON.stringify({ distretto: props.distretto }));
-        //console.log('caratteri distretto', res)
         return res;
     }
 
@@ -23,19 +22,6 @@ function CaratteriMetrici(props) {
         let res = await cm.getCaratteriMetriciByDistrettoAndIndividuo(JSON.stringify({ individuo: sessionStorage.getItem('individuoSelezionato'), distretto: props.distretto }));
         return res;
     }
-
-    /*
-    const checkPresenti = () => {
-        caratteriMetrici.map(carattere => {
-            for (let i = 0; i < caratteriMetriciIndividuo.lenght; i++) {
-                console.log('ao')
-                if (caratteriMetriciIndividuo[i].tipoCarattereMetrico == carattere.id) {
-                    console.log('ao', caratteriMetriciIndividuo[i])
-                }
-            }
-        })
-    }
-    */
 
     useEffect(() => {
         getCaratteriMetriciByDistretto().then(res => {
@@ -56,7 +42,6 @@ function CaratteriMetrici(props) {
         getCaratteriMetriciByDistrettoAndIndividuo().then(res => {
             switch (res.response) {
                 case 'success':
-                    console.log('caratteri individuo', res.results)
                     setCaratteriMetriciIndividuo(res.results)
                     break
                 case 'empty':
@@ -87,41 +72,52 @@ function CaratteriMetrici(props) {
                 <tbody>
                     {caratteriMetriciIndividuo ? (
                         caratteriMetriciIndividuo.map(car => (
-                            <RigaCaratteriMetrici carattere={car} caratteri={caratteriMetrici} />
+                            <RigaCaratteriMetrici carattere={car} caratteri={caratteriMetrici} callback={aggiorna} />
                         ))
-                    ) : (<tr>
-                        <td colSpan={4}>
-                            <Loading />
-                        </td>
-                    </tr>)}
+                    ) : (<tr></tr>)}
                 </tbody>
             </Table>)
         }
     }
 
-
     let checkUser = () => {
         if (localStorage.getItem('userID') != sessionStorage.getItem('individuoSelezionatoCreatore')) {
             return (<div></div>)
         } else {
-            return <ModalCreateCarattereMetrico caratteri={caratteriMetrici} />
+            return <ModalCreateCarattereMetrico caratteri={caratteriMetrici} callback={aggiorna} />
         }
     }
 
+    let aggiorna = () => {
+        getCaratteriMetriciByDistrettoAndIndividuo().then(res => {
+            switch (res.response) {
+                case 'success':
+                    setCaratteriMetriciIndividuo(res.results)
+                    break
+                case 'empty':
+                    setCaratteriMetriciIndividuo(null)
+                    break
+                case 'error':
+                    setCaratteriMetriciIndividuo(null)
+                    break
+                default:
+                    break
+            }
+        })
+    }
 
     return (<div className="col-6">
         <h5 className='border-bottom mb-2'>Caratteri metrici</h5>
 
         <div className="border rounded p-2">
-            {checkCarattereMetricoIndividuo()}
 
+            {caratteriMetrici ? (checkCarattereMetricoIndividuo()) : (<Loading />)}
 
             <div className="d-flex justify-content-end">
                 {caratteriMetrici ? (checkUser()) : (<div></div>)}
             </div>
 
         </div>
-
 
     </div >)
 }

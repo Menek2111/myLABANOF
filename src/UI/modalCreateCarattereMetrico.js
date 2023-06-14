@@ -40,7 +40,8 @@ function ModalCreateCarattereMetrico(props) {
 
             switch (res.response) {
                 case 'success':
-                    window.location.reload(false)
+                    props.callback()
+                    handleClose()
                     break
                 case 'alreadyExist':
                     alert('Questo carattere metrico è già presente...')
@@ -48,7 +49,6 @@ function ModalCreateCarattereMetrico(props) {
                 default:
                     break
             }
-
         })
     }
 
@@ -93,7 +93,11 @@ function ModalCreateCarattereMetrico(props) {
                             </Form.Group>
                             <Form.Group className="mb-2" >
                                 <Form.Label>Unita di misura</Form.Label>
-                                <Form.Control onChange={(e) => setUnitaMisura(e.target.value)} type="text" />
+                                <Form.Select onChange={(e) => setUnitaMisura(e.target.value)}>
+                                    <option></option>
+                                    <option>cm</option>
+                                    <option>mm</option>
+                                </Form.Select>
                             </Form.Group>
                         </div>
 

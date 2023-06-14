@@ -25,7 +25,6 @@ function CaratteriNonMetrici(props) {
 
     useEffect(() => {
         getCaratteriNonMetriciByDistretto().then(res => {
-
             switch (res.response) {
                 case 'success':
                     setCaratteriNonMetrici(res.results)
@@ -34,6 +33,7 @@ function CaratteriNonMetrici(props) {
                     setCaratteriNonMetrici(null)
                     break
                 case 'error':
+
                     break
                 default:
                     break
@@ -75,7 +75,7 @@ function CaratteriNonMetrici(props) {
                 <tbody>
                     {caratteriNonMetriciIndividuo ? (
                         caratteriNonMetriciIndividuo.map(car => (
-                            <RigaCaratteriNonMetrici carattere={car} caratteri={caratteriNonMetrici} />
+                            <RigaCaratteriNonMetrici carattere={car} caratteri={caratteriNonMetrici} callback={aggiorna} />
                         ))
                     ) : (<tr></tr>)}
                 </tbody>
@@ -83,12 +83,30 @@ function CaratteriNonMetrici(props) {
         }
     }
 
+    const aggiorna = () => {
+        getCaratteriNonMetriciByDistrettoAndIndividuo().then(res => {
+            console.log('res', res)
+            switch (res.response) {
+                case 'success':
+                    setCaratteriNonMetriciIndividuo(res.results)
+                    break
+                case 'empty':
+                    setCaratteriNonMetriciIndividuo(null)
+                    break
+                case 'error':
+                    setCaratteriNonMetriciIndividuo(null)
+                    break
+                default:
+                    break
+            }
+        })
+    }
 
     let checkUser = () => {
         if (localStorage.getItem('userID') != sessionStorage.getItem('individuoSelezionatoCreatore')) {
             return (<div></div>)
         } else {
-            return <ModalCreateCarattereNonMetrico caratteri={caratteriNonMetrici} />
+            return <ModalCreateCarattereNonMetrico caratteri={caratteriNonMetrici} callback={aggiorna} />
         }
     }
 
@@ -96,7 +114,8 @@ function CaratteriNonMetrici(props) {
         <h5 className='border-bottom mb-2'>Caratteri non metrici</h5>
 
         <div className="border rounded p-2">
-            {checkCarattereNonMetricoIndividuo()}
+
+            {caratteriNonMetrici ? (checkCarattereNonMetricoIndividuo()) : (<Loading />)}
 
             <div className="d-flex justify-content-end">
                 {caratteriNonMetrici ? (checkUser()) : (<div></div>)}

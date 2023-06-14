@@ -16,6 +16,8 @@ function Patologie(props) {
             console.log('getPatologiaSpecifica', res)
             if (res.response === 'success') {
                 setPatologie(res.results)
+            } else {
+                setPatologie([])
             }
         })
     }

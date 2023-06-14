@@ -20,8 +20,6 @@ function ModalCreateTrauma(props) {
     const [descrizione, setDescrizione] = useState()
     const [datazione, setDatazione] = useState()
 
-    const [listaTraumi, setListaTraumi] = useState()
-
     useEffect(() => {
 
     }, []);

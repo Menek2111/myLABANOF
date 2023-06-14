@@ -4,16 +4,11 @@ import ConnectionManager from "../../api/ConnectionManager";
 
 import RigaCranio from './rigaCranio'
 import ModalCreateOsso from "../../UI/modalCreateOsso";
-
 import Loading from '../../UI/loading'
 
 function Cranio(props) {
-    const [ossa, setOssa] = useState([])
+    const [ossa, setOssa] = useState()
     const [tipoOssa, setTipoOssa] = useState([])
-
-    //const [ossaPresenti, setOssaPresenti] = useState([])
-
-    const [loading, setLoading] = useState(false)
 
     const getOssaIndividuoByDistretto = async (e) => {
         let cm = new ConnectionManager();
@@ -27,18 +22,16 @@ function Cranio(props) {
     }
 
     useEffect(() => {
-
         getOssaByDistretto().then(res => {
             console.log('NomeTipoOssa', res.results)
             setTipoOssa(res.results.sort(compareTipoOssa))
         })
-
         getOssaIndividuoByDistretto().then(res => {
             if (res.response === 'success') {
                 console.log('OssaIndividuo', res.results)
                 setOssa(res.results.sort(compare))
-
-                setLoading(true)
+            } else {
+                setOssa([])
             }
         })
 
@@ -47,10 +40,10 @@ function Cranio(props) {
     let aggiorna = () => {
         getOssaIndividuoByDistretto().then(res => {
             if (res.response === 'success') {
-                console.log('OssaIndividuo', res.results)
+                console.log('aggiorna', res.results)
                 setOssa(res.results.sort(compare))
-
-                setLoading(true)
+            } else {
+                setOssa([])
             }
         })
     }
@@ -76,9 +69,9 @@ function Cranio(props) {
 
     let checkOssa = () => {
         if (ossa.length == 0) {
-            return <div>Non sono presenti ossa...</div>
+            return <div className="">Non sono presenti ossa...</div>
         } else {
-            return (<Table bordered striped hover size="sm">
+            return (<Table className="col" bordered striped hover size="sm">
                 <thead>
                     <tr>
                         <th>Osso</th>
@@ -111,23 +104,24 @@ function Cranio(props) {
     }
 
 
-    return (<div>
+    return (
+        <div>
+            <h5 className='border-bottom mb-2'>Ossa</h5>
 
-        <h5 className='border-bottom mb-2'>Ossa</h5>
+            <div className="border rounded p-2">
 
-        <div className="border rounded p-2">
-            {checkOssa()}
+                {ossa ? (checkOssa()) : (<Loading />)}
 
-            {tipoOssa ? (
-                <div>
-                    {checkUser()}
-                </div >
-            ) : (
-                <div></div>
-            )
-            }
+                {tipoOssa ? (
+                    <div>
+                        {checkUser()}
+                    </div >
+                ) : (
+                    <div></div>
+                )
+                }
+            </div>
         </div>
-    </div >)
-
+    )
 }
 export default Cranio;

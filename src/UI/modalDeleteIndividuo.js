@@ -51,8 +51,9 @@ function ModalDeleteIndividuo(props) {
         let cm = new ConnectionManager();
         var params = { id: props.individuo.id }
         await cm.deleteIndividuo(JSON.stringify(params)).then(res => {
-            if (res.error == null) {
-                navigate('/')
+            console.log('DeleteIndividuo', res)
+            if (res.response === 'success') {
+                navigate('/home')
             }
         })
     }
