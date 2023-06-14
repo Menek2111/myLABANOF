@@ -13,6 +13,8 @@ import '../App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 function ModalDeleteOsso(props) {
+    const navigate = useNavigate();
+
 
     useEffect(() => {
     }, []);
@@ -29,7 +31,7 @@ function ModalDeleteOsso(props) {
         await cm.deleteOsso(JSON.stringify(params)).then(res => {
             if (res.response === 'success') {
                 console.log('response', res)
-                window.location.reload(false);
+                navigate('/home')
             }
         })
     }

@@ -64,7 +64,7 @@ function SchedaIndividuo(props) {
                 <Button variant="primary" onClick={() => changeEditable()}>
                     Modifica
                 </Button>
-                <ModalDeleteIndividuo individuo={individuo.individuo} utente={individuo.utente} />
+                <ModalDeleteIndividuo individuo={individuo.individuo} utente={individuo.utente} callback={aggiorna} />
 
             </div>)
         }
