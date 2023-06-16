@@ -87,18 +87,21 @@ function ModalCreateCarattereMetrico(props) {
                                     <option>Incerto</option>
                                 </Form.Select>
                             </Form.Group>
-                            <Form.Group className="mb-2" >
-                                <Form.Label>Valore</Form.Label>
-                                <Form.Control onChange={(e) => setValore(e.target.value)} type="number" step="0.01" />
-                            </Form.Group>
-                            <Form.Group className="mb-2" >
-                                <Form.Label>Unita di misura</Form.Label>
-                                <Form.Select onChange={(e) => setUnitaMisura(e.target.value)}>
-                                    <option></option>
-                                    <option>cm</option>
-                                    <option>mm</option>
-                                </Form.Select>
-                            </Form.Group>
+                            <div className='d-flex'>
+                                <Form.Group className="mb-2" >
+                                    <Form.Label>Valore</Form.Label>
+                                    <Form.Control min='0' onChange={(e) => setValore(e.target.value)} type="number" step="0.01" />
+                                </Form.Group>
+                                <Form.Group className="mb-2" >
+                                    <Form.Label>Unita di misura</Form.Label>
+                                    <Form.Select onChange={(e) => setUnitaMisura(e.target.value)}>
+                                        <option></option>
+                                        <option>cm</option>
+                                        <option>mm</option>
+                                    </Form.Select>
+                                </Form.Group>
+                            </div>
+
                         </div>
 
 

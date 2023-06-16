@@ -46,7 +46,7 @@ function Traumi(props) {
         } else {
             return (
                 <div className="border rounded p-2 mb-4">
-                    <Table bordered striped hover size="sm">
+                    <Table bordered striped size="sm">
                         <thead>
                             <tr>
                                 <th>Trauma</th>

@@ -39,7 +39,7 @@ function RigaCranio(props) {
     }, []);
 
     return (
-        <tr onClick={handleShow}>
+        <tr onClick={handleShow} style={{ cursor: 'pointer' }}>
             <td>{props.osso.nome}</td>
             <td>{props.osso.lato}</td>
             <td>
@@ -188,7 +188,7 @@ function DettagliOsso(props) {
                     </div>
 
                     <div className='row border rounded p-2'>
-                        <Table className='col' bordered striped hover size="sm">
+                        <Table className='col' bordered striped size="sm">
                             <tbody>
                                 <tr>
                                     <th className='w-25'>Osso</th>
@@ -280,7 +280,7 @@ function DettagliOsso(props) {
                     </div>
 
                     <div className='row border rounded p-2'>
-                        <Table className='col' bordered striped hover size="sm">
+                        <Table className='col' bordered striped size="sm">
 
                             <tbody>
                                 <tr>

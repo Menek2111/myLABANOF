@@ -18,19 +18,31 @@ function ModalCreateOsso(props) {
 
     //Gestione modal
     const [show, setShow] = useState(false);
-    const handleClose = () => setShow(false);
+    const handleClose = () => {
+        setNome('')
+        setLato('')
+        setIntegro('')
+        setLvlIntegrita('')
+        setLvlQualita('')
+        setRestaurato('')
+        setCatalogazioneDescrizione('')
+        setIndagineRadiologica('')
+        setCampionamento('')
+        setAltreAnalisi('')
+        setShow(false);
+    }
     const handleShow = () => setShow(true);
 
-    const [nome, setNome] = useState()
-    const [lato, setLato] = useState()
-    const [integro, setIntegro] = useState()
-    const [lvlIntegrita, setLvlIntegrita] = useState()
-    const [lvlQualita, setLvlQualita] = useState()
-    const [restaurato, setRestaurato] = useState()
-    const [catalogazioneDescrizione, setCatalogazioneDescrizione] = useState()
-    const [indagineRadiologica, setIndagineRadiologica] = useState()
-    const [campionamento, setCampionamento] = useState()
-    const [altreAnalisi, setAltreAnalisi] = useState()
+    const [nome, setNome] = useState('')
+    const [lato, setLato] = useState('')
+    const [integro, setIntegro] = useState('')
+    const [lvlIntegrita, setLvlIntegrita] = useState('')
+    const [lvlQualita, setLvlQualita] = useState('')
+    const [restaurato, setRestaurato] = useState('')
+    const [catalogazioneDescrizione, setCatalogazioneDescrizione] = useState('')
+    const [indagineRadiologica, setIndagineRadiologica] = useState('')
+    const [campionamento, setCampionamento] = useState('')
+    const [altreAnalisi, setAltreAnalisi] = useState('')
 
     const createOsso = async () => {
         let cm = new ConnectionManager();
@@ -48,7 +60,7 @@ function ModalCreateOsso(props) {
             individuo: props.individuo
         }
         await cm.createOsso(JSON.stringify(params)).then(res => {
-
+            console.log('CreateOsso', res)
             switch (res.response) {
                 case 'success':
                     props.callback()
@@ -82,13 +94,14 @@ function ModalCreateOsso(props) {
                 </Modal.Header>
                 <Form onSubmit={createOsso}>
                     <Modal.Body>
-                        <Table bordered striped hover size="sm">
+                        <Table bordered striped size="sm">
                             <tbody>
                                 <tr>
                                     <th className='w-25'>Osso</th>
                                     <td>
                                         <Form.Select onChange={(e) => setNome(e.target.value)} required>
                                             <option></option>
+
                                             {props.tipoOssa.map(tipoOsso => (<option key={tipoOsso.id} value={tipoOsso.id}>{tipoOsso.nome}</option>))}
                                         </Form.Select>
                                     </td>
@@ -118,11 +131,11 @@ function ModalCreateOsso(props) {
                                 </tr>
                                 <tr>
                                     <th>Livello di integrità</th>
-                                    <td><input type="number" className='form-control' onChange={(e) => setLvlIntegrita(e.target.value)} /></td>
+                                    <td><input type="number" max='3' min='0' className='form-control' onChange={(e) => setLvlIntegrita(e.target.value)} /></td>
                                 </tr>
                                 <tr>
                                     <th>Livello di qualità</th>
-                                    <td><input type="number" className='form-control' onChange={(e) => setLvlQualita(e.target.value)} /></td>
+                                    <td><input type="number" max='3' min='0' className='form-control' onChange={(e) => setLvlQualita(e.target.value)} /></td>
                                 </tr>
                                 <tr>
                                     <th>Restaurato</th>

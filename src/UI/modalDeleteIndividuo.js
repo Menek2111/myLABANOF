@@ -30,8 +30,7 @@ function ModalDeleteIndividuo(props) {
         event.stopPropagation();
 
         if (testo === deleteText) {
-            deleteAPi().then(res => console.log('Eliminazione: ' + res))
-            navigate('/home')
+            deleteAPi()
         } else {
             var text = document.getElementById('formText')
             text.classList.add('border-danger')
@@ -44,7 +43,10 @@ function ModalDeleteIndividuo(props) {
 
     //Gestione modal
     const [show, setShow] = useState(false);
-    const handleClose = () => setShow(false);
+    const handleClose = () => {
+        setText('')
+        setShow(false);
+    }
     const handleShow = () => setShow(true);
 
     const deleteAPi = async () => {
@@ -52,9 +54,13 @@ function ModalDeleteIndividuo(props) {
         var params = { id: props.individuo.id }
         await cm.deleteIndividuo(JSON.stringify(params)).then(res => {
             console.log('DeleteIndividuo', res)
+
             if (res.response === 'success') {
+                alert('Eliminazione avvenuta con successo')
+                handleClose()
                 navigate('/home')
             }
+
         })
     }
 

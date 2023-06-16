@@ -19,9 +19,6 @@ function ModalCreateIndividuo(props) {
     const [nome, setNome] = useState('');
     const [tombe, setTombe] = useState([]);
 
-    //Stato per il profilo
-    const [profile, setProfile] = useState([]);
-
     const getTombe = async (e) => {
         let cm = new ConnectionManager();
         let res = await cm.getAllTombe();
@@ -29,7 +26,6 @@ function ModalCreateIndividuo(props) {
     }
 
     useEffect(() => {
-        setProfile(JSON.parse(localStorage.getItem('userID')));
         getTombe().then(res => {
             console.log('GetTombe', res)
             if (res.response === 'success') {
@@ -42,30 +38,36 @@ function ModalCreateIndividuo(props) {
 
     //Gestione modal
     const [show, setShow] = useState(false);
-    const handleClose = () => setShow(false);
+    const handleClose = () => {
+        setTomba('')
+        setNome('')
+        setShow(false);
+    }
     const handleShow = () => setShow(true);
 
     //Chiamate API
-    const creaIndividuo = async (tomba, nome, creatore) => {
-        if (tomba !== '' && nome !== '') {
-            let cm = new ConnectionManager();
-            var params
-            if (props.tomba != null) {
-                params = { tomba: props.tomba.id, nome: nome, creatore: creatore }
-            } else {
-                params = { tomba: tomba, nome: nome, creatore: creatore }
-            }
-            await cm.createIndividuo(JSON.stringify(params)).then(
-                res => {
-                    console.log('CreateIndividuo', res)
-                    if (res.response === 'success') {
-                        sessionStorage.setItem('individuoSelezionato', res.results)
-                        sessionStorage.setItem('individuoSelezionatoCreatore', localStorage.getItem('userID'))
-                        navigate('/individuo')
-                    }
-                }
-            );
+    const creaIndividuo = async () => {
+        let cm = new ConnectionManager();
+        var params
+        if (props.tomba != null) {
+            params = { tomba: props.tomba.id, nome: nome, creatore: localStorage.getItem('userID') }
+        } else {
+            params = { tomba: tomba, nome: nome, creatore: localStorage.getItem('userID') }
         }
+        await cm.createIndividuo(JSON.stringify(params)).then(
+            res => {
+                console.log('CreateIndividuo', res)
+
+                if (res.response === 'success') {
+                    sessionStorage.setItem('individuoSelezionato', res.results)
+                    sessionStorage.setItem('individuoSelezionatoCreatore', localStorage.getItem('userID'))
+
+                    navigate('/individuo')
+                }
+
+            }
+        );
+
     }
 
     let checkProps = () => {
@@ -98,14 +100,13 @@ function ModalCreateIndividuo(props) {
                 <Modal.Header closeButton>
                     <Modal.Title>Creazione nuovo individuo</Modal.Title>
                 </Modal.Header>
-                <Form>
+                <Form onSubmit={creaIndividuo}>
                     <Modal.Body>
 
                         <Form.Group className="mb-3" controlId="formBasicEmail">
                             <Form.Label>Tomba di appartenenza:</Form.Label>
 
                             {checkProps()}
-
 
                         </Form.Group>
                         <Form.Group className="mb-3" controlId="formBasicPassword">
@@ -118,7 +119,7 @@ function ModalCreateIndividuo(props) {
                         <Button variant="secondary" onClick={handleClose}>
                             Chiudi senza salvare
                         </Button>
-                        <Button variant="primary" type="submit" onClick={(e) => creaIndividuo(tomba, nome, profile)}>Salva</Button>
+                        <Button variant="primary" type="submit">Salva</Button>
                     </Modal.Footer>
                 </Form>
             </Modal>

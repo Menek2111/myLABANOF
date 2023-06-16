@@ -16,9 +16,9 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 function ModalCreateTrauma(props) {
     const navigate = useNavigate();
 
-    const [trauma, setTrauma] = useState()
-    const [descrizione, setDescrizione] = useState()
-    const [datazione, setDatazione] = useState()
+    const [trauma, setTrauma] = useState('')
+    const [descrizione, setDescrizione] = useState('')
+    const [datazione, setDatazione] = useState('')
 
     useEffect(() => {
 
@@ -26,7 +26,12 @@ function ModalCreateTrauma(props) {
 
     //Gestione modal
     const [show, setShow] = useState(false);
-    const handleClose = () => setShow(false);
+    const handleClose = () => {
+        setTrauma('')
+        setDescrizione('')
+        setDatazione('')
+        setShow(false);
+    }
     const handleShow = () => setShow(true);
 
     //Chiamate API
@@ -63,7 +68,7 @@ function ModalCreateTrauma(props) {
                     <Modal.Body>
 
                         <Form.Group className="mb-3" controlId="formBasicPassword">
-                            <Form.Label>Truma</Form.Label>
+                            <Form.Label>Trauma</Form.Label>
                             <Form.Select onChange={(e) => setTrauma(e.target.value)} required>
                                 <option></option>
                                 {props.listaTraumi ? (

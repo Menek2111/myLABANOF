@@ -11,6 +11,7 @@ import { useNavigate } from 'react-router-dom'
 
 import '../App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { NavItem } from 'react-bootstrap';
 
 function ModalDeleteOsso(props) {
     const navigate = useNavigate();
@@ -31,7 +32,8 @@ function ModalDeleteOsso(props) {
         await cm.deleteOsso(JSON.stringify(params)).then(res => {
             if (res.response === 'success') {
                 console.log('response', res)
-                navigate('/home')
+                window.location.reload(false)
+                //navigate('/individuo/cranio')
             }
         })
     }

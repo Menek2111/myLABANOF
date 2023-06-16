@@ -13,10 +13,10 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 function ModalCreatePatologia(props) {
 
-    const [tipoPatologia, setTipoPatologia] = useState()
-    const [descrizione, setDescrizione] = useState()
-    const [litica, setLitica] = useState()
-    const [proliferativa, setProliferativa] = useState()
+    const [tipoPatologia, setTipoPatologia] = useState('')
+    const [descrizione, setDescrizione] = useState('')
+    const [litica, setLitica] = useState('')
+    const [proliferativa, setProliferativa] = useState('')
 
 
     useEffect(() => {
@@ -25,7 +25,13 @@ function ModalCreatePatologia(props) {
 
     //Gestione modal
     const [show, setShow] = useState(false);
-    const handleClose = () => setShow(false);
+    const handleClose = () => {
+        setTipoPatologia('')
+        setDescrizione('')
+        setLitica('')
+        setProliferativa('')
+        setShow(false);
+    }
     const handleShow = () => setShow(true);
 
 

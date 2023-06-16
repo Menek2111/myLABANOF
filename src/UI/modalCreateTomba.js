@@ -27,11 +27,15 @@ function ModalCreateTomba() {
 
     //Gestione modal
     const [show, setShow] = useState(false);
-    const handleClose = () => setShow(false);
+    const handleClose = () => {
+        setNome('')
+        setNum('')
+        setCoord('')
+        setShow(false);
+    }
     const handleShow = () => setShow(true);
 
     //Chiamate API
-
     const creaTomba = async () => {
         let cm = new ConnectionManager();
         var params = { nome: nome, nMinIndividui: num, coordinate: coord }
@@ -39,10 +43,11 @@ function ModalCreateTomba() {
             console.log('CreateTomba', res)
 
             if (res.response == 'success') {
-
                 sessionStorage.setItem('tombaSelezionata', res.results)
+                handleClose()
                 navigate('/tomba')
             }
+
         })
 
     }

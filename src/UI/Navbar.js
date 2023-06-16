@@ -153,7 +153,7 @@ function NavBar() {
 
                                     <Dropdown className='border-left w-100'>
                                         <Dropdown.Toggle variant="success" className='bg-transparent searchbar removeArrow p-0 w-100'>
-                                            <input placeholder='Cerca...' className="w-100 searchbar2 bg-transparent rounded" onChange={(e) => getResultsByQuery(e.target.value)}  ></input>
+                                            <input placeholder='Cerca...' className="px-2 w-100 searchbar2 bg-transparent rounded" onChange={(e) => getResultsByQuery(e.target.value)}  ></input>
                                         </Dropdown.Toggle>
                                         <Dropdown.Menu className='rounded border mt-0 w-100'>
                                             {
