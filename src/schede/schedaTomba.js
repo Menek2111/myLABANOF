@@ -26,8 +26,6 @@ function SchedaTomba() {
     const [individui, setIndividui] = useState()
     const [tombaInfo, setTombaInfo] = useState()
 
-
-
     const centerMiddle = {
         display: "flex",
         alignItems: "center",
@@ -80,8 +78,6 @@ function SchedaTomba() {
                     break
             }
         })
-
-
     }, [location]);
 
     let aggiorna = () => {

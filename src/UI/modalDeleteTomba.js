@@ -50,6 +50,7 @@ function ModalDeleteTomba(props) {
             console.log('DeleteTomba', res)
             switch (res.response) {
                 case 'success':
+                    alert('Tomba eliminata con successo')
                     navigate('/home')
                     break
                 case 'error':

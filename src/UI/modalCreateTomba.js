@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-
+import { ProgressBar } from 'react-loader-spinner'
 //Import componenti
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
@@ -21,8 +21,10 @@ function ModalCreateTomba() {
     const [num, setNum] = useState('');
     const [coord, setCoord] = useState('');
 
-    useEffect(() => {
+    const [ready, setReady] = useState(false)
 
+    useEffect(() => {
+        setReady(true)
     }, []);
 
     //Gestione modal
@@ -36,22 +38,29 @@ function ModalCreateTomba() {
     const handleShow = () => setShow(true);
 
     //Chiamate API
-    const creaTomba = async () => {
+
+    const createTomba = async (e) => {
         let cm = new ConnectionManager();
         var params = { nome: nome, nMinIndividui: num, coordinate: coord }
-        await cm.createTomba(JSON.stringify(params)).then(res => {
-            console.log('CreateTomba', res)
 
-            if (res.response == 'success') {
-                sessionStorage.setItem('tombaSelezionata', res.results)
-                handleClose()
-                navigate('/tomba')
-            }
-
-        })
-
+        let res = await cm.createTomba(JSON.stringify(params))
+        if (res.response === 'success') {
+            console.log('response', res.response)
+            sessionStorage.setItem('tombaSelezionata', res.results)
+        }
     }
 
+    let creaTomba = (event) => {
+        event.preventDefault();
+
+
+        setReady(false)
+        createTomba().then(() => {
+            setTimeout(() => {
+                navigate('/tomba')
+            }, 1000);
+        })
+    }
 
     return (
         <div>
@@ -67,7 +76,7 @@ function ModalCreateTomba() {
                 centered
             >
                 <Form onSubmit={creaTomba}>
-                    <Modal.Header closeButton>
+                    <Modal.Header>
                         <Modal.Title>Creazione nuova tomba</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
@@ -86,10 +95,22 @@ function ModalCreateTomba() {
                         </Form.Group>
                     </Modal.Body>
                     <Modal.Footer>
-                        <Button variant="secondary" onClick={handleClose}>
-                            Chiudi senza salvare
-                        </Button>
-                        <Button variant="primary" type='submit'>Salva</Button>
+                        {ready ? (
+                            <div>
+                                <Button className='mx-2' variant="secondary" onClick={handleClose}>
+                                    Chiudi senza salvare
+                                </Button>
+
+                                <Button variant="primary" type='submit'>Salva</Button>
+                            </div>
+                        ) : (<ProgressBar
+                            width='100%'
+                            ariaLabel="progress-bar-loading"
+                            wrapperStyle={{}}
+                            wrapperClass="progress-bar-wrapper"
+                            borderColor='#EDF2FC'
+                            barColor='#0B5ED7'
+                        />)}
                     </Modal.Footer>
                 </Form>
             </Modal>

@@ -4,6 +4,8 @@ import React, { useState, useEffect } from 'react';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
+import { ProgressBar } from 'react-loader-spinner'
+
 
 //Import classi
 import ConnectionManager from '../api/ConnectionManager';
@@ -19,6 +21,8 @@ function ModalCreateIndividuo(props) {
     const [nome, setNome] = useState('');
     const [tombe, setTombe] = useState([]);
 
+    const [ready, setReady] = useState(false);
+
     const getTombe = async (e) => {
         let cm = new ConnectionManager();
         let res = await cm.getAllTombe();
@@ -26,6 +30,9 @@ function ModalCreateIndividuo(props) {
     }
 
     useEffect(() => {
+
+        setReady(true)
+
         getTombe().then(res => {
             console.log('GetTombe', res)
             if (res.response === 'success') {
@@ -45,8 +52,7 @@ function ModalCreateIndividuo(props) {
     }
     const handleShow = () => setShow(true);
 
-    //Chiamate API
-    const creaIndividuo = async () => {
+    const createIndividuo = async (e) => {
         let cm = new ConnectionManager();
         var params
         if (props.tomba != null) {
@@ -61,13 +67,21 @@ function ModalCreateIndividuo(props) {
                 if (res.response === 'success') {
                     sessionStorage.setItem('individuoSelezionato', res.results)
                     sessionStorage.setItem('individuoSelezionatoCreatore', localStorage.getItem('userID'))
-
-                    navigate('/individuo')
                 }
-
             }
         );
+    }
 
+    //Chiamate API
+    const creaIndividuo = async (event) => {
+        event.preventDefault();
+
+        setReady(false)
+        createIndividuo().then(() => {
+            setTimeout(() => {
+                navigate('/individuo')
+            }, 500);
+        })
     }
 
     let checkProps = () => {
@@ -116,10 +130,22 @@ function ModalCreateIndividuo(props) {
 
                     </Modal.Body>
                     <Modal.Footer>
-                        <Button variant="secondary" onClick={handleClose}>
-                            Chiudi senza salvare
-                        </Button>
-                        <Button variant="primary" type="submit">Salva</Button>
+                        {ready ? (
+                            <div>
+                                <Button className='mx-2' variant="secondary" onClick={handleClose}>
+                                    Chiudi senza salvare
+                                </Button>
+
+                                <Button variant="primary" type='submit'>Salva</Button>
+                            </div>
+                        ) : (<ProgressBar
+                            width='100%'
+                            ariaLabel="progress-bar-loading"
+                            wrapperStyle={{}}
+                            wrapperClass="progress-bar-wrapper"
+                            borderColor='#EDF2FC'
+                            barColor='#0B5ED7'
+                        />)}
                     </Modal.Footer>
                 </Form>
             </Modal>

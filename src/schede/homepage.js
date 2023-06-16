@@ -8,7 +8,6 @@ import ConnectionManager from '../api/ConnectionManager';
 import ListaIndividui from '../component/listaIndividui'
 import SideNav from '../component/sideNav';
 import ListaTombe from '../component/listaTombe';
-
 //Componenti grafici
 import { Dna } from 'react-loader-spinner'
 import Loading from '../UI/loading';
@@ -21,7 +20,6 @@ function Homepage() {
     //Tombe -> Elenco tombe presenti nel DB
     const [individui, setIndividui] = useState()
     const [tombe, setTombe] = useState()
-
 
     const getIndividui = async (e) => {
         let cm = new ConnectionManager();
