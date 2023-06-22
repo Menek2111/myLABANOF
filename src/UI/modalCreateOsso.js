@@ -44,7 +44,9 @@ function ModalCreateOsso(props) {
     const [campionamento, setCampionamento] = useState('')
     const [altreAnalisi, setAltreAnalisi] = useState('')
 
-    const createOsso = async () => {
+    const createOsso = async (event) => {
+        event.preventDefault();
+
         let cm = new ConnectionManager();
         var params = {
             tipoOsso: nome,

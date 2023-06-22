@@ -32,7 +32,9 @@ function ModalCreateCarattereMetrico(props) {
     const [valore, setValore] = useState()
     const [unitaMisura, setUnitaMisura] = useState()
 
-    const createCarattereMetricoSpecifico = async () => {
+    const createCarattereMetricoSpecifico = async (event) => {
+        event.preventDefault();
+
         let cm = new ConnectionManager();
         var params = { individuo: sessionStorage.getItem('individuoSelezionato'), tipoCarattereMetrico: tipoCarattereMetrico, lato: lato, valore: valore, unitaMisura: unitaMisura }
         await cm.createCarattereMetricoSpecifico(JSON.stringify(params)).then(res => {

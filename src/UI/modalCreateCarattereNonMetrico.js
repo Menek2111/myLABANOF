@@ -35,7 +35,11 @@ function ModalCreateCarattereNonMetrico(props) {
         else return 0
     }
 
-    const createCarattereNonMetricoSpecifico = async () => {
+    const createCarattereNonMetricoSpecifico = async (event) => {
+
+        event.preventDefault();
+
+
         let cm = new ConnectionManager();
         var params = {
             individuo: sessionStorage.getItem('individuoSelezionato'),

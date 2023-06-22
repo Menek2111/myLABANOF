@@ -58,7 +58,7 @@ function ModalCreateTomba() {
         createTomba().then(() => {
             setTimeout(() => {
                 navigate('/tomba')
-            }, 1000);
+            }, 500);
         })
     }
 
@@ -76,7 +76,7 @@ function ModalCreateTomba() {
                 centered
             >
                 <Form onSubmit={creaTomba}>
-                    <Modal.Header>
+                    <Modal.Header closeButton>
                         <Modal.Title>Creazione nuova tomba</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>

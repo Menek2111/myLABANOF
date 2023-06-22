@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Button from 'react-bootstrap/Button';
+import { useLocation } from 'react-router-dom';
 
 import ConnectionManager from '../api/ConnectionManager';
 
@@ -35,6 +36,8 @@ function SchedaIndividuo(props) {
         let res = await cm.getIndividuoById(JSON.stringify({ id: sessionStorage.getItem('individuoSelezionato') }));
         return res
     }
+
+    const location = useLocation();
     useEffect(() => {
         getIndividuoById().then(res => {
             console.log('GetIndividuoById', res)
@@ -49,7 +52,7 @@ function SchedaIndividuo(props) {
             }
 
         })
-    }, []);
+    }, [location]);
 
     function changeEditable() {
         if (editable) setEditable(false)

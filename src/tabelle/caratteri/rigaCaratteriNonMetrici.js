@@ -81,7 +81,7 @@ function RigaCaratteriNonMetrici(props) {
 
 
     return (
-        <tr key={props.carattere.id} onClick={() => checkUser()}>
+        <tr style={{ cursor: 'pointer' }} key={props.carattere.id} onClick={() => checkUser()}>
             <td>
                 {props.carattere.nome}
             </td>

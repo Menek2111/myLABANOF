@@ -32,7 +32,8 @@ function RigaPatologia(props) {
     const [proliferativa, setProliferativa] = useState(valueToBoolean(props.patologia.proliferativa))
 
 
-    const editPatologiaSpecifica = async () => {
+    const editPatologiaSpecifica = async (event) => {
+        event.preventDefault();
         let cm = new ConnectionManager();
         var params = {
             osso: props.patologia.osso,

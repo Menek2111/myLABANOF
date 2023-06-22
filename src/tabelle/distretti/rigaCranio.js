@@ -126,8 +126,8 @@ function DettagliOsso(props) {
 
     const [editable, setEditable] = useState(false)
 
-    const editOsso = async () => {
-
+    const editOsso = async (event) => {
+        event.preventDefault();
         //alert(integro)
 
         let cm = new ConnectionManager();

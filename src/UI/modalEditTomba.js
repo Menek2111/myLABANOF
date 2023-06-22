@@ -29,7 +29,9 @@ function ModalEditTomba(props) {
     const handleShow = () => setShow(true);
 
     //Chiamate API
-    const modificaTomba = async () => {
+    const modificaTomba = async (event) => {
+        event.preventDefault();
+
         let cm = new ConnectionManager();
         var params = { id: props.tomba.id, nome: nome, nMinIndividui: num, coordinate: coord }
         await cm.editTomba(JSON.stringify(params)).then(res => {

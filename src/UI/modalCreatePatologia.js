@@ -44,7 +44,10 @@ function ModalCreatePatologia(props) {
         }
     }
 
-    const createPatologiaSpecifica = async () => {
+    const createPatologiaSpecifica = async (event) => {
+        event.preventDefault();
+
+
         let cm = new ConnectionManager();
         var params = {
             tipoPatologia: tipoPatologia,

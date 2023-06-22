@@ -37,7 +37,9 @@ function ModalCreateTrauma(props) {
     //Chiamate API
 
 
-    const createTraumaSpecifico = async () => {
+    const createTraumaSpecifico = async (event) => {
+        event.preventDefault();
+
         let cm = new ConnectionManager();
         var params = { tipoTrauma: trauma, osso: props.osso, datazione: datazione, descrizione: descrizione }
         await cm.createTraumaSpecifico(JSON.stringify(params)).then(res => {

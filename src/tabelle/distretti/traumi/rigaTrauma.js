@@ -17,7 +17,8 @@ function RigaTrauma(props) {
     const [descrizione, setDescrizione] = useState(props.trauma.descrizione)
     const [datazione, setDatazione] = useState(props.trauma.datazione)
 
-    const editTraumaSpecifico = async () => {
+    const editTraumaSpecifico = async (event) => {
+        event.preventDefault();
         let cm = new ConnectionManager();
         var params = {
             osso: props.trauma.osso,
