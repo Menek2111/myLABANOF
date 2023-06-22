@@ -69,7 +69,6 @@ function CaratteriNonMetrici(props) {
                     <tr>
                         <th className="w-50">Caratteri non metrici</th>
                         <th>Lato</th>
-                        <th>Valore</th>
                     </tr>
                 </thead>
                 <tbody>

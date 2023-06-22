@@ -65,8 +65,7 @@ function CaratteriMetrici(props) {
                     <tr>
                         <th>Caratteri metrici</th>
                         <th>Lato</th>
-                        <th>Valore</th>
-                        <th>Unità di misura</th>
+                        <th>Valore (mm)</th>
                     </tr>
                 </thead>
                 <tbody>

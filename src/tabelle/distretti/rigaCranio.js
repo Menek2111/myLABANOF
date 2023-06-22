@@ -82,7 +82,9 @@ function RigaCranio(props) {
                 </Modal.Header>
                 <Modal.Body className='row'>
 
-                    <DettagliOsso osso={props.osso} callback={props.callback} />
+                    <div className='col-4'>
+                        <DettagliOsso osso={props.osso} callback={props.callback} />
+                    </div>
 
                     <div className='col'>
 
@@ -176,7 +178,7 @@ function DettagliOsso(props) {
 
 
     return (
-        <Form className='col-sm-5' onSubmit={editOsso}>
+        <Form onSubmit={editOsso}>
             {editable ? (
                 <div>
                     <div className='border-bottom mb-2 d-flex justify-content-between'>

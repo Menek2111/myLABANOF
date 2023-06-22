@@ -39,14 +39,12 @@ function ModalCreateCarattereNonMetrico(props) {
 
         event.preventDefault();
 
-
         let cm = new ConnectionManager();
         var params = {
             individuo: sessionStorage.getItem('individuoSelezionato'),
             tipoCarattereNonMetrico: tipoCarattereNonMetrico,
             lato: lato,
             valore: booleanToValue(valore),
-
         }
         await cm.createCarattereNonMetricoSpecifico(JSON.stringify(params)).then(res => {
             console.log('Creazione carattere metrico', res)
@@ -80,16 +78,16 @@ function ModalCreateCarattereNonMetrico(props) {
                 </Modal.Header>
                 <Form onSubmit={createCarattereNonMetricoSpecifico}>
                     <Modal.Body>
+                        <div className='row justify-content-around'>
+                            <Form.Group className="col mb-2" controlId="formBasicPassword">
+                                <Form.Label>Carattere metrico</Form.Label>
+                                <Form.Select onChange={(e) => setTipoCarattereNonMetrico(e.target.value)} required>
+                                    <option></option>
+                                    {props.caratteri.map(car => (<option key={car.id} value={car.id}>{car.nome}</option>))}
+                                </Form.Select>
+                            </Form.Group>
 
-                        <Form.Group className="mb-2" controlId="formBasicPassword">
-                            <Form.Label>Carattere metrico</Form.Label>
-                            <Form.Select onChange={(e) => setTipoCarattereNonMetrico(e.target.value)} required>
-                                <option></option>
-                                {props.caratteri.map(car => (<option key={car.id} value={car.id}>{car.nome}</option>))}
-                            </Form.Select>
-                        </Form.Group>
-                        <div className='d-flex justify-content-between'>
-                            <Form.Group className="mb-2 w-25" >
+                            <Form.Group className=" col mb-2 w-25" >
                                 <Form.Label>Lato</Form.Label>
                                 <Form.Select onChange={(e) => setLato(e.target.value)} required>
                                     <option></option>
@@ -98,15 +96,6 @@ function ModalCreateCarattereNonMetrico(props) {
                                     <option>Unico</option>
                                     <option>Incerto</option>
                                 </Form.Select>
-                            </Form.Group>
-                            <Form.Group className="mb-2" >
-                                <Form.Label>Valore</Form.Label>
-                                <Form.Check
-                                    type="checkbox"
-                                    onChange={() => {
-                                        setValore((state) => !state)
-                                    }}
-                                />
                             </Form.Group>
                         </div>
 

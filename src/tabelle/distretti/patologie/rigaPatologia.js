@@ -30,10 +30,10 @@ function RigaPatologia(props) {
     const [descrizione, setDescrizione] = useState(props.patologia.descrizione)
     const [litica, setLitica] = useState(valueToBoolean(props.patologia.litica))
     const [proliferativa, setProliferativa] = useState(valueToBoolean(props.patologia.proliferativa))
+    const [classePatologia, setClassePatologia] = useState(props.patologia.classePatologia)
 
+    const editPatologiaSpecifica = async () => {
 
-    const editPatologiaSpecifica = async (event) => {
-        event.preventDefault();
         let cm = new ConnectionManager();
         var params = {
             osso: props.patologia.osso,
@@ -41,9 +41,11 @@ function RigaPatologia(props) {
             descrizione: descrizione,
             litica: booleanToValue(litica),
             proliferativa: booleanToValue(proliferativa),
+            classePatologia: classePatologia,
             id: props.patologia.id
         }
         await cm.editPatologiaSpecifica(JSON.stringify(params)).then(res => {
+            console.log('EditPatologiaSpecifica', res)
             if (res.response === 'success') {
                 props.callback()
                 setEditable(false)
@@ -64,8 +66,8 @@ function RigaPatologia(props) {
     }
 
     useEffect(() => {
-    }, []);
 
+    }, []);
 
 
     let checkUser = () => {
@@ -87,6 +89,11 @@ function RigaPatologia(props) {
                 <Form.Select defaultValue={tipoPatologia} onChange={(e) => setTipoPatologia(e.target.value)} disabled>
                     <option></option>
                     {props.patologie.map(pato => <option key={pato.id} value={pato.id}>{pato.nome}</option>)}
+                </Form.Select>
+            </td>
+            <td>
+                <Form.Select defaultValue={classePatologia} onChange={(e) => setClassePatologia(e.target.value)} >
+                    {props.classiPatologie.map(classe => <option key={classe.id} value={classe.id}>{classe.nome}</option>)}
                 </Form.Select>
             </td>
             <td>
@@ -116,6 +123,7 @@ function RigaPatologia(props) {
     ) : (
         <tr>
             <td>{props.patologia.nome}</td >
+            <td>{props.patologia.classePatologiaNome}</td>
             <td>{props.patologia.descrizione}</td>
             <td>
                 <Form.Check

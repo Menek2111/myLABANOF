@@ -91,11 +91,12 @@ function SchedaIndividuo(props) {
     const [modGeneralità, setModGeneralità] = useState()
     const [modProfiloBiologico, setModProfiloBiologico] = useState()
 
-    const addModificheGeneralità = (nome, luogo, data) => {
+    const addModificheGeneralità = (nome, luogo, data, stato) => {
         var mod = {
             nome: nome,
             luogoRinvenimento: luogo,
-            dataRinvenimento: data
+            dataRinvenimento: data,
+            stato: stato
         }
         setModGeneralità(mod)
     }
@@ -121,7 +122,8 @@ function SchedaIndividuo(props) {
             classeDiEta: modProfiloBiologico.classeDiEta,
             origineBiologica: modProfiloBiologico.origineBiologica,
             origineGeografica: modProfiloBiologico.origineGeografica,
-            sessoBiologico: modProfiloBiologico.sessoBiologico
+            sessoBiologico: modProfiloBiologico.sessoBiologico,
+            stato: modGeneralità.stato
         }
 
         await cm.editIndividuo(JSON.stringify(modifiche)).then(res => {

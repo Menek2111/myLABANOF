@@ -222,6 +222,15 @@ export default class ConnectionManager {
         return data
     }
 
+    getClassiPatologie = async function (params) {
+
+        var URL = "https://applabanof.altervista.org/applabanof/data/getClassiPatologie.php"
+        const { data } = await axios.post(URL, {
+
+        })
+        return data
+    }
+
     //CREATE 
 
     createIndividuo = async function (params) {
@@ -304,7 +313,8 @@ export default class ConnectionManager {
             tipoPatologia: json.tipoPatologia,
             litica: json.litica,
             proliferativa: json.proliferativa,
-            descrizione: json.descrizione
+            descrizione: json.descrizione,
+            classePatologia: json.classePatologia
         })
         return data
     }
@@ -393,7 +403,8 @@ export default class ConnectionManager {
             classeDiEta: json.classeDiEta,
             origineBiologica: json.origineBiologica,
             origineGeografica: json.origineGeografica,
-            sessoBiologico: json.sessoBiologico
+            sessoBiologico: json.sessoBiologico,
+            stato: json.stato
         })
         return data
     }
@@ -426,7 +437,6 @@ export default class ConnectionManager {
             tipoCarattereMetrico: json.tipoCarattereMetrico,
             lato: json.lato,
             valore: json.valore,
-            unitaMisura: json.unitaMisura,
             id: json.id
         })
         return data
@@ -467,6 +477,7 @@ export default class ConnectionManager {
             descrizione: json.descrizione,
             litica: json.litica,
             proliferativa: json.proliferativa,
+            classePatologia: json.classePatologia,
             id: json.id
         })
         return data

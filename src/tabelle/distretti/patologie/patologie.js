@@ -10,6 +10,7 @@ function Patologie(props) {
 
     const [patologie, setPatologie] = useState([])
     const [listaPatologie, setListaPatologie] = useState()
+    const [classiPatologie, setClassiPatologie] = useState()
 
     const aggiorna = () => {
         getPatologiaSpecifica().then(res => {
@@ -34,6 +35,12 @@ function Patologie(props) {
         return res;
     }
 
+    const getClassiPatologie = async () => {
+        let cm = new ConnectionManager();
+        let res = await cm.getClassiPatologie();
+        return res;
+    }
+
     useEffect(() => {
         getPatologiaSpecifica().then(res => {
             console.log('getPatologiaSpecifica', res)
@@ -46,6 +53,13 @@ function Patologie(props) {
             console.log('getPatologiaByDistretto', res)
             if (res.response === 'success') {
                 setListaPatologie(res.results)
+            }
+        })
+
+        getClassiPatologie().then(res => {
+            console.log('getClassiPatologie', res)
+            if (res.response === 'success') {
+                setClassiPatologie(res.results)
             }
         })
     }, []);
@@ -61,6 +75,7 @@ function Patologie(props) {
                         <thead>
                             <tr>
                                 <th>Patologia</th>
+                                <th>Classe patologia</th>
                                 <th>Descrizione</th>
                                 <th>Litica</th>
                                 <th>Proliferativa</th>
@@ -68,9 +83,12 @@ function Patologie(props) {
                             </tr>
                         </thead>
                         <tbody>
-                            {patologie ? (patologie.map(patologia =>
-                                <RigaPatologia key={patologia.id} patologia={patologia} patologie={listaPatologie} callback={aggiorna} />
-                            )) : (<tr></tr>)}
+                            {patologie ? (classiPatologie ?
+                                ((patologie.map(patologia =>
+                                    <RigaPatologia key={patologia.id} patologia={patologia} classiPatologie={classiPatologie} patologie={listaPatologie} callback={aggiorna} />
+                                )))
+                                : (<tr></tr>))
+                                : (<tr></tr>)}
                         </tbody>
                     </Table>
                 </div >
@@ -85,32 +103,32 @@ function Patologie(props) {
         }
     }
 
-
     let checkUser = () => {
         if (localStorage.getItem('userID') != sessionStorage.getItem('individuoSelezionatoCreatore')) {
             return (<div></div>)
         } else {
 
-            return <ModalCreatePatologia osso={props.osso} distretto={1} patologie={listaPatologie} callback={aggiorna} />
-
+            return <ModalCreatePatologia osso={props.osso} distretto={1} patologie={listaPatologie} classiPatologie={classiPatologie} callback={aggiorna} />
         }
     }
-
-
 
     //<ModalCreateTrauma traumi={traumi} distretto={1} osso={props.osso} />
     return (<div className="">
         <div className='border-bottom mb-2 d-flex justify-content-between'>
             <h5 className=''>Patologie</h5>
-            {listaPatologie ? (checkUser()) : (<div></div>)}
+            {
+                listaPatologie ? classiPatologie ?
+                    (checkUser())
+                    : (<div></div>)
+                    : (<div></div>)
+            }
         </div>
 
-        {listaPatologie ? (
-
-            getPatologie()
-        ) : (
-            <div></div>
-        )}
+        {listaPatologie ? classiPatologie ?
+            (getPatologie())
+            : (<div></div>)
+            : (<div></div>)
+        }
 
         <div className="d-flex justify-content-end">
         </div>

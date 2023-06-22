@@ -88,13 +88,6 @@ function RigaCaratteriNonMetrici(props) {
             <td>
                 {props.carattere.lato}
             </td>
-            <td>
-                <Form.Check
-                    type="checkbox"
-                    checked={checkValue(props.carattere.valore)}
-                    disabled
-                />
-            </td>
             <Modal
                 show={show}
                 onClick={e => e.stopPropagation()}
@@ -108,12 +101,13 @@ function RigaCaratteriNonMetrici(props) {
                 </Modal.Header>
                 <Form onSubmit={editCarattereNonMetricoSpecifico}>
                     <Modal.Body>
-                        <Form.Group className="mb-2" controlId="formBasicPassword">
-                            <Form.Label>Carattere metrico</Form.Label>
-                            <Form.Control defaultValue={props.carattere.nome} disabled></Form.Control>
-                        </Form.Group>
-                        <div className='d-flex justify-content-around'>
-                            <Form.Group className="mb-2 w-25" >
+
+                        <div className='row justify-content-around'>
+                            <Form.Group className="col mb-2" controlId="formBasicPassword">
+                                <Form.Label>Carattere metrico</Form.Label>
+                                <Form.Control defaultValue={props.carattere.nome} disabled></Form.Control>
+                            </Form.Group>
+                            <Form.Group className="col mb-2" >
                                 <Form.Label>Lato</Form.Label>
                                 <Form.Select defaultValue={lato} onChange={(e) => setLato(e.target.value)} required>
                                     <option></option>
@@ -123,16 +117,7 @@ function RigaCaratteriNonMetrici(props) {
                                     <option>Incerto</option>
                                 </Form.Select>
                             </Form.Group>
-                            <Form.Group className="mb-2" >
-                                <Form.Label>Valore</Form.Label>
-                                <Form.Check
-                                    type="checkbox"
-                                    defaultChecked={valore}
-                                    onChange={() => {
-                                        setValore((state) => !state)
-                                    }}
-                                />
-                            </Form.Group>
+
                         </div>
 
                     </Modal.Body>

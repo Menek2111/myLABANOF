@@ -25,12 +25,13 @@ function RigaCaratteriMetrici(props) {
     //Chiamate API
     const [lato, setLato] = useState(props.carattere.lato)
     const [valore, setValore] = useState(props.carattere.valore)
-    const [unitaMisura, setUnitaMisura] = useState(props.carattere.unitaMisura)
 
-    const editCarattereMetricoSpecifico = async () => {
+    const editCarattereMetricoSpecifico = async (event) => {
+        event.preventDefault();
         let cm = new ConnectionManager();
-        var params = { individuo: sessionStorage.getItem('individuoSelezionato'), tipoCarattereMetrico: props.carattere.tipoCarattereMetrico, lato: lato, valore: valore, unitaMisura: unitaMisura, id: props.carattere.id }
+        var params = { individuo: sessionStorage.getItem('individuoSelezionato'), tipoCarattereMetrico: props.carattere.tipoCarattereMetrico, lato: lato, valore: valore, id: props.carattere.id }
         await cm.editCarattereMetricoSpecifico(JSON.stringify(params)).then(res => {
+            console.log('EditCarattereMetricoSpecifico', res)
             if (res.response === 'success') {
                 props.callback()
                 handleClose()
@@ -68,9 +69,6 @@ function RigaCaratteriMetrici(props) {
             <td>
                 {props.carattere.valore}
             </td>
-            <td>
-                {props.carattere.unitaMisura}
-            </td>
             <Modal
                 show={show}
                 onClick={e => e.stopPropagation()}
@@ -88,7 +86,7 @@ function RigaCaratteriMetrici(props) {
                             <Form.Label>Carattere metrico</Form.Label>
                             <Form.Control defaultValue={props.carattere.nome} disabled></Form.Control>
                         </Form.Group>
-                        <div className='d-flex justify-content-between'>
+                        <div className='d-flex justify-content-around'>
                             <Form.Group className="mb-2 w-25" >
                                 <Form.Label>Lato</Form.Label>
                                 <Form.Select defaultValue={lato} onChange={(e) => setLato(e.target.value)} required>
@@ -100,16 +98,8 @@ function RigaCaratteriMetrici(props) {
                                 </Form.Select>
                             </Form.Group>
                             <Form.Group className="mb-2" >
-                                <Form.Label>Valore</Form.Label>
+                                <Form.Label>Valore (mm)</Form.Label>
                                 <Form.Control defaultValue={valore} onChange={(e) => setValore(e.target.value)} type="number" step="0.01" />
-                            </Form.Group>
-                            <Form.Group className="mb-2" >
-                                <Form.Label>Unita di misura</Form.Label>
-                                <Form.Select defaultValue={unitaMisura} onChange={(e) => setUnitaMisura(e.target.value)}>
-                                    <option></option>
-                                    <option>cm</option>
-                                    <option>mm</option>
-                                </Form.Select>
                             </Form.Group>
                         </div>
 

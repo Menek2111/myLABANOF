@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Table from 'react-bootstrap/Table';
+import Form from 'react-bootstrap/Form'
 
 function GeneralitàIndividuo(props) {
 
@@ -15,11 +16,13 @@ function GeneralitàIndividuo(props) {
     const [luogo, setLuogo] = useState(props.individuo.luogoRinvenimento)
     const [data, setData] = useState(props.individuo.dataRinvenimento)
 
+    const [stato, setStato] = useState(props.individuo.stato)
+
     const propsLink = props
 
     useEffect(() => {
-        propsLink.onIndividuoChange(nome, luogo, data)
-    }, [data, luogo, nome]);
+        propsLink.onIndividuoChange(nome, luogo, data, stato)
+    }, [data, luogo, nome, stato]);
 
     function editableTable() {
         return (<div>
@@ -38,6 +41,23 @@ function GeneralitàIndividuo(props) {
                         <th>Data rinvenimento</th>
                         <td><input id="inputData" type="date" className="form-control" defaultValue={props.individuo.dataRinvenimento} onChange={(e) => setData(e.target.value)} /></td>
                     </tr>
+
+                    <tr>
+                        <th>
+                            Stato
+                        </th>
+                        <td>
+                            <Form.Select required aria-label="Default select example" defaultValue={props.individuo.stato} onChange={(e) => setStato(e.target.value)}>
+                                <option>Cadavere</option>
+                                <option>Mummificato\corificato</option>
+                                <option>Saponificato</option>
+                                <option>Carbonizzato</option>
+                                <option>Scheletrizzato</option>
+                                <option>Cremazione</option>
+                            </Form.Select>
+                        </td>
+                    </tr>
+
 
                 </tbody>
             </Table>
@@ -77,6 +97,10 @@ function GeneralitàIndividuo(props) {
                     <tr>
                         <th>Data rinvenimento</th>
                         <td>{props.individuo.dataRinvenimento}</td>
+                    </tr>
+                    <tr>
+                        <th>Stato</th>
+                        <td>{props.individuo.stato}</td>
                     </tr>
 
                 </tbody>

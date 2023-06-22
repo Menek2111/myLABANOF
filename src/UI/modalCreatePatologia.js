@@ -17,7 +17,7 @@ function ModalCreatePatologia(props) {
     const [descrizione, setDescrizione] = useState('')
     const [litica, setLitica] = useState('')
     const [proliferativa, setProliferativa] = useState('')
-
+    const [classePatologia, setClassePatologia] = useState('')
 
     useEffect(() => {
 
@@ -30,10 +30,10 @@ function ModalCreatePatologia(props) {
         setDescrizione('')
         setLitica('')
         setProliferativa('')
+        setClassePatologia('')
         setShow(false);
     }
     const handleShow = () => setShow(true);
-
 
 
     let booleanToValue = (val) => {
@@ -54,14 +54,14 @@ function ModalCreatePatologia(props) {
             osso: props.osso,
             litica: booleanToValue(litica),
             proliferativa: booleanToValue(proliferativa),
-            descrizione: descrizione
+            descrizione: descrizione,
+            classePatologia: classePatologia
         }
         await cm.createPatologiaSpecifica(JSON.stringify(params)).then(res => {
             console.log('createPatologiaSpecifica', res)
             if (res.response === 'success') {
                 props.callback()
                 handleClose()
-
             }
         })
     }
@@ -92,6 +92,15 @@ function ModalCreatePatologia(props) {
                                 {props.patologie.map(pato => <option key={pato.id} value={pato.id}>{pato.nome}</option>)}
                             </Form.Select>
                         </Form.Group>
+
+                        <Form.Group className="mb-3" controlId="formBasicPassword">
+                            <Form.Label>Classe patologia</Form.Label>
+                            <Form.Select onChange={(e) => setClassePatologia(e.target.value)} >
+                                <option></option>
+                                {props.classiPatologie.map(classe => <option key={classe.id} value={classe.id}>{classe.nome}</option>)}
+                            </Form.Select>
+                        </Form.Group>
+
                         <Form.Group className="mb-3" controlId="formBasicPassword">
                             <Form.Label>Descrizione</Form.Label>
                             <Form.Control type="text" onChange={(e) => setDescrizione(e.target.value)} />

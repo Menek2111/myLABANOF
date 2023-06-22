@@ -31,7 +31,6 @@ function ProfiloBiologicoIndividuo(props) {
                         <th className='w-25'>Sesso biologioco</th>
                         <td>
                             <Form.Select required aria-label="Default select example" defaultValue={props.individuo.sessoBiologico} onChange={(e) => setSessoBiologico(e.target.value)}>
-                                <option></option>
                                 <option value="Femminile">Femminile</option>
                                 <option value="Maschile">Maschile</option>
                                 <option value="Incerto">Incerto</option>
@@ -40,7 +39,19 @@ function ProfiloBiologicoIndividuo(props) {
                     </tr>
                     <tr>
                         <th>Classe di età</th>
-                        <td><input min='0' max='3' className="form-control" type="number" defaultValue={props.individuo.classeDiEta} onChange={(e) => setClasseDiEtà(e.target.value)} /></td>
+                        <td>
+                            <Form.Select required aria-label="Default select example" defaultValue={props.individuo.classeDiEta} onChange={(e) => setClasseDiEtà(e.target.value)}>
+                                <option>0 – 2</option>
+                                <option>3 – 6</option>
+                                <option>7 – 11</option>
+                                <option>12 – 20 </option>
+                                <option>21 – 30 </option>
+                                <option>31 – 45</option>
+                                <option>46 – 60</option>
+                                <option>61 – 80</option>
+                                <option>{'>'} 80</option>
+                            </Form.Select>
+                        </td>
 
                     </tr>
                     <tr>

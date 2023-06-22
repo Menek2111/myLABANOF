@@ -78,7 +78,7 @@ function ModalCreateCarattereMetrico(props) {
                                 {props.caratteri.map(car => (<option key={car.id} value={car.id}>{car.nome}</option>))}
                             </Form.Select>
                         </Form.Group>
-                        <div className='d-flex justify-content-between'>
+                        <div className='d-flex justify-content-around'>
                             <Form.Group className="mb-2 w-25" >
                                 <Form.Label>Lato</Form.Label>
                                 <Form.Select onChange={(e) => setLato(e.target.value)} required>
@@ -91,16 +91,8 @@ function ModalCreateCarattereMetrico(props) {
                             </Form.Group>
                             <div className='d-flex'>
                                 <Form.Group className="mb-2" >
-                                    <Form.Label>Valore</Form.Label>
+                                    <Form.Label>Valore (mm)</Form.Label>
                                     <Form.Control min='0' onChange={(e) => setValore(e.target.value)} type="number" step="0.01" />
-                                </Form.Group>
-                                <Form.Group className="mb-2" >
-                                    <Form.Label>Unita di misura</Form.Label>
-                                    <Form.Select onChange={(e) => setUnitaMisura(e.target.value)}>
-                                        <option></option>
-                                        <option>cm</option>
-                                        <option>mm</option>
-                                    </Form.Select>
                                 </Form.Group>
                             </div>
 
