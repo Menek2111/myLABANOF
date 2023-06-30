@@ -14,9 +14,10 @@ import ConnectionManager from '../../api/ConnectionManager';
 import ModalDeleteOsso from '../../UI/modalDeleteOsso';
 import Traumi from './traumi/traumi';
 import Patologie from './patologie/patologie';
+import ModalDeleteDente from '../../UI/modalDeleteDente';
 
 
-function RigaCranio(props) {
+function RigaDente(props) {
 
     //Gestione modal
     const [show, setShow] = useState(false);
@@ -41,7 +42,7 @@ function RigaCranio(props) {
     return (
         <tr onClick={handleShow} style={{ cursor: 'pointer' }}>
             <td>{props.osso.nome}</td>
-            <td>{props.osso.lato}</td>
+            <td>{props.osso.datazioneCaduta}</td>
             <td>
                 <Form.Check
                     type="checkbox"
@@ -53,18 +54,24 @@ function RigaCranio(props) {
             <td>
                 <Form.Check
                     type="checkbox"
-                    checked={valueToBoolean(props.osso.restaurato)}
+                    checked={valueToBoolean(props.osso.modificazioniOdontoiatrici)}
                     disabled
                 /></td>
-            <td>{props.osso.catalogazioneDescrizione}</td>
+            <td>
+                <Form.Check
+                    type="checkbox"
+                    checked={valueToBoolean(props.osso.restauriOdontoiatrici)}
+                    disabled
+                /></td>
+            <td>{props.osso.commento}</td>
             <td>{props.osso.indagineRadiologica}</td>
             <td>
                 <Form.Check
                     type="checkbox"
                     checked={valueToBoolean(props.osso.campionamento)}
                     disabled
-                /></td>
-            <td>{props.osso.altreAnalisi}</td>
+                />
+            </td>
 
             <Modal
                 onClick={e => e.stopPropagation()}
@@ -77,19 +84,19 @@ function RigaCranio(props) {
             >
                 <Modal.Header closeButton>
                     <Modal.Title>
-                        <p>{props.osso.nome}</p>
+                        <p>Dente numero: {props.osso.nome}</p>
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body className='row'>
 
                     <div className='col-4'>
-                        <DettagliOsso osso={props.osso} callback={props.callback} />
+                        {<DettagliOsso osso={props.osso} callback={props.callback} />}
                     </div>
 
                     <div className='col'>
-                        <Traumi osso={props.osso.id} distretto={props.osso.distretto} />
+                        {/*  <Traumi osso={props.osso.id} distretto={props.osso.distretto} />
 
-                        <Patologie osso={props.osso.id} distretto={props.osso.distretto} />
+                        <Patologie osso={props.osso.id} distretto={props.osso.distretto} />*/}
                     </div>
                 </Modal.Body>
 
@@ -98,7 +105,7 @@ function RigaCranio(props) {
                         Chiudi
                     </Button>
 
-                    <ModalDeleteOsso osso={props.osso.id} />
+                    <ModalDeleteDente osso={props.osso.id} />
                 </Modal.Footer>
             </Modal>
         </tr >
@@ -115,15 +122,14 @@ function DettagliOsso(props) {
         }
     }
 
-    const [lato, setLato] = useState(props.osso.lato)
     const [integro, setIntegro] = useState(checkValue(props.osso.integro))
     const [lvlIntegrita, setLvlIntegrita] = useState(props.osso.lvlIntegrita)
     const [lvlQualita, setLvlQualita] = useState(props.osso.lvlQualita)
-    const [restaurato, setRestaurato] = useState(checkValue(props.osso.restaurato))
-    const [catalogazioneDescrizione, setCatalogazioneDescrizione] = useState(props.osso.catalogazioneDescrizione)
+    const [commento, setCommento] = useState(props.osso.commento)
     const [indagineRadiologica, setIndagineRadiologica] = useState(props.osso.indagineRadiologica)
     const [campionamento, setCampionamento] = useState(checkValue(props.osso.campionamento))
-    const [altreAnalisi, setAltreAnalisi] = useState(props.osso.altreAnalisi)
+    const [modificazioniOdontoiatrici, setModificazioniOdontoiatrici] = useState(checkValue(props.osso.modificazioniOdontoiatrici))
+    const [restauriOdontoiatrici, setRestauriOdontoiatrici] = useState(checkValue(props.osso.restauriOdontoiatrici))
 
     const [editable, setEditable] = useState(false)
 
@@ -141,20 +147,18 @@ function DettagliOsso(props) {
         }
         var params = {
             tipoOsso: props.osso.tipoOsso,
-            lato: lato,
             integro: booleanToValue(integro),
             lvlIntegrita: lvlIntegrita,
             lvlQualita: lvlQualita,
-            restaurato: booleanToValue(restaurato),
-            catalogazioneDescrizione: catalogazioneDescrizione,
+            commento: commento,
             indagineRadiologica: indagineRadiologica,
             campionamento: booleanToValue(campionamento),
-            altreAnalisi: altreAnalisi,
-            individuo: props.osso.individuo,
+            modificazioniOdontoiatrici: booleanToValue(modificazioniOdontoiatrici),
+            restauriOdontoiatrici: booleanToValue(restauriOdontoiatrici),
             id: props.osso.id
         }
-        await cm.editOsso(JSON.stringify(params)).then(res => {
-            console.log('EditOsso', res)
+        await cm.editDente(JSON.stringify(params)).then(res => {
+            console.log('editDente', res)
             if (res.response === 'success') {
                 props.callback()
                 setEditable(false)
@@ -163,8 +167,6 @@ function DettagliOsso(props) {
     }
 
     useEffect(() => {
-
-
     }, []);
 
     let checkUser = () => {
@@ -174,7 +176,6 @@ function DettagliOsso(props) {
             return <Button className='p-1 mb-1' onClick={() => setEditable((state) => !state)}>Modifica</Button>
         }
     }
-
 
     return (
         <Form onSubmit={editOsso}>
@@ -192,20 +193,8 @@ function DettagliOsso(props) {
                         <Table className='col' bordered striped size="sm">
                             <tbody>
                                 <tr>
-                                    <th className='w-25'>Osso</th>
+                                    <th className='w-25'>Dente</th>
                                     <td><input className='form-control' defaultValue={props.osso.nome} disabled /></td>
-                                </tr>
-                                <tr>
-                                    <th>Materiale rivenuto</th>
-                                    <td>
-                                        <Form.Select defaultValue={props.osso.lato} onChange={(e) => setLato(e.target.value)}>
-                                            <option></option>
-                                            <option>Destro</option>
-                                            <option>Sinistro</option>
-                                            <option>Unico</option>
-                                            <option>Incerto</option>
-                                        </Form.Select>
-                                    </td>
                                 </tr>
                                 <tr>
                                     <th>Integro</th>
@@ -228,17 +217,26 @@ function DettagliOsso(props) {
                                     <td><input type='number' min='0' max='3' className='form-control' defaultValue={props.osso.lvlQualita} onChange={(e) => setLvlQualita(e.target.value)} /></td>
                                 </tr>
                                 <tr>
-                                    <th>Restaurato</th>
+                                    <th>Modificazioni odontoiatrici</th>
                                     <td>
                                         <Form.Check
                                             type="checkbox"
-                                            defaultChecked={restaurato}
-                                            onChange={() => setRestaurato((state) => !state)} />
+                                            defaultChecked={modificazioniOdontoiatrici}
+                                            onChange={() => setModificazioniOdontoiatrici((state) => !state)} />
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th>Catalogazione e descrizione</th>
-                                    <td><input className='form-control' defaultValue={props.osso.catalogazioneDescrizione} onChange={(e) => setCatalogazioneDescrizione(e.target.value)} /></td>
+                                    <th>Restaurati odontoiatrici</th>
+                                    <td>
+                                        <Form.Check
+                                            type="checkbox"
+                                            defaultChecked={restauriOdontoiatrici}
+                                            onChange={() => setRestauriOdontoiatrici((state) => !state)} />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Commento</th>
+                                    <td><input className='form-control' defaultValue={props.osso.commento} onChange={(e) => setCommento(e.target.value)} /></td>
                                 </tr>
                                 <tr>
                                     <th>Indagine radiologica</th>
@@ -265,10 +263,6 @@ function DettagliOsso(props) {
                                         />
                                     </td>
                                 </tr>
-                                <tr>
-                                    <th>Altre analisi</th>
-                                    <td><input className='form-control' defaultValue={props.osso.altreAnalisi} onChange={(e) => setAltreAnalisi(e.target.value)} /></td>
-                                </tr>
                             </tbody >
                         </Table >
                     </div >
@@ -285,13 +279,10 @@ function DettagliOsso(props) {
 
                             <tbody>
                                 <tr>
-                                    <th className='w-25'>Osso</th>
+                                    <th className='w-25'>Dente</th>
                                     <td>{props.osso.nome}</td>
                                 </tr>
-                                <tr>
-                                    <th>Materiale rivenuto</th>
-                                    <td>{props.osso.lato}</td>
-                                </tr>
+
                                 <tr>
                                     <th>Integro</th>
                                     <td><Form.Check
@@ -308,19 +299,30 @@ function DettagliOsso(props) {
                                     <td>{props.osso.lvlQualita}</td>
                                 </tr>
                                 <tr>
-                                    <th>Restaurato</th>
+                                    <th>Modificazioni odontoiatrici</th>
                                     <td><Form.Check
                                         type="checkbox"
-                                        defaultChecked={restaurato}
+                                        defaultChecked={restauriOdontoiatrici}
                                         disabled /></td>
                                 </tr>
                                 <tr>
-                                    <th>Catalogazione e descrizione</th>
-                                    <td>{props.osso.catalogazioneDescrizione}</td>
+                                    <th>Restauri odontoiatrici</th>
+                                    <td><Form.Check
+                                        type="checkbox"
+                                        defaultChecked={restauriOdontoiatrici}
+                                        disabled /></td>
+                                </tr>
+                                <tr>
+                                    <th>Commento</th>
+                                    <td>{props.osso.commento}</td>
                                 </tr>
                                 <tr>
                                     <th>Indagine radiologica</th>
                                     <td>{props.osso.indagineRadiologica}</td>
+                                </tr>
+                                <tr>
+                                    <th>Datazione caduta</th>
+                                    <td>{props.osso.datazioneCaduta}</td>
                                 </tr>
                                 <tr>
                                     <th>Campionamento</th>
@@ -331,11 +333,6 @@ function DettagliOsso(props) {
                                             disabled
                                         />
                                     </td>
-
-                                </tr>
-                                <tr>
-                                    <th>Altre analisi</th>
-                                    <td>{props.osso.altreAnalisi}</td>
                                 </tr>
                             </tbody>
                         </Table>
@@ -347,4 +344,4 @@ function DettagliOsso(props) {
     )
 }
 
-export default RigaCranio;
+export default RigaDente;

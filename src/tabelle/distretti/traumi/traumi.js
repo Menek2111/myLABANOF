@@ -17,7 +17,7 @@ function Traumi(props) {
 
     const getTraumaGeneraleByDistretto = async () => {
         let cm = new ConnectionManager();
-        let res = await cm.getTraumaGeneraleByDistretto(JSON.stringify({ distretto: 1 }));
+        let res = await cm.getTraumaGeneraleByDistretto(JSON.stringify({ distretto: props.distretto }));
         return res;
     }
 

@@ -17,6 +17,7 @@ import ProfiloBiologicoIndividuo from '../tabelle/profiloBiologicoIndividuo';
 import GeneralitàIndividuo from '../tabelle/generalitàIndividuo';
 
 import DropdownDistretti from '../UI/dropDownDistretti';
+import CaratteristicheDellaDeposizione from '../tabelle/caratteristicheDellaDeposizione';
 
 function SchedaIndividuo(props) {
     const navigate = useNavigate();
@@ -28,7 +29,6 @@ function SchedaIndividuo(props) {
         height: "100%"
     };
 
-    const [individuo, setIndividuo] = useState()
     const [editable, setEditable] = useState(false)
 
     const getIndividuoById = async () => {
@@ -36,6 +36,16 @@ function SchedaIndividuo(props) {
         let res = await cm.getIndividuoById(JSON.stringify({ id: sessionStorage.getItem('individuoSelezionato') }));
         return res
     }
+    const [individuo, setIndividuo] = useState()
+
+
+    const getCaratteristicheDeposizioneByIndividuo = async () => {
+        let cm = new ConnectionManager();
+        let res = await cm.getCaratteristicheDeposizioneByIndividuo(JSON.stringify({ individuo: sessionStorage.getItem('individuoSelezionato') }));
+        return res
+    }
+    const [caratteristicheDeposizione, setCaratteristicheDeposizione] = useState()
+
 
     const location = useLocation();
     useEffect(() => {
@@ -50,7 +60,18 @@ function SchedaIndividuo(props) {
                 default:
                     break
             }
-
+        })
+        getCaratteristicheDeposizioneByIndividuo().then(res => {
+            console.log('getCaratteristicheDeposizioneByIndividuo', res)
+            switch (res.response) {
+                case 'success':
+                    setCaratteristicheDeposizione(res.results)
+                    break
+                case 'error':
+                    break
+                default:
+                    break
+            }
         })
     }, [location]);
 
@@ -90,6 +111,7 @@ function SchedaIndividuo(props) {
 
     const [modGeneralità, setModGeneralità] = useState()
     const [modProfiloBiologico, setModProfiloBiologico] = useState()
+    const [modCaratteristicheDeposizione, setModCaratteristicheDeposizione] = useState()
 
     const addModificheGeneralità = (nome, luogo, data, stato) => {
         var mod = {
@@ -109,10 +131,24 @@ function SchedaIndividuo(props) {
         }
         setModProfiloBiologico(mod)
     }
+    const addModificheCaratteristicheDeposizione = (luogoRitrovamento, tipoSepoltura, tipoTerreno, fauna, clima, effettiPersonali, ossaAnimali, informazioniAnteMortem, altro) => {
+        var mod = {
+            individuo: sessionStorage.getItem('individuoSelezionato'),
+            luogoRitrovamento: luogoRitrovamento,
+            tipoSepoltura: tipoSepoltura,
+            tipoTerreno: tipoTerreno,
+            fauna: fauna,
+            clima: clima,
+            effettiPersonali: effettiPersonali,
+            ossaAnimali: ossaAnimali,
+            informazioniAnteMortem: informazioniAnteMortem,
+            altro: altro
+        }
+        setModCaratteristicheDeposizione(mod)
+    }
 
     const salva = async () => {
         let cm = new ConnectionManager();
-
 
         let modifiche = {
             id: sessionStorage.getItem('individuoSelezionato'),
@@ -133,12 +169,51 @@ function SchedaIndividuo(props) {
                 setEditable(false)
             }
         })
+        await salva2()
     }
+    const salva2 = async () => {
+        let cm = new ConnectionManager();
+
+        let modifiche = {
+            individuo: sessionStorage.getItem('individuoSelezionato'),
+            luogoRitrovamento: modCaratteristicheDeposizione.luogoRitrovamento,
+            tipoSepoltura: modCaratteristicheDeposizione.tipoSepoltura,
+            tipoTerreno: modCaratteristicheDeposizione.tipoTerreno,
+            fauna: modCaratteristicheDeposizione.fauna,
+            clima: modCaratteristicheDeposizione.clima,
+            effettiPersonali: modCaratteristicheDeposizione.effettiPersonali,
+            ossaAnimali: modCaratteristicheDeposizione.ossaAnimali,
+            informazioniAnteMortem: modCaratteristicheDeposizione.informazioniAnteMortem,
+            altro: modCaratteristicheDeposizione.altro
+        }
+
+        await cm.editCaratteristicheDeposizione(JSON.stringify(modifiche)).then(res => {
+            console.log('editCaratteristicheDeposizione', res)
+            if (res.response === 'success') {
+                aggiorna()
+                setEditable(false)
+            }
+        })
+    }
+
+
 
 
     let aggiorna = () => {
         getIndividuoById().then(res => {
             setIndividuo(res)
+        })
+        getCaratteristicheDeposizioneByIndividuo().then(res => {
+            console.log('getCaratteristicheDeposizioneByIndividuo', res)
+            switch (res.response) {
+                case 'success':
+                    setCaratteristicheDeposizione(res.results)
+                    break
+                case 'error':
+                    break
+                default:
+                    break
+            }
         })
     }
 
@@ -171,6 +246,9 @@ function SchedaIndividuo(props) {
                                 {individuo ? (<div className='row py-3'>
                                     <GeneralitàIndividuo editable={editable} individuo={individuo.individuo} tomba={individuo.tomba} onIndividuoChange={addModificheGeneralità} callback={aggiorna} />
                                     <ProfiloBiologicoIndividuo editable={editable} individuo={individuo.individuo} tomba={individuo.tomba} onIndividuoChange={addModificheProfiloBiologio} callback={aggiorna} />
+                                    {caratteristicheDeposizione ? (<CaratteristicheDellaDeposizione editable={editable} individuo={caratteristicheDeposizione} onIndividuoChange={addModificheCaratteristicheDeposizione} callback={aggiorna} />
+                                    ) : (<div></div>)}
+
                                 </div>) : (<div></div>)}
 
                             </div>

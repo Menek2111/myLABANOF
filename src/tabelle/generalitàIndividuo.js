@@ -19,7 +19,6 @@ function GeneralitàIndividuo(props) {
     const [stato, setStato] = useState(props.individuo.stato)
 
     const propsLink = props
-
     useEffect(() => {
         propsLink.onIndividuoChange(nome, luogo, data, stato)
     }, [data, luogo, nome, stato]);

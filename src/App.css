@@ -58,6 +58,7 @@
   /*background-color: #F1E3E3;
   background-image: url('images/background/bg2.png');
   background-size: cover*/
+
 }
 
 .my-modal {
@@ -187,6 +188,7 @@ background: linear-gradient(360deg, rgba(254,214,165,1) 0%, rgb(247, 249, 252, 1
 .temaPastelloRosa .indCard:hover{
   background-color: #ADCCB9 !important;
 }
+
 
 /*
 #f7abad

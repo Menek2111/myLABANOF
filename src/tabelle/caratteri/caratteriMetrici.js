@@ -5,11 +5,13 @@ import ConnectionManager from "../../api/ConnectionManager";
 import ModalCreateCarattereMetrico from "../../UI/modalCreateCarattereMetrico";
 import RigaCaratteriMetrici from "./rigaCaratteriMetrici";
 import Loading from "../../UI/loading";
+import { useLocation } from 'react-router-dom';
+
 
 function CaratteriMetrici(props) {
 
-    const [caratteriMetrici, setCaratteriMetrici] = useState()
-    const [caratteriMetriciIndividuo, setCaratteriMetriciIndividuo] = useState()
+    const [caratteriMetrici, setCaratteriMetrici] = useState([])
+    const [caratteriMetriciIndividuo, setCaratteriMetriciIndividuo] = useState([])
 
     const getCaratteriMetriciByDistretto = async () => {
         let cm = new ConnectionManager();
@@ -22,19 +24,23 @@ function CaratteriMetrici(props) {
         let res = await cm.getCaratteriMetriciByDistrettoAndIndividuo(JSON.stringify({ individuo: sessionStorage.getItem('individuoSelezionato'), distretto: props.distretto }));
         return res;
     }
+    const location = useLocation();
 
     useEffect(() => {
         getCaratteriMetriciByDistretto().then(res => {
+            console.log('getCaratteriMetriciByDistretto', res)
             switch (res.response) {
                 case 'success':
                     setCaratteriMetrici(res.results)
                     break
                 case 'empty':
-                    setCaratteriMetrici(null)
+                    setCaratteriMetrici([])
                     break
                 case 'error':
+                    setCaratteriMetrici([])
                     break
                 default:
+                    setCaratteriMetrici([])
                     break
             }
         })
@@ -45,20 +51,21 @@ function CaratteriMetrici(props) {
                     setCaratteriMetriciIndividuo(res.results)
                     break
                 case 'empty':
-                    setCaratteriMetriciIndividuo(null)
+                    setCaratteriMetriciIndividuo([])
                     break
                 case 'error':
-                    setCaratteriMetriciIndividuo(null)
+                    setCaratteriMetriciIndividuo([])
                     break
                 default:
+                    setCaratteriMetriciIndividuo([])
                     break
             }
         })
-    }, []);
+    }, [location]);
 
     let checkCarattereMetricoIndividuo = () => {
-        if (caratteriMetriciIndividuo == null) {
-            return <div>Non sono presenti caratteri metrici...</div>
+        if (caratteriMetriciIndividuo.length == 0) {
+            return <div className="pb-4">Non sono presenti caratteri metrici...</div>
         } else {
             return (<Table bordered striped hover size="sm">
                 <thead>
@@ -94,30 +101,36 @@ function CaratteriMetrici(props) {
                     setCaratteriMetriciIndividuo(res.results)
                     break
                 case 'empty':
-                    setCaratteriMetriciIndividuo(null)
+                    setCaratteriMetriciIndividuo([])
                     break
                 case 'error':
-                    setCaratteriMetriciIndividuo(null)
+                    setCaratteriMetriciIndividuo([])
                     break
                 default:
+                    setCaratteriMetriciIndividuo([])
                     break
             }
         })
     }
 
-    return (<div className="col-6">
-        <h5 className='border-bottom mb-2'>Caratteri metrici</h5>
 
-        <div className="border rounded p-2">
+    if (props.distretto == 2) {
+        return <div></div>
+    } else {
+        return (<div className="col-6">
+            <h5 className='border-bottom mb-2'>Caratteri metrici</h5>
 
-            {caratteriMetrici ? (checkCarattereMetricoIndividuo()) : (<Loading />)}
+            <div className="border rounded p-2">
 
-            <div className="d-flex justify-content-end">
-                {caratteriMetrici ? (checkUser()) : (<div></div>)}
+                {caratteriMetrici ? (checkCarattereMetricoIndividuo()) : (<Loading />)}
+
+                <div className="d-flex justify-content-end">
+                    {caratteriMetrici ? (checkUser()) : (<div></div>)}
+                </div>
+
             </div>
 
-        </div>
-
-    </div >)
+        </div >)
+    }
 }
 export default CaratteriMetrici;

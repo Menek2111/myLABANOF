@@ -31,7 +31,7 @@ function Patologie(props) {
 
     const getPatologiaByDistretto = async () => {
         let cm = new ConnectionManager();
-        let res = await cm.getPatologiaByDistretto(JSON.stringify({ distretto: 1 }));
+        let res = await cm.getPatologiaByDistretto(JSON.stringify({ distretto: props.distretto }));
         return res;
     }
 

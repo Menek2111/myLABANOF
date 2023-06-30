@@ -6,6 +6,7 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import { ProgressBar } from 'react-loader-spinner'
 
+import ind from '../images/icons/skull.png'
 
 //Import classi
 import ConnectionManager from '../api/ConnectionManager';
@@ -15,6 +16,13 @@ import '../App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 function ModalCreateIndividuo(props) {
+
+    const centerMiddle = {
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        height: "100%"
+    };
     const navigate = useNavigate();
 
     const [tomba, setTomba] = useState();
@@ -99,9 +107,10 @@ function ModalCreateIndividuo(props) {
     }
 
     return (
-        <div>
-            <Button className='w-100' variant="primary" onClick={handleShow}>
-                Crea nuovo individuo
+        <div className='py-2'>
+            <Button style={centerMiddle} className='w-100 d-flex justify-content-start' variant="outline-primary" onClick={handleShow}>
+                <img className='me-1 p-0 rounded' src={ind} style={{ height: '7vh' }} />
+                <p className='m-0 ps-2'> Crea individuo</p>
             </Button>
             <Modal
                 show={show}

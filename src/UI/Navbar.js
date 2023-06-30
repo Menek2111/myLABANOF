@@ -42,7 +42,6 @@ function NavBar() {
     const getResultsByQuery = async (query) => {
         let cm = new ConnectionManager();
         var params = { query: query }
-
         switch (tipoRicerca) {
             case 'Individuo':
                 await cm.getIndividuoByQuery(JSON.stringify(params)).then(res => {
@@ -59,6 +58,12 @@ function NavBar() {
                     setResult(res.results)
                 })
                 break
+            case 'Necropoli':
+                await cm.getNecropoliByQuery(JSON.stringify(params)).then(res => {
+                    console.log('getNecropoliByQuery', res)
+                    setResult(res.results)
+                })
+                break
         }
     }
 
@@ -68,12 +73,21 @@ function NavBar() {
             case 'Individuo':
                 array.push('Tomba')
                 array.push('Utente')
+                array.push('Necropoli')
                 break
             case 'Tomba':
                 array.push('Individuo')
                 array.push('Utente')
+                array.push('Necropoli')
+
                 break
             case 'Utente':
+                array.push('Individuo')
+                array.push('Tomba')
+                array.push('Necropoli')
+                break
+            case 'Necropoli':
+                array.push('Utente')
                 array.push('Individuo')
                 array.push('Tomba')
                 break
@@ -110,6 +124,15 @@ function NavBar() {
                 }
                 >
                     {res.name} - <span style={{ fontSize: '0.8em' }}>{res.email}</span>
+                </Dropdown.Item >)
+            case 'Necropoli':
+                return (<Dropdown.Item key={res.id} onClick={() => {
+                    sessionStorage.setItem('necropoliSelezionata', res.id)
+                    navigate('/necropoli')
+                }
+                }
+                >
+                    {res.nome}
                 </Dropdown.Item >)
         }
     }

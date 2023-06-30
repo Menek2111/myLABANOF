@@ -57,12 +57,34 @@ export default class ConnectionManager {
         return data
     }
 
+    getNecropoliByQuery = async function (params) {
+        var json = JSON.parse(params)
+        var URL = "https://applabanof.altervista.org/applabanof/data/search/getNecropoliByQuery.php"
+        const { data } = await axios.post(URL, {
+            query: json.query
+        })
+        return data
+    }
+
 
 
     //GET
     getTombe = async function (params) {
         var URL = "https://applabanof.altervista.org/applabanof/data/getTombe.php"
         const { data } = await axios.post(URL, {})
+        return data
+    }
+    getNecropoli = async function (params) {
+        var URL = "https://applabanof.altervista.org/applabanof/data/getNecropoli.php"
+        const { data } = await axios.post(URL, {})
+        return data
+    }
+    getNecropoliById = async function (params) {
+        var json = JSON.parse(params)
+        var URL = "https://applabanof.altervista.org/applabanof/data/getNecropoliById.php"
+        const { data } = await axios.post(URL, {
+            id: json.id
+        })
         return data
     }
     getAllTombe = async function (params) {
@@ -76,6 +98,19 @@ export default class ConnectionManager {
         const { data } = await axios.post(URL, {
             id: json.id
         })
+        return data
+    }
+    getTombeByNecropoli = async function (params) {
+        var json = JSON.parse(params)
+        var URL = "https://applabanof.altervista.org/applabanof/data/getTombeByNecropoli.php"
+        const { data } = await axios.post(URL, {
+            id: json.id
+        })
+        return data
+    }
+    getAllNecropoli = async function (params) {
+        var URL = "https://applabanof.altervista.org/applabanof/data/getAllNecropoli.php"
+        const { data } = await axios.post(URL, {})
         return data
     }
 
@@ -112,6 +147,15 @@ export default class ConnectionManager {
         })
         return data
     }
+    getDentiIndividuoByDistretto = async function (params) {
+        var json = JSON.parse(params)
+        var URL = "https://applabanof.altervista.org/applabanof/data/getDentiIndividuoByDistretto.php"
+        const { data } = await axios.post(URL, {
+            individuo: json.individuo,
+            distretto: json.distretto
+        })
+        return data
+    }
     getOssaByDistretto = async function (params) {
         var json = JSON.parse(params)
         var URL = "https://applabanof.altervista.org/applabanof/data/getOssaByDistretto.php"
@@ -120,6 +164,15 @@ export default class ConnectionManager {
         })
         return data
     }
+    getCaratteristicheDeposizioneByIndividuo = async function (params) {
+        var json = JSON.parse(params)
+        var URL = "https://applabanof.altervista.org/applabanof/data/getCaratteristicheDeposizioneByIndividuo.php"
+        const { data } = await axios.post(URL, {
+            individuo: json.individuo
+        })
+        return data
+    }
+
 
     getIndividuiByUser = async function (params) {
         var json = JSON.parse(params)
@@ -212,6 +265,15 @@ export default class ConnectionManager {
         })
         return data
     }
+    getNumeroDentiByIndividuoAndDistretto = async function (params) {
+        var json = JSON.parse(params)
+        var URL = "https://applabanof.altervista.org/applabanof/data/getNumeroDentiByIndividuoAndDistretto.php"
+        const { data } = await axios.post(URL, {
+            distretto: json.distretto,
+            individuo: json.individuo
+        })
+        return data
+    }
 
     getUserInfo = async function (params) {
         var json = JSON.parse(params)
@@ -223,10 +285,37 @@ export default class ConnectionManager {
     }
 
     getClassiPatologie = async function (params) {
-
         var URL = "https://applabanof.altervista.org/applabanof/data/getClassiPatologie.php"
         const { data } = await axios.post(URL, {
 
+        })
+        return data
+    }
+
+    getTipoOssa = async function (params) {
+        var URL = "https://applabanof.altervista.org/applabanof/data/getTipoOssa.php"
+        const { data } = await axios.post(URL, {
+        })
+        return data
+    }
+
+    getPatologieGenerali = async function (params) {
+        var URL = "https://applabanof.altervista.org/applabanof/data/getPatologieGenerali.php"
+        const { data } = await axios.post(URL, {
+        })
+        return data
+    }
+
+    getCaratteriMetrici = async function (params) {
+        var URL = "https://applabanof.altervista.org/applabanof/data/getCaratteriMetrici.php"
+        const { data } = await axios.post(URL, {
+        })
+        return data
+    }
+
+    getCaratteriNonMetrici = async function (params) {
+        var URL = "https://applabanof.altervista.org/applabanof/data/getCaratteriNonMetrici.php"
+        const { data } = await axios.post(URL, {
         })
         return data
     }
@@ -250,6 +339,15 @@ export default class ConnectionManager {
             nome: tomba.nome,
             nMinIndividui: tomba.nMinIndividui,
             coordinate: tomba.coordinate,
+            necropoli: tomba.necropoli
+        })
+        return data
+    }
+    createNecropoli = async function (params) {
+        var tomba = JSON.parse(params)
+        var URL = "https://applabanof.altervista.org/applabanof/data/creazione/createNecropoli.php"
+        const { data } = await axios.post(URL, {
+            nome: tomba.nome
         })
         return data
     }
@@ -268,6 +366,24 @@ export default class ConnectionManager {
             campionamento: osso.campionamento,
             altreAnalisi: osso.altreAnalisi,
             individuo: osso.individuo
+        })
+        return data
+    }
+    createDente = async function (params) {
+        var osso = JSON.parse(params)
+        var URL = "https://applabanof.altervista.org/applabanof/data/creazione/createDente.php"
+        const { data } = await axios.post(URL, {
+            individuo: osso.individuo,
+            tipoDente: osso.tipoDente,
+            integro: osso.integro,
+            lvlIntegrita: osso.lvlIntegrita,
+            lvlQualita: osso.lvlQualita,
+            indagineRadiologica: osso.indagineRadiologica,
+            modificazioniOdontoiatrici: osso.modificazioniOdontoiatrici,
+            restauriOdontoiatrici: osso.restauriOdontoiatrici,
+            commento: osso.commento,
+            datazioneCaduta: osso.datazioneCaduta,
+            campionamento: osso.campionamento
         })
         return data
     }
@@ -318,6 +434,24 @@ export default class ConnectionManager {
         })
         return data
     }
+    createPatologiaGeneraleEPerDistretto = async function (params) {
+        var json = JSON.parse(params)
+        var URL = "https://applabanof.altervista.org/applabanof/data/creazione/createPatologiaGeneraleEPerDistretto.php"
+        const { data } = await axios.post(URL, {
+            patologia: json.patologia,
+            distretto: json.distretto
+        })
+        return data
+    }
+    createCarattereMetricoGeneraleEPerDistretto = async function (params) {
+        var json = JSON.parse(params)
+        var URL = "https://applabanof.altervista.org/applabanof/data/creazione/createCarattereMetricoGeneraleEPerDistretto.php"
+        const { data } = await axios.post(URL, {
+            nome: json.nome,
+            distretto: json.distretto
+        })
+        return data
+    }
 
     //DELETE
 
@@ -337,9 +471,25 @@ export default class ConnectionManager {
         })
         return data
     }
+    deleteNecropoli = async function (params) {
+        var json = JSON.parse(params)
+        var URL = "https://applabanof.altervista.org/applabanof/data/delete/deleteNecropoli.php"
+        const { data } = await axios.post(URL, {
+            id: json.id
+        })
+        return data
+    }
     deleteOsso = async function (params) {
         var json = JSON.parse(params)
         var URL = "https://applabanof.altervista.org/applabanof/data/delete/deleteOsso.php"
+        const { data } = await axios.post(URL, {
+            id: json.id
+        })
+        return data
+    }
+    deleteDente = async function (params) {
+        var json = JSON.parse(params)
+        var URL = "https://applabanof.altervista.org/applabanof/data/delete/deleteDente.php"
         const { data } = await axios.post(URL, {
             id: json.id
         })
@@ -377,6 +527,23 @@ export default class ConnectionManager {
         })
         return data
     }
+    deletePatologiaGeneraleEPerDistretto = async function (params) {
+        var json = JSON.parse(params)
+        var URL = "https://applabanof.altervista.org/applabanof/data/delete/deletePatologiaGeneraleEPerDistretto.php"
+        const { data } = await axios.post(URL, {
+            id: json.id
+        })
+        return data
+    }
+
+    deleteCarattereMetricoGeneraleEPerDistretto = async function (params) {
+        var json = JSON.parse(params)
+        var URL = "https://applabanof.altervista.org/applabanof/data/delete/deleteCarattereMetricoGeneraleEPerDistretto.php"
+        const { data } = await axios.post(URL, {
+            id: json.id
+        })
+        return data
+    }
 
 
     //EDIT
@@ -388,10 +555,19 @@ export default class ConnectionManager {
             nome: tomba.nome,
             nMinIndividui: tomba.nMinIndividui,
             coordinate: tomba.coordinate,
+            necropoli: tomba.necropoli
         })
         return data
     }
-
+    editNecropoli = async function (params) {
+        var tomba = JSON.parse(params)
+        var URL = "https://applabanof.altervista.org/applabanof/data/edit/editNecropoli.php"
+        const { data } = await axios.post(URL, {
+            id: tomba.id,
+            nome: tomba.nome
+        })
+        return data
+    }
     editIndividuo = async function (params) {
         var json = JSON.parse(params)
         var URL = "https://applabanof.altervista.org/applabanof/data/edit/editIndividuo.php"
@@ -405,6 +581,24 @@ export default class ConnectionManager {
             origineGeografica: json.origineGeografica,
             sessoBiologico: json.sessoBiologico,
             stato: json.stato
+        })
+        return data
+    }
+
+    editCaratteristicheDeposizione = async function (params) {
+        var json = JSON.parse(params)
+        var URL = "https://applabanof.altervista.org/applabanof/data/edit/editCaratteristicheDeposizione.php"
+        const { data } = await axios.post(URL, {
+            individuo: json.individuo,
+            luogoRitrovamento: json.luogoRitrovamento,
+            tipoSepoltura: json.tipoSepoltura,
+            tipoTerreno: json.tipoTerreno,
+            fauna: json.fauna,
+            clima: json.clima,
+            effettiPersonali: json.effettiPersonali,
+            ossaAnimali: json.ossaAnimali,
+            informazioniAnteMortem: json.informazioniAnteMortem,
+            altro: json.altro
         })
         return data
     }
@@ -423,6 +617,25 @@ export default class ConnectionManager {
             indagineRadiologica: osso.indagineRadiologica,
             campionamento: osso.campionamento,
             altreAnalisi: osso.altreAnalisi,
+            id: osso.id
+            //individuo: osso.individuo
+        })
+        return data
+    }
+
+    editDente = async function (params) {
+        var osso = JSON.parse(params)
+        var URL = "https://applabanof.altervista.org/applabanof/data/edit/editDente.php"
+        const { data } = await axios.post(URL, {
+            //tipoOsso: osso.tipoOsso,
+            integro: osso.integro,
+            lvlIntegrita: osso.lvlIntegrita,
+            lvlQualita: osso.lvlQualita,
+            modificazioniOdontoiatrici: osso.modificazioniOdontoiatrici,
+            restauriOdontoiatrici: osso.restauriOdontoiatrici,
+            commento: osso.commento,
+            indagineRadiologica: osso.indagineRadiologica,
+            campionamento: osso.campionamento,
             id: osso.id
             //individuo: osso.individuo
         })
@@ -478,6 +691,26 @@ export default class ConnectionManager {
             litica: json.litica,
             proliferativa: json.proliferativa,
             classePatologia: json.classePatologia,
+            id: json.id
+        })
+        return data
+    }
+
+    editPatologiaGenerale = async function (params) {
+        var json = JSON.parse(params)
+        var URL = "https://applabanof.altervista.org/applabanof/data/edit/editPatologiaGenerale.php"
+        const { data } = await axios.post(URL, {
+            nome: json.nome,
+            id: json.id
+        })
+        return data
+    }
+
+    editCarattereMetricoGenerale = async function (params) {
+        var json = JSON.parse(params)
+        var URL = "https://applabanof.altervista.org/applabanof/data/edit/editCarattereMetricoGenerale.php"
+        const { data } = await axios.post(URL, {
+            nome: json.nome,
             id: json.id
         })
         return data

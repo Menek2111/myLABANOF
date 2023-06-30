@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from "react";
 
 import tomb from '../images/icons/tomb.png'
+import necropoli from '../images/icons/necropoli.PNG'
 import { useNavigate } from 'react-router-dom'
 
-import ConnectionManager from "../api/ConnectionManager";
-import Loading from "../UI/loading";
 
-function ListaTombe(props) {
+function ListaNecropoli(props) {
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -20,19 +19,19 @@ function ListaTombe(props) {
             return (props.tombe.map(tomba =>
                 <div key={tomba.id} className={props.colonna} >
                     <div className='d-flex rounded m-1 indCard border' style={{ backgroundColor: '', cursor: 'pointer' }} onClick={() => {
-                        sessionStorage.setItem('tombaSelezionata', tomba.id)
-                        navigate('/tomba')
+                        sessionStorage.setItem('necropoliSelezionata', tomba.id)
+                        navigate('/necropoli')
                     }
                     }>
                         <div className="w-25" >
-                            <img className="w-100 p-2" src={tomb} alt="tomba" />
+                            <img className="w-100 p-2" src={necropoli} alt="tomba" />
                         </div>
                         <div className="w-75">
                             <span style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }} className='w-75 p-0 m-0'>
                                 {tomba.nome}
                             </span><br />
                             <span style={{ fontSize: '0.8em' }}>
-                                N° Individui: {tomba.nIndividui}
+                                N° tombe: {tomba.nTombe}
                             </span>
                         </div>
                     </div>
@@ -50,4 +49,4 @@ function ListaTombe(props) {
     );
 
 }
-export default ListaTombe
+export default ListaNecropoli

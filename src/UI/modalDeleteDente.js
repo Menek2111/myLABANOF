@@ -13,7 +13,7 @@ import '../App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { NavItem } from 'react-bootstrap';
 
-function ModalDeleteOsso(props) {
+function ModalDeleteDente(props) {
     const navigate = useNavigate();
 
 
@@ -29,7 +29,7 @@ function ModalDeleteOsso(props) {
         let cm = new ConnectionManager();
         var params = { id: props.osso }
         //console.log('params', params)
-        await cm.deleteOsso(JSON.stringify(params)).then(res => {
+        await cm.deleteDente(JSON.stringify(params)).then(res => {
             if (res.response === 'success') {
                 console.log('response', res)
                 window.location.reload(false)
@@ -56,7 +56,7 @@ function ModalDeleteOsso(props) {
                 >
                     <Modal.Header closeButton>
                         <Modal.Title>
-                            <p>Vuoi eliminare questo osso?</p>
+                            <p>Vuoi eliminare questo dente?</p>
                         </Modal.Title>
                     </Modal.Header>
                     <Form onSubmit={deleteAPi}>
@@ -83,4 +83,4 @@ function ModalDeleteOsso(props) {
         checkUser()
     );
 }
-export default ModalDeleteOsso;
+export default ModalDeleteDente;

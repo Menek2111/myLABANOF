@@ -8,6 +8,8 @@ import ConnectionManager from '../api/ConnectionManager';
 import ListaIndividui from '../component/listaIndividui'
 import SideNav from '../component/sideNav';
 import ListaTombe from '../component/listaTombe';
+import ListaNecropoli from '../component/listaNecropoli'
+
 //Componenti grafici
 import { Dna } from 'react-loader-spinner'
 import Loading from '../UI/loading';
@@ -20,10 +22,17 @@ function Homepage() {
     //Tombe -> Elenco tombe presenti nel DB
     const [individui, setIndividui] = useState()
     const [tombe, setTombe] = useState()
+    const [necropoli, setNecropoli] = useState()
 
     const getIndividui = async (e) => {
         let cm = new ConnectionManager();
         let res = await cm.getIndividui();
+        return res;
+    }
+
+    const getNecropoli = async (e) => {
+        let cm = new ConnectionManager();
+        let res = await cm.getNecropoli();
         return res;
     }
 
@@ -56,6 +65,14 @@ function Homepage() {
                 setTombe([])
             }
         })
+        getNecropoli().then(res => {
+            console.log('getNecropoli', res)
+            if (res.response === 'success') {
+                setNecropoli(res.results)
+            } else {
+                setNecropoli([])
+            }
+        })
     }, [location]);
 
     return (
@@ -66,6 +83,13 @@ function Homepage() {
                         <SideNav />
                     </div>
                     <div className='col-sm-12 col-lg-10 bg-white border rounded' style={{ height: '89vh', overflowY: 'scroll' }}>
+
+
+                        <h5 className='pt-3 border-bottom'>Necropoli <span style={{ fontSize: '0.7em' }} className='text-secondary'>(Solo quelle contenenti almeno una tomba)</span></h5>
+
+                        {necropoli ? (<ListaNecropoli colonna="col-lg-4 col-sm-5" tombe={necropoli} />) : (<div></div>)}
+
+
 
                         <h5 className='pt-3 border-bottom'>Tombe <span style={{ fontSize: '0.7em' }} className='text-secondary'>(Solo quelle contenenti almeno un individuo)</span></h5>
 

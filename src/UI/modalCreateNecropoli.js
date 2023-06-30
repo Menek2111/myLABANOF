@@ -10,13 +10,14 @@ import Nav from 'react-bootstrap/Nav';
 import ConnectionManager from '../api/ConnectionManager';
 import { useNavigate } from 'react-router-dom'
 
-import tomb from '../images/icons/tomb.png'
+import necropoli from '../images/icons/necropoli.PNG'
 
 
 import '../App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-function ModalCreateTomba(props) {
+function ModalCreateNecropoli() {
+
     const centerMiddle = {
         display: "flex",
         alignItems: "center",
@@ -27,38 +28,18 @@ function ModalCreateTomba(props) {
     const navigate = useNavigate();
 
     const [nome, setNome] = useState('');
-    const [num, setNum] = useState('');
-    const [coord, setCoord] = useState('');
-    const [necropoli, setNecropoli] = useState('')
 
     const [ready, setReady] = useState(false)
 
-    const getNecropoli = async (e) => {
-        let cm = new ConnectionManager();
-        let res = await cm.getAllNecropoli();
-        return res;
-    }
-    const [listaNecropoli, setListaNecropoli] = useState([])
-
     useEffect(() => {
         setReady(true)
-
-        getNecropoli().then(res => {
-            console.log('getNecropoli', res)
-            if (res.response === 'success') {
-                setListaNecropoli(res.results)
-            } else {
-                setListaNecropoli([])
-            }
-        })
     }, []);
 
     //Gestione modal
     const [show, setShow] = useState(false);
     const handleClose = () => {
         setNome('')
-        setNum('')
-        setCoord('')
+        setReady(true)
         setShow(false);
     }
     const handleShow = () => setShow(true);
@@ -67,12 +48,12 @@ function ModalCreateTomba(props) {
 
     const createTomba = async (e) => {
         let cm = new ConnectionManager();
-        var params = { nome: nome, nMinIndividui: num, coordinate: coord, necropoli: necropoli }
+        var params = { nome: nome }
 
-        let res = await cm.createTomba(JSON.stringify(params))
+        let res = await cm.createNecropoli(JSON.stringify(params))
         if (res.response === 'success') {
-            console.log('response', res.response)
-            sessionStorage.setItem('tombaSelezionata', res.results)
+            console.log('createNecropoli', res.response)
+
         }
     }
 
@@ -82,31 +63,16 @@ function ModalCreateTomba(props) {
         setReady(false)
         createTomba().then(() => {
             setTimeout(() => {
-                navigate('/tomba')
+                handleClose()
             }, 500);
         })
-    }
-
-
-    let checkProps = () => {
-        if (props.necropoli != null) {
-            return (<Form.Select required aria-label="Default select example" disabled>
-                <option value={props.necropoli.id}>{props.necropoli.nome}</option>
-            </Form.Select>)
-        } else {
-            return (<Form.Select required aria-label="Default select example" onChange={(e) => setNecropoli(e.target.value)}>
-                <option></option>
-                {listaNecropoli ? (listaNecropoli.map(necropoli => <option key={necropoli.id} value={necropoli.id}>{necropoli.nome}</option>))
-                    : (<option></option>)}
-            </Form.Select>)
-        }
     }
 
     return (
         <div className='py-2'>
             <Button style={centerMiddle} className='w-100 d-flex justify-content-start' variant="outline-primary" onClick={handleShow}>
-                <img className='me-1 p-0 rounded' src={tomb} style={{ height: '7vh' }} />
-                <p className='m-0 ps-2'> Crea tomba</p>
+                <img className='me-1 p-0 rounded' src={necropoli} style={{ height: '7vh' }} />
+                <p className='m-0 ps-2'> Crea necropoli</p>
             </Button>
             <Modal
                 show={show}
@@ -118,26 +84,13 @@ function ModalCreateTomba(props) {
             >
                 <Form onSubmit={creaTomba}>
                     <Modal.Header closeButton>
-                        <Modal.Title>Creazione nuova tomba</Modal.Title>
+                        <Modal.Title>Creazione nuova necropoli</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
-                        <Form.Group className="mb-3" controlId="formBasicEmail">
-                            <Form.Label>Necropoli di appartenenza: <span className='text-secondary' style={{ fontSize: '0.8em' }}>(Non obbligatorio)</span></Form.Label>
 
-                            {checkProps()}
-
-                        </Form.Group>
                         <Form.Group className="mb-3" controlId="formBasicPassword">
-                            <Form.Label>Nome tomba</Form.Label>
+                            <Form.Label>Nome necropoli</Form.Label>
                             <Form.Control type="text" onChange={(e) => setNome(e.target.value)} required />
-                        </Form.Group>
-                        <Form.Group className="mb-3" controlId="formBasicPassword">
-                            <Form.Label>Numero minimo di individui</Form.Label>
-                            <Form.Control type="number" onChange={(e) => setNum(e.target.value)} />
-                        </Form.Group>
-                        <Form.Group className="mb-3" controlId="formBasicPassword">
-                            <Form.Label>Coordinate tomba</Form.Label>
-                            <Form.Control type="text" onChange={(e) => setCoord(e.target.value)} />
                         </Form.Group>
                     </Modal.Body>
                     <Modal.Footer>
@@ -163,4 +116,4 @@ function ModalCreateTomba(props) {
         </div >
     );
 }
-export default ModalCreateTomba;
+export default ModalCreateNecropoli;

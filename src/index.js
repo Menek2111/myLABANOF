@@ -12,7 +12,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Homepage from "./schede/homepage";
 import SchedaTomba from "./schede/schedaTomba";
 import SchedaIndividuo from "./schede/schedaIndividuo";
-
+import SchedaNecropoli from './schede/schedaNecropoli'
 import SchedaCranio from './schede/distretti/schedaCranio'
 
 //SCHEDA LOGIN
@@ -22,6 +22,7 @@ import { GoogleOAuthProvider } from '@react-oauth/google';
 //UI
 import NavBar from "./UI/Navbar";
 import SchedaUtente from "./schede/schedaUtente";
+import SchedaAmministratore from "./schede/schedaAmministratore";
 
 const container = document.getElementById('root');
 const root = createRoot(container);
@@ -38,7 +39,7 @@ root.render(
                 <Route
                     path="/"
                     element={
-                        <div className={theme}>
+                        <div className={theme} >
                             <Login />
                         </div>
                     } />
@@ -54,7 +55,7 @@ root.render(
                 <Route
                     path="/individuo"
                     element={
-                        <div className={theme} >
+                        <div className={theme}>
                             <NavBar />
                             <SchedaIndividuo />
                         </div>
@@ -65,7 +66,52 @@ root.render(
                     element={
                         <div className={theme} >
                             <NavBar />
-                            <SchedaCranio />
+                            <SchedaCranio distretto='Cranio' />
+                        </div>
+                    }
+                />
+                <Route
+                    path="/individuo/denti"
+                    element={
+                        <div className={theme} >
+                            <NavBar />
+                            <SchedaCranio distretto='Denti' />
+                        </div>
+                    }
+                />
+                <Route
+                    path="/individuo/colonna"
+                    element={
+                        <div className={theme} >
+                            <NavBar />
+                            <SchedaCranio distretto='Colonna' />
+                        </div>
+                    }
+                />
+                <Route
+                    path="/individuo/torace"
+                    element={
+                        <div className={theme} >
+                            <NavBar />
+                            <SchedaCranio distretto='Torace' />
+                        </div>
+                    }
+                />
+                <Route
+                    path="/individuo/artiSuperiori"
+                    element={
+                        <div className={theme} >
+                            <NavBar />
+                            <SchedaCranio distretto='Arti superiori' />
+                        </div>
+                    }
+                />
+                <Route
+                    path="/individuo/artiInferiori"
+                    element={
+                        <div className={theme} >
+                            <NavBar />
+                            <SchedaCranio distretto='Arti inferiori' />
                         </div>
                     }
                 />
@@ -79,11 +125,29 @@ root.render(
                     }
                 />
                 <Route
+                    path="/necropoli"
+                    element={
+                        <div className={theme} >
+                            <NavBar />
+                            <SchedaNecropoli />
+                        </div>
+                    }
+                />
+                <Route
                     path="/utente"
                     element={
                         <div className={theme} >
                             <NavBar />
                             <SchedaUtente />
+                        </div>
+                    }
+                />
+                <Route
+                    path="/admin"
+                    element={
+                        <div className={theme} >
+                            <NavBar />
+                            <SchedaAmministratore />
                         </div>
                     }
                 />

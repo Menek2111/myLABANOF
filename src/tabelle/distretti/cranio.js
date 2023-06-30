@@ -3,41 +3,65 @@ import Table from 'react-bootstrap/Table';
 import ConnectionManager from "../../api/ConnectionManager";
 
 import RigaCranio from './rigaCranio'
+import RigaDente from './rigaDente'
 import ModalCreateOsso from "../../UI/modalCreateOsso";
 import Loading from '../../UI/loading'
+import { useLocation } from 'react-router-dom';
+import ModalCreateDente from "../../UI/modalCreateDente";
+
 
 function Cranio(props) {
     const [ossa, setOssa] = useState()
     const [tipoOssa, setTipoOssa] = useState([])
 
+    // @todo: rendere dinamica questa funzione
+    let getDistrettoId = (nome) => {
+        switch (nome) {
+            case 'Cranio':
+                return 1
+            case 'Denti':
+                return 2
+            case 'Colonna':
+                return 3
+            case 'Torace':
+                return 4
+            case 'Arti superiori':
+                return 5
+            case 'Arti inferiori':
+                return 6
+            default:
+                return null
+        }
+    }
+
     const getOssaIndividuoByDistretto = async (e) => {
         let cm = new ConnectionManager();
-        let res = await cm.getOssaIndividuoByDistretto(JSON.stringify({ individuo: sessionStorage.getItem('individuoSelezionato'), distretto: 'Cranio' }));
-        return res;
+        if (getDistrettoId(props.distretto) != 2) {
+            return await cm.getOssaIndividuoByDistretto(JSON.stringify({ individuo: sessionStorage.getItem('individuoSelezionato'), distretto: getDistrettoId(props.distretto) }));
+        } else {
+            return await cm.getDentiIndividuoByDistretto(JSON.stringify({ individuo: sessionStorage.getItem('individuoSelezionato'), distretto: getDistrettoId(props.distretto) }));
+        }
     }
     const getOssaByDistretto = async (e) => {
         let cm = new ConnectionManager();
-        let res = await cm.getOssaByDistretto(JSON.stringify({ distretto: 'Cranio' }));
+        let res = await cm.getOssaByDistretto(JSON.stringify({ distretto: props.distretto }));
         return res;
     }
 
+    const location = useLocation();
     useEffect(() => {
-        getOssaByDistretto().then(res => {
-            console.log('NomeTipoOssa', res.results)
-            setTipoOssa(res.results.sort(compareTipoOssa))
-        })
-        getOssaIndividuoByDistretto().then(res => {
-            if (res.response === 'success') {
-                console.log('OssaIndividuo', res.results)
-                setOssa(res.results.sort(compare))
-            } else {
-                setOssa([])
-            }
-        })
-
-    }, []);
+        aggiorna()
+    }, [location]);
 
     let aggiorna = () => {
+        getOssaByDistretto().then(res => {
+            console.log('getOssaByDistretto', res)
+            if (res.response == 'success') {
+                setTipoOssa(res.results.sort(compareTipoOssa))
+            } else {
+                setTipoOssa([])
+            }
+        })
         getOssaIndividuoByDistretto().then(res => {
             if (res.response === 'success') {
                 console.log('aggiorna', res.results)
@@ -46,6 +70,7 @@ function Cranio(props) {
                 setOssa([])
             }
         })
+        props.callback()
     }
 
     function compare(a, b) {
@@ -71,25 +96,47 @@ function Cranio(props) {
         if (ossa.length == 0) {
             return <div className="">Non sono presenti ossa...</div>
         } else {
-            return (<Table className="col" bordered striped hover size="sm">
-                <thead>
-                    <tr>
-                        <th>Osso</th>
-                        <th>Materiale rivenuto</th>
-                        <th>Integro</th>
-                        <th>Livello di integrità</th>
-                        <th>Livello di qualità</th>
-                        <th>Restaurato</th>
-                        <th>Catalogazione e descrizione</th>
-                        <th>Indagine radiologica</th>
-                        <th>Campionamento</th>
-                        <th>Altre analisi</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {ossa.map(osso => <RigaCranio key={osso.id} osso={osso} individuo={sessionStorage.getItem('individuoSelezionato')} callback={aggiorna} />)}
-                </tbody>
-            </Table>)
+            if (getDistrettoId(props.distretto) != 2) {
+                return (<Table className="col" bordered striped hover size="sm">
+                    <thead>
+                        <tr>
+                            <th>Osso</th>
+                            <th>Materiale rivenuto</th>
+                            <th>Integro</th>
+                            <th>Livello di integrità</th>
+                            <th>Livello di qualità</th>
+                            <th>Restaurato</th>
+                            <th>Catalogazione e descrizione</th>
+                            <th>Indagine radiologica</th>
+                            <th>Campionamento</th>
+                            <th>Altre analisi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {ossa.map(osso => <RigaCranio key={osso.id} osso={osso} individuo={sessionStorage.getItem('individuoSelezionato')} callback={aggiorna} />)}
+                    </tbody>
+                </Table>)
+            } else {
+                return (<Table className="col" bordered striped hover size="sm">
+                    <thead>
+                        <tr>
+                            <th>Dente</th>
+                            <th>Datazione caduta</th>
+                            <th>Integro</th>
+                            <th>Livello di integrità</th>
+                            <th>Livello di qualità</th>
+                            <th>Modificazioni odontoiatrici</th>
+                            <th>Restauri odontoiatrici</th>
+                            <th>Commenti</th>
+                            <th>Indagine radiologica</th>
+                            <th>Prelievi/Campionamenti</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {ossa.map(osso => <RigaDente key={osso.id} osso={osso} individuo={sessionStorage.getItem('individuoSelezionato')} callback={aggiorna} />)}
+                    </tbody>
+                </Table>)
+            }
         }
     }
 
@@ -98,7 +145,13 @@ function Cranio(props) {
             return (<div></div>)
         } else {
             return (<div className="d-flex justify-content-end">
-                <ModalCreateOsso tipoOssa={tipoOssa} individuo={sessionStorage.getItem('individuoSelezionato')} callback={aggiorna} />
+
+                {getDistrettoId(props.distretto) == 2 ? (
+                    <ModalCreateDente tipoOssa={tipoOssa} individuo={sessionStorage.getItem('individuoSelezionato')} callback={aggiorna} />
+                ) : (
+                    <ModalCreateOsso tipoOssa={tipoOssa} individuo={sessionStorage.getItem('individuoSelezionato')} callback={aggiorna} />
+                )}
+
             </div>)
         }
     }

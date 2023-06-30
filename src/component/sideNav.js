@@ -3,6 +3,7 @@ import Nav from 'react-bootstrap/Nav';
 
 import ModalCreateIndividuo from "../UI/modalCreateIndividuo";
 import ModalCreateTomba from "../UI/modalCreateTomba";
+import ModalCreateNecropoli from "../UI/modalCreateNecropoli";
 
 function SideNav() {
 
@@ -11,11 +12,17 @@ function SideNav() {
         <div className="">
             <Nav defaultActiveKey="/home" className="flex-column">
 
+                <div className="my-2"></div>
+
                 <ModalCreateIndividuo />
 
-                <div className="my-3"></div>
 
                 <ModalCreateTomba />
+
+                <ModalCreateNecropoli />
+
+                <div className="my-4"></div>
+
                 <Nav.Link eventKey="link-1" disabled>Carica immagini</Nav.Link>
                 <Nav.Link eventKey="disabled" disabled>
                     Scheda amministratore

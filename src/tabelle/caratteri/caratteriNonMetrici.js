@@ -6,11 +6,13 @@ import ConnectionManager from "../../api/ConnectionManager";
 import RigaCaratteriNonMetrici from "./rigaCaratteriNonMetrici";
 import ModalCreateCarattereNonMetrico from "../../UI/modalCreateCarattereNonMetrico";
 import Loading from "../../UI/loading";
+import { useLocation } from 'react-router-dom';
+
 
 function CaratteriNonMetrici(props) {
 
-    const [caratteriNonMetrici, setCaratteriNonMetrici] = useState()
-    const [caratteriNonMetriciIndividuo, setCaratteriNonMetriciIndividuo] = useState()
+    const [caratteriNonMetrici, setCaratteriNonMetrici] = useState([])
+    const [caratteriNonMetriciIndividuo, setCaratteriNonMetriciIndividuo] = useState([])
 
     const getCaratteriNonMetriciByDistretto = async () => {
         let cm = new ConnectionManager();
@@ -23,6 +25,8 @@ function CaratteriNonMetrici(props) {
         return res;
     }
 
+    const location = useLocation();
+
     useEffect(() => {
         getCaratteriNonMetriciByDistretto().then(res => {
             switch (res.response) {
@@ -30,10 +34,10 @@ function CaratteriNonMetrici(props) {
                     setCaratteriNonMetrici(res.results)
                     break
                 case 'empty':
-                    setCaratteriNonMetrici(null)
+                    setCaratteriNonMetrici([])
                     break
                 case 'error':
-
+                    setCaratteriNonMetrici([])
                     break
                 default:
                     break
@@ -47,21 +51,22 @@ function CaratteriNonMetrici(props) {
                     setCaratteriNonMetriciIndividuo(res.results)
                     break
                 case 'empty':
-                    setCaratteriNonMetriciIndividuo(null)
+                    setCaratteriNonMetriciIndividuo([])
                     break
                 case 'error':
-                    setCaratteriNonMetriciIndividuo(null)
+                    setCaratteriNonMetriciIndividuo([])
                     break
                 default:
+                    setCaratteriNonMetriciIndividuo([])
                     break
             }
 
         })
-    }, []);
+    }, [location]);
 
     let checkCarattereNonMetricoIndividuo = () => {
-        if (caratteriNonMetriciIndividuo == null) {
-            return <div>Non sono presenti caratteri non metrici...</div>
+        if (caratteriNonMetriciIndividuo.length == 0) {
+            return <div className="pb-4">Non sono presenti caratteri non metrici...</div>
         }
         else {
             return (<Table bordered striped hover size="sm">
@@ -90,12 +95,13 @@ function CaratteriNonMetrici(props) {
                     setCaratteriNonMetriciIndividuo(res.results)
                     break
                 case 'empty':
-                    setCaratteriNonMetriciIndividuo(null)
+                    setCaratteriNonMetriciIndividuo([])
                     break
                 case 'error':
-                    setCaratteriNonMetriciIndividuo(null)
+                    setCaratteriNonMetriciIndividuo([])
                     break
                 default:
+                    setCaratteriNonMetriciIndividuo([])
                     break
             }
         })
@@ -109,19 +115,23 @@ function CaratteriNonMetrici(props) {
         }
     }
 
-    return (<div className="col-6">
-        <h5 className='border-bottom mb-2'>Caratteri non metrici</h5>
+    if (props.distretto == 2) {
+        return <div></div>
+    } else {
+        return (<div className="col-6">
+            <h5 className='border-bottom mb-2'>Caratteri non metrici</h5>
 
-        <div className="border rounded p-2">
+            <div className="border rounded p-2">
 
-            {caratteriNonMetrici ? (checkCarattereNonMetricoIndividuo()) : (<Loading />)}
+                {caratteriNonMetrici ? (checkCarattereNonMetricoIndividuo()) : (<Loading />)}
 
-            <div className="d-flex justify-content-end">
-                {caratteriNonMetrici ? (checkUser()) : (<div></div>)}
+                <div className="d-flex justify-content-end">
+                    {caratteriNonMetrici ? (checkUser()) : (<div></div>)}
+                </div>
             </div>
-        </div>
+        </div >)
+    }
 
 
-    </div >)
 }
 export default CaratteriNonMetrici;
