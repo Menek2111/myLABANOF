@@ -82,7 +82,7 @@ function Homepage() {
                     <div className='col-2 d-none d-sm-block d-md-none d-lg-block 	d-sm-none d-md-block' >
                         <SideNav />
                     </div>
-                    <div className='col-sm-12 col-lg-10 bg-white border rounded' style={{ height: '89vh', overflowY: 'scroll' }}>
+                    <div className='col-sm-12 col-lg-10 bg-white border rounded pb-5' style={{ height: '89vh', overflowY: 'scroll' }}>
 
 
                         <h5 className='pt-3 border-bottom'>Necropoli <span style={{ fontSize: '0.7em' }} className='text-secondary'>(Solo quelle contenenti almeno una tomba)</span></h5>
@@ -98,8 +98,13 @@ function Homepage() {
                         <h5 className='pt-3 border-bottom'>Individui</h5>
                         {individui ? (<ListaIndividui colonna="col-lg-4 col-sm-5" individui={individui} />) : (<Loading />)}
 
+
                     </div>
+
                 </div>
+
+
+
             </div>
         </div >
 
