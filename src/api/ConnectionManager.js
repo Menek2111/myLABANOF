@@ -225,6 +225,7 @@ export default class ConnectionManager {
         var URL = "https://applabanof.altervista.org/applabanof/data/getTraumaSpecifico.php"
         const { data } = await axios.post(URL, {
             osso: json.osso,
+            dente: json.dente,
         })
         return data
     }
@@ -234,6 +235,7 @@ export default class ConnectionManager {
         var URL = "https://applabanof.altervista.org/applabanof/data/getPatologiaSpecifica.php"
         const { data } = await axios.post(URL, {
             osso: json.osso,
+            dente: json.dente
         })
         return data
     }
@@ -243,6 +245,13 @@ export default class ConnectionManager {
         var URL = "https://applabanof.altervista.org/applabanof/data/getTraumaGeneraleByDistretto.php"
         const { data } = await axios.post(URL, {
             distretto: json.distretto,
+        })
+        return data
+    }
+
+    getTraumaGenerale = async function (params) {
+        var URL = "https://applabanof.altervista.org/applabanof/data/getTraumaGenerale.php"
+        const { data } = await axios.post(URL, {
         })
         return data
     }
@@ -415,6 +424,7 @@ export default class ConnectionManager {
         var URL = "https://applabanof.altervista.org/applabanof/data/creazione/createTraumaSpecifico.php"
         const { data } = await axios.post(URL, {
             osso: json.osso,
+            dente: json.dente,
             tipoTrauma: json.tipoTrauma,
             datazione: json.datazione,
             descrizione: json.descrizione
@@ -426,6 +436,7 @@ export default class ConnectionManager {
         var URL = "https://applabanof.altervista.org/applabanof/data/creazione/createPatologiaSpecifica.php"
         const { data } = await axios.post(URL, {
             osso: json.osso,
+            dente: json.dente,
             tipoPatologia: json.tipoPatologia,
             litica: json.litica,
             proliferativa: json.proliferativa,

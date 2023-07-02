@@ -20,7 +20,6 @@ function ModalCreatePatologia(props) {
     const [classePatologia, setClassePatologia] = useState('')
 
     useEffect(() => {
-
     }, []);
 
     //Gestione modal
@@ -47,16 +46,29 @@ function ModalCreatePatologia(props) {
     const createPatologiaSpecifica = async (event) => {
         event.preventDefault();
 
-
         let cm = new ConnectionManager();
-        var params = {
-            tipoPatologia: tipoPatologia,
-            osso: props.osso,
-            litica: booleanToValue(litica),
-            proliferativa: booleanToValue(proliferativa),
-            descrizione: descrizione,
-            classePatologia: classePatologia
+
+        var params = ''
+        if (props.distretto != 2) {
+            params = {
+                tipoPatologia: tipoPatologia,
+                osso: props.osso,
+                litica: booleanToValue(litica),
+                proliferativa: booleanToValue(proliferativa),
+                descrizione: descrizione,
+                classePatologia: classePatologia
+            }
+        } else {
+            params = {
+                tipoPatologia: tipoPatologia,
+                dente: props.osso,
+                litica: booleanToValue(litica),
+                proliferativa: booleanToValue(proliferativa),
+                descrizione: descrizione,
+                classePatologia: classePatologia
+            }
         }
+
         await cm.createPatologiaSpecifica(JSON.stringify(params)).then(res => {
             console.log('createPatologiaSpecifica', res)
             if (res.response === 'success') {

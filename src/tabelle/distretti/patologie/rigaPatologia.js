@@ -93,6 +93,7 @@ function RigaPatologia(props) {
             </td>
             <td>
                 <Form.Select defaultValue={classePatologia} onChange={(e) => setClassePatologia(e.target.value)} >
+                    <option></option>
                     {props.classiPatologie.map(classe => <option key={classe.id} value={classe.id}>{classe.nome}</option>)}
                 </Form.Select>
             </td>

@@ -25,13 +25,18 @@ function Patologie(props) {
 
     const getPatologiaSpecifica = async () => {
         let cm = new ConnectionManager();
-        let res = await cm.getPatologiaSpecifica(JSON.stringify({ osso: props.osso }));
+        let res;
+        if (props.distretto != 2) {
+            res = await cm.getPatologiaSpecifica(JSON.stringify({ osso: props.osso }));
+        } else {
+            res = await cm.getPatologiaSpecifica(JSON.stringify({ dente: props.osso }));
+        }
         return res;
     }
 
-    const getPatologiaByDistretto = async () => {
+    const getPatologieGenerali = async () => {
         let cm = new ConnectionManager();
-        let res = await cm.getPatologiaByDistretto(JSON.stringify({ distretto: props.distretto }));
+        let res = await cm.getPatologieGenerali();
         return res;
     }
 
@@ -49,10 +54,20 @@ function Patologie(props) {
             }
         })
 
-        getPatologiaByDistretto().then(res => {
+        getPatologieGenerali().then(res => {
             console.log('getPatologiaByDistretto', res)
             if (res.response === 'success') {
-                setListaPatologie(res.results)
+                if (props.distretto == 2) {
+                    let array = []
+                    res.results.map((pat, i) => {
+                        if (pat.odontoiatrico == 1) {
+                            array.push(pat)
+                        }
+                    })
+                    setListaPatologie(array)
+                } else {
+                    setListaPatologie(res.results)
+                }
             }
         })
 
@@ -108,7 +123,7 @@ function Patologie(props) {
             return (<div></div>)
         } else {
 
-            return <ModalCreatePatologia osso={props.osso} distretto={1} patologie={listaPatologie} classiPatologie={classiPatologie} callback={aggiorna} />
+            return <ModalCreatePatologia osso={props.osso} distretto={props.distretto} patologie={listaPatologie} classiPatologie={classiPatologie} callback={aggiorna} />
         }
     }
 

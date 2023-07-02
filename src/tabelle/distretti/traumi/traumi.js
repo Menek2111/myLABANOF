@@ -11,33 +11,37 @@ function Traumi(props) {
 
     const getTraumaSpecifico = async () => {
         let cm = new ConnectionManager();
-        let res = await cm.getTraumaSpecifico(JSON.stringify({ osso: props.osso }));
+        let res;
+        if (props.distretto != 2) {
+            res = await cm.getTraumaSpecifico(JSON.stringify({ osso: props.osso }));
+        } else {
+            res = await cm.getTraumaSpecifico(JSON.stringify({ dente: props.osso }));
+        }
         return res;
     }
 
     const getTraumaGeneraleByDistretto = async () => {
         let cm = new ConnectionManager();
-        let res = await cm.getTraumaGeneraleByDistretto(JSON.stringify({ distretto: props.distretto }));
+        let res = await cm.getTraumaGenerale();
         return res;
     }
 
     const aggiorna = () => {
         getTraumaSpecifico().then(res => {
+
+            console.log('getTraumaSpecifico', res)
             if (res.response === 'success') {
+
                 setTraumi(res.results)
             } else {
                 setTraumi([])
             }
         })
+        getTraumaGeneraleByDistretto().then(res => setListaTraumi(res.results))
     }
 
     useEffect(() => {
-        getTraumaSpecifico().then(res => {
-            if (res.response === 'success') {
-                setTraumi(res.results)
-            }
-        })
-        getTraumaGeneraleByDistretto().then(res => setListaTraumi(res.results))
+        aggiorna()
     }, []);
 
     let getTraumi = () => {
@@ -77,7 +81,7 @@ function Traumi(props) {
         if (localStorage.getItem('userID') != sessionStorage.getItem('individuoSelezionatoCreatore')) {
             return (<div></div>)
         } else {
-            return <ModalCreateTrauma listaTraumi={listaTraumi} distretto={1} osso={props.osso} callback={aggiorna} />
+            return <ModalCreateTrauma listaTraumi={listaTraumi} distretto={props.distretto} osso={props.osso} callback={aggiorna} />
         }
     }
 

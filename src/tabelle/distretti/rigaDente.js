@@ -36,7 +36,6 @@ function RigaDente(props) {
     }
 
     useEffect(() => {
-
     }, []);
 
     return (
@@ -94,9 +93,9 @@ function RigaDente(props) {
                     </div>
 
                     <div className='col'>
-                        {/*  <Traumi osso={props.osso.id} distretto={props.osso.distretto} />
+                        <Traumi osso={props.osso.id} distretto={props.osso.distretto} />
 
-                        <Patologie osso={props.osso.id} distretto={props.osso.distretto} />*/}
+                        <Patologie osso={props.osso.id} distretto={props.osso.distretto} />
                     </div>
                 </Modal.Body>
 

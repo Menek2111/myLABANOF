@@ -21,7 +21,6 @@ function ModalCreateTrauma(props) {
     const [datazione, setDatazione] = useState('')
 
     useEffect(() => {
-
     }, []);
 
     //Gestione modal
@@ -41,8 +40,16 @@ function ModalCreateTrauma(props) {
         event.preventDefault();
 
         let cm = new ConnectionManager();
-        var params = { tipoTrauma: trauma, osso: props.osso, datazione: datazione, descrizione: descrizione }
+
+        var params = ''
+        if (props.distretto != 2) {
+            params = { tipoTrauma: trauma, osso: props.osso, datazione: datazione, descrizione: descrizione }
+        } else {
+            params = { tipoTrauma: trauma, dente: props.osso, datazione: datazione, descrizione: descrizione }
+        }
+
         await cm.createTraumaSpecifico(JSON.stringify(params)).then(res => {
+            console.log('createTraumaSpecifico', res)
             if (res.response === 'success') {
                 props.callback()
                 handleClose()

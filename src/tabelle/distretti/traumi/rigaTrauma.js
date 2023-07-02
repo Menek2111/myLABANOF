@@ -9,8 +9,6 @@ import ConnectionManager from '../../../api/ConnectionManager';
 
 function RigaTrauma(props) {
 
-
-
     const [editable, setEditable] = useState(false);
 
     const [tipoTrauma, setTipoTrauma] = useState(props.trauma.tipoTrauma)
@@ -18,7 +16,7 @@ function RigaTrauma(props) {
     const [datazione, setDatazione] = useState(props.trauma.datazione)
 
     const editTraumaSpecifico = async (event) => {
-        event.preventDefault();
+
         let cm = new ConnectionManager();
         var params = {
             osso: props.trauma.osso,

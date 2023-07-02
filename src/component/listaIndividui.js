@@ -15,7 +15,9 @@ function ListaIndividui(props) {
     //Chiamate Connection Manager
 
     useEffect(() => {
-
+        if (props.all != null) {
+            setMax(props.individui.length)
+        }
     }, [props.individui])
 
     let parseTimeStamp = (timeStamp) => {
@@ -76,7 +78,7 @@ function ListaIndividui(props) {
     }
 
     let moreButton = () => {
-        if (max > props.individui.length) {
+        if (max >= props.individui.length) {
             return <></>
         } else {
             return <Button variant="link" onClick={() => setMax((state) => state + 6)}>Mostra altri individui</Button>
