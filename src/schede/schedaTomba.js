@@ -47,6 +47,10 @@ function SchedaTomba() {
 
     const location = useLocation();
     useEffect(() => {
+        aggiorna()
+    }, [location]);
+
+    let aggiorna = () => {
         getIndividuiByTomba().then(res => {
             switch (res.response) {
                 case 'success':
@@ -62,25 +66,6 @@ function SchedaTomba() {
             }
         })
 
-        getTombaById().then(res => {
-            console.log('getTombaById', res)
-            switch (res.response) {
-                case 'success':
-                    setTombaInfo(res.results[0])
-                    break
-                case 'empty':
-                    setTombaInfo(null)
-                    break
-                case 'error':
-                    setTombaInfo(null)
-                    break
-                default:
-                    break
-            }
-        })
-    }, [location]);
-
-    let aggiorna = () => {
         getTombaById().then(res => {
             console.log('getTombaById', res)
             switch (res.response) {
@@ -136,7 +121,7 @@ function SchedaTomba() {
                                     </div>
                                 </div>
 
-                                {individui ? (<ListaIndividui colonna="col-lg-3 col-sm-6" individui={individui} />
+                                {individui ? (<ListaIndividui all={true} colonna="col-lg-3 col-sm-6" individui={individui} />
                                 ) : (<Loading />)}
 
                             </div>

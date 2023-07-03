@@ -2,15 +2,14 @@ import React, { useState, useEffect } from "react";
 import Table from 'react-bootstrap/Table';
 import ConnectionManager from "../../api/ConnectionManager";
 
-import RigaCranio from './rigaCranio'
+import RigaCranio from './rigaOssaDistretto'
 import RigaDente from './rigaDente'
 import ModalCreateOsso from "../../UI/modalCreateOsso";
 import Loading from '../../UI/loading'
 import { useLocation } from 'react-router-dom';
 import ModalCreateDente from "../../UI/modalCreateDente";
 
-
-function Cranio(props) {
+function OssaDistretto(props) {
     const [ossa, setOssa] = useState()
     const [tipoOssa, setTipoOssa] = useState([])
 
@@ -141,19 +140,55 @@ function Cranio(props) {
     }
 
     let checkUser = () => {
-        if (localStorage.getItem('userID') != sessionStorage.getItem('individuoSelezionatoCreatore')) {
-            return (<div></div>)
-        } else {
-            return (<div className="d-flex justify-content-end">
 
-                {getDistrettoId(props.distretto) == 2 ? (
-                    <ModalCreateDente tipoOssa={tipoOssa} individuo={sessionStorage.getItem('individuoSelezionato')} callback={aggiorna} />
-                ) : (
-                    <ModalCreateOsso tipoOssa={tipoOssa} individuo={sessionStorage.getItem('individuoSelezionato')} callback={aggiorna} />
-                )}
+        switch (localStorage.getItem('ruolo')) {
+            case '0':
+                return <></>
+            case '1':
+                return <></>
+            case '2':
+                if (localStorage.getItem('userID') != sessionStorage.getItem('individuoSelezionatoCreatore')) {
+                    return (<div></div>)
+                } else {
+                    return (<div className="d-flex justify-content-end">
+                        {getDistrettoId(props.distretto) == 2 ? (
+                            <ModalCreateDente tipoOssa={tipoOssa} individuo={sessionStorage.getItem('individuoSelezionato')} callback={aggiorna} />
+                        ) : (
+                            <ModalCreateOsso tipoOssa={tipoOssa} individuo={sessionStorage.getItem('individuoSelezionato')} callback={aggiorna} />
+                        )}
 
-            </div>)
+                    </div>)
+                }
+            case '3':
+                return (<div className="d-flex justify-content-end">
+                    {getDistrettoId(props.distretto) == 2 ? (
+                        <ModalCreateDente tipoOssa={tipoOssa} individuo={sessionStorage.getItem('individuoSelezionato')} callback={aggiorna} />
+                    ) : (
+                        <ModalCreateOsso tipoOssa={tipoOssa} individuo={sessionStorage.getItem('individuoSelezionato')} callback={aggiorna} />
+                    )}
+
+                </div>)
+            default:
+                return <></>
         }
+
+        /*
+        if (localStorage.getItem('ruolo') == 1) {
+            return (<></>)
+        } else {
+            if (localStorage.getItem('userID') != sessionStorage.getItem('individuoSelezionatoCreatore')) {
+                return (<div></div>)
+            } else {
+                return (<div className="d-flex justify-content-end">
+                    {getDistrettoId(props.distretto) == 2 ? (
+                        <ModalCreateDente tipoOssa={tipoOssa} individuo={sessionStorage.getItem('individuoSelezionato')} callback={aggiorna} />
+                    ) : (
+                        <ModalCreateOsso tipoOssa={tipoOssa} individuo={sessionStorage.getItem('individuoSelezionato')} callback={aggiorna} />
+                    )}
+
+                </div>)
+            }
+        }*/
     }
 
 
@@ -177,4 +212,10 @@ function Cranio(props) {
         </div>
     )
 }
-export default Cranio;
+
+
+
+
+
+
+export default OssaDistretto;

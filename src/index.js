@@ -13,7 +13,7 @@ import Homepage from "./schede/homepage";
 import SchedaTomba from "./schede/schedaTomba";
 import SchedaIndividuo from "./schede/schedaIndividuo";
 import SchedaNecropoli from './schede/schedaNecropoli'
-import SchedaCranio from './schede/distretti/schedaCranio'
+import SchedaCranio from './schede/schedaDistretto'
 
 //SCHEDA LOGIN
 import Login from './Login'
@@ -32,6 +32,12 @@ if (sessionStorage.getItem('tema') == null) {
 }
 const theme = sessionStorage.getItem('tema')
 
+
+if (sessionStorage.getItem('font') == null) {
+    sessionStorage.setItem('font', 'Roboto')
+}
+const font = sessionStorage.getItem('font')
+
 root.render(
     <GoogleOAuthProvider clientId="893808787073-9euu770ju7ncbmbbgbdedn9tdj5t3296.apps.googleusercontent.com">
         <HashRouter>
@@ -40,15 +46,19 @@ root.render(
                     path="/"
                     element={
                         <div className={theme} >
-                            <Login />
+                            <div className={font}>
+                                <Login />
+                            </div>
                         </div>
                     } />
                 <Route
                     path="/home"
                     element={
                         <div className={theme} >
-                            <NavBar />
-                            <Homepage />
+                            <div className={font}>
+                                <NavBar />
+                                <Homepage />
+                            </div>
                         </div>
                     }
                 />
@@ -56,8 +66,10 @@ root.render(
                     path="/individuo"
                     element={
                         <div className={theme}>
-                            <NavBar />
-                            <SchedaIndividuo />
+                            <div className={font}>
+                                <NavBar />
+                                <SchedaIndividuo />
+                            </div>
                         </div>
                     }
                 />
@@ -65,8 +77,10 @@ root.render(
                     path="/individuo/cranio"
                     element={
                         <div className={theme} >
-                            <NavBar />
-                            <SchedaCranio distretto='Cranio' />
+                            <div className={font}>
+                                <NavBar />
+                                <SchedaCranio distretto='Cranio' />
+                            </div>
                         </div>
                     }
                 />
@@ -74,8 +88,10 @@ root.render(
                     path="/individuo/denti"
                     element={
                         <div className={theme} >
-                            <NavBar />
-                            <SchedaCranio distretto='Denti' />
+                            <div className={font}>
+                                <NavBar />
+                                <SchedaCranio distretto='Denti' />
+                            </div>
                         </div>
                     }
                 />
@@ -83,8 +99,10 @@ root.render(
                     path="/individuo/colonna"
                     element={
                         <div className={theme} >
-                            <NavBar />
-                            <SchedaCranio distretto='Colonna' />
+                            <div className={font}>
+                                <NavBar />
+                                <SchedaCranio distretto='Colonna' />
+                            </div>
                         </div>
                     }
                 />
@@ -92,8 +110,10 @@ root.render(
                     path="/individuo/torace"
                     element={
                         <div className={theme} >
-                            <NavBar />
-                            <SchedaCranio distretto='Torace' />
+                            <div className={font}>
+                                <NavBar />
+                                <SchedaCranio distretto='Torace' />
+                            </div>
                         </div>
                     }
                 />
@@ -101,8 +121,10 @@ root.render(
                     path="/individuo/artiSuperiori"
                     element={
                         <div className={theme} >
-                            <NavBar />
-                            <SchedaCranio distretto='Arti superiori' />
+                            <div className={font}>
+                                <NavBar />
+                                <SchedaCranio distretto='Arti superiori' />
+                            </div>
                         </div>
                     }
                 />
@@ -110,8 +132,10 @@ root.render(
                     path="/individuo/artiInferiori"
                     element={
                         <div className={theme} >
-                            <NavBar />
-                            <SchedaCranio distretto='Arti inferiori' />
+                            <div className={font}>
+                                <NavBar />
+                                <SchedaCranio distretto='Arti inferiori' />
+                            </div>
                         </div>
                     }
                 />
@@ -119,8 +143,10 @@ root.render(
                     path="/tomba"
                     element={
                         <div className={theme} >
-                            <NavBar />
-                            <SchedaTomba />
+                            <div className={font}>
+                                <NavBar />
+                                <SchedaTomba />
+                            </div>
                         </div>
                     }
                 />
@@ -128,8 +154,10 @@ root.render(
                     path="/necropoli"
                     element={
                         <div className={theme} >
-                            <NavBar />
-                            <SchedaNecropoli />
+                            <div className={font}>
+                                <NavBar />
+                                <SchedaNecropoli />
+                            </div>
                         </div>
                     }
                 />
@@ -137,8 +165,10 @@ root.render(
                     path="/utente"
                     element={
                         <div className={theme} >
-                            <NavBar />
-                            <SchedaUtente />
+                            <div className={font}>
+                                <NavBar />
+                                <SchedaUtente />
+                            </div>
                         </div>
                     }
                 />
@@ -146,8 +176,10 @@ root.render(
                     path="/admin"
                     element={
                         <div className={theme} >
-                            <NavBar />
-                            <SchedaAmministratore />
+                            <div className={font}>
+                                <NavBar />
+                                <SchedaAmministratore />
+                            </div>
                         </div>
                     }
                 />

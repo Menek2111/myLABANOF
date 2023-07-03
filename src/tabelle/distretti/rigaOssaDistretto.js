@@ -16,7 +16,7 @@ import Traumi from './traumi/traumi';
 import Patologie from './patologie/patologie';
 
 
-function RigaCranio(props) {
+function RigaOssaDistretto(props) {
 
     //Gestione modal
     const [show, setShow] = useState(false);
@@ -347,4 +347,4 @@ function DettagliOsso(props) {
     )
 }
 
-export default RigaCranio;
+export default RigaOssaDistretto;

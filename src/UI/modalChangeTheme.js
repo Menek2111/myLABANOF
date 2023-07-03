@@ -20,10 +20,15 @@ function ModalChangeTheme(props) {
         window.location.reload(false)
     }
 
+    const selezionaFont = (font) => {
+        sessionStorage.setItem('font', font)
+        window.location.reload(false)
+    }
+
     return (
         <div>
             <Dropdown.Item style={{ marginRight: '2vw' }} className='w-100 ' variant="primary" onClick={handleShow}>
-                Tema
+                Personalizzazione
             </Dropdown.Item  >
             <Modal
                 show={show}
@@ -34,11 +39,14 @@ function ModalChangeTheme(props) {
                 centered
             >
                 <Modal.Header closeButton>
-                    <Modal.Title>Scegli tema</Modal.Title>
+                    <Modal.Title>Personalizzazione</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
 
                     <div className='row justify-content-center'>
+
+                        <p className='border-bottom mb-3'>Colore di sfondo</p>
+
                         <div className='col-2'>
                             <div className='rounded text-center' style={{ width: '5vw', height: '5vw', backgroundColor: '#E7CECE' }}
                                 onClick={() => selezionaTema('temaMyLabanof')}></div>
@@ -63,6 +71,52 @@ function ModalChangeTheme(props) {
                         <div className='col-2'>
                             <div className='rounded text-center' style={{ width: '5vw', height: '5vw', backgroundColor: '#EBC8DE' }}
                                 onClick={() => selezionaTema('temaPastelloRosa')}></div>
+                        </div>
+                    </div>
+
+
+
+                    <div className='my-4'></div>
+
+                    <p className='border-bottom'>Font</p>
+
+
+                    <div className='row justify-content-center'>
+                        <div className='col-4 p-1'>
+                            <div className='rounded text-center border p-3' style={{ fontFamily: 'Roboto' }}
+                                onClick={() => selezionaFont('Roboto')}>
+                                Roboto
+                            </div>
+                        </div>
+                        <div className='col-4 p-1'>
+                            <div className='rounded text-center border p-3' style={{ fontFamily: 'Open Sans' }}
+                                onClick={() => selezionaFont('OpenSans')}>
+                                Open Sans
+                            </div>
+                        </div>
+                        <div className='col-4 p-1'>
+                            <div className='rounded text-center border p-3' style={{ fontFamily: 'Lato' }}
+                                onClick={() => selezionaFont('Lato')}>
+                                Lato
+                            </div>
+                        </div>
+                        <div className='col-4 p-1'>
+                            <div className='rounded text-center border p-3' style={{ fontFamily: 'Montserrat' }}
+                                onClick={() => selezionaFont('Montserrat')}>
+                                Montserrat
+                            </div>
+                        </div>
+                        <div className='col-4 p-1'>
+                            <div className='rounded text-center border p-3' style={{ fontFamily: 'Poppins' }}
+                                onClick={() => selezionaFont('Poppins')}>
+                                Poppins
+                            </div>
+                        </div>
+                        <div className='col-4 p-1'>
+                            <div className='rounded text-center border p-3' style={{ fontFamily: 'Mulish' }}
+                                onClick={() => selezionaFont('Mulish')}>
+                                Mulish
+                            </div>
                         </div>
 
                     </div>

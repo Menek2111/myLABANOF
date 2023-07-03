@@ -15,6 +15,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import LogOutButton from './logOutButton';
 
 import ModalChangeTheme from './modalChangeTheme'
+import ModalCheckPermessi from './modalCheckPermessi';
 
 function NavBar() {
     const navigate = useNavigate();
@@ -210,8 +211,7 @@ function NavBar() {
                                     }}>
                                         Profilo
                                     </Dropdown.Item >
-                                    <Dropdown.Item disabled>Permessi</Dropdown.Item>
-
+                                    <ModalCheckPermessi />
                                     <ModalChangeTheme />
 
 

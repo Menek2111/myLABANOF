@@ -293,6 +293,14 @@ export default class ConnectionManager {
         return data
     }
 
+    getUsersRegisterRequests = async function (params) {
+        var URL = "https://applabanof.altervista.org/applabanof/data/getUsersRegisterRequests.php"
+        const { data } = await axios.post(URL, {
+
+        })
+        return data
+    }
+
     getClassiPatologie = async function (params) {
         var URL = "https://applabanof.altervista.org/applabanof/data/getClassiPatologie.php"
         const { data } = await axios.post(URL, {
@@ -727,5 +735,14 @@ export default class ConnectionManager {
         return data
     }
 
+    editRuoloAccountById = async function (params) {
+        var json = JSON.parse(params)
+        var URL = "https://applabanof.altervista.org/applabanof/data/edit/editRuoloAccountById.php"
+        const { data } = await axios.post(URL, {
+            ruolo: json.ruolo,
+            id: json.id
+        })
+        return data
+    }
 
 }

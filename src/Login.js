@@ -26,13 +26,14 @@ function Login() {
     useEffect(() => {
 
         //Controllo se il token è ancora valido, se lo è impedisco la visualizzazione della pagina
+        /*
         checkJWT().then(
             res => {
                 if (res.response === 'success') {
                     navigate('/home')
                 }
             }
-        )
+        )*/
 
         if (user) {
             axios.get(`https://www.googleapis.com/oauth2/v1/userinfo?access_token=${user.access_token}`, {
@@ -44,8 +45,23 @@ function Login() {
                 .then((res) => {
                     localStorage.setItem('profile', JSON.stringify(res.data))
                     sessionStorage.setItem('access_token', user.access_token)
-                    register(res.data).then(res => localStorage.setItem('userID', res.userId.id))
-                    navigate('/home')
+                    register(res.data).then(ress => {
+                        if (ress.response === 'success') {
+                            localStorage.setItem('userID', ress.userId.id)
+
+                            if (ress.action == 'login') {
+                                if (ress.userId.ruolo != 0) {
+                                    localStorage.setItem('ruolo', ress.userId.ruolo)
+                                    navigate('/home')
+                                } else {
+                                    alert('La richiesta di accesso è già stata effettuata, dovrai attendere la conferma da parte di un amministratore myLABANOF')
+                                }
+                            } else {
+                                alert('è stata effettuata la richiesta di accesso per: ' + res.data.email)
+                            }
+                        }
+                    })
+
                 })
                 .catch((err) => console.log(err));
         }

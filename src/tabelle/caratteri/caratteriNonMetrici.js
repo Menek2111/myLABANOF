@@ -108,11 +108,24 @@ function CaratteriNonMetrici(props) {
     }
 
     let checkUser = () => {
-        if (localStorage.getItem('userID') != sessionStorage.getItem('individuoSelezionatoCreatore')) {
-            return (<div></div>)
-        } else {
-            return <ModalCreateCarattereNonMetrico caratteri={caratteriNonMetrici} callback={aggiorna} />
+        switch (localStorage.getItem('ruolo')) {
+            case '0':
+                return <></>
+            case '1':
+                return <></>
+            case '2':
+                if (localStorage.getItem('userID') != sessionStorage.getItem('individuoSelezionatoCreatore')) {
+                    return (<div></div>)
+                } else {
+                    return <ModalCreateCarattereNonMetrico caratteri={caratteriNonMetrici} callback={aggiorna} />
+                }
+            case '3':
+                return <ModalCreateCarattereNonMetrico caratteri={caratteriNonMetrici} callback={aggiorna} />
+            default:
+                return <></>
         }
+
+
     }
 
     if (props.distretto == 2) {

@@ -1,22 +1,22 @@
 .Center{
-    display: 'flex' !important;
-    align-items: 'center' !important;
-    justify-content: 'center' !important;
-    height: '100%' !important;
+  display: 'flex' !important;
+  align-items: 'center' !important;
+  justify-content: 'center' !important;
+  height: '100%' !important;
 }
 .bar{
-    margin: 0 auto !important;
-    width: 30vw !important;
-    border-radius: 30px !important;
-    background-color: #EDF2FC !important;
-  }
-  .bar:hover{
-    box-shadow: 1px 1px 5px 1px #dcdcdc !important;
-  }
-  .bar:focus-within{
-    box-shadow: 1px 1px 5px 1px #dcdcdc !important;
-    outline:none !important;
-  }
+  margin: 0 auto !important;
+  width: 30vw !important;
+  border-radius: 30px !important;
+  background-color: #EDF2FC !important;
+}
+.bar:hover{
+  box-shadow: 1px 1px 5px 1px #dcdcdc !important;
+}
+.bar:focus-within{
+  box-shadow: 1px 1px 5px 1px #dcdcdc !important;
+  outline:none !important;
+}
 .searchbar{
   height: 5vh !important;
   border:none !important;
@@ -112,17 +112,6 @@ background: linear-gradient(360deg, rgba(254,214,165,1) 0%, rgb(247, 249, 252, 1
  background-size: cover;
   user-select: none;
 }
-.temaPastelloArancio .btn-primary{
-  background-color: #a5cdfe!important;
-  border-color: #a5cdfe !important;
-}
-.temaPastelloArancio .form-check-input:checked{
-  background-color: #a5cdfe !important;
-  border-color: #a5cdfe !important;
-}
-.temaPastelloArancio .indCard:hover{
-  background-color: #a5cdfe !important;
-}
 
 
 .temaPastelloVerde{
@@ -131,28 +120,15 @@ background: linear-gradient(360deg, rgba(254,214,165,1) 0%, rgb(247, 249, 252, 1
   background: linear-gradient(360deg, rgba(206,229,183,1) 0%, rgb(247, 249, 252, 1) 90%, rgb(247, 249, 252, 1) 100%);
   user-select: none;
 }
-.temaPastelloVerde .btn-primary{
-  background-color: #ceb7e5!important;
-  border-color: #ceb7e5 !important;
-}
-.temaPastelloVerde .form-check-input:checked{
-  background-color: #ceb7e5 !important;
-  border-color: #ceb7e5 !important;
-}
+
+
 .temaPastelloAzzurro{
   height: 100vh;
   background: #A9DFEB;
   background: linear-gradient(360deg, rgba(169,223,235,1) 0%, rgb(247, 249, 252, 1) 90%, rgb(247, 249, 252, 1) 100%);  
   user-select: none;
 }
-.temaPastelloAzzurro .btn-primary{
-  background-color: #ebb5a9!important;
-  border-color: #ebb5a9 !important;
-}
-.temaPastelloAzzurro .form-check-input:checked{
-  background-color: #ebb5a9 !important;
-  border-color: #ebb5a9 !important;
-}
+
 
 .temaPastelloBlue{
   height: 100vh;
@@ -161,14 +137,6 @@ background: linear-gradient(360deg, rgba(254,214,165,1) 0%, rgb(247, 249, 252, 1
   background-size: cover;
   user-select: none;
 } 
-.temaPastelloBlue .btn-primary{
-  background-color: #e6caa5!important;
-  border-color: #e6caa5 !important;
-}
-.temaPastelloBlue .form-check-input:checked{
-  background-color: #e6caa5 !important;
-  border-color: #e6caa5 !important;
-}
 
 .temaPastelloRosa{
   height: 100vh;
@@ -177,18 +145,27 @@ background: linear-gradient(360deg, rgba(254,214,165,1) 0%, rgb(247, 249, 252, 1
   background-size: cover;
   user-select: none;
 }
-.temaPastelloRosa .btn-primary{
-  background-color: #ADCCB9!important;
-  border-color: #ADCCB9 !important;
-}
-.temaPastelloRosa .form-check-input:checked{
-  background-color: #ADCCB9 !important;
-  border-color: #ADCCB9 !important;
-}
-.temaPastelloRosa .indCard:hover{
-  background-color: #ADCCB9 !important;
-}
 
+
+@import url('https://fonts.googleapis.com/css2?family=Lato&family=Montserrat&family=Mulish&family=Open+Sans&family=Poppins&family=Roboto&display=swap');
+.Roboto {
+  font-family: 'Roboto' !important;
+}
+.OpenSans{
+  font-family: 'Open Sans' !important;
+}
+.Lato{
+  font-family: 'Lato' !important;
+}
+.Montserrat{
+  font-family: 'Montserrat' !important;
+}
+.Poppins{
+  font-family: 'Poppins' !important;
+}
+.Mulish{
+  font-family: 'Mulish' !important;
+}
 
 /*
 #f7abad

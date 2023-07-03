@@ -18,9 +18,19 @@ import {
 
 
 import { IconContext } from "react-icons";
+import { Tab, Table } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom'
 
 
 function SchedaAmministratore() {
+    const navigate = useNavigate();
+
+    const getUserInfo = async (e) => {
+        let cm = new ConnectionManager();
+        var params = { id: localStorage.getItem('userID') }
+        let res = await cm.getUserInfo(JSON.stringify(params))
+        return res
+    }
 
     //CHIAMATE PER OTTENERE I DATI --------------------------------------------------
     const getPatologieGenerali = async () => {
@@ -43,46 +53,17 @@ function SchedaAmministratore() {
         return res;
     }
     const [listaCaratteriNonMetrici, setListaCaratteriNonMetrici] = useState([])
+
+    const getUsersRegisterRequests = async (e) => {
+        let cm = new ConnectionManager();
+        let res = await cm.getUsersRegisterRequests()
+        return res
+    }
+    const [listaUtenti, setListaUtenti] = useState()
+
     //CHIAMATE PER OTTENERE I DATI (END)--------------------------------------------------
 
-
     let aggiorna = () => {
-        getPatologieGenerali().then(res => {
-            console.log('getPatologieGenerali', res)
-            switch (res.response) {
-                case 'success':
-                    setListaPatologie(res.results)
-                    break
-                case 'empty':
-                    setListaPatologie([])
-                    break
-                case 'error':
-                    setListaPatologie([])
-                    break
-                default:
-                    break
-            }
-        })
-        getCaratteriMetrici().then(res => {
-            console.log('getCaratteriMetrici', res)
-            switch (res.response) {
-                case 'success':
-                    setListaCaratteriMetrici(res.results)
-                    break
-                case 'empty':
-                    setListaCaratteriMetrici([])
-                    break
-                case 'error':
-                    setListaCaratteriMetrici([])
-                    break
-                default:
-                    break
-            }
-        })
-    }
-
-    //USE EFFECT -------------------------------------------------------------------------
-    useEffect(() => {
         getPatologieGenerali().then(res => {
             console.log('getPatologieGenerali', res)
             switch (res.response) {
@@ -131,6 +112,23 @@ function SchedaAmministratore() {
                     break
             }
         })
+        getUsersRegisterRequests().then(res => {
+            if (res.response == 'success') {
+                setListaUtenti(res.results)
+            }
+        })
+    }
+
+    //USE EFFECT -------------------------------------------------------------------------
+    useEffect(() => {
+        getUserInfo().then(res => {
+            if (res.response == 'success') {
+                if (res.results[0].ruolo != 3) {
+                    navigate('/home')
+                }
+            }
+        })
+        aggiorna()
     }, [])
     //USE EFFECT (END) -------------------------------------------------------------------
 
@@ -150,315 +148,249 @@ function SchedaAmministratore() {
                             </div>
                             <div>
                                 <div className='row justify-content-start p-2' style={{ overflowY: 'scroll', height: '80vh' }}>
-                                    <Distretto distrettoId='1' callback={aggiorna} listaPatologie={listaPatologie} listaCaratteriMetrici={listaCaratteriMetrici} listaCaratteriNonMetrici={listaCaratteriNonMetrici} distretto='Cranio' />
-                                    <Distretto distrettoId='3' callback={aggiorna} listaPatologie={listaPatologie} listaCaratteriMetrici={listaCaratteriMetrici} listaCaratteriNonMetrici={listaCaratteriNonMetrici} distretto='Colonna' />
+                                    {/*listaPatologie ? (
+                                        <>
+                                            <Patologie odontoiatrico={false} col="col-2" patologie={listaPatologie} />
+                                            <Patologie odontoiatrico={true} col="col-2" patologie={listaPatologie} />
+                                        </>
+                                    ) : (<></>)*/}
+
+                                    {/*listaCaratteriMetrici ? (<Caratteri caratteri={listaCaratteriMetrici} col="col-2" />) : (<></>)*/}
+
+                                    {listaUtenti ? (<RichiesteRegistrazione col='col-12' listaUtenti={listaUtenti} callback={aggiorna} />
+                                    ) : (<></>)}
+
+
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </div >
     );
     //RENDER SCHEDA (END) ----------------------------------------------------------------
 }
 
-function Distretto(props) {
-    //CHIAMATE API PER CREAZIONE ----------------------------------------------------------
-    const createPatologiaGeneraleEPerDistretto = async () => {
-        let cm = new ConnectionManager();
-        let res = await cm.createPatologiaGeneraleEPerDistretto(JSON.stringify({ patologia: patologia, distretto: props.distrettoId }));
-        console.log('createPatologiaGeneraleEPerDistretto', res)
-        if (res.response == 'success') {
-            props.callback()
+function Patologie(props) {
+
+    let isOdontoiatrica = (patologia) => {
+        if (patologia.odontoiatrico == 1) {
+            return (<tr>
+                <td>{patologia.nome}</td>
+            </tr>)
         }
     }
-    const [patologia, setPatologia] = useState()
 
-    const createCarattereMetricoGeneraleEPerDistretto = async () => {
-        let cm = new ConnectionManager();
-        let res = await cm.createCarattereMetricoGeneraleEPerDistretto(JSON.stringify({ nome: carattereMetrico, distretto: props.distrettoId }));
-        console.log('createCarattereMetricoGeneraleEPerDistretto', res)
-        if (res.response == 'success') {
-            props.callback()
+    if (props.odontoiatrico) {
+        return (<div className={props.col}>
+            <Table hover striped size='sm' bordered >
+                <thead>
+                    <tr>
+                        <th>Patologie odontoiatriche</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {props.patologie.map(patologia =>
+                        isOdontoiatrica(patologia)
+                    )}
+                </tbody>
+            </Table>
+        </div>)
+    } else {
+        return (<div className={props.col}>
+            <Table hover striped size='sm' bordered >
+                <thead>
+                    <tr>
+                        <th>Patologia</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {props.patologie.map(patologia =>
+                        <tr>
+                            <td>{patologia.nome}</td>
+                        </tr>
+                    )}
+                </tbody>
+            </Table>
+        </div>)
+    }
+
+
+
+}
+
+function Caratteri(props) {
+
+    return <div className={props.col}>
+
+        <Table hover striped size='sm' bordered >
+            <thead>
+                <tr>
+                    <th>Caratteri metrici</th>
+                </tr>
+            </thead>
+            <tbody>
+                {props.caratteri.map((carattere => <tr>
+                    <td>
+                        {carattere.nome}
+                    </td>
+                </tr>))}
+            </tbody>
+        </Table>
+
+    </div>
+}
+
+function RichiesteRegistrazione(props) {
+
+    function checkPermission(utente, i) {
+        if (utente.ruolo == i) {
+            return <RigaAccount utente={utente} />
+        } else {
+            return <></>
         }
     }
-    const [carattereMetrico, setCarattereMetrico] = useState()
-    //CHIAMATE API PER CREAZIONE (END) ----------------------------------------------------
 
-    //IMPOSTO L'IMMAGINE IN BASE AL DISTRETTO ---------------------------------------------
-    let imageFromDistretto = (nome) => {
-        switch (nome) {
-            case 'Cranio':
-                return skull
-            case 'Colonna':
-                return colonna
-            default:
-                return null
-        }
-    }
-    //IMPOSTO L'IMMAGINE IN BASE AL DISTRETTO (END) ----------------------------------------
-
-    //VARIABILI MODAL ----------------------------------------------------------------------
-    const [show, setShow] = useState(false);
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
-    //VARIABILI MODAL (END) ----------------------------------------------------------------
-
-    //RENDER BLOCCO DISTRETTO --------------------------------------------------------------
     return (
-        <div className='col-3'>
-            <div className='p-2 border mx-1 row rounded indCard' style={{ cursor: 'pointer' }} onClick={handleShow}>
-                <div className=' rounded m-1 col text-center'>
-                    <img src={imageFromDistretto(props.distretto)} className="p-1 rounded" style={{ height: '10vh' }} />
-                </div>
-                <div className='rounded m-1 col'>
-                    <h5>{props.distretto}</h5>
-                </div>
-            </div>
+        <div className={props.col}>
 
-            <Modal
-                show={show}
-                onHide={handleClose}
-                size='xl'>
-                <Modal.Header closeButton>
-                    <Modal.Title>Distretto {props.distretto.toLowerCase()}</Modal.Title>
-                </Modal.Header>
-                <Modal.Body className='row'>
-                    <div className='col px-5'>
-                        <div className='row'>
-                            <h5 className='border-bottom'>PATOLOGIE</h5>
-                            <div className='border rounded px-3 py-2'>
-                                <div className='row'>
-                                    {
-                                        props.listaPatologie.map(patologia =>
-                                            <ListaPatologie callback={props.callback} distretto={patologia.distrettoNome} checkDistretto={props.distretto} patologia={patologia} />
-                                        )
-                                    }
-                                </div>
-                                <Form onSubmit={createPatologiaGeneraleEPerDistretto}>
-                                    <Form.Group className='pt-4 px-2'>
-                                        <Form.Label>Crea nuova patologia</Form.Label>
-                                        <div className='row justify-content-between'>
-                                            <Form.Control
-                                                required
-                                                type="text"
-                                                placeholder="Nome patologia"
-                                                className='col'
-                                                onChange={(e) => {
-                                                    setPatologia(e.target.value)
-                                                }}
-                                            />
-                                            <Button className='col-3 ms-4' type="submit">CREA</Button>
-                                        </div>
-                                    </Form.Group>
-                                </Form>
-                            </div>
-                        </div>
+            <h5 className='border-bottom mb-2'>Richieste di accesso</h5>
+            <Table striped size='sm' bordered>
+                <thead>
+                    <tr>
+                        <th>Nome</th>
+                        <th>Email</th>
+                        <th>Azioni</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {
+                        props.listaUtenti.map(utente =>
+                            checkPermission(utente, 0)
+                        )
+                    }
+                </tbody>
+            </Table>
+
+            <div className='my-5'></div>
 
 
-                        <div className='row mt-5'>
-                            <h5 className='border-bottom'>CARATTERI METRICI</h5>
-                            <div className='border rounded px-3 py-2'>
-                                <div className='row'>
-                                    {
-                                        props.listaCaratteriMetrici.map(patologia =>
-                                            <ListaCaratteriMetrici callback={props.callback} distretto={patologia.distrettoNome} checkDistretto={props.distretto} carattereMetrico={patologia} />
-                                        )
-                                    }
-                                </div>
-                                <Form onSubmit={createCarattereMetricoGeneraleEPerDistretto}>
-                                    <Form.Group className='pt-4 px-2'>
-                                        <Form.Label>Crea nuovo carattere metrico</Form.Label>
-                                        <div className='row justify-content-between'>
-                                            <Form.Control
-                                                required
-                                                type="text"
-                                                placeholder="Nome carattere metrico"
-                                                className='col'
-                                                onChange={(e) => {
-                                                    setCarattereMetrico(e.target.value)
-                                                }}
-                                            />
-                                            <Button className='col-3 ms-4' type="submit">CREA</Button>
-                                        </div>
-                                    </Form.Group>
-                                </Form>
-                            </div>
-                        </div>
-                    </div>
+            <h5 className='border-bottom mb-2'>Utenti in sola lettura</h5>
+            <Table striped size='sm' bordered>
+                <thead>
+                    <tr>
+                        <th>Nome</th>
+                        <th>Email</th>
+                        <th>Azioni</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {
+                        props.listaUtenti.map(utente =>
+                            checkPermission(utente, 1)
+                        )
+                    }
+                </tbody>
+            </Table>
 
 
-                </Modal.Body>
-                <Modal.Footer>
-                    <Button variant="secondary" onClick={handleClose}>
-                        Close
-                    </Button>
-                    <Button variant="primary" onClick={handleClose}>
-                        Save Changes
-                    </Button>
-                </Modal.Footer>
-            </Modal>
+            <div className='my-5'></div>
 
 
-        </div >
-    );
-    //RENDER BLOCCO DISTRETTO (END) --------------------------------------------------------
+            <h5 className='border-bottom mb-2'>Utenti in lettura e scrittura</h5>
+            <Table striped size='sm' bordered>
+                <thead>
+                    <tr>
+                        <th>Nome</th>
+                        <th>Email</th>
+                        <th>Azioni</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {
+                        props.listaUtenti.map(utente =>
+                            checkPermission(utente, 2)
+                        )
+                    }
+                </tbody>
+            </Table>
+
+            <div className='my-5'></div>
+
+
+            <h5 className='border-bottom mb-2'>Amministratori</h5>
+            <Table striped size='sm' bordered>
+                <thead>
+                    <tr>
+                        <th>Nome</th>
+                        <th>Email</th>
+                        <th>Azioni</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {
+                        props.listaUtenti.map(utente =>
+                            checkPermission(utente, 3)
+                        )
+                    }
+                </tbody>
+            </Table>
+        </div>
+    )
 
 }
 
-function ListaPatologie(props) {
-
-    const centerMiddle = {
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        height: "100%"
-    };
-    const deletePatologiaGeneraleEPerDistretto = async (id) => {
+function RigaAccount(props) {
+    const editRuoloAccountById = async (e) => {
         let cm = new ConnectionManager();
-        let res = await cm.deletePatologiaGeneraleEPerDistretto(JSON.stringify({ id: id }));
-        console.log('deletePatologiaGeneraleEPerDistretto', res)
-        if (res.response == 'success') {
-            props.callback()
+        var params = { ruolo: ruolo, id: props.utente.id }
+        let res = await cm.editRuoloAccountById(JSON.stringify(params))
+        return res
+    }
+
+    let handleSubmit = () => {
+        editRuoloAccountById().then(res => {
+            if (res.response == 'success') {
+                props.callback()
+            }
+        })
+    }
+
+    const [ruolo, setRuolo] = useState()
+
+    let isAdmin = () => {
+        if (props.utente.ruolo != 3) {
+            return (<Form className='d-flex' onSubmit={handleSubmit}>
+                <Form.Select className='mx-2' required onChange={(e) => setRuolo(e.target.value)} defaultValue={props.utente.ruolo}>
+                    <option></option>
+                    <option value='1'>Solo lettura</option>
+                    <option value='2'>Lettura e scrittura</option>
+                    <option value='3'>Admin</option>
+                </Form.Select>
+                <Button type='submit'>Accetta</Button>
+                <Button variant='outline-danger' className='mx-2'>Rifiuta</Button>
+            </Form>)
+        } else {
+            return (<Form className='d-flex' onSubmit={handleSubmit} >
+                <Form.Select className='mx-2' disabled required onChange={(e) => setRuolo(e.target.value)} defaultValue={props.utente.ruolo}>
+                    <option></option>
+                    <option value='1'>Solo lettura</option>
+                    <option value='2'>Lettura e scrittura</option>
+                    <option value='3'>Admin</option>
+                </Form.Select>
+            </Form>)
         }
     }
 
-    const editPatologiaGenerale = async (id) => {
-        let cm = new ConnectionManager();
-        let res = await cm.editPatologiaGenerale(JSON.stringify({ nome: nome, id: id }));
-        console.log('editPatologiaGenerale', res)
-        if (res.response == 'success') {
-            props.callback()
-            setEditable(false)
-        }
-    }
-    const [editable, setEditable] = useState(false)
-    const [nome, setNome] = useState(props.patologia.nome)
+    return (<tr>
+        <td>{props.utente.name}</td>
+        <td>{props.utente.email}</td>
 
-    if (props.distretto == props.checkDistretto) {
-        return (
-            <div className='col-4 mt-2 rounded '>
-                <div className='border rounded indCard'>
-                    <div className='text-center d-flex justify-content-between p-2' style={centerMiddle}>
-
-                        {editable ? (
-                            <Form.Group >
-                                <Form.Control defaultValue={props.patologia.nome} onChange={(e) => setNome(e.target.value)} type="email" placeholder="name@example.com" />
-                            </Form.Group>
-                        ) : (props.patologia.nome)}
-
-
-                        <div className='d-flex'>
-                            {editable ? (<IconContext.Provider
-                                value={{ color: 'white' }}
-                            >
-                                <Button variant='success' className='p-2 mx-1' onClick={() => editPatologiaGenerale(props.patologia.id)}>
-                                    <FiSave />
-                                </Button>
-                            </IconContext.Provider>) : (<IconContext.Provider
-                                value={{ color: 'white' }}
-                            >
-                                <Button className='p-2 mx-1' onClick={() => setEditable(((state) => !state))}>
-                                    <FiEdit2 />
-                                </Button>
-                            </IconContext.Provider>)}
-
-
-                            <IconContext.Provider
-                                value={{ color: 'white' }}
-                            >
-                                <Button variant='danger' className='p-2' onClick={() => deletePatologiaGeneraleEPerDistretto(props.patologia.id)}>
-                                    <FiTrash2 />
-                                </Button>
-                            </IconContext.Provider>
-                        </div>
-
-                    </div>
-                </div>
-            </div >
-        )
-    }
-
-    //BLOCCO ELEMENTO (END) ---------------------------------------------------------------
-}
-
-function ListaCaratteriMetrici(props) {
-
-    const centerMiddle = {
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        height: "100%"
-    };
-
-    const deleteCarattereMetricoGeneraleEPerDistretto = async (id) => {
-        let cm = new ConnectionManager();
-        let res = await cm.deleteCarattereMetricoGeneraleEPerDistretto(JSON.stringify({ id: id }));
-        console.log('deleteCarattereMetricoGeneraleEPerDistretto', res)
-        if (res.response == 'success') {
-            props.callback()
-        }
-    }
-
-    const editCarattereMetricoGenerale = async (id) => {
-        let cm = new ConnectionManager();
-        let res = await cm.editCarattereMetricoGenerale(JSON.stringify({ nome: nome, id: id }));
-        console.log('editCarattereMetricoGenerale', res)
-        if (res.response == 'success') {
-            props.callback()
-            setEditable(false)
-        }
-    }
-
-    const [editable, setEditable] = useState(false)
-    const [nome, setNome] = useState(props.carattereMetrico.nome)
-
-    if (props.distretto == props.checkDistretto) {
-        return (
-            <div className='col-6 mt-2 rounded '>
-                <div className='border rounded indCard'>
-                    <div className='text-center d-flex justify-content-between p-2' style={centerMiddle}>
-
-                        {editable ? (
-                            <Form.Group >
-                                <Form.Control defaultValue={props.carattereMetrico.nome} onChange={(e) => setNome(e.target.value)} type="email" placeholder="name@example.com" />
-                            </Form.Group>
-                        ) : (props.carattereMetrico.nome)}
-
-
-                        <div className='d-flex'>
-                            {editable ? (<IconContext.Provider
-                                value={{ color: 'white' }}
-                            >
-                                <Button variant='success' className='p-2 mx-1' onClick={() => editCarattereMetricoGenerale(props.carattereMetrico.id)}>
-                                    <FiSave />
-                                </Button>
-                            </IconContext.Provider>) : (<IconContext.Provider
-                                value={{ color: 'white' }}
-                            >
-                                <Button className='p-2 mx-1' onClick={() => setEditable(((state) => !state))}>
-                                    <FiEdit2 />
-                                </Button>
-                            </IconContext.Provider>)}
-
-
-                            <IconContext.Provider
-                                value={{ color: 'white' }}
-                            >
-                                <Button variant='danger' className='p-2' onClick={() => deleteCarattereMetricoGeneraleEPerDistretto(props.carattereMetrico.id)} >
-                                    <FiTrash2 />
-                                </Button>
-                            </IconContext.Provider>
-                        </div>
-
-                    </div>
-                </div>
-            </div >
-        )
-    }
-
-    //BLOCCO ELEMENTO (END) ---------------------------------------------------------------
+        <td>
+            {isAdmin()}
+        </td>
+    </tr>)
 }
 
 export default SchedaAmministratore;

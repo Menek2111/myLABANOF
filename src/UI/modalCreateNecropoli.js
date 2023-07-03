@@ -12,7 +12,6 @@ import { useNavigate } from 'react-router-dom'
 
 import necropoli from '../images/icons/necropoli.PNG'
 
-
 import '../App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 

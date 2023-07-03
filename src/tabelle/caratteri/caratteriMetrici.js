@@ -87,11 +87,30 @@ function CaratteriMetrici(props) {
     }
 
     let checkUser = () => {
-        if (localStorage.getItem('userID') != sessionStorage.getItem('individuoSelezionatoCreatore')) {
-            return (<div></div>)
-        } else {
-            return <ModalCreateCarattereMetrico caratteri={caratteriMetrici} callback={aggiorna} />
+        switch (localStorage.getItem('ruolo')) {
+            case '0':
+                return <></>
+            case '1':
+                return <></>
+            case '2':
+
+
+                if (localStorage.getItem('userID') != sessionStorage.getItem('individuoSelezionatoCreatore')) {
+                    return (<div></div>)
+                } else {
+                    return <ModalCreateCarattereMetrico caratteri={caratteriMetrici} callback={aggiorna} />
+                }
+
+            case '3':
+                return <ModalCreateCarattereMetrico caratteri={caratteriMetrici} callback={aggiorna} />
+
+            default:
+                return <></>
         }
+
+
+
+
     }
 
     let aggiorna = () => {

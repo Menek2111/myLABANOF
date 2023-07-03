@@ -247,8 +247,9 @@ function SchedaIndividuo(props) {
                                     <GeneralitàIndividuo editable={editable} individuo={individuo.individuo} tomba={individuo.tomba} onIndividuoChange={addModificheGeneralità} callback={aggiorna} />
                                     <ProfiloBiologicoIndividuo editable={editable} individuo={individuo.individuo} tomba={individuo.tomba} onIndividuoChange={addModificheProfiloBiologio} callback={aggiorna} />
                                     {caratteristicheDeposizione ? (<CaratteristicheDellaDeposizione editable={editable} individuo={caratteristicheDeposizione} onIndividuoChange={addModificheCaratteristicheDeposizione} callback={aggiorna} />
-                                    ) : (<div></div>)}
-
+                                    ) : (
+                                        <></>
+                                    )}
                                 </div>) : (<div></div>)}
 
                             </div>

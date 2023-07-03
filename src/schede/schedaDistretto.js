@@ -1,27 +1,27 @@
 import React, { useEffect, useState } from 'react';
 
-import '../../App.css';
+import '../App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-import DropDownDistretti from '../../UI/dropDownDistretti';
+import DropDownDistretti from '../UI/dropDownDistretti';
 import { useLocation } from 'react-router-dom';
 
 
 
-import skull from '../../images/skull (3).jpg'
-import colonna from '../../images/colonna.png'
-import denti from '../../images/teeth.png'
-import torace from '../../images/torace.png'
-import artiSuperiori from '../../images/artisup.png'
-import artiInferiori from '../../images/artisup.png'
+import skull from '../images/skull (3).jpg'
+import colonna from '../images/colonna.png'
+import denti from '../images/teeth.png'
+import torace from '../images/torace.png'
+import artiSuperiori from '../images/artisup.png'
+import artiInferiori from '../images/artisup.png'
 
-import Cranio from '../../tabelle/distretti/cranio';
-import CaratteriMetrici from '../../tabelle/caratteri/caratteriMetrici';
-import CaratteriNonMetrici from '../../tabelle/caratteri/caratteriNonMetrici';
+import OssaDistretto from '../tabelle/distretti/OssaDistretto';
+import CaratteriMetrici from '../tabelle/caratteri/caratteriMetrici';
+import CaratteriNonMetrici from '../tabelle/caratteri/caratteriNonMetrici';
 
-import ConnectionManager from '../../api/ConnectionManager';
+import ConnectionManager from '../api/ConnectionManager';
 
-function SchedaCranio(props) {
+function SchedaDistretto(props) {
 
     // @todo: rendere dinamica questa funzione
     let getDistrettoId = (nome) => {
@@ -130,7 +130,7 @@ function SchedaCranio(props) {
                                 </div>
                             </div>
                             <div className='row py-3'>
-                                <Cranio distretto={props.distretto} callback={aggiorna} />
+                                <OssaDistretto distretto={props.distretto} callback={aggiorna} />
                             </div>
                             <div className='row py-3'>
                                 <CaratteriMetrici distretto={getDistrettoId(props.distretto)} />
@@ -145,4 +145,4 @@ function SchedaCranio(props) {
         </div >
     );
 }
-export default SchedaCranio;
+export default SchedaDistretto;
