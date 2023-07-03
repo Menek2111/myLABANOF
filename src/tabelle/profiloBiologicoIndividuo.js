@@ -135,7 +135,7 @@ function ProfiloBiologicoIndividuo(props) {
     }
 
 
-    return <div className="col-6">
+    return <div className={props.col}>
         <div className="border rounded p-2">
             {checkEditableValue()}
         </div>

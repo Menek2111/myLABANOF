@@ -23,20 +23,21 @@ import { GoogleOAuthProvider } from '@react-oauth/google';
 import NavBar from "./UI/Navbar";
 import SchedaUtente from "./schede/schedaUtente";
 import SchedaAmministratore from "./schede/schedaAmministratore";
+import PrintIndividuoPDF from "./schede/printIndividuoPDF";
 
 const container = document.getElementById('root');
 const root = createRoot(container);
 
-if (sessionStorage.getItem('tema') == null) {
-    sessionStorage.setItem('tema', 'temaMyLabanof')
+if (localStorage.getItem('tema') == null) {
+    localStorage.setItem('tema', 'temaMyLabanof')
 }
-const theme = sessionStorage.getItem('tema')
+const theme = localStorage.getItem('tema')
 
 
-if (sessionStorage.getItem('font') == null) {
-    sessionStorage.setItem('font', 'Roboto')
+if (localStorage.getItem('font') == null) {
+    localStorage.setItem('font', 'Roboto')
 }
-const font = sessionStorage.getItem('font')
+const font = localStorage.getItem('font')
 
 root.render(
     <GoogleOAuthProvider clientId="893808787073-9euu770ju7ncbmbbgbdedn9tdj5t3296.apps.googleusercontent.com">
@@ -69,6 +70,16 @@ root.render(
                             <div className={font}>
                                 <NavBar />
                                 <SchedaIndividuo />
+                            </div>
+                        </div>
+                    }
+                />
+                <Route
+                    path="/individuo/export"
+                    element={
+                        <div className={theme}>
+                            <div className={font}>
+                                <PrintIndividuoPDF />
                             </div>
                         </div>
                     }

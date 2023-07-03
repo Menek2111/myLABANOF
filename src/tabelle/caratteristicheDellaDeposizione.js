@@ -120,7 +120,7 @@ function CaratteristicheDellaDeposizione(props) {
         </div>)
     }
 
-    return <div className="col-6 mt-5">
+    return <div className={props.col}>
         <div className="border rounded p-2">
             {checkEditableValue()}
 

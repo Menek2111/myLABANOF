@@ -66,6 +66,15 @@ function ModalCheckPermessi(props) {
                         <li>Creare, modificare ed eliminare individui (Sarà possibile anche modificare ed eliminare individui appartenenti ad altri account, <span className='text-danger'>azione sconsigliata</span>)</li>
                         <li>Esportare il contenuto delle schede in PDF</li>
                     </ul>
+
+                    <div className='mt-4 text-center '>
+                        <Button variant='outline-primary' href='#/admin' onClick={() => handleClose()}>Accedere alla scheda amministratore</Button>
+                    </div>
+
+                    <div className='mt-4 text-center '>
+                        Funzionalità sperimentale <a href='#/individuo/export' onClick={() => handleClose()}>export to PDF</a> <br />
+                        (Seleziona prima un individuo altrimenti non funziona per ora)
+                    </div>
                 </div>
             default:
                 return <span>ao</span>

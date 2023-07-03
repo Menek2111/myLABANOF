@@ -67,7 +67,14 @@ function ModalCreateTomba(props) {
 
     const createTomba = async (e) => {
         let cm = new ConnectionManager();
-        var params = { nome: nome, nMinIndividui: num, coordinate: coord, necropoli: necropoli }
+        var params
+        if (props.necropoli != null) {
+            params = { nome: nome, nMinIndividui: num, coordinate: coord, necropoli: props.necropoli.id }
+        } else {
+            params = { nome: nome, nMinIndividui: num, coordinate: coord, necropoli: necropoli }
+
+        }
+
 
         let res = await cm.createTomba(JSON.stringify(params))
         if (res.response === 'success') {
@@ -97,7 +104,7 @@ function ModalCreateTomba(props) {
             return (<Form.Select required aria-label="Default select example" onChange={(e) => setNecropoli(e.target.value)}>
                 <option></option>
                 {listaNecropoli ? (listaNecropoli.map(necropoli => <option key={necropoli.id} value={necropoli.id}>{necropoli.nome}</option>))
-                    : (<option></option>)}
+                    : (<></>)}
             </Form.Select>)
         }
     }

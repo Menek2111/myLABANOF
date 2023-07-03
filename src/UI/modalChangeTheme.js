@@ -16,12 +16,12 @@ function ModalChangeTheme(props) {
     const handleShow = () => setShow(true);
 
     const selezionaTema = (tema) => {
-        sessionStorage.setItem('tema', tema)
+        localStorage.setItem('tema', tema)
         window.location.reload(false)
     }
 
     const selezionaFont = (font) => {
-        sessionStorage.setItem('font', font)
+        localStorage.setItem('font', font)
         window.location.reload(false)
     }
 

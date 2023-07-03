@@ -264,9 +264,9 @@ function SchedaIndividuo(props) {
                                 </div>
 
                                 {individuo ? (<div className='row py-3'>
-                                    <GeneralitàIndividuo editable={editable} individuo={individuo.individuo} tomba={individuo.tomba} onIndividuoChange={addModificheGeneralità} callback={aggiorna} />
-                                    <ProfiloBiologicoIndividuo editable={editable} individuo={individuo.individuo} tomba={individuo.tomba} onIndividuoChange={addModificheProfiloBiologio} callback={aggiorna} />
-                                    {caratteristicheDeposizione ? (<CaratteristicheDellaDeposizione editable={editable} individuo={caratteristicheDeposizione} onIndividuoChange={addModificheCaratteristicheDeposizione} callback={aggiorna} />
+                                    <GeneralitàIndividuo col="col-6" editable={editable} individuo={individuo.individuo} tomba={individuo.tomba} onIndividuoChange={addModificheGeneralità} callback={aggiorna} />
+                                    <ProfiloBiologicoIndividuo col="col-6" editable={editable} individuo={individuo.individuo} tomba={individuo.tomba} onIndividuoChange={addModificheProfiloBiologio} callback={aggiorna} />
+                                    {caratteristicheDeposizione ? (<CaratteristicheDellaDeposizione col="col-6 mt-5" editable={editable} individuo={caratteristicheDeposizione} onIndividuoChange={addModificheCaratteristicheDeposizione} callback={aggiorna} />
                                     ) : (
                                         <></>
                                     )}
