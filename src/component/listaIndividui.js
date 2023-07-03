@@ -69,7 +69,7 @@ function ListaIndividui(props) {
 
     let checkListaIndividui = () => {
         if (props.individui.length == 0) {
-            return <div>Non sono stati trovati individui...</div>
+            return <div className="my-4">Non sono stati trovati individui...</div>
         } else {
             return props.individui.map((ind, index) =>
                 checkIndex(ind, index)

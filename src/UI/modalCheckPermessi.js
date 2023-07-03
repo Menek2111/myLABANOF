@@ -27,11 +27,11 @@ function ModalCheckPermessi(props) {
     let getPermissionName = () => {
         switch (userInfo.ruolo) {
             case '1':
-                return <span>Solo lettura</span>
+                return <span className='text-primary'>Solo lettura</span>
             case '2':
-                return <span>Lettura e scrittura</span>
+                return <span className='text-primary'>Lettura e scrittura</span>
             case '3':
-                return <span>Amministratore</span>
+                return <span className='text-primary'>Amministratore</span>
             default:
                 return <span>ao</span>
         }
@@ -40,11 +40,33 @@ function ModalCheckPermessi(props) {
     let getPermissionDescription = () => {
         switch (userInfo.ruolo) {
             case '1':
-                return <span>Solo lettura</span>
+                return <div>
+                    <p>Con questo ruolo le sarà permesso:</p>
+                    <ul>
+                        <li>Leggere le varie schede senza poterle modificare</li>
+                        <li>Esportare il contenuto delle schede in PDF</li>
+                    </ul>
+                </div>
             case '2':
-                return <span>Lettura e scrittura</span>
+                return <div>
+                    <p>Con questo ruolo le sarà permesso:</p>
+                    <ul>
+                        <li>Creare, modificare ed eliminare tombe</li>
+                        <li>Creare, modificare ed eliminare necropoli</li>
+                        <li>Creare, modificare ed eliminare individui (SOLO SE DI TUA APPARTENENZA)</li>
+                        <li>Esportare il contenuto delle schede in PDF</li>
+                    </ul>
+                </div>
             case '3':
-                return <span>Con questo tipo di permesso può fare un sacco di cose simpatiche <a href='#/admin' onClick={() => handleClose()}>SchedaAmministratore</a></span>
+                return <div>
+                    <p>Con questo ruolo le sarà permesso:</p>
+                    <ul>
+                        <li>Creare, modificare ed eliminare tombe</li>
+                        <li>Creare, modificare ed eliminare necropoli</li>
+                        <li>Creare, modificare ed eliminare individui (Sarà possibile anche modificare ed eliminare individui appartenenti ad altri account, <span className='text-danger'>azione sconsigliata</span>)</li>
+                        <li>Esportare il contenuto delle schede in PDF</li>
+                    </ul>
+                </div>
             default:
                 return <span>ao</span>
         }

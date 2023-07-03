@@ -89,6 +89,16 @@ function SchedaTomba() {
         })
     }
 
+    let checkUser = () => {
+        if (localStorage.getItem('ruolo') != 0 && localStorage.getItem('ruolo') != 1) {
+            return <>
+                <ModalEditNecropoli tomba={tombaInfo} callback={aggiorna} />
+                <ModalDeleteNecropoli tomba={tombaInfo} />
+            </>
+        } else {
+            <></>
+        }
+    }
 
     return (
         <div className='px-4 py-2 containerPrincipale' >
@@ -110,8 +120,7 @@ function SchedaTomba() {
 
                                 <div className='col d-flex flex-column justify-content-center'>
                                     {tombaInfo ? (<div className='d-flex justify-content-end'>
-                                        <ModalEditNecropoli tomba={tombaInfo} callback={aggiorna} />
-                                        <ModalDeleteNecropoli tomba={tombaInfo} />
+                                        {checkUser()}
                                     </div>) : (<div></div>)}
 
                                 </div>

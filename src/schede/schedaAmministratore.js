@@ -252,6 +252,7 @@ function RichiesteRegistrazione(props) {
         }
     }
 
+
     return (
         <div className={props.col}>
 

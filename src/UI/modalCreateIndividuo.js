@@ -105,60 +105,64 @@ function ModalCreateIndividuo(props) {
             </Form.Select>)
         }
     }
+    if (localStorage.getItem('ruolo') != 0 && localStorage.getItem('ruolo') != 1) {
 
-    return (
-        <div className='py-2'>
-            <Button style={centerMiddle} className='w-100 d-flex justify-content-start' variant="outline-primary" onClick={handleShow}>
-                <img className='me-1 p-0 rounded' src={ind} style={{ height: '7vh' }} />
-                <p className='m-0 ps-2'> Crea individuo</p>
-            </Button>
-            <Modal
-                show={show}
-                onHide={handleClose}
-                backdrop="static"
-                keyboard={false}
-                size="lg"
-                centered
-            >
-                <Modal.Header closeButton>
-                    <Modal.Title>Creazione nuovo individuo</Modal.Title>
-                </Modal.Header>
-                <Form onSubmit={creaIndividuo}>
-                    <Modal.Body>
+        return (
+            <div className='py-2'>
+                <Button style={centerMiddle} className='w-100 d-flex justify-content-start' variant="outline-primary" onClick={handleShow}>
+                    <img className='me-1 p-0 rounded' src={ind} style={{ height: '7vh' }} />
+                    <p className='m-0 ps-2'> Crea individuo</p>
+                </Button>
+                <Modal
+                    show={show}
+                    onHide={handleClose}
+                    backdrop="static"
+                    keyboard={false}
+                    size="lg"
+                    centered
+                >
+                    <Modal.Header closeButton>
+                        <Modal.Title>Creazione nuovo individuo</Modal.Title>
+                    </Modal.Header>
+                    <Form onSubmit={creaIndividuo}>
+                        <Modal.Body>
 
-                        <Form.Group className="mb-3" controlId="formBasicEmail">
-                            <Form.Label>Tomba di appartenenza:</Form.Label>
+                            <Form.Group className="mb-3" controlId="formBasicEmail">
+                                <Form.Label>Tomba di appartenenza:</Form.Label>
 
-                            {checkProps()}
+                                {checkProps()}
 
-                        </Form.Group>
-                        <Form.Group className="mb-3" controlId="formBasicPassword">
-                            <Form.Label>Identificativo individuo</Form.Label>
-                            <Form.Control required type="text" onChange={(e) => setNome(e.target.value)} />
-                        </Form.Group>
+                            </Form.Group>
+                            <Form.Group className="mb-3" controlId="formBasicPassword">
+                                <Form.Label>Identificativo individuo</Form.Label>
+                                <Form.Control required type="text" onChange={(e) => setNome(e.target.value)} />
+                            </Form.Group>
 
-                    </Modal.Body>
-                    <Modal.Footer>
-                        {ready ? (
-                            <div>
-                                <Button className='mx-2' variant="secondary" onClick={handleClose}>
-                                    Chiudi senza salvare
-                                </Button>
+                        </Modal.Body>
+                        <Modal.Footer>
+                            {ready ? (
+                                <div>
+                                    <Button className='mx-2' variant="secondary" onClick={handleClose}>
+                                        Chiudi senza salvare
+                                    </Button>
 
-                                <Button variant="primary" type='submit'>Salva</Button>
-                            </div>
-                        ) : (<ProgressBar
-                            width='100%'
-                            ariaLabel="progress-bar-loading"
-                            wrapperStyle={{}}
-                            wrapperClass="progress-bar-wrapper"
-                            borderColor='#EDF2FC'
-                            barColor='#0B5ED7'
-                        />)}
-                    </Modal.Footer>
-                </Form>
-            </Modal>
-        </div >
-    );
+                                    <Button variant="primary" type='submit'>Salva</Button>
+                                </div>
+                            ) : (<ProgressBar
+                                width='100%'
+                                ariaLabel="progress-bar-loading"
+                                wrapperStyle={{}}
+                                wrapperClass="progress-bar-wrapper"
+                                borderColor='#EDF2FC'
+                                barColor='#0B5ED7'
+                            />)}
+                        </Modal.Footer>
+                    </Form>
+                </Modal>
+            </div >
+        );
+    } else {
+        return <></>
+    }
 }
 export default ModalCreateIndividuo;

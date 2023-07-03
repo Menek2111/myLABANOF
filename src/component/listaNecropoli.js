@@ -44,7 +44,7 @@ function ListaNecropoli(props) {
 
     let checkListaTombe = () => {
         if (props.tombe.length == 0) {
-            return <div>Non sono state trovate tombe...</div>
+            return <div className="my-4">Non sono state trovate necropoli...</div>
         } else {
             return (props.tombe.map((tomba, index) =>
                 checkIndex(tomba, index)

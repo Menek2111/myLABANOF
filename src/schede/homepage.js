@@ -75,14 +75,31 @@ function Homepage() {
         })
     }, [location]);
 
+    let checkUser = () => {
+        if (localStorage.getItem('ruolo') != 0 && localStorage.getItem('ruolo') != 1) {
+            return (<div className='col-2 d-none d-sm-block d-md-none d-lg-block 	d-sm-none d-md-block' >
+                <SideNav />
+            </div>)
+        } else {
+            return <></>
+        }
+    }
+
+    let checkUserClass = () => {
+        if (localStorage.getItem('ruolo') != 0 && localStorage.getItem('ruolo') != 1) {
+            return 'col-sm-12 col-lg-10 bg-white border rounded pb-5'
+        } else {
+            return 'col-sm-12 col-lg-12 bg-white border rounded pb-5'
+        }
+    }
+
     return (
         <div>
             <div className='px-4 py-2 containerPrincipale '>
                 <div className='row d-flex'>
-                    <div className='col-2 d-none d-sm-block d-md-none d-lg-block 	d-sm-none d-md-block' >
-                        <SideNav />
-                    </div>
-                    <div className='col-sm-12 col-lg-10 bg-white border rounded pb-5' style={{ height: '89vh', overflowY: 'scroll' }}>
+                    {checkUser()}
+
+                    <div className={checkUserClass()} style={{ height: '89vh', overflowY: 'scroll' }}>
 
 
                         <h5 className='pt-3 border-bottom'>Necropoli <span style={{ fontSize: '0.7em' }} className='text-secondary'>(Solo quelle contenenti almeno una tomba)</span></h5>

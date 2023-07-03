@@ -66,53 +66,57 @@ function ModalCreateNecropoli() {
             }, 500);
         })
     }
+    if (localStorage.getItem('ruolo') != 0 && localStorage.getItem('ruolo') != 1) {
 
-    return (
-        <div className='py-2'>
-            <Button style={centerMiddle} className='w-100 d-flex justify-content-start' variant="outline-primary" onClick={handleShow}>
-                <img className='me-1 p-0 rounded' src={necropoli} style={{ height: '7vh' }} />
-                <p className='m-0 ps-2'> Crea necropoli</p>
-            </Button>
-            <Modal
-                show={show}
-                onHide={handleClose}
-                backdrop="static"
-                keyboard={false}
-                size="lg"
-                centered
-            >
-                <Form onSubmit={creaTomba}>
-                    <Modal.Header closeButton>
-                        <Modal.Title>Creazione nuova necropoli</Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body>
+        return (
+            <div className='py-2'>
+                <Button style={centerMiddle} className='w-100 d-flex justify-content-start' variant="outline-primary" onClick={handleShow}>
+                    <img className='me-1 p-0 rounded' src={necropoli} style={{ height: '7vh' }} />
+                    <p className='m-0 ps-2'> Crea necropoli</p>
+                </Button>
+                <Modal
+                    show={show}
+                    onHide={handleClose}
+                    backdrop="static"
+                    keyboard={false}
+                    size="lg"
+                    centered
+                >
+                    <Form onSubmit={creaTomba}>
+                        <Modal.Header closeButton>
+                            <Modal.Title>Creazione nuova necropoli</Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body>
 
-                        <Form.Group className="mb-3" controlId="formBasicPassword">
-                            <Form.Label>Nome necropoli</Form.Label>
-                            <Form.Control type="text" onChange={(e) => setNome(e.target.value)} required />
-                        </Form.Group>
-                    </Modal.Body>
-                    <Modal.Footer>
-                        {ready ? (
-                            <div>
-                                <Button className='mx-2' variant="secondary" onClick={handleClose}>
-                                    Chiudi senza salvare
-                                </Button>
+                            <Form.Group className="mb-3" controlId="formBasicPassword">
+                                <Form.Label>Nome necropoli</Form.Label>
+                                <Form.Control type="text" onChange={(e) => setNome(e.target.value)} required />
+                            </Form.Group>
+                        </Modal.Body>
+                        <Modal.Footer>
+                            {ready ? (
+                                <div>
+                                    <Button className='mx-2' variant="secondary" onClick={handleClose}>
+                                        Chiudi senza salvare
+                                    </Button>
 
-                                <Button variant="primary" type='submit'>Salva</Button>
-                            </div>
-                        ) : (<ProgressBar
-                            width='100%'
-                            ariaLabel="progress-bar-loading"
-                            wrapperStyle={{}}
-                            wrapperClass="progress-bar-wrapper"
-                            borderColor='#EDF2FC'
-                            barColor='#0B5ED7'
-                        />)}
-                    </Modal.Footer>
-                </Form>
-            </Modal>
-        </div >
-    );
+                                    <Button variant="primary" type='submit'>Salva</Button>
+                                </div>
+                            ) : (<ProgressBar
+                                width='100%'
+                                ariaLabel="progress-bar-loading"
+                                wrapperStyle={{}}
+                                wrapperClass="progress-bar-wrapper"
+                                borderColor='#EDF2FC'
+                                barColor='#0B5ED7'
+                            />)}
+                        </Modal.Footer>
+                    </Form>
+                </Modal>
+            </div >
+        );
+    } else {
+        return <></>
+    }
 }
 export default ModalCreateNecropoli;

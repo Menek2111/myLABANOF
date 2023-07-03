@@ -16,20 +16,17 @@ function SideNav() {
 
                 <ModalCreateIndividuo />
 
-
                 <ModalCreateTomba />
 
                 <ModalCreateNecropoli />
 
                 <div className="my-4"></div>
 
-                <Nav.Link eventKey="link-1" disabled>Carica immagini</Nav.Link>
-                <Nav.Link eventKey="disabled" disabled>
-                    Scheda amministratore
-                </Nav.Link>
             </Nav>
         </div>
     );
+
+
 
 }
 export default SideNav

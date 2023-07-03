@@ -81,17 +81,37 @@ function SchedaIndividuo(props) {
     }
 
     let checkUser = () => {
-        if (localStorage.getItem('userID') != individuo.utente.id) {
-            return (<div></div>)
-        } else {
-            return (<div className='d-flex justify-content-around'>
-                <Button variant="primary" onClick={() => changeEditable()}>
-                    Modifica
-                </Button>
-                <ModalDeleteIndividuo individuo={individuo.individuo} utente={individuo.utente} callback={aggiorna} />
 
-            </div>)
+        switch (localStorage.getItem('ruolo')) {
+            case '0':
+                return <></>
+            case '1':
+                return <></>
+            case '2':
+                if (localStorage.getItem('userID') != individuo.utente.id) {
+                    return (<div></div>)
+                } else {
+                    return (<div className='d-flex justify-content-around'>
+                        <Button variant="primary" onClick={() => changeEditable()}>
+                            Modifica
+                        </Button>
+                        <ModalDeleteIndividuo individuo={individuo.individuo} utente={individuo.utente} callback={aggiorna} />
+
+                    </div>)
+                }
+            case '3':
+                return (<div className='d-flex justify-content-around'>
+                    <Button variant="primary" onClick={() => changeEditable()}>
+                        Modifica
+                    </Button>
+                    <ModalDeleteIndividuo individuo={individuo.individuo} utente={individuo.utente} callback={aggiorna} />
+
+                </div>)
+            default:
+                return <></>
         }
+
+
     }
 
     function editButton() {
