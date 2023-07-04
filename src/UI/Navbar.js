@@ -18,6 +18,7 @@ import ModalChangeTheme from './modalChangeTheme'
 import ModalCheckPermessi from './modalCheckPermessi';
 
 function NavBar() {
+
     const navigate = useNavigate();
 
     const [profile, setProfile] = useState([]);
@@ -35,9 +36,30 @@ function NavBar() {
 
     const location = useLocation();
 
+    const [isOnline, setIsOnline] = useState(navigator.onLine);
+
+
+
     useEffect(() => {
+        function onlineHandler() {
+            setIsOnline(true);
+        }
+
+        function offlineHandler() {
+            setIsOnline(false);
+        }
+
+        window.addEventListener("online", onlineHandler);
+        window.addEventListener("offline", offlineHandler);
+
+
         setProfile(JSON.parse(localStorage.getItem('profile')));
         getResultsByQuery('')
+
+        return () => {
+            window.removeEventListener("online", onlineHandler);
+            window.removeEventListener("offline", offlineHandler);
+        };
     }, [tipoRicerca, location]);
 
     const getResultsByQuery = async (query) => {

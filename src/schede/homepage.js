@@ -113,8 +113,7 @@ function Homepage() {
                         {tombe ? (<ListaTombe colonna="col-lg-4 col-sm-5" tombe={tombe} />) : (<div></div>)}
 
                         <h5 className='pt-3 border-bottom'>Individui</h5>
-                        {individui ? (<ListaIndividui colonna="col-lg-4 col-sm-5" individui={individui} />) : (<Loading />)}
-
+                        {individui ? (<ListaIndividui pubblici={true} colonna="col-lg-4 col-sm-5" individui={individui} />) : (<Loading />)}
 
                     </div>
 

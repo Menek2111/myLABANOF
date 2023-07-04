@@ -27,6 +27,18 @@ function Login() {
     const [isOnline, setIsOnline] = useState(navigator.onLine);
 
 
+    //Prova clear chache
+    // Function to clear complete cache data
+    const clearCacheData = () => {
+        caches.keys().then((names) => {
+            names.forEach((name) => {
+                caches.delete(name);
+            });
+        });
+        alert('Complete Cache Cleared')
+        window.location.reload(false)
+    };
+
     useEffect(() => {
         function onlineHandler() {
             setIsOnline(true);
@@ -129,6 +141,8 @@ function Login() {
                                 ) : (
                                     <p>You are offline. Please check your internet connection.</p>
                                 )}
+                                <button onClick={() => clearCacheData()} >
+                                    Clear Cache Data</button>
                                 <p>
                                     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam nulla augue, imperdiet vel maximus id, mattis pulvinar massa. Proin non mi molestie, fermentum diam nec, malesuada sapien.
                                 </p>

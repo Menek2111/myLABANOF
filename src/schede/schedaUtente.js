@@ -110,7 +110,15 @@ function SchedaUtente() {
                                 </div>
                             </div>
                             <div style={{ height: '75vh', overflowY: 'scroll', overflowX: 'hidden' }}>
-                                {individui ? (<ListaIndividui all={true} colonna="col-3" individui={individui} />) : (<Loading />)}
+                                <div className='mt-4'></div>
+
+                                {individui ? (<ListaIndividui pubblici={true} visibilità={true} all={true} colonna="col-3" individui={individui} />) : (<Loading />)}
+
+                                <div className='border-bottom my-4'></div>
+
+                                {individui ? (<ListaIndividui bozze={true} visibilità={true} all={true} colonna="col-3" individui={individui} />) : (<Loading />)}
+
+
                             </div>
                         </div>
                     </div>

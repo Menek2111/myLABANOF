@@ -36,6 +36,17 @@ function ListaIndividui(props) {
         return 'Modificato: ' + formattedDate
     }
 
+    let checkVisibilita = (bool) => {
+        if (props.visibilità != null) {
+            if (bool == 1) {
+                return (<span className="text-success">Pubblico</span>)
+            } else {
+                return (<span className="text-danger">Bozza</span>)
+            }
+        }
+
+    }
+
     let checkIndex = (ind, i) => {
         if (i < max) {
             return <div key={ind.id} className={props.colonna} >
@@ -48,10 +59,10 @@ function ListaIndividui(props) {
                         <img src={indLogo} className="w-100 p-2" />
                     </div>
                     <div className="p-1 w-75">
-                        <span >
-                            {ind.nome}
-                        </span>
-                        <br />
+                        <div className="d-flex justify-content-between">
+                            <span>{ind.nome}</span>
+                            {checkVisibilita(ind.visibilita)}
+                        </div>
                         <span style={{ fontSize: '0.8em' }}>
                             {ind.email}
                         </span>
@@ -68,6 +79,31 @@ function ListaIndividui(props) {
     }
 
     let checkListaIndividui = () => {
+
+        if (props.bozze != null) {
+            let bozze = getBozze()
+
+            if (bozze.length == 0) {
+                return <div className="my-4">Non sono stati trovati individui...</div>
+            } else {
+                return bozze.map((ind, index) =>
+                    checkIndex(ind, index)
+                )
+            }
+        }
+
+        if (props.pubblici != null) {
+            let pubblici = getPubblici()
+
+            if (pubblici.length == 0) {
+                return <div className="my-4">Non sono stati trovati individui...</div>
+            } else {
+                return pubblici.map((ind, index) =>
+                    checkIndex(ind, index)
+                )
+            }
+        }
+
         if (props.individui.length == 0) {
             return <div className="my-4">Non sono stati trovati individui...</div>
         } else {
@@ -75,6 +111,25 @@ function ListaIndividui(props) {
                 checkIndex(ind, index)
             )
         }
+    }
+
+    let getBozze = () => {
+        let array = []
+        props.individui.map(ind => {
+            if (ind.visibilita == 0) {
+                array.push(ind)
+            }
+        })
+        return array
+    }
+    let getPubblici = () => {
+        let array = []
+        props.individui.map(ind => {
+            if (ind.visibilita == 1) {
+                array.push(ind)
+            }
+        })
+        return array
     }
 
     let moreButton = () => {
