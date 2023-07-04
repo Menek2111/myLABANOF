@@ -10,6 +10,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import ind from '../images/individuo.jpg'
 import { useNavigate } from 'react-router-dom'
 
+import Form from 'react-bootstrap/Form'
 
 import { Dna } from 'react-loader-spinner'
 import ModalDeleteIndividuo from '../UI/modalDeleteIndividuo'
@@ -49,30 +50,7 @@ function SchedaIndividuo(props) {
 
     const location = useLocation();
     useEffect(() => {
-        getIndividuoById().then(res => {
-            console.log('GetIndividuoById', res)
-            switch (res.response) {
-                case 'success':
-                    setIndividuo(res)
-                    break
-                case 'error':
-                    break
-                default:
-                    break
-            }
-        })
-        getCaratteristicheDeposizioneByIndividuo().then(res => {
-            console.log('getCaratteristicheDeposizioneByIndividuo', res)
-            switch (res.response) {
-                case 'success':
-                    setCaratteristicheDeposizione(res.results)
-                    break
-                case 'error':
-                    break
-                default:
-                    break
-            }
-        })
+        aggiorna()
     }, [location]);
 
     function changeEditable() {
@@ -167,8 +145,12 @@ function SchedaIndividuo(props) {
         setModCaratteristicheDeposizione(mod)
     }
 
+    const [visibilita, setVisibilita] = useState()
+
     const salva = async () => {
         let cm = new ConnectionManager();
+
+
 
         let modifiche = {
             id: sessionStorage.getItem('individuoSelezionato'),
@@ -179,11 +161,12 @@ function SchedaIndividuo(props) {
             origineBiologica: modProfiloBiologico.origineBiologica,
             origineGeografica: modProfiloBiologico.origineGeografica,
             sessoBiologico: modProfiloBiologico.sessoBiologico,
-            stato: modGeneralità.stato
+            stato: modGeneralità.stato,
+            visibilita: visibilita
         }
 
         await cm.editIndividuo(JSON.stringify(modifiche)).then(res => {
-            console.log(res)
+            console.log('editIndividuo', res)
             if (res.response === 'success') {
                 aggiorna()
                 setEditable(false)
@@ -217,11 +200,19 @@ function SchedaIndividuo(props) {
     }
 
 
-
-
     let aggiorna = () => {
         getIndividuoById().then(res => {
-            setIndividuo(res)
+            console.log('GetIndividuoById', res)
+            switch (res.response) {
+                case 'success':
+                    setIndividuo(res)
+                    setVisibilita(res.individuo.visibilita)
+                    break
+                case 'error':
+                    break
+                default:
+                    break
+            }
         })
         getCaratteristicheDeposizioneByIndividuo().then(res => {
             console.log('getCaratteristicheDeposizioneByIndividuo', res)
@@ -236,6 +227,7 @@ function SchedaIndividuo(props) {
             }
         })
     }
+
 
     return (
         <div>
@@ -264,6 +256,17 @@ function SchedaIndividuo(props) {
                                 </div>
 
                                 {individuo ? (<div className='row py-3'>
+
+                                    {editable ? (<div className='mb-3' >
+                                        <div className='border rounded p-2' >
+                                            <p>Stato visibilità:</p>
+                                            <Form.Select required aria-label="Default select example" defaultValue={visibilita} onChange={(e) => setVisibilita(e.target.value)}>
+                                                <option value='0'>Bozza</option>
+                                                <option value='1'>Pubblico</option>
+                                            </Form.Select>
+                                        </div>
+                                    </div>) : (<></>)}
+
                                     <GeneralitàIndividuo col="col-6" editable={editable} individuo={individuo.individuo} tomba={individuo.tomba} onIndividuoChange={addModificheGeneralità} callback={aggiorna} />
                                     <ProfiloBiologicoIndividuo col="col-6" editable={editable} individuo={individuo.individuo} tomba={individuo.tomba} onIndividuoChange={addModificheProfiloBiologio} callback={aggiorna} />
                                     {caratteristicheDeposizione ? (<CaratteristicheDellaDeposizione col="col-6 mt-5" editable={editable} individuo={caratteristicheDeposizione} onIndividuoChange={addModificheCaratteristicheDeposizione} callback={aggiorna} />

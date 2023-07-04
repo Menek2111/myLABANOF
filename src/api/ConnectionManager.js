@@ -599,7 +599,8 @@ export default class ConnectionManager {
             origineBiologica: json.origineBiologica,
             origineGeografica: json.origineGeografica,
             sessoBiologico: json.sessoBiologico,
-            stato: json.stato
+            stato: json.stato,
+            visibilita: json.visibilita
         })
         return data
     }
