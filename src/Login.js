@@ -23,7 +23,24 @@ function Login() {
         onError: (error) => console.log('Login Failed:', error)
     });
 
+    //PROVA OFFLINE
+    const [isOnline, setIsOnline] = useState(navigator.onLine);
+
+
     useEffect(() => {
+        function onlineHandler() {
+            setIsOnline(true);
+        }
+
+        function offlineHandler() {
+            setIsOnline(false);
+        }
+
+        window.addEventListener("online", onlineHandler);
+        window.addEventListener("offline", offlineHandler);
+
+
+
 
         //Controllo se il token è ancora valido, se lo è impedisco la visualizzazione della pagina
         /*
@@ -65,6 +82,11 @@ function Login() {
                 })
                 .catch((err) => console.log(err));
         }
+
+        return () => {
+            window.removeEventListener("online", onlineHandler);
+            window.removeEventListener("offline", offlineHandler);
+        };
     },
         [user, navigate]
     );
@@ -102,6 +124,11 @@ function Login() {
 
                             <div>
                                 <h4>Accedi a MyLabanof</h4>
+                                {isOnline ? (
+                                    <p>You are online.</p>
+                                ) : (
+                                    <p>You are offline. Please check your internet connection.</p>
+                                )}
                                 <p>
                                     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam nulla augue, imperdiet vel maximus id, mattis pulvinar massa. Proin non mi molestie, fermentum diam nec, malesuada sapien.
                                 </p>
