@@ -47,6 +47,7 @@ function GeneralitàIndividuo(props) {
                         </th>
                         <td>
                             <Form.Select required aria-label="Default select example" defaultValue={props.individuo.stato} onChange={(e) => setStato(e.target.value)}>
+                                <option></option>
                                 <option>Cadavere</option>
                                 <option>Mummificato\corificato</option>
                                 <option>Saponificato</option>

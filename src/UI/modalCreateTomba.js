@@ -101,7 +101,7 @@ function ModalCreateTomba(props) {
                 <option value={props.necropoli.id}>{props.necropoli.nome}</option>
             </Form.Select>)
         } else {
-            return (<Form.Select required aria-label="Default select example" onChange={(e) => setNecropoli(e.target.value)}>
+            return (<Form.Select aria-label="Default select example" onChange={(e) => setNecropoli(e.target.value)}>
                 <option></option>
                 {listaNecropoli ? (listaNecropoli.map(necropoli => <option key={necropoli.id} value={necropoli.id}>{necropoli.nome}</option>))
                     : (<></>)}
