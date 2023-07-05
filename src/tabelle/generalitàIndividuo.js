@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import Table from 'react-bootstrap/Table';
 import Form from 'react-bootstrap/Form'
+import ConnectionManager from '../api/ConnectionManager';
+
 
 function GeneralitàIndividuo(props) {
 
@@ -12,6 +14,15 @@ function GeneralitàIndividuo(props) {
         }
     }
 
+    const getTombe = async (e) => {
+        let cm = new ConnectionManager();
+        let res = await cm.getAllTombe();
+        return res;
+    }
+    const [tombe, setTombe] = useState()
+
+    const [tomba, setTomba] = useState(props.individuo.tomba)
+
     const [nome, setNome] = useState(props.individuo.nome)
     const [luogo, setLuogo] = useState(props.individuo.luogoRinvenimento)
     const [data, setData] = useState(props.individuo.dataRinvenimento)
@@ -20,8 +31,16 @@ function GeneralitàIndividuo(props) {
 
     const propsLink = props
     useEffect(() => {
-        propsLink.onIndividuoChange(nome, luogo, data, stato)
-    }, [data, luogo, nome, stato]);
+        propsLink.onIndividuoChange(nome, luogo, data, stato, tomba)
+        getTombe().then(res => {
+            console.log('GetTombe', res)
+            if (res.response === 'success') {
+                setTombe(res.results)
+            } else {
+                setTombe([])
+            }
+        })
+    }, [data, luogo, nome, stato, tomba]);
 
     function editableTable() {
         return (<div>
@@ -66,19 +85,29 @@ function GeneralitàIndividuo(props) {
                 <tbody>
                     <tr>
                         <th className='w-25'>Tomba</th>
-                        <td>{props.tomba.nome}</td>
+                        <td>
+                            <Form.Select required aria-label="Default select example" defaultValue={tomba} onChange={(e) => setTomba(e.target.value)}>
+                                <option></option>
+                                {tombe ? (
+                                    tombe.map(tb => (<option value={tb.id}>{tb.nome}</option>))
+                                ) : (<></>)}
+                            </Form.Select>
+                        </td>
                     </tr>
-                    <tr>
-                        <th>N° minimo di individui</th>
-                        <td>{props.tomba.nMinIndividui}</td>
-                    </tr>
-                    <tr>
-                        <th>Coordinate</th>
-                        <td>{props.tomba.coordinate}</td>
-                    </tr>
+
                 </tbody>
             </Table>
         </div>)
+    }
+
+    function getNomeTombaById() {
+        let out = ''
+        for (let i = 0; i < tombe.length; i++) {
+            if (tombe[i].id == props.individuo.tomba) {
+                out = tombe[i].nome
+            }
+        }
+        return out
     }
 
     function uneditableTable() {
@@ -105,23 +134,18 @@ function GeneralitàIndividuo(props) {
 
                 </tbody>
             </Table>
+
             <h5 className='border-bottom my-2'>Tomba di appartenenza</h5>
             <Table bordered striped size="sm">
                 <tbody>
                     <tr>
                         <th className="w-25">Tomba</th>
-                        <td>{props.tomba.nome}</td>
-                    </tr>
-                    <tr>
-                        <th>N° minimo di individui</th>
-                        <td>{props.tomba.nMinIndividui}</td>
-                    </tr>
-                    <tr >
-                        <th>Coordinate</th>
-                        <td>{props.tomba.coordinate}</td>
+                        <td>{tombe ? (getNomeTombaById()) : (<></>)}</td>
                     </tr>
                 </tbody>
             </Table>
+
+
         </div>)
     }
 

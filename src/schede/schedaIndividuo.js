@@ -111,12 +111,13 @@ function SchedaIndividuo(props) {
     const [modProfiloBiologico, setModProfiloBiologico] = useState()
     const [modCaratteristicheDeposizione, setModCaratteristicheDeposizione] = useState()
 
-    const addModificheGeneralità = (nome, luogo, data, stato) => {
+    const addModificheGeneralità = (nome, luogo, data, stato, tomba) => {
         var mod = {
             nome: nome,
             luogoRinvenimento: luogo,
             dataRinvenimento: data,
-            stato: stato
+            stato: stato,
+            tomba: tomba
         }
         setModGeneralità(mod)
     }
@@ -160,6 +161,7 @@ function SchedaIndividuo(props) {
             origineGeografica: modProfiloBiologico.origineGeografica,
             sessoBiologico: modProfiloBiologico.sessoBiologico,
             stato: modGeneralità.stato,
+            tomba: modGeneralità.tomba,
             visibilita: visibilita
         }
 
@@ -197,7 +199,6 @@ function SchedaIndividuo(props) {
         })
     }
 
-
     let aggiorna = () => {
         getIndividuoById().then(res => {
             console.log('GetIndividuoById', res)
@@ -224,8 +225,8 @@ function SchedaIndividuo(props) {
                     break
             }
         })
-    }
 
+    }
 
     return (
         <div>
@@ -242,7 +243,7 @@ function SchedaIndividuo(props) {
                                         </div>
                                         <div className='d-flex w-100 justify-content-center'>
                                             <img className='mx-2' src={ind} style={{ height: '10vh' }} />
-                                            {individuo ? (<p style={centerMiddle} className=''>{individuo.tomba.nome + ' ' + individuo.individuo.nome} <br /> Creato da: {individuo.utente.email} <br /> Data: {individuo.individuo.dataCreazione} </p>
+                                            {individuo ? (<p style={centerMiddle} className=''>{individuo.individuo.nome} <br /> Creato da: {individuo.utente.email} <br /> Data: {individuo.individuo.dataCreazione} </p>
                                             ) : (<div></div>)}
                                         </div>
 
@@ -265,8 +266,9 @@ function SchedaIndividuo(props) {
                                         </div>
                                     </div>) : (<></>)}
 
-                                    <GeneralitàIndividuo col="col-6" editable={editable} individuo={individuo.individuo} tomba={individuo.tomba} onIndividuoChange={addModificheGeneralità} callback={aggiorna} />
-                                    <ProfiloBiologicoIndividuo col="col-6" editable={editable} individuo={individuo.individuo} tomba={individuo.tomba} onIndividuoChange={addModificheProfiloBiologio} callback={aggiorna} />
+                                    <GeneralitàIndividuo col="col-6" editable={editable} individuo={individuo.individuo} onIndividuoChange={addModificheGeneralità} callback={aggiorna} />
+
+                                    <ProfiloBiologicoIndividuo col="col-6" editable={editable} individuo={individuo.individuo} onIndividuoChange={addModificheProfiloBiologio} callback={aggiorna} />
                                     {caratteristicheDeposizione ? (<CaratteristicheDellaDeposizione col="col-6 mt-5" editable={editable} individuo={caratteristicheDeposizione} onIndividuoChange={addModificheCaratteristicheDeposizione} callback={aggiorna} />
                                     ) : (
                                         <></>

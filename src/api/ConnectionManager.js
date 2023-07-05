@@ -609,6 +609,7 @@ export default class ConnectionManager {
             origineGeografica: json.origineGeografica,
             sessoBiologico: json.sessoBiologico,
             stato: json.stato,
+            tomba: json.tomba,
             visibilita: json.visibilita
         })
         return data
