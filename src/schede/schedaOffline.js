@@ -9,6 +9,7 @@ import ListaIndividui from '../component/listaIndividui'
 import SideNav from '../component/sideNav';
 import ListaTombe from '../component/listaTombe';
 import ListaNecropoli from '../component/listaNecropoli'
+import indThumb from '../images/icons/skull.png'
 
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
@@ -20,7 +21,6 @@ import { useLocation } from 'react-router-dom';
 import ModalCreateIndividuo from '../UI/modalCreateIndividuo';
 
 import labanof from '../images/logoMyLabanof.PNG'
-import OfflineListaIndividui from '../component/offlineListaIndividui';
 
 function SchedaOffline() {
     const navigate = useNavigate();
@@ -34,9 +34,18 @@ function SchedaOffline() {
         height: "100%"
     };
 
+    const [individui, setIndividui] = useState()
     useEffect(() => {
-
+        aggiorna()
     }, [])
+
+    let aggiorna = () => {
+        if (localStorage.getItem('OfflineIndividui') != null) {
+            setIndividui(JSON.parse(localStorage.getItem('OfflineIndividui')))
+        } else {
+            setIndividui([])
+        }
+    }
 
     return (
         <div>
@@ -69,14 +78,23 @@ function SchedaOffline() {
                         <div className='text-center'>
                             <div className='my-3'></div>
                             <p>Queste sono le operazioni disponibili in modalità offline</p>
-                            <ModalCreateIndividuo offline={true} />
+                            <ModalCreateIndividuo offline={true} offlineCallback={aggiorna} />
                         </div>
 
 
                         <div className='border-bottom my-4'></div>
                         <p className='text-center'>Individui creati in modalità offline</p>
 
-                        <OfflineListaIndividui col='col-2' />
+                        <div className="row">
+                            {individui ? (
+                                individui.map(ind => <div className='col-2'>
+                                    <div className="indCard p-2 rounded border d-flex">
+                                        <img src={indThumb} style={{ height: '5vh' }} />
+                                        <p className="w-100 text-center">{ind.nome}</p>
+                                    </div>
+                                </div>)) : (<></>)
+                            }
+                        </div >
 
                         <div>
 

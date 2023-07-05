@@ -17,9 +17,7 @@ function OfflineCheck(props) {
         await cm.createIndividuo(JSON.stringify(params)).then(
             res => {
                 console.log('CreateIndividuo', res)
-
                 if (res.response === 'success') {
-                    alert('Individuo creato')
                 }
             }
         );
@@ -31,7 +29,6 @@ function OfflineCheck(props) {
             let individui = JSON.parse(localStorage.getItem('OfflineIndividui'))
             individui.map(
                 ind => {
-                    alert('ao')
                     creaIndividuo(ind.nome)
                 }
             )

@@ -107,6 +107,7 @@ function ModalCreateIndividuo(props) {
                 individui.push(individuo)
                 localStorage.setItem('OfflineIndividui', JSON.stringify(individui))
             }
+            props.offlineCallback()
         }
     }
 
