@@ -14,7 +14,7 @@ function OfflineCheck(props) {
         function onlineHandler() {
             setIsOnline(true);
             if (window.confirm('La connessione alla rete è stata ristabilita, vuoi tornare in modalità online?')) {
-                alert('yee')
+                navigate('/login')
             } else {
                 alert('uffa')
             }
