@@ -10,6 +10,8 @@ import Button from 'react-bootstrap/Button';
 function ListaTombe(props) {
     const navigate = useNavigate();
 
+    const DEFAULT_TOMBA = 122
+
     const [max, setMax] = useState(6)
 
     useEffect(() => {
@@ -46,8 +48,11 @@ function ListaTombe(props) {
         if (props.tombe.length == 0) {
             return <div className="my-4">Non sono state trovate tombe...</div>
         } else {
-            return (props.tombe.map((tomba, index) =>
-                checkIndex(tomba, index)
+            return (props.tombe.map((tomba, index) => {
+
+                if (tomba.id != DEFAULT_TOMBA) checkIndex(tomba, index)
+
+            }
             ))
         }
     }

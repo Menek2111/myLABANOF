@@ -11,6 +11,7 @@ function OfflineCheck(props) {
     const creaIndividuo = async (nome) => {
         let cm = new ConnectionManager();
         let params = {
+            tomba: 122,
             nome: nome,
             creatore: localStorage.getItem('userID')
         }
