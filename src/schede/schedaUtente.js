@@ -83,6 +83,20 @@ function SchedaUtente() {
         }
     }
 
+    let checkUser = () => {
+        if (profile.id == localStorage.getItem('userID')) {
+            return <>
+
+                <h5 className='pt-3 border-bottom'>Bozze</h5>
+
+                <ListaIndividui bozze={true} visibilità={true} all={true} colonna="col-3" individui={individui} />
+            </>
+
+        } else {
+            return <></>
+        }
+    }
+
     return (
         <div className='px-4 py-2 containerPrincipale' >
             <div className='rounded h-100'>
@@ -112,11 +126,13 @@ function SchedaUtente() {
                             <div style={{ height: '75vh', overflowY: 'scroll', overflowX: 'hidden' }}>
                                 <div className='mt-4'></div>
 
+                                <h5 className='pt-3 border-bottom'>Individui pubblici</h5>
+
                                 {individui ? (<ListaIndividui pubblici={true} visibilità={true} all={true} colonna="col-3" individui={individui} />) : (<Loading />)}
 
-                                <div className='border-bottom my-4'></div>
 
-                                {individui ? (<ListaIndividui bozze={true} visibilità={true} all={true} colonna="col-3" individui={individui} />) : (<Loading />)}
+
+                                {individui ? (checkUser()) : (<Loading />)}
 
 
                             </div>

@@ -48,28 +48,28 @@ function ModalChangeTheme(props) {
                         <p className='border-bottom mb-3'>Colore di sfondo</p>
 
                         <div className='col-2'>
-                            <div className='rounded text-center' style={{ width: '5vw', height: '5vw', backgroundColor: '#E7CECE' }}
+                            <div className='rounded text-center' style={{ width: '5vw', height: '5vw', backgroundColor: '#E7CECE', cursor: 'pointer' }}
                                 onClick={() => selezionaTema('temaMyLabanof')}></div>
                         </div>
                         <div className='col-2'>
-                            <div className='rounded text-center' style={{ width: '5vw', height: '5vw', backgroundColor: '#FED6A5' }}
+                            <div className='rounded text-center' style={{ width: '5vw', height: '5vw', backgroundColor: '#FED6A5', cursor: 'pointer' }}
                                 onClick={() => selezionaTema('temaPastelloArancio')}>
                             </div>
                         </div>
                         <div className='col-2'>
-                            <div className='rounded text-center' style={{ width: '5vw', height: '5vw', backgroundColor: '#CEE5B7' }}
+                            <div className='rounded text-center' style={{ width: '5vw', height: '5vw', backgroundColor: '#CEE5B7', cursor: 'pointer' }}
                                 onClick={() => selezionaTema('temaPastelloVerde')}></div>
                         </div>
                         <div className='col-2'>
-                            <div className='rounded text-center' style={{ width: '5vw', height: '5vw', backgroundColor: '#A9DFEB' }}
+                            <div className='rounded text-center' style={{ width: '5vw', height: '5vw', backgroundColor: '#A9DFEB', cursor: 'pointer' }}
                                 onClick={() => selezionaTema('temaPastelloAzzurro')}></div>
                         </div>
                         <div className='col-2'>
-                            <div className='rounded text-center' style={{ width: '5vw', height: '5vw', backgroundColor: '#A5C1E6' }}
+                            <div className='rounded text-center' style={{ width: '5vw', height: '5vw', backgroundColor: '#A5C1E6', cursor: 'pointer' }}
                                 onClick={() => selezionaTema('temaPastelloBlue')}></div>
                         </div>
                         <div className='col-2'>
-                            <div className='rounded text-center' style={{ width: '5vw', height: '5vw', backgroundColor: '#EBC8DE' }}
+                            <div className='rounded text-center' style={{ width: '5vw', height: '5vw', backgroundColor: '#EBC8DE', cursor: 'pointer' }}
                                 onClick={() => selezionaTema('temaPastelloRosa')}></div>
                         </div>
                     </div>
@@ -83,37 +83,37 @@ function ModalChangeTheme(props) {
 
                     <div className='row justify-content-center'>
                         <div className='col-4 p-1'>
-                            <div className='rounded text-center border p-3' style={{ fontFamily: 'Roboto' }}
+                            <div className='rounded text-center border p-3' style={{ fontFamily: 'Roboto', cursor: 'pointer' }}
                                 onClick={() => selezionaFont('Roboto')}>
                                 Roboto
                             </div>
                         </div>
                         <div className='col-4 p-1'>
-                            <div className='rounded text-center border p-3' style={{ fontFamily: 'Open Sans' }}
+                            <div className='rounded text-center border p-3' style={{ fontFamily: 'Open Sans', cursor: 'pointer' }}
                                 onClick={() => selezionaFont('OpenSans')}>
                                 Open Sans
                             </div>
                         </div>
                         <div className='col-4 p-1'>
-                            <div className='rounded text-center border p-3' style={{ fontFamily: 'Lato' }}
+                            <div className='rounded text-center border p-3' style={{ fontFamily: 'Lato', cursor: 'pointer' }}
                                 onClick={() => selezionaFont('Lato')}>
                                 Lato
                             </div>
                         </div>
                         <div className='col-4 p-1'>
-                            <div className='rounded text-center border p-3' style={{ fontFamily: 'Montserrat' }}
+                            <div className='rounded text-center border p-3' style={{ fontFamily: 'Montserrat', cursor: 'pointer' }}
                                 onClick={() => selezionaFont('Montserrat')}>
                                 Montserrat
                             </div>
                         </div>
                         <div className='col-4 p-1'>
-                            <div className='rounded text-center border p-3' style={{ fontFamily: 'Poppins' }}
+                            <div className='rounded text-center border p-3' style={{ fontFamily: 'Poppins', cursor: 'pointer' }}
                                 onClick={() => selezionaFont('Poppins')}>
                                 Poppins
                             </div>
                         </div>
                         <div className='col-4 p-1'>
-                            <div className='rounded text-center border p-3' style={{ fontFamily: 'Mulish' }}
+                            <div className='rounded text-center border p-3' style={{ fontFamily: 'Mulish', cursor: 'pointer' }}
                                 onClick={() => selezionaFont('Mulish')}>
                                 Mulish
                             </div>

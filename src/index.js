@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { createRoot } from 'react-dom/client';
 import { HashRouter, Route, Routes } from 'react-router-dom'
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
@@ -24,6 +24,7 @@ import NavBar from "./UI/Navbar";
 import SchedaUtente from "./schede/schedaUtente";
 import SchedaAmministratore from "./schede/schedaAmministratore";
 import PrintIndividuoPDF from "./schede/printIndividuoPDF";
+import SchedaOffline from "./schede/schedaOffline";
 
 const container = document.getElementById('root');
 const root = createRoot(container);
@@ -190,6 +191,17 @@ root.render(
                             <div className={font}>
                                 <NavBar />
                                 <SchedaAmministratore />
+                            </div>
+                        </div>
+                    }
+                />
+                <Route
+                    path="/offline"
+                    element={
+                        <div className={theme} >
+                            <div className={font}>
+                                <NavBar />
+                                <SchedaOffline />
                             </div>
                         </div>
                     }

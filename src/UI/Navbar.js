@@ -38,8 +38,6 @@ function NavBar() {
 
     const [isOnline, setIsOnline] = useState(navigator.onLine);
 
-
-
     useEffect(() => {
         function onlineHandler() {
             setIsOnline(true);
@@ -47,6 +45,7 @@ function NavBar() {
 
         function offlineHandler() {
             setIsOnline(false);
+            navigate('/offline')
         }
 
         window.addEventListener("online", onlineHandler);
@@ -65,29 +64,32 @@ function NavBar() {
     const getResultsByQuery = async (query) => {
         let cm = new ConnectionManager();
         var params = { query: query }
-        switch (tipoRicerca) {
-            case 'Individuo':
-                await cm.getIndividuoByQuery(JSON.stringify(params)).then(res => {
-                    setResult(res.results)
-                })
-                break
-            case 'Tomba':
-                await cm.getTombaByQuery(JSON.stringify(params)).then(res => {
-                    setResult(res.results)
-                })
-                break
-            case 'Utente':
-                await cm.getUtenteByQuery(JSON.stringify(params)).then(res => {
-                    setResult(res.results)
-                })
-                break
-            case 'Necropoli':
-                await cm.getNecropoliByQuery(JSON.stringify(params)).then(res => {
-                    console.log('getNecropoliByQuery', res)
-                    setResult(res.results)
-                })
-                break
+        if (query != '') {
+            switch (tipoRicerca) {
+                case 'Individuo':
+                    await cm.getIndividuoByQuery(JSON.stringify(params)).then(res => {
+                        setResult(res.results)
+                    })
+                    break
+                case 'Tomba':
+                    await cm.getTombaByQuery(JSON.stringify(params)).then(res => {
+                        setResult(res.results)
+                    })
+                    break
+                case 'Utente':
+                    await cm.getUtenteByQuery(JSON.stringify(params)).then(res => {
+                        setResult(res.results)
+                    })
+                    break
+                case 'Necropoli':
+                    await cm.getNecropoliByQuery(JSON.stringify(params)).then(res => {
+                        console.log('getNecropoliByQuery', res)
+                        setResult(res.results)
+                    })
+                    break
+            }
         }
+
     }
 
     let getDropdownItem = () => {

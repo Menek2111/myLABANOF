@@ -169,11 +169,26 @@ function DettagliOsso(props) {
     }, []);
 
     let checkUser = () => {
-        if (localStorage.getItem('userID') != sessionStorage.getItem('individuoSelezionatoCreatore')) {
-            return (<div></div>)
-        } else {
-            return <Button className='p-1 mb-1' onClick={() => setEditable((state) => !state)}>Modifica</Button>
+
+        switch (localStorage.getItem('ruolo')) {
+            case '0':
+                return <></>
+            case '1':
+                return <></>
+            case '2':
+
+                if (localStorage.getItem('userID') != sessionStorage.getItem('individuoSelezionatoCreatore')) {
+                    return (<div></div>)
+                } else {
+                    return <Button className='p-1 mb-1' onClick={() => setEditable((state) => !state)}>Modifica</Button>
+                }
+            case '3':
+                return <Button className='p-1 mb-1' onClick={() => setEditable((state) => !state)}>Modifica</Button>
+            default:
+                return <></>
         }
+
+
     }
 
     return (

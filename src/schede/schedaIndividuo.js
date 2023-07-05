@@ -150,8 +150,6 @@ function SchedaIndividuo(props) {
     const salva = async () => {
         let cm = new ConnectionManager();
 
-
-
         let modifiche = {
             id: sessionStorage.getItem('individuoSelezionato'),
             nome: modGeneralità.nome,

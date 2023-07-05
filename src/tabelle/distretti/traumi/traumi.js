@@ -79,11 +79,29 @@ function Traumi(props) {
     }
 
     let checkUser = () => {
-        if (localStorage.getItem('userID') != sessionStorage.getItem('individuoSelezionatoCreatore')) {
-            return (<div></div>)
-        } else {
-            return <ModalCreateTrauma listaTraumi={listaTraumi} distretto={props.distretto} osso={props.osso} callback={aggiorna} />
+
+        switch (localStorage.getItem('ruolo')) {
+            case '0':
+                return <></>
+            case '1':
+                return <></>
+            case '2':
+                if (localStorage.getItem('userID') != sessionStorage.getItem('individuoSelezionatoCreatore')) {
+                    return (<div></div>)
+                } else {
+                    return <ModalCreateTrauma listaTraumi={listaTraumi} distretto={props.distretto} osso={props.osso} callback={aggiorna} />
+                }
+            case '3':
+                return <ModalCreateTrauma listaTraumi={listaTraumi} distretto={props.distretto} osso={props.osso} callback={aggiorna} />
+            default:
+                return <></>
         }
+
+
+
+
+
+
     }
 
 

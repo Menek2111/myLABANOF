@@ -246,7 +246,7 @@ function RichiesteRegistrazione(props) {
 
     function checkPermission(utente, i) {
         if (utente.ruolo == i) {
-            return <RigaAccount utente={utente} />
+            return <RigaAccount utente={utente} callback={props.callback} />
         } else {
             return <></>
         }
@@ -350,7 +350,8 @@ function RigaAccount(props) {
         return res
     }
 
-    let handleSubmit = () => {
+    let handleSubmit = (event) => {
+        event.preventDefault()
         editRuoloAccountById().then(res => {
             if (res.response == 'success') {
                 props.callback()

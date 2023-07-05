@@ -132,7 +132,7 @@ function SchedaTomba() {
                                     </div>
                                 </div>
 
-                                {individui ? (<ListaIndividui all={true} colonna="col-lg-3 col-sm-6" individui={individui} />
+                                {individui ? (<ListaIndividui all={true} pubblici={true} colonna="col-lg-3 col-sm-6" individui={individui} />
                                 ) : (<Loading />)}
 
                             </div>

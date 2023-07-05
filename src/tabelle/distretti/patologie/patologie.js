@@ -66,7 +66,13 @@ function Patologie(props) {
                     })
                     setListaPatologie(array)
                 } else {
-                    setListaPatologie(res.results)
+                    let array = []
+                    res.results.map((pat, i) => {
+                        if (pat.odontoiatrico == 0) {
+                            array.push(pat)
+                        }
+                    })
+                    setListaPatologie(array)
                 }
             }
         })
@@ -119,12 +125,32 @@ function Patologie(props) {
     }
 
     let checkUser = () => {
-        if (localStorage.getItem('userID') != sessionStorage.getItem('individuoSelezionatoCreatore')) {
-            return (<div></div>)
-        } else {
 
-            return <ModalCreatePatologia osso={props.osso} distretto={props.distretto} patologie={listaPatologie} classiPatologie={classiPatologie} callback={aggiorna} />
+
+        switch (localStorage.getItem('ruolo')) {
+            case '0':
+                return <></>
+            case '1':
+                return <></>
+            case '2':
+                if (localStorage.getItem('userID') != sessionStorage.getItem('individuoSelezionatoCreatore')) {
+                    return (<div></div>)
+                } else {
+
+                    return <ModalCreatePatologia osso={props.osso} distretto={props.distretto} patologie={listaPatologie} classiPatologie={classiPatologie} callback={aggiorna} />
+                }
+            case '3':
+                return <ModalCreatePatologia osso={props.osso} distretto={props.distretto} patologie={listaPatologie} classiPatologie={classiPatologie} callback={aggiorna} />
+
+            default:
+                return <></>
         }
+
+
+
+
+
+
     }
 
     //<ModalCreateTrauma traumi={traumi} distretto={1} osso={props.osso} />
