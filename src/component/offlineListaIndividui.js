@@ -11,7 +11,7 @@ function OfflineListaIndividui(props) {
         let array = JSON.parse(localStorage.getItem('OfflineIndividui'))
         setIndividui(array)
 
-    }, [individui])
+    }, [])
 
     return <div className="row">
         {individui ? (
