@@ -28,6 +28,8 @@ function OssaDistretto(props) {
                 return 5
             case 'Arti inferiori':
                 return 6
+            case 'NMR':
+                return 7
             default:
                 return null
         }
@@ -46,6 +48,11 @@ function OssaDistretto(props) {
         let res = await cm.getOssaByDistretto(JSON.stringify({ distretto: props.distretto }));
         return res;
     }
+    const getTipoOssa = async (e) => {
+        let cm = new ConnectionManager();
+        let res = await cm.getTipoOssa();
+        return res;
+    }
 
     const location = useLocation();
     useEffect(() => {
@@ -53,14 +60,28 @@ function OssaDistretto(props) {
     }, [location]);
 
     let aggiorna = () => {
-        getOssaByDistretto().then(res => {
-            console.log('getOssaByDistretto', res)
-            if (res.response == 'success') {
-                setTipoOssa(res.results.sort(compareTipoOssa))
-            } else {
-                setTipoOssa([])
-            }
-        })
+
+        if (getDistrettoId(props.distretto) != 7) {
+            getOssaByDistretto().then(res => {
+                console.log('getOssaByDistretto', res)
+                if (res.response == 'success') {
+                    setTipoOssa(res.results.sort(compareTipoOssa))
+                } else {
+                    setTipoOssa([])
+                }
+            })
+        } else {
+            getTipoOssa().then(res => {
+                console.log('getTipoOssa', res)
+                if (res.response == 'success') {
+                    setTipoOssa(res.results.sort(compareTipoOssa))
+                } else {
+                    setTipoOssa([])
+                }
+            })
+        }
+
+
         getOssaIndividuoByDistretto().then(res => {
             if (res.response === 'success') {
                 console.log('aggiorna', res.results)

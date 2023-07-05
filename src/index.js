@@ -8,6 +8,8 @@ import reportWebVitals from './reportWebVitals';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
+import OfflineCheck from './component/OfflineCheck'
+
 //SCHEDE
 import Homepage from "./schede/homepage";
 import SchedaTomba from "./schede/schedaTomba";
@@ -58,6 +60,7 @@ root.render(
                     element={
                         <div className={theme} >
                             <div className={font}>
+                                <OfflineCheck />
                                 <NavBar />
                                 <Homepage />
                             </div>
@@ -69,6 +72,8 @@ root.render(
                     element={
                         <div className={theme}>
                             <div className={font}>
+                                <OfflineCheck />
+
                                 <NavBar />
                                 <SchedaIndividuo />
                             </div>
@@ -90,6 +95,8 @@ root.render(
                     element={
                         <div className={theme} >
                             <div className={font}>
+                                <OfflineCheck />
+
                                 <NavBar />
                                 <SchedaCranio distretto='Cranio' />
                             </div>
@@ -101,6 +108,8 @@ root.render(
                     element={
                         <div className={theme} >
                             <div className={font}>
+                                <OfflineCheck />
+
                                 <NavBar />
                                 <SchedaCranio distretto='Denti' />
                             </div>
@@ -112,6 +121,8 @@ root.render(
                     element={
                         <div className={theme} >
                             <div className={font}>
+                                <OfflineCheck />
+
                                 <NavBar />
                                 <SchedaCranio distretto='Colonna' />
                             </div>
@@ -123,6 +134,8 @@ root.render(
                     element={
                         <div className={theme} >
                             <div className={font}>
+                                <OfflineCheck />
+
                                 <NavBar />
                                 <SchedaCranio distretto='Torace' />
                             </div>
@@ -134,6 +147,8 @@ root.render(
                     element={
                         <div className={theme} >
                             <div className={font}>
+                                <OfflineCheck />
+
                                 <NavBar />
                                 <SchedaCranio distretto='Arti superiori' />
                             </div>
@@ -145,8 +160,23 @@ root.render(
                     element={
                         <div className={theme} >
                             <div className={font}>
+                                <OfflineCheck />
+
                                 <NavBar />
                                 <SchedaCranio distretto='Arti inferiori' />
+                            </div>
+                        </div>
+                    }
+                />
+                <Route
+                    path="/individuo/nmr"
+                    element={
+                        <div className={theme} >
+                            <div className={font}>
+                                <OfflineCheck />
+
+                                <NavBar />
+                                <SchedaCranio distretto='NMR' />
                             </div>
                         </div>
                     }
@@ -156,6 +186,8 @@ root.render(
                     element={
                         <div className={theme} >
                             <div className={font}>
+                                <OfflineCheck />
+
                                 <NavBar />
                                 <SchedaTomba />
                             </div>
@@ -167,6 +199,8 @@ root.render(
                     element={
                         <div className={theme} >
                             <div className={font}>
+                                <OfflineCheck />
+
                                 <NavBar />
                                 <SchedaNecropoli />
                             </div>
@@ -178,6 +212,8 @@ root.render(
                     element={
                         <div className={theme} >
                             <div className={font}>
+                                <OfflineCheck />
+
                                 <NavBar />
                                 <SchedaUtente />
                             </div>
@@ -189,6 +225,8 @@ root.render(
                     element={
                         <div className={theme} >
                             <div className={font}>
+                                <OfflineCheck />
+
                                 <NavBar />
                                 <SchedaAmministratore />
                             </div>
@@ -200,7 +238,9 @@ root.render(
                     element={
                         <div className={theme} >
                             <div className={font}>
-                                <NavBar />
+
+
+                                <OfflineCheck />
                                 <SchedaOffline />
                             </div>
                         </div>

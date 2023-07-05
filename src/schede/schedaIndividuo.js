@@ -7,7 +7,7 @@ import ConnectionManager from '../api/ConnectionManager';
 import '../App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-import ind from '../images/individuo.jpg'
+import ind from '../images/skeleton.png'
 import { useNavigate } from 'react-router-dom'
 
 import Form from 'react-bootstrap/Form'

@@ -34,6 +34,8 @@ function DropDownDistretti(props) {
                 return 'ARTI SUPERIORI'
             case 'Arti inferiori':
                 return 'ARTI INFERIORI'
+            case 'NMR':
+                return 'NMR'
             default:
                 return <div></div>
         }
@@ -60,10 +62,13 @@ function DropDownDistretti(props) {
         </Dropdown.Item>,
         <Dropdown.Item href="#/individuo/artiInferiori">
             ARTI INFERIORI
+        </Dropdown.Item>,
+        <Dropdown.Item href="#/individuo/nmr">
+            NMR
         </Dropdown.Item>
     ]
     let dpName = [
-        'Individuo', 'Cranio', 'Denti', 'Colonna', 'Torace', 'Arti superiori', 'Arti inferiori'
+        'Individuo', 'Cranio', 'Denti', 'Colonna', 'Torace', 'Arti superiori', 'Arti inferiori', 'NMR'
     ]
 
     function setItems() {
@@ -95,6 +100,10 @@ function DropDownDistretti(props) {
                 break
             case 'Arti inferiori':
                 i = dpName.indexOf('Arti inferiori')
+                dpItems.splice(i, 1)
+                break
+            case 'NMR':
+                i = dpName.indexOf('NMR')
                 dpItems.splice(i, 1)
                 break
         }

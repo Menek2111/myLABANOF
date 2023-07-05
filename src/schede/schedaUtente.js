@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 
 import '../App.css';
+import { googleLogout } from '@react-oauth/google';
+
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 import ConnectionManager from '../api/ConnectionManager';
@@ -35,6 +37,20 @@ function SchedaUtente() {
         let cm = new ConnectionManager();
         let res = await cm.getIndividuiByUser(JSON.stringify({ user: sessionStorage.getItem('profiloSelezionato') }));
         return res;
+    }
+    const deleteAccount = async () => {
+        let cm = new ConnectionManager();
+        let res = await cm.deleteAccount(JSON.stringify({ id: localStorage.getItem('userID') }));
+        console.log('deleteAccount', res)
+        if (res.response == 'success') {
+            googleLogout();
+            localStorage.removeItem('profile')
+            localStorage.removeItem('userID')
+            sessionStorage.removeItem('access_token')
+            navigate('/')
+            alert('Account eliminato con successo')
+            //LOGOUT
+        }
     }
 
     const location = useLocation();
@@ -77,7 +93,7 @@ function SchedaUtente() {
 
     let checkLogOut = () => {
         if (profile.id == localStorage.getItem('userID')) {
-            return <Button variant='outline-danger' disabled>Elimina profilo</Button>
+            return <Button variant='outline-danger' onClick={() => deleteAccount()}>Elimina profilo</Button>
         } else {
             return <div></div>
         }
@@ -86,7 +102,6 @@ function SchedaUtente() {
     let checkUser = () => {
         if (profile.id == localStorage.getItem('userID')) {
             return <>
-
                 <h5 className='pt-3 border-bottom'>Bozze</h5>
 
                 <ListaIndividui bozze={true} visibilità={true} all={true} colonna="col-3" individui={individui} />
@@ -103,7 +118,7 @@ function SchedaUtente() {
                 <div className='container-fluid h-100'>
                     <div className='row h-100'>
                         <div className='col h-100 bg-white w-100 rounded border'>
-                            <div className='row border-bottom rounded-top justify-content-between'>
+                            <div className='row rounded-top justify-content-between'>
                                 <div className='col-10 py-2 d-flex'>
                                     <div style={centerMiddle}>
 
@@ -124,7 +139,7 @@ function SchedaUtente() {
                                 </div>
                             </div>
                             <div style={{ height: '75vh', overflowY: 'scroll', overflowX: 'hidden' }}>
-                                <div className='mt-4'></div>
+                                <div className='mt-1'></div>
 
                                 <h5 className='pt-3 border-bottom'>Individui pubblici</h5>
 

@@ -36,62 +36,41 @@ function NavBar() {
 
     const location = useLocation();
 
-    const [isOnline, setIsOnline] = useState(navigator.onLine);
 
     useEffect(() => {
-        function onlineHandler() {
-            setIsOnline(true);
-        }
-
-        function offlineHandler() {
-            setIsOnline(false);
-            navigate('/offline')
-        }
-
-        if (!isOnline) {
-            navigate('/offline')
-        }
-        window.addEventListener("online", onlineHandler);
-        window.addEventListener("offline", offlineHandler);
-
 
         setProfile(JSON.parse(localStorage.getItem('profile')));
         getResultsByQuery('')
 
-        return () => {
-            window.removeEventListener("online", onlineHandler);
-            window.removeEventListener("offline", offlineHandler);
-        };
     }, [tipoRicerca, location, navigate]);
 
     const getResultsByQuery = async (query) => {
         let cm = new ConnectionManager();
         var params = { query: query }
-        if (query != '') {
-            switch (tipoRicerca) {
-                case 'Individuo':
-                    await cm.getIndividuoByQuery(JSON.stringify(params)).then(res => {
-                        setResult(res.results)
-                    })
-                    break
-                case 'Tomba':
-                    await cm.getTombaByQuery(JSON.stringify(params)).then(res => {
-                        setResult(res.results)
-                    })
-                    break
-                case 'Utente':
-                    await cm.getUtenteByQuery(JSON.stringify(params)).then(res => {
-                        setResult(res.results)
-                    })
-                    break
-                case 'Necropoli':
-                    await cm.getNecropoliByQuery(JSON.stringify(params)).then(res => {
-                        console.log('getNecropoliByQuery', res)
-                        setResult(res.results)
-                    })
-                    break
-            }
+        switch (tipoRicerca) {
+            case 'Individuo':
+                await cm.getIndividuoByQuery(JSON.stringify(params)).then(res => {
+                    setResult(res.results)
+                })
+                break
+            case 'Tomba':
+                await cm.getTombaByQuery(JSON.stringify(params)).then(res => {
+                    setResult(res.results)
+                })
+                break
+            case 'Utente':
+                await cm.getUtenteByQuery(JSON.stringify(params)).then(res => {
+                    setResult(res.results)
+                })
+                break
+            case 'Necropoli':
+                await cm.getNecropoliByQuery(JSON.stringify(params)).then(res => {
+                    console.log('getNecropoliByQuery', res)
+                    setResult(res.results)
+                })
+                break
         }
+
 
     }
 
@@ -206,7 +185,7 @@ function NavBar() {
                                         <Dropdown.Toggle variant="success" className='bg-transparent searchbar removeArrow p-0 w-100'>
                                             <input placeholder='Cerca...' className="px-2 w-100 searchbar2 bg-transparent rounded" onChange={(e) => getResultsByQuery(e.target.value)}  ></input>
                                         </Dropdown.Toggle>
-                                        <Dropdown.Menu className='rounded border mt-0 w-100'>
+                                        <Dropdown.Menu className='rounded border mt-0 w-100' style={{ maxHeight: '40vh', overflowY: 'scroll' }}>
                                             {
                                                 result ? (result.map(res => getResultsItem(res))) : (<Dropdown.Item disabled>Nessun risultato...</Dropdown.Item>)
                                             }

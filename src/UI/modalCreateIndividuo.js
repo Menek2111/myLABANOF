@@ -31,6 +31,8 @@ function ModalCreateIndividuo(props) {
 
     const [ready, setReady] = useState(false);
 
+    const [isOffline, setIsOffline] = useState(false)
+
     const getTombe = async (e) => {
         let cm = new ConnectionManager();
         let res = await cm.getAllTombe();
@@ -39,16 +41,20 @@ function ModalCreateIndividuo(props) {
 
     useEffect(() => {
 
-        setReady(true)
-
-        getTombe().then(res => {
-            console.log('GetTombe', res)
-            if (res.response === 'success') {
-                setTombe(res.results)
-            } else {
-                setTombe([])
-            }
-        })
+        if (props.offline == null) {
+            setReady(true)
+            getTombe().then(res => {
+                console.log('GetTombe', res)
+                if (res.response === 'success') {
+                    setTombe(res.results)
+                } else {
+                    setTombe([])
+                }
+            })
+        } else {
+            setReady(true)
+            setIsOffline(true)
+        }
     }, []);
 
     //Gestione modal
@@ -61,23 +67,47 @@ function ModalCreateIndividuo(props) {
     const handleShow = () => setShow(true);
 
     const createIndividuo = async (e) => {
-        let cm = new ConnectionManager();
-        var params
-        if (props.tomba != null) {
-            params = { tomba: props.tomba.id, nome: nome, creatore: localStorage.getItem('userID') }
-        } else {
-            params = { tomba: tomba, nome: nome, creatore: localStorage.getItem('userID') }
-        }
-        await cm.createIndividuo(JSON.stringify(params)).then(
-            res => {
-                console.log('CreateIndividuo', res)
 
-                if (res.response === 'success') {
-                    sessionStorage.setItem('individuoSelezionato', res.results)
-                    sessionStorage.setItem('individuoSelezionatoCreatore', localStorage.getItem('userID'))
-                }
+        if (!isOffline) {
+            let cm = new ConnectionManager();
+            var params
+            if (props.tomba != null) {
+                params = { tomba: props.tomba.id, nome: nome, creatore: localStorage.getItem('userID') }
+            } else {
+                params = { tomba: tomba, nome: nome, creatore: localStorage.getItem('userID') }
             }
-        );
+            await cm.createIndividuo(JSON.stringify(params)).then(
+                res => {
+                    console.log('CreateIndividuo', res)
+
+                    if (res.response === 'success') {
+                        sessionStorage.setItem('individuoSelezionato', res.results)
+                        sessionStorage.setItem('individuoSelezionatoCreatore', localStorage.getItem('userID'))
+                    }
+                }
+            );
+        } else {
+            if (localStorage.getItem('OfflineIndividui') == null) {
+                let individui = []
+                let individuo = {
+                    nome: nome,
+                    creatore: localStorage.getItem('userID'),
+                    localId: 0
+                }
+                individui.push(individuo)
+                localStorage.setItem('OfflineIndividui', JSON.stringify(individui))
+            } else {
+                let individui = JSON.parse(localStorage.getItem('OfflineIndividui'))
+                let index = individui.length
+                let individuo = {
+                    nome: nome,
+                    creatore: localStorage.getItem('userID'),
+                    localId: index
+                }
+                individui.push(individuo)
+                localStorage.setItem('OfflineIndividui', JSON.stringify(individui))
+            }
+        }
     }
 
     //Chiamate API
@@ -86,27 +116,40 @@ function ModalCreateIndividuo(props) {
 
         setReady(false)
         createIndividuo().then(() => {
-            setTimeout(() => {
-                navigate('/individuo')
-            }, 500);
+            if (!isOffline) {
+                setTimeout(() => {
+                    navigate('/individuo')
+                }, 500);
+            } else {
+                setTimeout(() => {
+                    handleClose()
+                    setReady(true)
+                }, 500);
+            }
         })
     }
 
     let checkProps = () => {
-        if (props.tomba != null) {
-            return (<Form.Select required aria-label="Default select example" disabled>
-                <option value={props.tomba.id}>{props.tomba.nome}</option>
-            </Form.Select>)
+
+        if (!isOffline) {
+            if (props.tomba != null) {
+                return (<Form.Select required aria-label="Default select example" disabled>
+                    <option value={props.tomba.id}>{props.tomba.nome}</option>
+                </Form.Select>)
+            } else {
+                return (<Form.Select required aria-label="Default select example" onChange={(e) => setTomba(e.target.value)}>
+                    <option></option>
+                    {tombe ? (tombe.map(tomba => <option key={tomba.id} value={tomba.id}>{tomba.nome}</option>))
+                        : (<option></option>)}
+                </Form.Select>)
+            }
         } else {
-            return (<Form.Select required aria-label="Default select example" onChange={(e) => setTomba(e.target.value)}>
-                <option></option>
-                {tombe ? (tombe.map(tomba => <option key={tomba.id} value={tomba.id}>{tomba.nome}</option>))
-                    : (<option></option>)}
-            </Form.Select>)
+            return <></>
         }
+
+
     }
     if (localStorage.getItem('ruolo') != 0 && localStorage.getItem('ruolo') != 1) {
-
         return (
             <div className='py-2'>
                 <Button style={centerMiddle} className='w-100 d-flex justify-content-start' variant="outline-primary" onClick={handleShow}>

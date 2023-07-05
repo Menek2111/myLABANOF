@@ -6,14 +6,13 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import DropDownDistretti from '../UI/dropDownDistretti';
 import { useLocation } from 'react-router-dom';
 
-
-
-import skull from '../images/skull (3).jpg'
+import skull from '../images/skull.png'
 import colonna from '../images/colonna.png'
 import denti from '../images/teeth.png'
 import torace from '../images/torace.png'
 import artiSuperiori from '../images/artisup.png'
-import artiInferiori from '../images/artisup.png'
+import artiInferiori from '../images/artiinf.png'
+import nmr from '../images/nmr.png'
 
 import OssaDistretto from '../tabelle/distretti/OssaDistretto';
 import CaratteriMetrici from '../tabelle/caratteri/caratteriMetrici';
@@ -38,6 +37,8 @@ function SchedaDistretto(props) {
                 return 5
             case 'Arti inferiori':
                 return 6
+            case 'NMR':
+                return 7
             default:
                 return null
         }
@@ -57,6 +58,8 @@ function SchedaDistretto(props) {
                 return artiSuperiori
             case 'Arti inferiori':
                 return artiInferiori
+            case 'NMR':
+                return nmr
             default:
                 return null
         }

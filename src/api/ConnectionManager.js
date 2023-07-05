@@ -564,6 +564,15 @@ export default class ConnectionManager {
         return data
     }
 
+    deleteAccount = async function (params) {
+        var json = JSON.parse(params)
+        var URL = "https://applabanof.altervista.org/applabanof/data/delete/deleteAccount.php"
+        const { data } = await axios.post(URL, {
+            id: json.id
+        })
+        return data
+    }
+
 
     //EDIT
     editTomba = async function (params) {
