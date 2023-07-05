@@ -48,6 +48,9 @@ function NavBar() {
             navigate('/offline')
         }
 
+        if (!isOnline) {
+            navigate('/offline')
+        }
         window.addEventListener("online", onlineHandler);
         window.addEventListener("offline", offlineHandler);
 
