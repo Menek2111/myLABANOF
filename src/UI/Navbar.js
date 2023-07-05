@@ -59,7 +59,7 @@ function NavBar() {
             window.removeEventListener("online", onlineHandler);
             window.removeEventListener("offline", offlineHandler);
         };
-    }, [tipoRicerca, location]);
+    }, [tipoRicerca, location, navigate]);
 
     const getResultsByQuery = async (query) => {
         let cm = new ConnectionManager();
