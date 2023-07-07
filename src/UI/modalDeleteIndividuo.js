@@ -79,22 +79,14 @@ function ModalDeleteIndividuo(props) {
             >
                 <Modal.Header closeButton>
                     <Modal.Title>
-                        <h4 className='text-danger'>Sei sicuro di voler eliminare l'individuo ?</h4>
-                        <p className=' p-0 m-0 text-warning'>Questa operazione sarà irreversibile</p>
+                        <h4 className=''>Eliminazione individuo</h4>
                     </Modal.Title>
                 </Modal.Header>
                 <Form onSubmit={handleSubmit}>
                     <Modal.Body>
 
-                        <div className='d-flex border border-danger rounded p-2 my-4' style={{ backgroundColor: '#F7F9FC' }}>
-                            <div>
-                                <img src={thumb} alt="thumb" style={{ height: '15vh' }} />
-                            </div>
-                            <div>
-                                <p>Individuo: {props.individuo.nome}</p>
-
-                                <p>Creato il: {props.individuo.dataCreazione}</p>
-                            </div>
+                        <div className='my-5'>
+                            Sei sicuro di voler eliminare questo individuo? Questa operazione è irreversibile
                         </div>
 
 

@@ -48,19 +48,39 @@ function ModalCreateOsso(props) {
         event.preventDefault();
 
         let cm = new ConnectionManager();
-        var params = {
-            tipoOsso: nome,
-            lato: lato,
-            integro: integro,
-            lvlIntegrita: lvlIntegrita,
-            lvlQualita: lvlQualita,
-            restaurato: restaurato,
-            catalogazioneDescrizione: catalogazioneDescrizione,
-            indagineRadiologica: indagineRadiologica,
-            campionamento: campionamento,
-            altreAnalisi: altreAnalisi,
-            individuo: props.individuo
+
+        var params
+        if (props.nmr != 'true') {
+            params = {
+                tipoOsso: nome,
+                lato: lato,
+                integro: integro,
+                lvlIntegrita: lvlIntegrita,
+                lvlQualita: lvlQualita,
+                restaurato: restaurato,
+                catalogazioneDescrizione: catalogazioneDescrizione,
+                indagineRadiologica: indagineRadiologica,
+                campionamento: campionamento,
+                altreAnalisi: altreAnalisi,
+                individuo: props.individuo
+            }
+        } else {
+            params = {
+                tipoOsso: nome,
+                lato: lato,
+                integro: integro,
+                lvlIntegrita: lvlIntegrita,
+                lvlQualita: lvlQualita,
+                restaurato: restaurato,
+                catalogazioneDescrizione: catalogazioneDescrizione,
+                indagineRadiologica: indagineRadiologica,
+                campionamento: campionamento,
+                altreAnalisi: altreAnalisi,
+                individuo: props.individuo,
+                NMR: '1'
+            }
         }
+
         await cm.createOsso(JSON.stringify(params)).then(res => {
             console.log('CreateOsso', res)
             switch (res.response) {
@@ -91,7 +111,7 @@ function ModalCreateOsso(props) {
             >
                 <Modal.Header closeButton>
                     <Modal.Title>
-                        <p>Creazione osso: </p>
+                        <p>Creazione osso: {props.nmr}</p>
                     </Modal.Title>
                 </Modal.Header>
                 <Form onSubmit={createOsso}>

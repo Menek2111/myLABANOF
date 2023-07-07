@@ -164,6 +164,14 @@ export default class ConnectionManager {
         })
         return data
     }
+    getOssaNMRByIndividuo = async function (params) {
+        var json = JSON.parse(params)
+        var URL = "https://applabanof.altervista.org/applabanof/data/getOssaNMRByIndividuo.php"
+        const { data } = await axios.post(URL, {
+            individuo: json.individuo
+        })
+        return data
+    }
     getCaratteristicheDeposizioneByIndividuo = async function (params) {
         var json = JSON.parse(params)
         var URL = "https://applabanof.altervista.org/applabanof/data/getCaratteristicheDeposizioneByIndividuo.php"
@@ -382,7 +390,8 @@ export default class ConnectionManager {
             indagineRadiologica: osso.indagineRadiologica,
             campionamento: osso.campionamento,
             altreAnalisi: osso.altreAnalisi,
-            individuo: osso.individuo
+            individuo: osso.individuo,
+            NMR: osso.NMR
         })
         return data
     }

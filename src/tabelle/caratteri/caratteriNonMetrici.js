@@ -128,7 +128,7 @@ function CaratteriNonMetrici(props) {
 
     }
 
-    if (props.distretto == 2) {
+    if (props.distretto == 2 || props.distretto == 7) {
         return <div></div>
     } else {
         return (<div className="col-6">

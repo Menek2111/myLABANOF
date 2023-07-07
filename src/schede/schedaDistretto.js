@@ -113,6 +113,18 @@ function SchedaDistretto(props) {
         }
     }
 
+    let numeroOssa = () => {
+        if (getDistrettoId(props.distretto) == 7) {
+            return <></>
+        } else {
+            if (getDistrettoId(props.distretto) == 2) {
+                return <>Denti presenti: {nOssa}</>
+            } else {
+                return <>Ossa presenti: {nOssa}</>
+            }
+        }
+    }
+
     return (
         <div className='px-4 py-2 containerPrincipale'>
             <div className='rounded h-100'>
@@ -127,9 +139,8 @@ function SchedaDistretto(props) {
                                     <div className='d-flex w-100 justify-content-center'>
                                         <img className='mx-2' src={imageFromDistretto(props.distretto)} style={{ height: '10vh' }} />
                                         <p style={centerMiddle} className=''>Distretto: {props.distretto.toUpperCase()} <br />
-                                            {(getDistrettoId(props.distretto) != 2) ? (<>Ossa presenti: </>) : (<>Denti presenti: </>)}
-
-                                            {nOssa ? (nOssa) : (<span></span>)}</p>
+                                            {nOssa ? (numeroOssa()) : (<> </>)}
+                                        </p>
                                     </div>
                                 </div>
                                 <div className='col-2 d-flex flex-column justify-content-center'>

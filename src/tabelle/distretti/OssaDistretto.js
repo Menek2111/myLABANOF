@@ -43,6 +43,11 @@ function OssaDistretto(props) {
             return await cm.getDentiIndividuoByDistretto(JSON.stringify({ individuo: sessionStorage.getItem('individuoSelezionato'), distretto: getDistrettoId(props.distretto) }));
         }
     }
+    const getOssaNMRByIndividuo = async (e) => {
+        let cm = new ConnectionManager();
+        return await cm.getOssaNMRByIndividuo(JSON.stringify({ individuo: sessionStorage.getItem('individuoSelezionato') }));
+    }
+
     const getOssaByDistretto = async (e) => {
         let cm = new ConnectionManager();
         let res = await cm.getOssaByDistretto(JSON.stringify({ distretto: props.distretto }));
@@ -81,15 +86,26 @@ function OssaDistretto(props) {
             })
         }
 
+        if (getDistrettoId(props.distretto) != 7) {
+            getOssaIndividuoByDistretto().then(res => {
+                if (res.response === 'success') {
+                    console.log('aggiorna', res.results)
+                    setOssa(res.results.sort(compare))
+                } else {
+                    setOssa([])
+                }
+            })
+        } else {
+            getOssaNMRByIndividuo().then(res => {
+                if (res.response === 'success') {
+                    console.log('aggiorna', res.results)
+                    setOssa(res.results.sort(compare))
+                } else {
+                    setOssa([])
+                }
+            })
+        }
 
-        getOssaIndividuoByDistretto().then(res => {
-            if (res.response === 'success') {
-                console.log('aggiorna', res.results)
-                setOssa(res.results.sort(compare))
-            } else {
-                setOssa([])
-            }
-        })
         props.callback()
     }
 
@@ -161,6 +177,7 @@ function OssaDistretto(props) {
         }
     }
 
+
     let checkUser = () => {
 
         switch (localStorage.getItem('ruolo')) {
@@ -176,7 +193,11 @@ function OssaDistretto(props) {
                         {getDistrettoId(props.distretto) == 2 ? (
                             <ModalCreateDente tipoOssa={tipoOssa} individuo={sessionStorage.getItem('individuoSelezionato')} callback={aggiorna} />
                         ) : (
-                            <ModalCreateOsso tipoOssa={tipoOssa} individuo={sessionStorage.getItem('individuoSelezionato')} callback={aggiorna} />
+                            getDistrettoId(props.distretto) == 7 ? (
+                                <ModalCreateOsso tipoOssa={tipoOssa} nmr='true' individuo={sessionStorage.getItem('individuoSelezionato')} callback={aggiorna} />
+                            ) : (
+                                <ModalCreateOsso tipoOssa={tipoOssa} individuo={sessionStorage.getItem('individuoSelezionato')} callback={aggiorna} />
+                            )
                         )}
 
                     </div>)
@@ -186,8 +207,11 @@ function OssaDistretto(props) {
                     {getDistrettoId(props.distretto) == 2 ? (
                         <ModalCreateDente tipoOssa={tipoOssa} individuo={sessionStorage.getItem('individuoSelezionato')} callback={aggiorna} />
                     ) : (
-                        <ModalCreateOsso tipoOssa={tipoOssa} individuo={sessionStorage.getItem('individuoSelezionato')} callback={aggiorna} />
-                    )}
+                        getDistrettoId(props.distretto) == 7 ? (
+                            <ModalCreateOsso tipoOssa={tipoOssa} nmr='true' individuo={sessionStorage.getItem('individuoSelezionato')} callback={aggiorna} />
+                        ) : (
+                            <ModalCreateOsso tipoOssa={tipoOssa} individuo={sessionStorage.getItem('individuoSelezionato')} callback={aggiorna} />
+                        ))}
 
                 </div>)
             default:
@@ -207,7 +231,7 @@ function OssaDistretto(props) {
                     ) : (
                         <ModalCreateOsso tipoOssa={tipoOssa} individuo={sessionStorage.getItem('individuoSelezionato')} callback={aggiorna} />
                     )}
-
+ 
                 </div>)
             }
         }*/

@@ -18,6 +18,11 @@ function CaratteriMetrici(props) {
         let res = await cm.getCaratteriMetriciByDistretto(JSON.stringify({ distretto: props.distretto }));
         return res;
     }
+    const getCaratteriMetrici = async () => {
+        let cm = new ConnectionManager();
+        let res = await cm.getCaratteriMetrici();
+        return res;
+    }
 
     const getCaratteriMetriciByDistrettoAndIndividuo = async () => {
         let cm = new ConnectionManager();
@@ -27,23 +32,43 @@ function CaratteriMetrici(props) {
     const location = useLocation();
 
     useEffect(() => {
-        getCaratteriMetriciByDistretto().then(res => {
-            console.log('getCaratteriMetriciByDistretto', res)
-            switch (res.response) {
-                case 'success':
-                    setCaratteriMetrici(res.results)
-                    break
-                case 'empty':
-                    setCaratteriMetrici([])
-                    break
-                case 'error':
-                    setCaratteriMetrici([])
-                    break
-                default:
-                    setCaratteriMetrici([])
-                    break
-            }
-        })
+        if (props.distretto != 7) {
+            getCaratteriMetriciByDistretto().then(res => {
+                console.log('getCaratteriMetriciByDistretto', res)
+                switch (res.response) {
+                    case 'success':
+                        setCaratteriMetrici(res.results)
+                        break
+                    case 'empty':
+                        setCaratteriMetrici([])
+                        break
+                    case 'error':
+                        setCaratteriMetrici([])
+                        break
+                    default:
+                        setCaratteriMetrici([])
+                        break
+                }
+            })
+        } else {
+            getCaratteriMetrici().then(res => {
+                console.log('getCaratteriMetrici', res)
+                switch (res.response) {
+                    case 'success':
+                        setCaratteriMetrici(res.results)
+                        break
+                    case 'empty':
+                        setCaratteriMetrici([])
+                        break
+                    case 'error':
+                        setCaratteriMetrici([])
+                        break
+                    default:
+                        setCaratteriMetrici([])
+                        break
+                }
+            })
+        }
 
         getCaratteriMetriciByDistrettoAndIndividuo().then(res => {
             switch (res.response) {
@@ -133,7 +158,7 @@ function CaratteriMetrici(props) {
     }
 
 
-    if (props.distretto == 2) {
+    if (props.distretto == 2 || props.distretto == 7) {
         return <div></div>
     } else {
         return (<div className="col-6">
