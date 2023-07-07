@@ -32,13 +32,13 @@ function SchedaIndividuo(props) {
 
     const [editable, setEditable] = useState(false)
 
+    //ONLINE -----------------------------------------------------------------------------
     const getIndividuoById = async () => {
         let cm = new ConnectionManager();
         let res = await cm.getIndividuoById(JSON.stringify({ id: sessionStorage.getItem('individuoSelezionato') }));
         return res
     }
     const [individuo, setIndividuo] = useState()
-
 
     const getCaratteristicheDeposizioneByIndividuo = async () => {
         let cm = new ConnectionManager();
@@ -53,10 +53,18 @@ function SchedaIndividuo(props) {
         return res
     }
     const [userInfo, setUserInfo] = useState()
+    //ONLINE -----------------------------------------------------------------------------
 
     const location = useLocation();
     useEffect(() => {
-        aggiorna()
+        if (localStorage.getItem('isOnline') == 'true') {
+            aggiorna() //ONLINE
+        } else {
+            //OFFLINE
+            let index = sessionStorage.getItem('individuoSelezionato')
+            let array = JSON.parse(localStorage.getItem('OfflineIndividui'))
+            setIndividuo(array[index])
+        }
     }, [location]);
 
     function changeEditable() {
@@ -98,18 +106,33 @@ function SchedaIndividuo(props) {
     }
 
     function editButton() {
-        if (editable) {
+
+        if (localStorage.getItem('isOnline') == 'true') {
+
+            if (editable) {
+
+                return (<div className='d-flex justify-content-around'>
+                    <Button variant="secondary" onClick={() => changeEditable()}>
+                        Annulla
+                    </Button>
+                    <Button className='w-100 mx-2' variant="primary" onClick={() => salva()}>
+                        Salva
+                    </Button>
+                </div>)
+            } else {
+                return checkUser()
+            }
+
+        } else {
             return (<div className='d-flex justify-content-around'>
-                <Button variant="secondary" onClick={() => changeEditable()}>
-                    Annulla
-                </Button>
-                <Button className='w-100 mx-2' variant="primary" onClick={() => salva()}>
+                <Button className='w-100 mx-2' variant="primary" onClick={() => salvaOffline()}>
                     Salva
                 </Button>
             </div>)
-        } else {
-            return checkUser()
         }
+
+
+
     }
 
     const [modGeneralità, setModGeneralità] = useState()
@@ -210,6 +233,43 @@ function SchedaIndividuo(props) {
         })
     }
 
+    const salvaOffline = () => {
+        let index = sessionStorage.getItem('individuoSelezionato')
+        let array = JSON.parse(localStorage.getItem('OfflineIndividui'))
+
+        let caratteristicheDellaDeposizione = {
+            luogoRitrovamento: modCaratteristicheDeposizione.luogoRitrovamento,
+            tipoSepoltura: modCaratteristicheDeposizione.tipoSepoltura,
+            tipoTerreno: modCaratteristicheDeposizione.tipoTerreno,
+            fauna: modCaratteristicheDeposizione.fauna,
+            clima: modCaratteristicheDeposizione.clima,
+            effettiPersonali: modCaratteristicheDeposizione.effettiPersonali,
+            ossaAnimali: modCaratteristicheDeposizione.ossaAnimali,
+            informazioniAnteMortem: modCaratteristicheDeposizione.informazioniAnteMortem,
+            altro: modCaratteristicheDeposizione.altro
+        }
+
+        array[index] = {
+            nome: modGeneralità.nome,
+            luogoRinvenimento: modGeneralità.luogoRinvenimento,
+            dataRinvenimento: modGeneralità.dataRinvenimento,
+            classeDiEta: modProfiloBiologico.classeDiEta,
+            origineBiologica: modProfiloBiologico.origineBiologica,
+            origineGeografica: modProfiloBiologico.origineGeografica,
+            sessoBiologico: modProfiloBiologico.sessoBiologico,
+            stato: modGeneralità.stato,
+            tomba: modGeneralità.tomba,
+            visibilita: visibilita,
+            pesoIndividuo: modGeneralità.pesoIndividuo,
+            pesoCremazione: modGeneralità.pesoCremazione,
+            volumeCremazione: modGeneralità.volumeCremazione,
+            caratteristicheDellaDeposizione: caratteristicheDellaDeposizione
+        }
+
+        localStorage.setItem('OfflineIndividui', JSON.stringify(array))
+        alert('Individuo salvato correttamente')
+    }
+
     let aggiorna = () => {
         getIndividuoById().then(res => {
             console.log('GetIndividuoById', res)
@@ -248,60 +308,108 @@ function SchedaIndividuo(props) {
 
     }
 
-    return (
-        <div>
-            <div className='px-4 py-2 containerPrincipale'>
-                <div className='rounded h-100'>
-                    <div className='container-fluid h-100'>
-                        <div className='row h-100'>
-                            <div className='col bg-white h-100 w-100 rounded border' style={{ overflowY: 'scroll' }}>
-                                <div className='row border-bottom rounded-top justify-content-between'>
-                                    <div className='col-10 py-2 d-flex'>
-                                        <div style={centerMiddle}>
-                                            {individuo ? (<DropdownDistretti scheda='Individuo' id={individuo.id} />) : (<div></div>)}
+    if (localStorage.getItem('isOnline') == 'true') {
+        return (
+            <div>
+                <div className='px-4 py-2 containerPrincipale'>
+                    <div className='rounded h-100'>
+                        <div className='container-fluid h-100'>
+                            <div className='row h-100'>
+                                <div className='col bg-white h-100 w-100 rounded border' style={{ overflowY: 'scroll' }}>
+                                    <div className='row border-bottom rounded-top justify-content-between'>
+                                        <div className='col-10 py-2 d-flex'>
+                                            <div style={centerMiddle}>
+                                                {individuo ? (<DropdownDistretti scheda='Individuo' id={individuo.id} />) : (<div></div>)}
+
+                                            </div>
+                                            <div className='d-flex w-100 justify-content-center'>
+                                                <img className='mx-2' src={ind} style={{ height: '10vh' }} />
+                                                {individuo ? (<p style={centerMiddle} className=''>{individuo.nome} <br /> Creato da: {userInfo ? (userInfo.email) : (<>---</>)} <br /> Data: {individuo.dataCreazione} </p>
+                                                ) : (<div></div>)}
+                                            </div>
 
                                         </div>
-                                        <div className='d-flex w-100 justify-content-center'>
-                                            <img className='mx-2' src={ind} style={{ height: '10vh' }} />
-                                            {individuo ? (<p style={centerMiddle} className=''>{individuo.nome} <br /> Creato da: {userInfo ? (userInfo.email) : (<>---</>)} <br /> Data: {individuo.dataCreazione} </p>
-                                            ) : (<div></div>)}
+
+                                        <div className='col-2 d-flex flex-column justify-content-center'>
+                                            {individuo ? (editButton()) : (<div></div>)}
                                         </div>
-
                                     </div>
 
-                                    <div className='col-2 d-flex flex-column justify-content-center'>
-                                        {individuo ? (editButton()) : (<div></div>)}
-                                    </div>
+                                    {individuo ? (<div className='row py-3'>
+
+                                        {editable ? (<div className='mb-3' >
+                                            <div className='border rounded p-2' >
+                                                <p>Stato visibilità:</p>
+                                                <Form.Select required aria-label="Default select example" defaultValue={visibilita} onChange={(e) => setVisibilita(e.target.value)}>
+                                                    <option value='0'>Bozza</option>
+                                                    <option value='1'>Pubblico</option>
+                                                </Form.Select>
+                                            </div>
+                                        </div>) : (<></>)}
+
+                                        <GeneralitàIndividuo col="col-6" editable={editable} individuo={individuo} onIndividuoChange={addModificheGeneralità} callback={aggiorna} />
+
+                                        <ProfiloBiologicoIndividuo col="col-6" editable={editable} individuo={individuo} onIndividuoChange={addModificheProfiloBiologio} callback={aggiorna} />
+                                        {caratteristicheDeposizione ? (<CaratteristicheDellaDeposizione col="col-6 mt-5" editable={editable} individuo={caratteristicheDeposizione} onIndividuoChange={addModificheCaratteristicheDeposizione} callback={aggiorna} />
+                                        ) : (
+                                            <></>
+                                        )}
+                                    </div>) : (<div></div>)}
+
                                 </div>
-
-                                {individuo ? (<div className='row py-3'>
-
-                                    {editable ? (<div className='mb-3' >
-                                        <div className='border rounded p-2' >
-                                            <p>Stato visibilità:</p>
-                                            <Form.Select required aria-label="Default select example" defaultValue={visibilita} onChange={(e) => setVisibilita(e.target.value)}>
-                                                <option value='0'>Bozza</option>
-                                                <option value='1'>Pubblico</option>
-                                            </Form.Select>
-                                        </div>
-                                    </div>) : (<></>)}
-
-                                    <GeneralitàIndividuo col="col-6" editable={editable} individuo={individuo} onIndividuoChange={addModificheGeneralità} callback={aggiorna} />
-
-                                    <ProfiloBiologicoIndividuo col="col-6" editable={editable} individuo={individuo} onIndividuoChange={addModificheProfiloBiologio} callback={aggiorna} />
-                                    {caratteristicheDeposizione ? (<CaratteristicheDellaDeposizione col="col-6 mt-5" editable={editable} individuo={caratteristicheDeposizione} onIndividuoChange={addModificheCaratteristicheDeposizione} callback={aggiorna} />
-                                    ) : (
-                                        <></>
-                                    )}
-                                </div>) : (<div></div>)}
-
                             </div>
                         </div>
                     </div>
-                </div>
-            </div >
+                </div >
 
-        </div >
-    );
+            </div >
+        );
+    } else {
+        return (
+            <div>
+                <div className='px-4 py-2 containerPrincipale'>
+                    <div className='rounded h-100'>
+                        <div className='container-fluid h-100'>
+                            <div className='row h-100'>
+                                <div className='col bg-white h-100 w-100 rounded border' style={{ overflowY: 'scroll' }}>
+                                    <div className='row border-bottom rounded-top justify-content-between'>
+                                        <div className='col-10 py-2 d-flex'>
+                                            <div style={centerMiddle}>
+                                                {individuo ? (<DropdownDistretti scheda='Individuo' id={individuo.localId} />) : (<div></div>)}
+
+                                            </div>
+                                            <div className='d-flex w-100 justify-content-center'>
+                                                <img className='mx-2' src={ind} style={{ height: '10vh' }} />
+                                                {individuo ? (<p style={centerMiddle} className=''>{individuo.nome}</p>
+                                                ) : (<div></div>)}
+                                            </div>
+
+                                        </div>
+
+                                        <div className='col-2 d-flex flex-column justify-content-center'>
+                                            {individuo ? (editButton()) : (<div></div>)}
+                                        </div>
+                                    </div>
+
+                                    {individuo ? (<div className='row py-3'>
+
+
+                                        <GeneralitàIndividuo col="col-6" editable={true} individuo={individuo} onIndividuoChange={addModificheGeneralità} callback={aggiorna} />
+
+                                        <ProfiloBiologicoIndividuo col="col-6" editable={true} individuo={individuo} onIndividuoChange={addModificheProfiloBiologio} callback={aggiorna} />
+
+                                        <CaratteristicheDellaDeposizione col="col-6 mt-5" editable={true} individuo={ind} onIndividuoChange={addModificheCaratteristicheDeposizione} callback={aggiorna} />
+
+                                    </div>) : (<div>{sessionStorage.getItem('individuoSelezionato')}</div>)}
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div >
+
+            </div >
+        );
+    }
 }
 export default SchedaIndividuo;

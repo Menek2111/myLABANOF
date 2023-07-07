@@ -87,8 +87,12 @@ function SchedaOffline() {
 
                         <div className="row">
                             {individui ? (
-                                individui.map(ind => <div className='col-2'>
-                                    <div className="indCard p-2 rounded border d-flex">
+                                individui.map((ind, index) => <div className='col-2'>
+                                    <div className="indCard p-2 rounded border d-flex" onClick={() => {
+                                        sessionStorage.setItem('individuoSelezionato', index)
+                                        sessionStorage.setItem('individuoSelezionatoCreatore', ind.creatore)
+                                        navigate('/individuo')
+                                    }}>
                                         <img src={indThumb} style={{ height: '5vh' }} />
                                         <p className="w-100 text-center">{ind.nome}</p>
                                     </div>
