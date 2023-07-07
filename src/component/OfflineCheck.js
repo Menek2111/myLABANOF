@@ -25,7 +25,6 @@ function OfflineCheck(props) {
             }
         );
     }
-
     const editIndividuo = async (ind, id) => {
         let cm = new ConnectionManager();
         let modifiche = {
@@ -75,9 +74,7 @@ function OfflineCheck(props) {
             }
         })
     }
-
     let uploadLocalData = async () => {
-
         if (localStorage.getItem('OfflineIndividui') != null) {
             let individui = JSON.parse(localStorage.getItem('OfflineIndividui'))
             individui.map(

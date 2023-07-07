@@ -42,16 +42,16 @@ function Login() {
     useEffect(() => {
         function onlineHandler() {
             setIsOnline(true);
+            localStorage.setItem('isOnline', true)
         }
 
         function offlineHandler() {
             setIsOnline(false);
+            localStorage.setItem('isOnline', false)
         }
 
         window.addEventListener("online", onlineHandler);
         window.addEventListener("offline", offlineHandler);
-
-
 
 
         //Controllo se il token è ancora valido, se lo è impedisco la visualizzazione della pagina

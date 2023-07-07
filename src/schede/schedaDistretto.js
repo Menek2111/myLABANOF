@@ -87,7 +87,12 @@ function SchedaDistretto(props) {
 
     const location = useLocation();
     useEffect(() => {
-        aggiorna()
+        if (localStorage.getItem('isOnline') == 'true') {
+            aggiorna()
+        } else {
+            //OFFLINE
+        }
+
     }, [location]);
 
     let aggiorna = () => {
