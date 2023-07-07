@@ -47,6 +47,12 @@ function SchedaIndividuo(props) {
     }
     const [caratteristicheDeposizione, setCaratteristicheDeposizione] = useState()
 
+    const getUserInfo = async (id) => {
+        let cm = new ConnectionManager();
+        let res = await cm.getUserInfo(JSON.stringify({ id: id }));
+        return res
+    }
+    const [userInfo, setUserInfo] = useState()
 
     const location = useLocation();
     useEffect(() => {
@@ -66,15 +72,14 @@ function SchedaIndividuo(props) {
             case '1':
                 return <></>
             case '2':
-                if (localStorage.getItem('userID') != individuo.utente.id) {
+                if (localStorage.getItem('userID') != individuo.creatore) {
                     return (<div></div>)
                 } else {
                     return (<div className='d-flex justify-content-around'>
                         <Button variant="primary" onClick={() => changeEditable()}>
                             Modifica
                         </Button>
-                        <ModalDeleteIndividuo individuo={individuo.individuo} utente={individuo.utente} callback={aggiorna} />
-
+                        <ModalDeleteIndividuo individuo={individuo} utente={userInfo} callback={aggiorna} />
                     </div>)
                 }
             case '3':
@@ -82,7 +87,7 @@ function SchedaIndividuo(props) {
                     <Button variant="primary" onClick={() => changeEditable()}>
                         Modifica
                     </Button>
-                    <ModalDeleteIndividuo individuo={individuo.individuo} utente={individuo.utente} callback={aggiorna} />
+                    <ModalDeleteIndividuo individuo={individuo} utente={individuo.utente} callback={aggiorna} />
 
                 </div>)
             default:
@@ -111,13 +116,16 @@ function SchedaIndividuo(props) {
     const [modProfiloBiologico, setModProfiloBiologico] = useState()
     const [modCaratteristicheDeposizione, setModCaratteristicheDeposizione] = useState()
 
-    const addModificheGeneralità = (nome, luogo, data, stato, tomba) => {
+    const addModificheGeneralità = (nome, luogo, data, stato, tomba, pesoIndividuo, pesoCremazione, volumeCremazione) => {
         var mod = {
             nome: nome,
             luogoRinvenimento: luogo,
             dataRinvenimento: data,
             stato: stato,
-            tomba: tomba
+            tomba: tomba,
+            pesoIndividuo: pesoIndividuo,
+            pesoCremazione: pesoCremazione,
+            volumeCremazione: volumeCremazione
         }
         setModGeneralità(mod)
     }
@@ -162,7 +170,10 @@ function SchedaIndividuo(props) {
             sessoBiologico: modProfiloBiologico.sessoBiologico,
             stato: modGeneralità.stato,
             tomba: modGeneralità.tomba,
-            visibilita: visibilita
+            visibilita: visibilita,
+            pesoIndividuo: modGeneralità.pesoIndividuo,
+            pesoCremazione: modGeneralità.pesoCremazione,
+            volumeCremazione: modGeneralità.volumeCremazione
         }
 
         await cm.editIndividuo(JSON.stringify(modifiche)).then(res => {
@@ -204,8 +215,17 @@ function SchedaIndividuo(props) {
             console.log('GetIndividuoById', res)
             switch (res.response) {
                 case 'success':
-                    setIndividuo(res)
-                    setVisibilita(res.individuo.visibilita)
+                    setIndividuo(res.results)
+                    setVisibilita(res.results.visibilita)
+
+                    getUserInfo(res.results.creatore).then(res => {
+                        console.log('getUserInfo', res)
+                        if (res.response == 'success') {
+                            setUserInfo(res.results[0])
+                        } else {
+                            setUserInfo(null)
+                        }
+                    })
                     break
                 case 'error':
                     break
@@ -238,12 +258,12 @@ function SchedaIndividuo(props) {
                                 <div className='row border-bottom rounded-top justify-content-between'>
                                     <div className='col-10 py-2 d-flex'>
                                         <div style={centerMiddle}>
-                                            {individuo ? (<DropdownDistretti scheda='Individuo' id={individuo.individuo.id} />) : (<div></div>)}
+                                            {individuo ? (<DropdownDistretti scheda='Individuo' id={individuo.id} />) : (<div></div>)}
 
                                         </div>
                                         <div className='d-flex w-100 justify-content-center'>
                                             <img className='mx-2' src={ind} style={{ height: '10vh' }} />
-                                            {individuo ? (<p style={centerMiddle} className=''>{individuo.individuo.nome} <br /> Creato da: {individuo.utente.email} <br /> Data: {individuo.individuo.dataCreazione} </p>
+                                            {individuo ? (<p style={centerMiddle} className=''>{individuo.nome} <br /> Creato da: {userInfo ? (userInfo.email) : (<>---</>)} <br /> Data: {individuo.dataCreazione} </p>
                                             ) : (<div></div>)}
                                         </div>
 
@@ -266,9 +286,9 @@ function SchedaIndividuo(props) {
                                         </div>
                                     </div>) : (<></>)}
 
-                                    <GeneralitàIndividuo col="col-6" editable={editable} individuo={individuo.individuo} onIndividuoChange={addModificheGeneralità} callback={aggiorna} />
+                                    <GeneralitàIndividuo col="col-6" editable={editable} individuo={individuo} onIndividuoChange={addModificheGeneralità} callback={aggiorna} />
 
-                                    <ProfiloBiologicoIndividuo col="col-6" editable={editable} individuo={individuo.individuo} onIndividuoChange={addModificheProfiloBiologio} callback={aggiorna} />
+                                    <ProfiloBiologicoIndividuo col="col-6" editable={editable} individuo={individuo} onIndividuoChange={addModificheProfiloBiologio} callback={aggiorna} />
                                     {caratteristicheDeposizione ? (<CaratteristicheDellaDeposizione col="col-6 mt-5" editable={editable} individuo={caratteristicheDeposizione} onIndividuoChange={addModificheCaratteristicheDeposizione} callback={aggiorna} />
                                     ) : (
                                         <></>

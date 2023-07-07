@@ -36,7 +36,6 @@ function OfflineCheck(props) {
         }
     }
 
-
     const location = useLocation();
     const navigate = useNavigate();
 
@@ -72,6 +71,7 @@ function OfflineCheck(props) {
     //<div className='delete-button' onClick={() => { if (window.confirm('Are you sure you wish to delete this item?')) this.onCancel(item) } } />
 
     if (isOnline) {
+
         return <div className='bg-success w-100' style={{ height: '1px' }}></div>
     } else {
         return <div className='bg-danger w-100' style={{ height: '1px' }}></div>

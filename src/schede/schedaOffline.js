@@ -100,17 +100,11 @@ function SchedaOffline() {
 
                         </div>
                     </div>
-
-
-
-
                 </div>
-
-
-
             </div>
         </div >
 
     );
 }
+
 export default SchedaOffline;

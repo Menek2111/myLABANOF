@@ -150,6 +150,7 @@ function OssaDistretto(props) {
                             <th>Commenti</th>
                             <th>Indagine radiologica</th>
                             <th>Prelievi/Campionamenti</th>
+
                         </tr>
                     </thead>
                     <tbody>

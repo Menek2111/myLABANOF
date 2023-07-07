@@ -252,7 +252,6 @@ function RichiesteRegistrazione(props) {
         }
     }
 
-
     return (
         <div className={props.col}>
 
@@ -350,6 +349,25 @@ function RigaAccount(props) {
         return res
     }
 
+
+
+    const deleteAccount = async () => {
+        let cm = new ConnectionManager();
+
+        if (window.confirm('Sei sicuro di voler rifiutare questa richiesta?')) {
+
+            let res = await cm.deleteAccount(JSON.stringify({ id: props.utente.id }));
+            console.log('deleteAccount', res)
+            if (res.response == 'success') {
+                props.callback()
+
+            } else {
+                alert('Impossibile eliminare account')
+            }
+
+        }
+    }
+
     let handleSubmit = (event) => {
         event.preventDefault()
         editRuoloAccountById().then(res => {
@@ -371,7 +389,7 @@ function RigaAccount(props) {
                     <option value='3'>Admin</option>
                 </Form.Select>
                 <Button type='submit'>Accetta</Button>
-                <Button variant='outline-danger' className='mx-2'>Rifiuta</Button>
+                <Button variant='outline-danger' className='mx-2' onClick={() => deleteAccount()}>Rifiuta</Button>
             </Form>)
         } else {
             return (<Form className='d-flex' onSubmit={handleSubmit} >

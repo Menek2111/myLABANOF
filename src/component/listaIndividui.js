@@ -133,7 +133,14 @@ function ListaIndividui(props) {
     }
 
     let moreButton = () => {
-        if (max >= props.individui.length) {
+
+        let array = []
+        props.individui.map((ind) => {
+            if (ind.visibilita == 1) {
+                array.push(ind)
+            }
+        })
+        if (max >= array.length) {
             return <></>
         } else {
             return <Button variant="link" onClick={() => setMax((state) => state + 6)}>Mostra altri individui</Button>

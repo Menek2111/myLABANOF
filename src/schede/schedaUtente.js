@@ -38,19 +38,39 @@ function SchedaUtente() {
         let res = await cm.getIndividuiByUser(JSON.stringify({ user: sessionStorage.getItem('profiloSelezionato') }));
         return res;
     }
+
+
     const deleteAccount = async () => {
-        let cm = new ConnectionManager();
-        let res = await cm.deleteAccount(JSON.stringify({ id: localStorage.getItem('userID') }));
-        console.log('deleteAccount', res)
-        if (res.response == 'success') {
-            googleLogout();
-            localStorage.removeItem('profile')
-            localStorage.removeItem('userID')
-            sessionStorage.removeItem('access_token')
-            navigate('/')
-            alert('Account eliminato con successo')
-            //LOGOUT
+
+        if (window.confirm('Sei sicuro di voler eliminare il tuo profilo?')) {
+            if (window.confirm('Ma ne sei super super sicuro?')) {
+
+                let cm = new ConnectionManager();
+                var params = { id: localStorage.getItem('userID') }
+                await cm.deleteIndividuoSenzaCreatore(JSON.stringify(params))
+
+                let res = await cm.deleteAccount(JSON.stringify({ id: localStorage.getItem('userID') }));
+                console.log('deleteAccount', res)
+                if (res.response == 'success') {
+                    googleLogout();
+                    localStorage.removeItem('profile')
+                    localStorage.removeItem('userID')
+                    sessionStorage.removeItem('access_token')
+                    navigate('/')
+                    alert('Account eliminato con successo')
+                    //LOGOUT
+                } else {
+                    alert('Impossibile eliminare account')
+                }
+            }
         }
+
+
+
+    }
+
+    const deleteProfilo = () => {
+
     }
 
     const location = useLocation();
@@ -145,11 +165,7 @@ function SchedaUtente() {
 
                                 {individui ? (<ListaIndividui pubblici={true} visibilità={true} all={true} colonna="col-3" individui={individui} />) : (<Loading />)}
 
-
-
-                                {individui ? (checkUser()) : (<Loading />)}
-
-
+                                {individui ? (profile ? (checkUser()) : (<></>)) : (<Loading />)}
                             </div>
                         </div>
                     </div>

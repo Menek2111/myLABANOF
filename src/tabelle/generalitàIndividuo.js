@@ -29,9 +29,13 @@ function GeneralitàIndividuo(props) {
 
     const [stato, setStato] = useState(props.individuo.stato)
 
+    const [pesoIndividuo, setPesoIndividuo] = useState(props.individuo.pesoIndividuo)
+    const [pesoCremazione, setPesoCremazione] = useState(props.individuo.pesoCremazione)
+    const [volumeCremazione, setVolumeCremazione] = useState(props.individuo.pesoCremazione)
+
     const propsLink = props
     useEffect(() => {
-        propsLink.onIndividuoChange(nome, luogo, data, stato, tomba)
+        propsLink.onIndividuoChange(nome, luogo, data, stato, tomba, pesoIndividuo, pesoCremazione, volumeCremazione)
         getTombe().then(res => {
             console.log('GetTombe', res)
             if (res.response === 'success') {
@@ -40,7 +44,7 @@ function GeneralitàIndividuo(props) {
                 setTombe([])
             }
         })
-    }, [data, luogo, nome, stato, tomba]);
+    }, [data, luogo, nome, stato, tomba, pesoIndividuo, pesoCremazione, volumeCremazione]);
 
     function editableTable() {
         return (<div>
@@ -76,8 +80,18 @@ function GeneralitàIndividuo(props) {
                             </Form.Select>
                         </td>
                     </tr>
-
-
+                    <tr>
+                        <th>Peso individuo (gr)</th>
+                        <td><input id="inputLuogo" className="form-control" defaultValue={props.individuo.pesoIndividuo} onChange={(e) => setPesoIndividuo(e.target.value)} /></td>
+                    </tr>
+                    <tr>
+                        <th>Peso cremazione (gr)</th>
+                        <td><input id="inputLuogo" className="form-control" defaultValue={props.individuo.pesoCremazione} onChange={(e) => setPesoCremazione(e.target.value)} /></td>
+                    </tr>
+                    <tr>
+                        <th>Volume cremazione (gr)</th>
+                        <td><input id="inputLuogo" className="form-control" defaultValue={props.individuo.volumeCremazione} onChange={(e) => setVolumeCremazione(e.target.value)} /></td>
+                    </tr>
                 </tbody>
             </Table>
             <h5 className='border-bottom my-2'>Tomba di appartenenza</h5>
@@ -116,7 +130,7 @@ function GeneralitàIndividuo(props) {
             <Table bordered striped size="sm">
                 <tbody>
                     <tr>
-                        <th className='w-25'>Individuo N°</th>
+                        <th className="w-25">Individuo N°</th>
                         <td>{props.individuo.nome}</td>
                     </tr>
                     <tr>
@@ -130,6 +144,18 @@ function GeneralitàIndividuo(props) {
                     <tr>
                         <th>Stato</th>
                         <td>{props.individuo.stato}</td>
+                    </tr>
+                    <tr>
+                        <th>Peso individuo (gr)</th>
+                        <td>{props.individuo.pesoIndividuo}</td>
+                    </tr>
+                    <tr>
+                        <th>Peso cremazione (gr)</th>
+                        <td>{props.individuo.pesoCremazione}</td>
+                    </tr>
+                    <tr>
+                        <th>Volume cremazione (gr)</th>
+                        <td>{props.individuo.volumeCremazione}</td>
                     </tr>
 
                 </tbody>

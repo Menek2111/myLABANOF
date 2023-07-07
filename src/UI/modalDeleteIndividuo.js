@@ -92,7 +92,7 @@ function ModalDeleteIndividuo(props) {
                             </div>
                             <div>
                                 <p>Individuo: {props.individuo.nome}</p>
-                                <p>Creato da: {props.utente.email}</p>
+
                                 <p>Creato il: {props.individuo.dataCreazione}</p>
                             </div>
                         </div>

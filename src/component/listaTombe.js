@@ -42,11 +42,16 @@ function ListaTombe(props) {
         }
     }
 
+    function compareNumbers(a, b) {
+        return a - b;
+    }
+
     let checkListaTombe = () => {
         if (props.tombe.length == 0) {
             return <div className="my-4">Non sono state trovate tombe...</div>
         } else {
-            return (props.tombe.map((tomba, index) =>
+            let arr = props.tombe.sort((a, b) => b.nIndividui - a.nIndividui)
+            return (arr.map((tomba, index) =>
                 checkIndex(tomba, index)
             ))
         }

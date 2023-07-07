@@ -50,9 +50,9 @@ function ModalCreateNecropoli() {
         var params = { nome: nome }
 
         let res = await cm.createNecropoli(JSON.stringify(params))
+        console.log('createNecropoli', res)
         if (res.response === 'success') {
-            console.log('createNecropoli', res.response)
-
+            sessionStorage.setItem('necropoliSelezionata', res.results)
         }
     }
 
@@ -63,6 +63,7 @@ function ModalCreateNecropoli() {
         createTomba().then(() => {
             setTimeout(() => {
                 handleClose()
+                navigate('/necropoli')
             }, 500);
         })
     }

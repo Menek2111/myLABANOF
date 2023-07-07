@@ -573,6 +573,15 @@ export default class ConnectionManager {
         return data
     }
 
+    deleteIndividuoSenzaCreatore = async function (params) {
+        var json = JSON.parse(params)
+        var URL = "https://applabanof.altervista.org/applabanof/data/delete/deleteIndividuiSenzaCreatore.php"
+        const { data } = await axios.post(URL, {
+            id: json.id
+        })
+        return data
+    }
+
 
     //EDIT
     editTomba = async function (params) {
@@ -610,7 +619,10 @@ export default class ConnectionManager {
             sessoBiologico: json.sessoBiologico,
             stato: json.stato,
             tomba: json.tomba,
-            visibilita: json.visibilita
+            visibilita: json.visibilita,
+            pesoIndividuo: json.pesoIndividuo,
+            pesoCremazione: json.pesoCremazione,
+            volumeCremazione: json.volumeCremazione
         })
         return data
     }

@@ -108,7 +108,7 @@ function Homepage() {
 
 
 
-                        <h5 className='pt-3 border-bottom'>Tombe <span style={{ fontSize: '0.7em' }} className='text-secondary'>(Solo quelle contenenti almeno un individuo)</span></h5>
+                        <h5 className='pt-3 border-bottom'>Tombe <span style={{ fontSize: '0.7em', display: 'none' }} className='text-secondary'>(Solo quelle contenenti almeno un individuo)</span></h5>
 
                         {tombe ? (<ListaTombe colonna="col-lg-4 col-sm-5" tombe={tombe} />) : (<div></div>)}
 
