@@ -128,7 +128,7 @@ function Login() {
     let checkMemorizzato = () => {
         if (localStorage.getItem('userID') != null) {
 
-            let utente = JSON.stringify(localStorage.getItem('profile'))
+            let utente = JSON.parse(localStorage.getItem('profile'))
 
             return (<>
                 <p>
