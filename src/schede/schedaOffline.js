@@ -56,7 +56,7 @@ function SchedaOffline() {
                 style={{ height: '7vh', backgroundColor: '#F7F9FC' }}
             >
                 <Nav.Item style={centerMiddle}>
-                    <Nav.Link onClick={() => navigate('/home')}>
+                    <Nav.Link >
                         <img src={labanof} alt='Labanof logo' style={{ height: '5vh' }} />
                     </Nav.Link>
                 </Nav.Item>
