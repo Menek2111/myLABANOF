@@ -217,6 +217,24 @@ function SchedaAmministratore() {
                                             <Caratteri col='col-6' caratteri={listaCaratteriMetrici} m={true} distrettoNome='Cranio' callback={aggiorna} />
                                             <Caratteri col='col-6' caratteri={listaCaratteriNonMetrici} m={false} distrettoNome='Cranio' callback={aggiorna} />
 
+                                            <h4>Colonna</h4>
+                                            <Caratteri col='col-6' caratteri={listaCaratteriMetrici} m={true} distrettoNome='Colonna' callback={aggiorna} />
+                                            <Caratteri col='col-6' caratteri={listaCaratteriNonMetrici} m={false} distrettoNome='Colonna' callback={aggiorna} />
+
+
+                                            <h4>Torace</h4>
+                                            <Caratteri col='col-6' caratteri={listaCaratteriMetrici} m={true} distrettoNome='Torace' callback={aggiorna} />
+                                            <Caratteri col='col-6' caratteri={listaCaratteriNonMetrici} m={false} distrettoNome='Torace' callback={aggiorna} />
+
+
+                                            <h4>Arti Superiori</h4>
+                                            <Caratteri col='col-6' caratteri={listaCaratteriMetrici} m={true} distrettoNome='Arti superiori' callback={aggiorna} />
+                                            <Caratteri col='col-6' caratteri={listaCaratteriNonMetrici} m={false} distrettoNome='Arti superiori' callback={aggiorna} />
+
+                                            <h4>Arti Inferiori</h4>
+                                            <Caratteri col='col-6' caratteri={listaCaratteriMetrici} m={true} distrettoNome='Arti inferiori' callback={aggiorna} />
+                                            <Caratteri col='col-6' caratteri={listaCaratteriNonMetrici} m={false} distrettoNome='Arti inferiori' callback={aggiorna} />
+
                                         </div>
                                     </div>
 
@@ -407,6 +425,8 @@ function TraumaGenerale(props) {
 function Caratteri(props) {
 
     const createCarattereMetricoGeneraleEPerDistretto = async (e) => {
+        e.preventDefault()
+
         let cm = new ConnectionManager();
         var params = { nome: nome, distretto: getDistrettoId(props.distrettoNome) }
         let res = await cm.createCarattereMetricoGeneraleEPerDistretto(JSON.stringify(params))
@@ -415,6 +435,7 @@ function Caratteri(props) {
         document.getElementById('formCarattereMetrico').value = ''
     }
     const createCarattereNonMetricoGeneraleEPerDistretto = async (e) => {
+        e.preventDefault()
         let cm = new ConnectionManager();
         var params = { nome: nome, distretto: getDistrettoId(props.distrettoNome) }
         let res = await cm.createCarattereNonMetricoGeneraleEPerDistretto(JSON.stringify(params))

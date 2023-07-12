@@ -8,6 +8,15 @@ import ConnectionManager from '../api/ConnectionManager';
 function OfflineCheck(props) {
     const [isOnline, setIsOnline] = useState(navigator.onLine);
 
+    const [offlineMode, setOfflineMode] = useState(false)
+
+    const centerMiddle = {
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        height: "100%"
+    };
+
     const creaIndividuo = async (ind) => {
         let cm = new ConnectionManager();
         let params = {
@@ -89,22 +98,31 @@ function OfflineCheck(props) {
     const location = useLocation();
     const navigate = useNavigate();
 
+
+    let goOnline = () => {
+        localStorage.setItem('isOnline', true)
+        uploadLocalData()
+        setOfflineMode(false)
+    }
+    let goOffline = () => {
+        localStorage.setItem('isOnline', false)
+        navigate('/offline')
+        setOfflineMode(true)
+    }
+
     useEffect(() => {
         function onlineHandler() {
             setIsOnline(true);
 
             if (window.confirm('La connessione alla rete è stata ristabilita, vuoi tornare in modalità online?')) {
-                localStorage.setItem('isOnline', true)
-                uploadLocalData()
-                //navigate('/')
+                goOnline()
             }
         }
 
         function offlineHandler() {
             setIsOnline(false);
             if (window.confirm('Non è possibile collegarsi alla rete, abilitare la modalità offline?')) {
-                localStorage.setItem('isOnline', false)
-                navigate('/offline')
+                goOffline()
             }
         }
 
@@ -120,12 +138,23 @@ function OfflineCheck(props) {
     //<div className='delete-button' onClick={() => { if (window.confirm('Are you sure you wish to delete this item?')) this.onCancel(item) } } />
 
     if (isOnline) {
-        return <div className='bg-success w-100' style={{ height: '1px' }}></div>
-    } else {
-        return <div className='bg-danger w-100 text-white text-center' >
-            In attesa della rete ...
-        </div>
+        return <div className='bg-success w-100' style={{ height: '1px' }}>
 
+            {offlineMode ? (<a href='#/home' className='text-white p-0 m-0' onClick={() => goOnline()}>Torna in modalità online</a>) : (<></>)}
+
+        </div>
+    } else {
+        return <div className='bg-danger w-100 row justify-content-betweeen' >
+            <div className='col text-start' >
+                <p className='m-0 p-0 text-white'>OFFLINE</p>
+            </div>
+            <div className='col text-center'>
+                <p className='text-white p-0 m-0'>In attesa della rete ...</p>
+            </div>
+            <div className='col text-end'>
+                {offlineMode ? (<></>) : (<a href='#/offline' className='text-white p-0 m-0' onClick={() => goOffline()}>Attiva modalità offline</a>)}
+            </div>
+        </div >
     }
 }
 export default OfflineCheck
