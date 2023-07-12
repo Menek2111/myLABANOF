@@ -17,12 +17,12 @@ function Login() {
     const navigate = useNavigate();
 
     const [user, setUser] = useState([]);
+    const [mem, setMem] = useState(true)
 
     const login = useGoogleLogin({
         onSuccess: (codeResponse) => setUser(codeResponse),
         onError: (error) => console.log('Login Failed:', error)
     });
-
 
     //PROVA OFFLINE
     const [isOnline, setIsOnline] = useState(navigator.onLine);
@@ -75,8 +75,19 @@ function Login() {
                 .then((res) => {
                     localStorage.setItem('profile', JSON.stringify(res.data))
                     sessionStorage.setItem('access_token', user.access_token)
+
+
                     register(res.data).then(ress => {
                         if (ress.response === 'success') {
+
+                            if (mem) {
+                                localStorage.setItem('offlineProfile', JSON.stringify(res.data))
+                                localStorage.setItem('offlineId', ress.userId.id)
+                            } else {
+                                localStorage.removeItem('offlineProfile')
+                                localStorage.removeItem('offlineId')
+                            }
+
                             localStorage.setItem('userID', ress.userId.id)
                             if (ress.action == 'login') {
                                 if (ress.userId.ruolo != 0) {
@@ -126,10 +137,8 @@ function Login() {
     }
 
     let checkMemorizzato = () => {
-        if (localStorage.getItem('userID') != null) {
-
-            let utente = JSON.parse(localStorage.getItem('profile'))
-
+        if (localStorage.getItem('offlineId') != null) {
+            let utente = JSON.stringify(localStorage.getItem('offlineProfile'))
             return (<>
                 <p>
                     Non è stata rilevata nessuna connessione di rete:
@@ -175,6 +184,13 @@ function Login() {
                                     {isOnline ? (<> <button className='btn border btn-primary' onClick={() => login()}>
                                         <img className='bg-white p-1 rounded rounded-circle' src={google} style={{ height: '5vh' }} alt="google logo" /> Accedi con Google
                                     </button>
+                                        <Form.Check // prettier-ignore
+                                            type="switch"
+                                            label="Memorizza dispositivo per la modalità offline"
+                                            onChange={() => setMem((state) => !state)}
+                                            defaultChecked={mem}
+                                        />
+
                                     </>) : (
                                         <>
                                             {checkMemorizzato()}

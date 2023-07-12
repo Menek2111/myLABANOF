@@ -20,7 +20,7 @@ function OfflineCheck(props) {
         let cm = new ConnectionManager();
         let params = {
             nome: ind.nome,
-            creatore: localStorage.getItem('userID')
+            creatore: localStorage.getItem('offlineId')
         }
         await cm.createIndividuo(JSON.stringify(params)).then(
             res => {
@@ -100,17 +100,30 @@ function OfflineCheck(props) {
     useEffect(() => {
         function onlineHandler() {
             setIsOnline(true);
-            alert('La connessione alla rete è stata ristabilita, verrà attivata la modalità online')
-            localStorage.setItem('isOnline', true)
-            uploadLocalData()
-            navigate('/home')
+
+            if (localStorage.getItem('offlineId') != null) {
+                alert('La connessione alla rete è stata ristabilita, verrà attivata la modalità online')
+                localStorage.setItem('isOnline', true)
+                uploadLocalData()
+                navigate('/home')
+
+            } else {
+                alert('La connessione alla rete è stata ristabilita')
+            }
+
         }
 
         function offlineHandler() {
             setIsOnline(false);
-            alert('Non è possibile collegarsi alla rete, verrà attivata la modalità offline')
-            localStorage.setItem('isOnline', false)
-            navigate('/offline')
+
+            if (localStorage.getItem('offlineId') != null) {
+                alert('Non è possibile collegarsi alla rete, verrà attivata la modalità offline')
+                localStorage.setItem('isOnline', false)
+                navigate('/offline')
+            } else {
+                alert('Non è possibile collegarsi alla rete, si consiglia di attendere')
+
+            }
         }
 
         window.addEventListener("online", onlineHandler);
@@ -128,7 +141,8 @@ function OfflineCheck(props) {
         return <div className='bg-success w-100' style={{ height: '1px' }}>
         </div>
     } else {
-        return <div className='bg-danger w-100' style={{ height: '1px' }}>
+        return <div className='bg-danger w-100 text-white text-center' >
+            In attesa di connessione...
         </div>
     }
 }

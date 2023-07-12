@@ -24,8 +24,8 @@ import labanof from '../images/logoMyLabanof.PNG'
 
 function SchedaOffline() {
     const navigate = useNavigate();
-    const [profile, setProfile] = useState(JSON.parse(localStorage.getItem('profile')))
-    const [userID, setUserID] = useState(JSON.parse(localStorage.getItem('userID')))
+    const [profile, setProfile] = useState(JSON.parse(localStorage.getItem('offlineProfile')))
+    const [userID, setUserID] = useState(JSON.parse(localStorage.getItem('offlineId')))
 
     const centerMiddle = {
         display: "flex",
