@@ -23,6 +23,7 @@ function Login() {
         onError: (error) => console.log('Login Failed:', error)
     });
 
+
     //PROVA OFFLINE
     const [isOnline, setIsOnline] = useState(navigator.onLine);
 
@@ -48,7 +49,6 @@ function Login() {
         function offlineHandler() {
             setIsOnline(false);
             localStorage.setItem('isOnline', false)
-            alert('Non è prensente la connessione di rete, myLabanof verrà avviato in modalità offline')
         }
 
         window.addEventListener("online", onlineHandler);
@@ -78,7 +78,6 @@ function Login() {
                     register(res.data).then(ress => {
                         if (ress.response === 'success') {
                             localStorage.setItem('userID', ress.userId.id)
-
                             if (ress.action == 'login') {
                                 if (ress.userId.ruolo != 0) {
                                     localStorage.setItem('ruolo', ress.userId.ruolo)
@@ -126,6 +125,23 @@ function Login() {
         return res;
     }
 
+    let checkMemorizzato = () => {
+        if (localStorage.getItem('userID') != null) {
+
+            let utente = JSON.stringify(localStorage.getItem('profile'))
+
+            return (<>
+                <p>
+                    Non è stata rilevata nessuna connessione di rete:
+                    è possibile ultilizzare l'applicazione in modalità offline
+                </p>
+                <button>Accedi come: {utente.email}</button>
+            </>)
+        } else {
+            return (<p>No</p>)
+        }
+    }
+
     return (
         <div style={{ width: '100vw', height: '100vh' }} >
             <div className='container p-3 h-100'>
@@ -155,21 +171,18 @@ function Login() {
 
                             <div className='pb-3 text-center justify-content-center d-flex'>
                                 <div className='d-flex flex-column'>
-                                    <button className='btn border btn-primary' onClick={() => login()}>
+
+                                    {isOnline ? (<> <button className='btn border btn-primary' onClick={() => login()}>
                                         <img className='bg-white p-1 rounded rounded-circle' src={google} style={{ height: '5vh' }} alt="google logo" /> Accedi con Google
                                     </button>
-                                    <Form.Check // prettier-ignore
-                                        className='pt-2'
-                                        type="switch"
-                                        id="custom-switch"
-                                        label="Ricorda questo dispositivo"
-                                    />
+                                    </>) : (
+                                        <>
+                                            {checkMemorizzato()}
+                                        </>
+                                    )}
                                 </div>
-
                             </div>
-
                         </div>
-
                     </div>
                 </div>
             </div>
