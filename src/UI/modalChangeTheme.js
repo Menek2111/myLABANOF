@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 //Import componenti
 import Modal from 'react-bootstrap/Modal';
@@ -6,6 +6,8 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import Button from 'react-bootstrap/Button'
 import '../App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import ConnectionManager from "../api/ConnectionManager";
+
 
 function ModalChangeTheme(props) {
 
@@ -120,6 +122,7 @@ function ModalChangeTheme(props) {
                         </div>
 
                     </div>
+
 
                 </Modal.Body>
                 <Modal.Footer>

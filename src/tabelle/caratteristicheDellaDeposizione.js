@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Table from 'react-bootstrap/Table';
 import Form from 'react-bootstrap/Form'
 
+
 function CaratteristicheDellaDeposizione(props) {
 
     function checkEditableValue() {
@@ -123,7 +124,6 @@ function CaratteristicheDellaDeposizione(props) {
     return <div className={props.col}>
         <div className="border rounded p-2">
             {checkEditableValue()}
-
         </div>
     </div>
 }

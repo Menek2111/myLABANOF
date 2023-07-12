@@ -88,7 +88,7 @@ function PrintIndividuoPDF(props) {
         <div className='bg-white'>
             <div className='d-flex w-100 justify-content-center'>
                 <img className='mx-2' src={ind} style={{ height: '10vh' }} />
-                {individuo ? (<p style={centerMiddle} className=''>{individuo.tomba.nome + ' ' + individuo.individuo.nome} <br /> Creato da: {individuo.utente.email} <br /> Data: {individuo.individuo.dataCreazione} </p>
+                {individuo ? (<p style={centerMiddle} className=''>{+ ' ' + individuo.individuo.nome} <br /> Creato da: {individuo.utente.email} <br /> Data: {individuo.individuo.dataCreazione} </p>
                 ) : (<div></div>)}
             </div>
             {individuo ? (<div className=''>

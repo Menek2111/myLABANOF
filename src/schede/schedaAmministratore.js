@@ -20,6 +20,9 @@ import {
 import { IconContext } from "react-icons";
 import { Tab, Table } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom'
+import ModalUploadImage from '../UI/modalUploadImage';
+import ListaImmagini from '../component/listaImmagini';
+
 
 
 function SchedaAmministratore() {
@@ -39,6 +42,13 @@ function SchedaAmministratore() {
         return res;
     }
     const [listaPatologie, setListaPatologie] = useState([])
+
+    const getTraumaGenerale = async () => {
+        let cm = new ConnectionManager();
+        let res = await cm.getTraumaGenerale();
+        return res;
+    }
+    const [listaTraumi, setListaTraumi] = useState([])
 
     const getCaratteriMetrici = async () => {
         let cm = new ConnectionManager();
@@ -60,7 +70,6 @@ function SchedaAmministratore() {
         return res
     }
     const [listaUtenti, setListaUtenti] = useState()
-
     //CHIAMATE PER OTTENERE I DATI (END)--------------------------------------------------
 
     let aggiorna = () => {
@@ -75,6 +84,22 @@ function SchedaAmministratore() {
                     break
                 case 'error':
                     setListaPatologie([])
+                    break
+                default:
+                    break
+            }
+        })
+        getTraumaGenerale().then(res => {
+            console.log('getTraumaGenerale', res)
+            switch (res.response) {
+                case 'success':
+                    setListaTraumi(res.results)
+                    break
+                case 'empty':
+                    setListaTraumi([])
+                    break
+                case 'error':
+                    setListaTraumi([])
                     break
                 default:
                     break
@@ -157,9 +182,43 @@ function SchedaAmministratore() {
 
                                     {/*listaCaratteriMetrici ? (<Caratteri caratteri={listaCaratteriMetrici} col="col-2" />) : (<></>)*/}
 
-                                    {listaUtenti ? (<RichiesteRegistrazione col='col-12' listaUtenti={listaUtenti} callback={aggiorna} />
-                                    ) : (<></>)}
 
+                                    <div className='py-2 border rounded' style={{ backgroundColor: '#fbfcfe' }} >
+                                        <h3 className='border-bottom mb-3'>Richieste di accesso e gestione ruoli</h3>
+                                        <div className='border rounded p-3'>
+                                            {listaUtenti ? (<RichiesteRegistrazione col='col-12' listaUtenti={listaUtenti} callback={aggiorna} />
+                                            ) : (<></>)}
+                                        </div>
+
+                                    </div>
+
+                                    <div className='mt-5 py-2 border rounded' style={{ backgroundColor: '#fbfcfe' }}>
+                                        <h3 className='border-bottom mb-3'>Gestione patologie</h3>
+                                        <div className='row'>
+                                            <Patologie col="col-6" patologie={listaPatologie} odontoiatrico={false} />
+                                            <Patologie col="col-6" patologie={listaPatologie} odontoiatrico={true} />
+                                        </div>
+                                    </div>
+
+                                    <div className='mt-5 py-2 border rounded' style={{ backgroundColor: '#fbfcfe' }}>
+                                        <h3 className='border-bottom mb-3'>Gestione traumi</h3>
+                                        <div className='row'>
+                                            <Traumi col='col-12' traumi={listaTraumi} callback={aggiorna} />
+                                        </div>
+                                    </div>
+
+
+                                    <div className='mt-5 py-2 border rounded' style={{ backgroundColor: '#fbfcfe' }}>
+                                        <h3 className='border-bottom mb-3'>Gestione caratteri</h3>
+
+                                        <div className='row'>
+
+                                            <h4>Cranio</h4>
+                                            <Caratteri col='col-6' caratteri={listaCaratteriMetrici} m={true} distrettoNome='Cranio' callback={aggiorna} />
+                                            <Caratteri col='col-6' caratteri={listaCaratteriNonMetrici} m={false} distrettoNome='Cranio' callback={aggiorna} />
+
+                                        </div>
+                                    </div>
 
                                 </div>
                             </div>
@@ -174,11 +233,29 @@ function SchedaAmministratore() {
 
 function Patologie(props) {
 
+    const createPatologiaGeneraleEPerDistretto = async (e) => {
+        let cm = new ConnectionManager();
+        var params
+        if (props.odontoiatrico) {
+            params = { patologia: nome, odontoiatrico: 1 }
+        } else {
+            params = { patologia: nome, odontoiatrico: 0 }
+        }
+
+        let res = await cm.createPatologiaGeneraleEPerDistretto(JSON.stringify(params))
+        console.log('createPatologiaGeneraleEPerDistretto', res)
+        props.callback()
+    }
+    const [nome, setNome] = useState()
+
     let isOdontoiatrica = (patologia) => {
         if (patologia.odontoiatrico == 1) {
-            return (<tr>
-                <td>{patologia.nome}</td>
-            </tr>)
+            return <PatologiaGenerale patologia={patologia} callback={props.callback} />
+        }
+    }
+    let isNotOdontoiatrica = (patologia) => {
+        if (patologia.odontoiatrico == 0) {
+            return <PatologiaGenerale patologia={patologia} callback={props.callback} />
         }
     }
 
@@ -194,6 +271,14 @@ function Patologie(props) {
                     {props.patologie.map(patologia =>
                         isOdontoiatrica(patologia)
                     )}
+                    <tr>
+                        <td className='d-flex mt-4'>
+                            <Form onSubmit={createPatologiaGeneraleEPerDistretto} className='d-flex w-100'>
+                                <input className='form-control' onChange={(e) => setNome(e.target.value)} placeholder='Nome patologia...' type='text' required />
+                                <button className='btn btn-primary mx-1' type='submit' >Aggiungi</button>
+                            </Form>
+                        </td>
+                    </tr>
                 </tbody>
             </Table>
         </div>)
@@ -206,42 +291,253 @@ function Patologie(props) {
                     </tr>
                 </thead>
                 <tbody>
-                    {props.patologie.map(patologia =>
-                        <tr>
-                            <td>{patologia.nome}</td>
-                        </tr>
+                    {props.patologie.map(patologia => isNotOdontoiatrica(patologia)
                     )}
+                    <tr>
+                        <td className='d-flex mt-4'>
+                            <Form onSubmit={createPatologiaGeneraleEPerDistretto} className='d-flex w-100'>
+                                <input className='form-control' onChange={(e) => setNome(e.target.value)} placeholder='Nome patologia...' type='text' required />
+                                <button className='btn btn-primary mx-1' type='submit' >Aggiungi</button>
+                            </Form>
+                        </td>
+                    </tr>
                 </tbody>
             </Table>
         </div>)
     }
 
-
-
 }
+function PatologiaGenerale(props) {
+    const editPatologiaGenerale = async (e) => {
+        let cm = new ConnectionManager();
+        var params = { id: props.patologia.id, nome: nome }
+        let res = await cm.editPatologiaGenerale(JSON.stringify(params))
+        console.log('editPatologiaGenerale', res)
+        props.callback()
+    }
+    const [nome, setNome] = useState(props.patologia.nome)
 
+    const deletePatologiaGeneraleEPerDistretto = async (e) => {
+
+        if (window.confirm('sei sicurio?')) {
+            let cm = new ConnectionManager();
+            var params = { id: props.patologia.id }
+            let res = await cm.deletePatologiaGeneraleEPerDistretto(JSON.stringify(params))
+            console.log('editPatologiaGenerale', res)
+            props.callback()
+        }
+    }
+
+    return (<tr>
+        <td className='d-flex'>
+            <input className='form-control' type='text' defaultValue={nome} onChange={(e) => setNome(e.target.value)} />
+            <button className='btn btn-primary mx-1' onClick={() => editPatologiaGenerale()}><FiSave /></button>
+            <button className='btn btn-outline-danger mx-1' onClick={() => deletePatologiaGeneraleEPerDistretto()}><FiTrash2 /></button>
+        </td>
+    </tr>)
+}
+function Traumi(props) {
+
+    const createTraumaGenerale = async (e) => {
+        let cm = new ConnectionManager();
+        var params = { trauma: nome }
+
+        let res = await cm.createTraumaGenerale(JSON.stringify(params))
+        console.log('createTraumaGenerale', res)
+        props.callback()
+        document.getElementById('formTrauma').value = ''
+    }
+    const [nome, setNome] = useState()
+
+
+    return (<div className={props.col}>
+        <Table hover striped size='sm' bordered>
+            <thead>
+                <tr>
+                    <th>Traumi</th>
+                </tr>
+            </thead>
+            <tbody >
+                {props.traumi.map(trauma =>
+
+                    <TraumaGenerale trauma={trauma} callback={props.callback} />
+
+                )}
+                <tr>
+                    <td className='d-flex mt-4'>
+                        <Form className='d-flex w-100' onSubmit={createTraumaGenerale}>
+                            <input className='form-control' id="formTrauma" placeholder='Nome trauma...' type='text' required onChange={(e) => setNome(e.target.value)} />
+                            <button className='btn btn-primary mx-1' type='submit' >Aggiungi</button>
+                        </Form>
+                    </td>
+                </tr>
+            </tbody>
+        </Table>
+    </div>)
+}
+function TraumaGenerale(props) {
+
+    const editTraumaGenerale = async (e) => {
+        let cm = new ConnectionManager();
+        var params = { id: props.trauma.id, nome: nome }
+        let res = await cm.editTraumaGenerale(JSON.stringify(params))
+        console.log('editPatologiaGenerale', res)
+        props.callback()
+    }
+    const [nome, setNome] = useState(props.trauma.nome)
+
+    const deleteTraumaGenerale = async (e) => {
+        if (window.confirm('sei sicurio?')) {
+            let cm = new ConnectionManager();
+            var params = { id: props.trauma.id }
+            let res = await cm.deleteTraumaGenerale(JSON.stringify(params))
+            console.log('deleteTraumaGenerale', res)
+            props.callback()
+        }
+    }
+
+    return (<tr className='w-100'>
+        <td className='d-flex w-100'>
+            <input className='form-control' type='text' defaultValue={nome} onChange={(e) => setNome(e.target.value)} />
+            <button className='btn btn-primary mx-1' onClick={() => editTraumaGenerale()}><FiSave /></button>
+            <button className='btn btn-outline-danger mx-1' onClick={() => deleteTraumaGenerale()}><FiTrash2 /></button>
+        </td>
+    </tr>)
+}
 function Caratteri(props) {
 
-    return <div className={props.col}>
+    const createCarattereMetricoGeneraleEPerDistretto = async (e) => {
+        let cm = new ConnectionManager();
+        var params = { nome: nome, distretto: getDistrettoId(props.distrettoNome) }
+        let res = await cm.createCarattereMetricoGeneraleEPerDistretto(JSON.stringify(params))
+        console.log('createCarattereMetricoGenerale', res)
+        props.callback()
+        document.getElementById('formCarattereMetrico').value = ''
+    }
+    const createCarattereNonMetricoGeneraleEPerDistretto = async (e) => {
+        let cm = new ConnectionManager();
+        var params = { nome: nome, distretto: getDistrettoId(props.distrettoNome) }
+        let res = await cm.createCarattereNonMetricoGeneraleEPerDistretto(JSON.stringify(params))
+        console.log('createCarattereNonMetricoGeneraleEPerDistretto', res)
+        props.callback()
+        document.getElementById('formCarattereNonMetrico').value = ''
+    }
+    const [nome, setNome] = useState()
 
+    let getDistrettoId = (nome) => {
+        switch (nome) {
+            case 'Cranio':
+                return 1
+            case 'Denti':
+                return 2
+            case 'Colonna':
+                return 3
+            case 'Torace':
+                return 4
+            case 'Arti superiori':
+                return 5
+            case 'Arti inferiori':
+                return 6
+            case 'NMR':
+                return 7
+            default:
+                return null
+        }
+    }
+
+    let getCaratteriByDistretto = () => {
+        let array = []
+
+        props.caratteri.map(car => {
+            if (car.distrettoNome == props.distrettoNome) {
+                array.push(car)
+            }
+        })
+
+        return array.map((carattere => <CarattereGenerale carattere={carattere} m={props.m} callback={props.callback} />))
+    }
+
+    return <div className={props.col}>
         <Table hover striped size='sm' bordered >
             <thead>
                 <tr>
-                    <th>Caratteri metrici</th>
+                    <th>{props.m ? (<>Caratteri metrici</>) : (<>Caratteri non metrici</>)}</th>
                 </tr>
             </thead>
             <tbody>
-                {props.caratteri.map((carattere => <tr>
-                    <td>
-                        {carattere.nome}
+                {getCaratteriByDistretto()}
+                <tr>
+                    <td className='d-flex mt-4'>
+
+                        {props.m ? (
+                            <Form className='d-flex w-100' onSubmit={createCarattereMetricoGeneraleEPerDistretto}>
+                                <input className='form-control' id="formCarattereMetrico" placeholder='Nome carattere metrico...' type='text' required onChange={(e) => setNome(e.target.value)} />
+                                <button className='btn btn-primary mx-1' type='submit' >Aggiungi</button>
+                            </Form>
+                        ) : (
+                            <Form className='d-flex w-100' onSubmit={createCarattereNonMetricoGeneraleEPerDistretto}>
+                                <input className='form-control' id="formCarattereNonMetrico" placeholder='Nome carattere non metrico...' type='text' required onChange={(e) => setNome(e.target.value)} />
+                                <button className='btn btn-primary mx-1' type='submit' >Aggiungi</button>
+                            </Form>
+                        )}
+
                     </td>
-                </tr>))}
+                </tr>
             </tbody>
         </Table>
 
     </div>
 }
+function CarattereGenerale(props) {
+    const editCarattereMetricoGenerale = async (e) => {
+        let cm = new ConnectionManager();
+        var params = { id: props.carattere.id, nome: nome }
+        let res = await cm.editCarattereMetricoGenerale(JSON.stringify(params))
+        console.log('editCarattereMetricoGenerale', res)
+    }
 
+    const editCarattereNonMetricoGenerale = async (e) => {
+        let cm = new ConnectionManager();
+        var params = { id: props.carattere.id, nome: nome }
+        let res = await cm.editCarattereNonMetricoGenerale(JSON.stringify(params))
+        console.log('editCarattereNonMetricoGenerale', res)
+    }
+
+    const deleteCarattereMetricoGeneraleEPerDistretto = async (e) => {
+        let cm = new ConnectionManager();
+        var params = { id: props.carattere.id }
+        let res = await cm.deleteCarattereMetricoGeneraleEPerDistretto(JSON.stringify(params))
+        console.log('deleteCarattereMetricoGeneraleEPerDistretto', res)
+        props.callback()
+    }
+    const deleteCarattereNonMetricoGeneraleEPerDistretto = async (e) => {
+        let cm = new ConnectionManager();
+        var params = { id: props.carattere.id }
+        let res = await cm.deleteCarattereNonMetricoGeneraleEPerDistretto(JSON.stringify(params))
+        console.log('deleteCarattereNonMetricoGeneraleEPerDistretto', res)
+        props.callback()
+    }
+
+    const [nome, setNome] = useState(props.carattere.nome)
+
+    return (<tr>
+        <td className='d-flex'>
+            <input className='form-control' type='text' defaultValue={nome} onChange={(e) => setNome(e.target.value)} />
+
+            {props.m ? (
+                <>
+                    <button className='btn btn-primary mx-1' onClick={() => editCarattereMetricoGenerale()}><FiSave /></button>
+                    <button className='btn btn-outline-danger mx-1' onClick={() => deleteCarattereMetricoGeneraleEPerDistretto()}><FiTrash2 /></button>
+                </>
+            ) : (
+                <>
+                    <button className='btn btn-primary mx-1' onClick={() => editCarattereNonMetricoGenerale()}><FiSave /></button>
+                    <button className='btn btn-outline-danger mx-1' onClick={() => deleteCarattereNonMetricoGeneraleEPerDistretto()}><FiTrash2 /></button>
+                </>
+            )}
+        </td>
+    </tr>)
+}
 function RichiesteRegistrazione(props) {
 
     function checkPermission(utente, i) {
@@ -340,7 +636,6 @@ function RichiesteRegistrazione(props) {
     )
 
 }
-
 function RigaAccount(props) {
     const editRuoloAccountById = async (e) => {
         let cm = new ConnectionManager();

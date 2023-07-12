@@ -17,10 +17,16 @@ function ProfiloBiologicoIndividuo(props) {
     const [origineBiologica, setOrigineBiologica] = useState(props.individuo.origineBiologica)
     const [origineGeografica, setOrigineGeografica] = useState(props.individuo.origineGeografica)
 
+    const [etaMin, setEtaMin] = useState(props.individuo.etaMin)
+    const [etaMax, setEtaMax] = useState(props.individuo.etaMax)
+
+    const [staturaMin, setStaturaMin] = useState(props.individuo.staturaMin)
+    const [staturaMax, setStaturaMax] = useState(props.individuo.staturaMax)
+
     const propsLink = props
     useEffect(() => {
-        propsLink.onIndividuoChange(sessoBiologico, classeDiEtà, origineBiologica, origineGeografica)
-    }, [classeDiEtà, origineBiologica, origineGeografica, sessoBiologico]);
+        propsLink.onIndividuoChange(sessoBiologico, classeDiEtà, origineBiologica, origineGeografica, etaMin, etaMax, staturaMin, staturaMax)
+    }, [sessoBiologico, classeDiEtà, origineBiologica, origineGeografica, etaMin, etaMax, staturaMin, staturaMax]);
 
     function editableTable() {
         return (<div>
@@ -57,12 +63,16 @@ function ProfiloBiologicoIndividuo(props) {
 
                     </tr>
                     <tr>
-                        <td>Età stimata (MIN)</td>
-                        <td>---</td>
+                        <th>Età stimata (MIN)</th>
+                        <td>
+                            <input className="form-control" type="number" defaultValue={props.individuo.etaMin} onChange={(e) => setEtaMin(e.target.value)} />
+                        </td>
                     </tr>
                     <tr>
-                        <td>Età stimata (MAX)</td>
-                        <td>---</td>
+                        <th>Età stimata (MAX)</th>
+                        <td>
+                            <input className="form-control" type="number" defaultValue={props.individuo.etaMax} onChange={(e) => setEtaMax(e.target.value)} />
+                        </td>
                     </tr>
                     <tr>
                         <th>Origine biologica</th>
@@ -81,12 +91,16 @@ function ProfiloBiologicoIndividuo(props) {
                         <td><input className="form-control" defaultValue={props.individuo.origineGeografica} onChange={(e) => setOrigineGeografica(e.target.value)} /></td>
                     </tr>
                     <tr>
-                        <td>Statura (MIN)</td>
-                        <td>---</td>
+                        <th>Statura MIN (cm)</th>
+                        <td className="d-flex">
+                            <input className="form-control" type="number" defaultValue={props.individuo.staturaMin} onChange={(e) => setStaturaMin(e.target.value)} />
+                        </td>
                     </tr>
                     <tr>
-                        <td>Statura (MAX)</td>
-                        <td>---</td>
+                        <th>Statura MAX (cm)</th>
+                        <td>
+                            <input className="form-control" type="number" defaultValue={props.individuo.staturaMax} onChange={(e) => setStaturaMax(e.target.value)} />
+                        </td>
                     </tr>
                 </tbody>
             </Table>
@@ -108,12 +122,12 @@ function ProfiloBiologicoIndividuo(props) {
                         <td>{props.individuo.classeDiEta}</td>
                     </tr>
                     <tr>
-                        <td>Età stimata (MIN)</td>
-                        <td>---</td>
+                        <th>Età stimata (MIN)</th>
+                        <td>{props.individuo.etaMin}</td>
                     </tr>
                     <tr>
-                        <td>Età stimata (MAX)</td>
-                        <td>---</td>
+                        <th>Età stimata (MAX)</th>
+                        <td>{props.individuo.etaMax}</td>
                     </tr>
                     <tr>
                         <th>Origine biologica</th>
@@ -124,12 +138,12 @@ function ProfiloBiologicoIndividuo(props) {
                         <td>{props.individuo.origineGeografica}</td>
                     </tr>
                     <tr>
-                        <td>Statura (MIN)</td>
-                        <td>---</td>
+                        <th>Statura (MIN)</th>
+                        <td>{props.individuo.staturaMin}</td>
                     </tr>
                     <tr>
-                        <td>Statura (MAX)</td>
-                        <td>---</td>
+                        <th>Statura (MAX)</th>
+                        <td>{props.individuo.staturaMax}</td>
                     </tr>
                 </tbody>
             </Table>

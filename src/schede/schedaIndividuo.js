@@ -12,10 +12,12 @@ import { useNavigate } from 'react-router-dom'
 
 import Form from 'react-bootstrap/Form'
 
+import ListaImmagini from '../component/listaImmagini';
 import { Dna } from 'react-loader-spinner'
 import ModalDeleteIndividuo from '../UI/modalDeleteIndividuo'
 import ProfiloBiologicoIndividuo from '../tabelle/profiloBiologicoIndividuo';
 import GeneralitàIndividuo from '../tabelle/generalitàIndividuo';
+
 
 import DropdownDistretti from '../UI/dropDownDistretti';
 import CaratteristicheDellaDeposizione from '../tabelle/caratteristicheDellaDeposizione';
@@ -152,12 +154,16 @@ function SchedaIndividuo(props) {
         }
         setModGeneralità(mod)
     }
-    const addModificheProfiloBiologio = (sesso, classeEta, origineBiologica, origineGeografica) => {
+    const addModificheProfiloBiologio = (sessoBiologico, classeDiEtà, origineBiologica, origineGeografica, etaMin, etaMax, staturaMin, staturaMax) => {
         var mod = {
-            sessoBiologico: sesso,
-            classeDiEta: classeEta,
+            sessoBiologico: sessoBiologico,
+            classeDiEta: classeDiEtà,
             origineBiologica: origineBiologica,
-            origineGeografica: origineGeografica
+            origineGeografica: origineGeografica,
+            etaMin: etaMin,
+            etaMax: etaMax,
+            staturaMin: staturaMin,
+            staturaMax: staturaMax
         }
         setModProfiloBiologico(mod)
     }
@@ -196,7 +202,11 @@ function SchedaIndividuo(props) {
             visibilita: visibilita,
             pesoIndividuo: modGeneralità.pesoIndividuo,
             pesoCremazione: modGeneralità.pesoCremazione,
-            volumeCremazione: modGeneralità.volumeCremazione
+            volumeCremazione: modGeneralità.volumeCremazione,
+            etaMin: modProfiloBiologico.etaMin,
+            etaMax: modProfiloBiologico.etaMax,
+            staturaMin: modProfiloBiologico.staturaMin,
+            staturaMax: modProfiloBiologico.staturaMax
         }
 
         await cm.editIndividuo(JSON.stringify(modifiche)).then(res => {
@@ -305,7 +315,6 @@ function SchedaIndividuo(props) {
                     break
             }
         })
-
     }
 
     if (localStorage.getItem('isOnline') == 'true') {
@@ -347,13 +356,15 @@ function SchedaIndividuo(props) {
                                             </div>
                                         </div>) : (<></>)}
 
-                                        <GeneralitàIndividuo col="col-6" editable={editable} individuo={individuo} onIndividuoChange={addModificheGeneralità} callback={aggiorna} />
+                                        <GeneralitàIndividuo col="col-4" editable={editable} individuo={individuo} onIndividuoChange={addModificheGeneralità} callback={aggiorna} />
 
-                                        <ProfiloBiologicoIndividuo col="col-6" editable={editable} individuo={individuo} onIndividuoChange={addModificheProfiloBiologio} callback={aggiorna} />
-                                        {caratteristicheDeposizione ? (<CaratteristicheDellaDeposizione col="col-6 mt-5" editable={editable} individuo={caratteristicheDeposizione} onIndividuoChange={addModificheCaratteristicheDeposizione} callback={aggiorna} />
+                                        <ProfiloBiologicoIndividuo col="col-4" editable={editable} individuo={individuo} onIndividuoChange={addModificheProfiloBiologio} callback={aggiorna} />
+                                        {caratteristicheDeposizione ? (<CaratteristicheDellaDeposizione col="col-4" editable={editable} individuo={caratteristicheDeposizione} onIndividuoChange={addModificheCaratteristicheDeposizione} callback={aggiorna} />
                                         ) : (
                                             <></>
                                         )}
+
+                                        <ListaImmagini col="col-12 mt-5" individuo={individuo.id} callback={aggiorna} />
                                     </div>) : (<div></div>)}
 
                                 </div>
@@ -393,12 +404,11 @@ function SchedaIndividuo(props) {
 
                                     {individuo ? (<div className='row py-3'>
 
-
                                         <GeneralitàIndividuo col="col-6" editable={true} individuo={individuo} onIndividuoChange={addModificheGeneralità} callback={aggiorna} />
 
                                         <ProfiloBiologicoIndividuo col="col-6" editable={true} individuo={individuo} onIndividuoChange={addModificheProfiloBiologio} callback={aggiorna} />
 
-                                        <CaratteristicheDellaDeposizione col="col-6 mt-5" editable={true} individuo={ind} onIndividuoChange={addModificheCaratteristicheDeposizione} callback={aggiorna} />
+                                        <CaratteristicheDellaDeposizione col="col-12 mt-5" editable={true} individuo={ind} onIndividuoChange={addModificheCaratteristicheDeposizione} callback={aggiorna} />
 
                                     </div>) : (<div>{sessionStorage.getItem('individuoSelezionato')}</div>)}
 
