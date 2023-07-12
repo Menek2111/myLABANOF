@@ -102,6 +102,7 @@ function OfflineCheck(props) {
     let goOnline = () => {
         localStorage.setItem('isOnline', true)
         uploadLocalData()
+        navigate('/home')
         setOfflineMode(false)
     }
     let goOffline = () => {
@@ -137,7 +138,7 @@ function OfflineCheck(props) {
 
     //<div className='delete-button' onClick={() => { if (window.confirm('Are you sure you wish to delete this item?')) this.onCancel(item) } } />
 
-    if (offlineMode) {
+    if (!offlineMode) {
         return <div className='bg-success w-100' style={{ height: '1px' }}>
 
             {offlineMode ? (<a href='#/home' className='text-white p-0 m-0' onClick={() => goOnline()}>Torna in modalità online</a>) : (<></>)}
