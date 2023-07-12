@@ -48,6 +48,7 @@ function Login() {
         function offlineHandler() {
             setIsOnline(false);
             localStorage.setItem('isOnline', false)
+            alert('Non è prensente la connessione di rete, myLabanof verrà avviato in modalità offline')
         }
 
         window.addEventListener("online", onlineHandler);
