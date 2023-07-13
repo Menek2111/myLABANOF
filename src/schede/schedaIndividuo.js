@@ -365,6 +365,12 @@ function SchedaIndividuo(props) {
                                         )}
 
                                         <ListaImmagini col="col-12 mt-5" individuo={individuo.id} callback={aggiorna} />
+
+
+
+                                        <div className='d-flex justify-content-end mt-5'>
+                                            <button className='btn btn-outline-primary' onClick={() => navigate('/individuo/export')}>Esporta come pdf</button>
+                                        </div>
                                     </div>) : (<div></div>)}
 
                                 </div>

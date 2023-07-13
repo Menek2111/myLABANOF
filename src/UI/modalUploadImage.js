@@ -41,6 +41,7 @@ function ModalUploadImage(props) {
     //Gestione modal
     const [show, setShow] = useState(false);
     const handleClose = () => {
+        setDescrizione('')
         setReady(true)
         setShow(false);
     }

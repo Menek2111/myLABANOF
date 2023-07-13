@@ -1,24 +1,33 @@
 
 import axios from "axios";
 
+
+
+function CheckToken(data) {
+    if (data.response == 'invalid_token') {
+        alert('sessione scaduta, è necessario effettuare nuovamente l\'accesso')
+        window.location.href = "/";
+    }
+}
+var baseUrl = 'https://applabanof.altervista.org/applabanof/'
+
+
 export default class ConnectionManager {
 
     constructor() {
-
     }
 
     checkJWT = async function (params) {
-        var token = sessionStorage.getItem('access_token')
-        var URL = "https://applabanof.altervista.org/applabanof/data/checkJWT.php"
+        var URL = baseUrl + "data/checkJWT.php"
         const { data } = await axios.post(URL, {
-            token: token
+            token: sessionStorage.getItem('access_token')
         })
         return data
     }
 
     register = async function (params) {
         var profile = JSON.parse(params)
-        var URL = "https://applabanof.altervista.org/applabanof/authentication/register.php"
+        var URL = baseUrl + "authentication/register.php"
         const { data } = await axios.post(URL, {
             email: profile.email,
             userId: profile.id,
@@ -32,7 +41,7 @@ export default class ConnectionManager {
     //SEARCH 
     getIndividuoByQuery = async function (params) {
         var json = JSON.parse(params)
-        var URL = "https://applabanof.altervista.org/applabanof/data/search/getIndividuoByQuery.php"
+        var URL = baseUrl + "data/search/getIndividuoByQuery.php"
         const { data } = await axios.post(URL, {
             query: json.query
         })
@@ -41,7 +50,7 @@ export default class ConnectionManager {
 
     getTombaByQuery = async function (params) {
         var json = JSON.parse(params)
-        var URL = "https://applabanof.altervista.org/applabanof/data/search/getTombaByQuery.php"
+        var URL = baseUrl + "data/search/getTombaByQuery.php"
         const { data } = await axios.post(URL, {
             query: json.query
         })
@@ -50,7 +59,7 @@ export default class ConnectionManager {
 
     getUtenteByQuery = async function (params) {
         var json = JSON.parse(params)
-        var URL = "https://applabanof.altervista.org/applabanof/data/search/getUtenteByQuery.php"
+        var URL = baseUrl + "data/search/getUtenteByQuery.php"
         const { data } = await axios.post(URL, {
             query: json.query
         })
@@ -59,7 +68,7 @@ export default class ConnectionManager {
 
     getNecropoliByQuery = async function (params) {
         var json = JSON.parse(params)
-        var URL = "https://applabanof.altervista.org/applabanof/data/search/getNecropoliByQuery.php"
+        var URL = baseUrl + "data/search/getNecropoliByQuery.php"
         const { data } = await axios.post(URL, {
             query: json.query
         })
@@ -70,31 +79,31 @@ export default class ConnectionManager {
 
     //GET
     getTombe = async function (params) {
-        var URL = "https://applabanof.altervista.org/applabanof/data/getTombe.php"
+        var URL = baseUrl + "data/getTombe.php"
         const { data } = await axios.post(URL, {})
         return data
     }
     getNecropoli = async function (params) {
-        var URL = "https://applabanof.altervista.org/applabanof/data/getNecropoli.php"
+        var URL = baseUrl + "data/getNecropoli.php"
         const { data } = await axios.post(URL, {})
         return data
     }
     getNecropoliById = async function (params) {
         var json = JSON.parse(params)
-        var URL = "https://applabanof.altervista.org/applabanof/data/getNecropoliById.php"
+        var URL = baseUrl + "data/getNecropoliById.php"
         const { data } = await axios.post(URL, {
             id: json.id
         })
         return data
     }
     getAllTombe = async function (params) {
-        var URL = "https://applabanof.altervista.org/applabanof/data/getAllTombe.php"
+        var URL = baseUrl + "data/getAllTombe.php"
         const { data } = await axios.post(URL, {})
         return data
     }
     getTombaById = async function (params) {
         var json = JSON.parse(params)
-        var URL = "https://applabanof.altervista.org/applabanof/data/getTombaById.php"
+        var URL = baseUrl + "data/getTombaById.php"
         const { data } = await axios.post(URL, {
             id: json.id
         })
@@ -102,21 +111,21 @@ export default class ConnectionManager {
     }
     getTombeByNecropoli = async function (params) {
         var json = JSON.parse(params)
-        var URL = "https://applabanof.altervista.org/applabanof/data/getTombeByNecropoli.php"
+        var URL = baseUrl + "data/getTombeByNecropoli.php"
         const { data } = await axios.post(URL, {
             id: json.id
         })
         return data
     }
     getAllNecropoli = async function (params) {
-        var URL = "https://applabanof.altervista.org/applabanof/data/getAllNecropoli.php"
+        var URL = baseUrl + "data/getAllNecropoli.php"
         const { data } = await axios.post(URL, {})
         return data
     }
 
     getIndividui = async function (params) {
         var token = sessionStorage.getItem('access_token')
-        var URL = "https://applabanof.altervista.org/applabanof/data/getIndividui.php"
+        var URL = baseUrl + "data/getIndividui.php"
         const { data } = await axios.post(URL, {
             token: token
         })
@@ -124,7 +133,7 @@ export default class ConnectionManager {
     }
     getIndividuoById = async function (params) {
         var json = JSON.parse(params)
-        var URL = "https://applabanof.altervista.org/applabanof/data/getIndividuoById.php"
+        var URL = baseUrl + "data/getIndividuoById.php"
         const { data } = await axios.post(URL, {
             id: json.id
         })
@@ -132,7 +141,7 @@ export default class ConnectionManager {
     }
     getIndividuiByTomba = async function (params) {
         var json = JSON.parse(params)
-        var URL = "https://applabanof.altervista.org/applabanof/data/getIndividuiByTomba.php"
+        var URL = baseUrl + "data/getIndividuiByTomba.php"
         const { data } = await axios.post(URL, {
             tomba: json.tomba
         })
@@ -140,7 +149,7 @@ export default class ConnectionManager {
     }
     getOssaIndividuoByDistretto = async function (params) {
         var json = JSON.parse(params)
-        var URL = "https://applabanof.altervista.org/applabanof/data/getOssaIndividuoByDistretto.php"
+        var URL = baseUrl + "data/getOssaIndividuoByDistretto.php"
         const { data } = await axios.post(URL, {
             individuo: json.individuo,
             distretto: json.distretto
@@ -149,7 +158,7 @@ export default class ConnectionManager {
     }
     getDentiIndividuoByDistretto = async function (params) {
         var json = JSON.parse(params)
-        var URL = "https://applabanof.altervista.org/applabanof/data/getDentiIndividuoByDistretto.php"
+        var URL = baseUrl + "data/getDentiIndividuoByDistretto.php"
         const { data } = await axios.post(URL, {
             individuo: json.individuo,
             distretto: json.distretto
@@ -158,7 +167,7 @@ export default class ConnectionManager {
     }
     getOssaByDistretto = async function (params) {
         var json = JSON.parse(params)
-        var URL = "https://applabanof.altervista.org/applabanof/data/getOssaByDistretto.php"
+        var URL = baseUrl + "data/getOssaByDistretto.php"
         const { data } = await axios.post(URL, {
             distretto: json.distretto
         })
@@ -166,7 +175,7 @@ export default class ConnectionManager {
     }
     getOssaNMRByIndividuo = async function (params) {
         var json = JSON.parse(params)
-        var URL = "https://applabanof.altervista.org/applabanof/data/getOssaNMRByIndividuo.php"
+        var URL = baseUrl + "data/getOssaNMRByIndividuo.php"
         const { data } = await axios.post(URL, {
             individuo: json.individuo
         })
@@ -174,7 +183,7 @@ export default class ConnectionManager {
     }
     getCaratteristicheDeposizioneByIndividuo = async function (params) {
         var json = JSON.parse(params)
-        var URL = "https://applabanof.altervista.org/applabanof/data/getCaratteristicheDeposizioneByIndividuo.php"
+        var URL = baseUrl + "data/getCaratteristicheDeposizioneByIndividuo.php"
         const { data } = await axios.post(URL, {
             individuo: json.individuo
         })
@@ -184,7 +193,7 @@ export default class ConnectionManager {
 
     getIndividuiByUser = async function (params) {
         var json = JSON.parse(params)
-        var URL = "https://applabanof.altervista.org/applabanof/data/getIndividuiByUser.php"
+        var URL = baseUrl + "data/getIndividuiByUser.php"
         const { data } = await axios.post(URL, {
             creatore: json.user
         })
@@ -193,7 +202,7 @@ export default class ConnectionManager {
 
     getCaratteriMetriciByDistretto = async function (params) {
         var json = JSON.parse(params)
-        var URL = "https://applabanof.altervista.org/applabanof/data/getCaratteriMetriciByDistretto.php"
+        var URL = baseUrl + "data/getCaratteriMetriciByDistretto.php"
         const { data } = await axios.post(URL, {
             distretto: json.distretto
         })
@@ -201,7 +210,7 @@ export default class ConnectionManager {
     }
     getCaratteriNonMetriciByDistretto = async function (params) {
         var json = JSON.parse(params)
-        var URL = "https://applabanof.altervista.org/applabanof/data/getCaratteriNonMetriciByDistretto.php"
+        var URL = baseUrl + "data/getCaratteriNonMetriciByDistretto.php"
         const { data } = await axios.post(URL, {
             distretto: json.distretto
         })
@@ -210,7 +219,7 @@ export default class ConnectionManager {
 
     getCaratteriMetriciByDistrettoAndIndividuo = async function (params) {
         var json = JSON.parse(params)
-        var URL = "https://applabanof.altervista.org/applabanof/data/getCaratteriMetriciByDistrettoAndIndividuo.php"
+        var URL = baseUrl + "data/getCaratteriMetriciByDistrettoAndIndividuo.php"
         const { data } = await axios.post(URL, {
             distretto: json.distretto,
             individuo: json.individuo
@@ -220,7 +229,7 @@ export default class ConnectionManager {
 
     getCaratteriNonMetriciByDistrettoAndIndividuo = async function (params) {
         var json = JSON.parse(params)
-        var URL = "https://applabanof.altervista.org/applabanof/data/getCaratteriNonMetriciByDistrettoAndIndividuo.php"
+        var URL = baseUrl + "data/getCaratteriNonMetriciByDistrettoAndIndividuo.php"
         const { data } = await axios.post(URL, {
             distretto: json.distretto,
             individuo: json.individuo
@@ -230,7 +239,7 @@ export default class ConnectionManager {
 
     getTraumaSpecifico = async function (params) {
         var json = JSON.parse(params)
-        var URL = "https://applabanof.altervista.org/applabanof/data/getTraumaSpecifico.php"
+        var URL = baseUrl + "data/getTraumaSpecifico.php"
         const { data } = await axios.post(URL, {
             osso: json.osso,
             dente: json.dente,
@@ -240,7 +249,7 @@ export default class ConnectionManager {
 
     getPatologiaSpecifica = async function (params) {
         var json = JSON.parse(params)
-        var URL = "https://applabanof.altervista.org/applabanof/data/getPatologiaSpecifica.php"
+        var URL = baseUrl + "data/getPatologiaSpecifica.php"
         const { data } = await axios.post(URL, {
             osso: json.osso,
             dente: json.dente
@@ -250,7 +259,7 @@ export default class ConnectionManager {
 
     getTraumaGeneraleByDistretto = async function (params) {
         var json = JSON.parse(params)
-        var URL = "https://applabanof.altervista.org/applabanof/data/getTraumaGeneraleByDistretto.php"
+        var URL = baseUrl + "data/getTraumaGeneraleByDistretto.php"
         const { data } = await axios.post(URL, {
             distretto: json.distretto,
         })
@@ -258,7 +267,7 @@ export default class ConnectionManager {
     }
 
     getTraumaGenerale = async function (params) {
-        var URL = "https://applabanof.altervista.org/applabanof/data/getTraumaGenerale.php"
+        var URL = baseUrl + "data/getTraumaGenerale.php"
         const { data } = await axios.post(URL, {
         })
         return data
@@ -266,7 +275,7 @@ export default class ConnectionManager {
 
     getPatologiaByDistretto = async function (params) {
         var json = JSON.parse(params)
-        var URL = "https://applabanof.altervista.org/applabanof/data/getPatologiaGeneraleByDistretto.php"
+        var URL = baseUrl + "data/getPatologiaGeneraleByDistretto.php"
         const { data } = await axios.post(URL, {
             distretto: json.distretto,
         })
@@ -275,7 +284,7 @@ export default class ConnectionManager {
 
     getNumeroOssaByIndividuoAndDistretto = async function (params) {
         var json = JSON.parse(params)
-        var URL = "https://applabanof.altervista.org/applabanof/data/getNumeroOssaByIndividuoAndDistretto.php"
+        var URL = baseUrl + "data/getNumeroOssaByIndividuoAndDistretto.php"
         const { data } = await axios.post(URL, {
             distretto: json.distretto,
             individuo: json.individuo
@@ -284,7 +293,7 @@ export default class ConnectionManager {
     }
     getNumeroDentiByIndividuoAndDistretto = async function (params) {
         var json = JSON.parse(params)
-        var URL = "https://applabanof.altervista.org/applabanof/data/getNumeroDentiByIndividuoAndDistretto.php"
+        var URL = baseUrl + "data/getNumeroDentiByIndividuoAndDistretto.php"
         const { data } = await axios.post(URL, {
             distretto: json.distretto,
             individuo: json.individuo
@@ -294,7 +303,7 @@ export default class ConnectionManager {
 
     getUserInfo = async function (params) {
         var json = JSON.parse(params)
-        var URL = "https://applabanof.altervista.org/applabanof/data/getUserInfo.php"
+        var URL = baseUrl + "data/getUserInfo.php"
         const { data } = await axios.post(URL, {
             id: json.id
         })
@@ -302,7 +311,7 @@ export default class ConnectionManager {
     }
 
     getUsersRegisterRequests = async function (params) {
-        var URL = "https://applabanof.altervista.org/applabanof/data/getUsersRegisterRequests.php"
+        var URL = baseUrl + "data/getUsersRegisterRequests.php"
         const { data } = await axios.post(URL, {
 
         })
@@ -310,7 +319,7 @@ export default class ConnectionManager {
     }
 
     getClassiPatologie = async function (params) {
-        var URL = "https://applabanof.altervista.org/applabanof/data/getClassiPatologie.php"
+        var URL = baseUrl + "data/getClassiPatologie.php"
         const { data } = await axios.post(URL, {
 
         })
@@ -318,28 +327,28 @@ export default class ConnectionManager {
     }
 
     getTipoOssa = async function (params) {
-        var URL = "https://applabanof.altervista.org/applabanof/data/getTipoOssa.php"
+        var URL = baseUrl + "data/getTipoOssa.php"
         const { data } = await axios.post(URL, {
         })
         return data
     }
 
     getPatologieGenerali = async function (params) {
-        var URL = "https://applabanof.altervista.org/applabanof/data/getPatologieGenerali.php"
+        var URL = baseUrl + "data/getPatologieGenerali.php"
         const { data } = await axios.post(URL, {
         })
         return data
     }
 
     getCaratteriMetrici = async function (params) {
-        var URL = "https://applabanof.altervista.org/applabanof/data/getCaratteriMetrici.php"
+        var URL = baseUrl + "data/getCaratteriMetrici.php"
         const { data } = await axios.post(URL, {
         })
         return data
     }
 
     getCaratteriNonMetrici = async function (params) {
-        var URL = "https://applabanof.altervista.org/applabanof/data/getCaratteriNonMetrici.php"
+        var URL = baseUrl + "data/getCaratteriNonMetrici.php"
         const { data } = await axios.post(URL, {
         })
         return data
@@ -347,14 +356,14 @@ export default class ConnectionManager {
 
     getImageById = async function (params) {
         var json = JSON.parse(params)
-        var URL = "https://applabanof.altervista.org/applabanof/data/getImageById.php"
+        var URL = baseUrl + "data/getImageById.php"
         const { data } = await axios.post(URL, {
             id: json.id
         })
         return data
     }
     getImages = async function (params) {
-        var URL = "https://applabanof.altervista.org/applabanof/data/getImages.php"
+        var URL = baseUrl + "data/getImages.php"
         const { data } = await axios.post(URL, {
 
         })
@@ -362,47 +371,68 @@ export default class ConnectionManager {
     }
     getImagesByIndividuo = async function (params) {
         var json = JSON.parse(params)
-        var URL = "https://applabanof.altervista.org/applabanof/data/getImagesByIndividuo.php"
+        var URL = baseUrl + "data/getImagesByIndividuo.php"
         const { data } = await axios.post(URL, {
             individuo: json.individuo
         })
         return data
     }
 
-    //CREATE 
+    getAllInfoIndividuo = async function (params) {
+        var json = JSON.parse(params)
+        var URL = baseUrl + "data/getAllInfoIndividuo.php"
+        const { data } = await axios.post(URL, {
+            id: json.id,
+            token: sessionStorage.getItem('access_token')
+        })
 
+
+        return data
+    }
+
+
+    //CREATE 
     createIndividuo = async function (params) {
         var ind = JSON.parse(params)
-        var URL = "https://applabanof.altervista.org/applabanof/data/creazione/createIndividuo.php"
+        var URL = baseUrl + "data/creazione/createIndividuo.php"
         const { data } = await axios.post(URL, {
             nome: ind.nome,
             tomba: ind.tomba,
             creatore: ind.creatore,
+
+            token: sessionStorage.getItem('access_token')
         })
+
+
+        CheckToken(data)
         return data
     }
     createTomba = async function (params) {
         var tomba = JSON.parse(params)
-        var URL = "https://applabanof.altervista.org/applabanof/data/creazione/createTomba.php"
+        var URL = baseUrl + "data/creazione/createTomba.php"
         const { data } = await axios.post(URL, {
             nome: tomba.nome,
             nMinIndividui: tomba.nMinIndividui,
             coordinate: tomba.coordinate,
-            necropoli: tomba.necropoli
+            necropoli: tomba.necropoli,
+            token: sessionStorage.getItem('access_token')
         })
+        CheckToken(data)
         return data
     }
     createNecropoli = async function (params) {
         var tomba = JSON.parse(params)
-        var URL = "https://applabanof.altervista.org/applabanof/data/creazione/createNecropoli.php"
+        var URL = baseUrl + "data/creazione/createNecropoli.php"
         const { data } = await axios.post(URL, {
-            nome: tomba.nome
+            nome: tomba.nome,
+            token: sessionStorage.getItem('access_token')
         })
+        CheckToken(data)
         return data
     }
     createOsso = async function (params) {
         var osso = JSON.parse(params)
-        var URL = "https://applabanof.altervista.org/applabanof/data/creazione/createOsso.php"
+        var URL = baseUrl + "data/creazione/createOsso.php"
         const { data } = await axios.post(URL, {
             tipoOsso: osso.tipoOsso,
             lato: osso.lato,
@@ -415,13 +445,15 @@ export default class ConnectionManager {
             campionamento: osso.campionamento,
             altreAnalisi: osso.altreAnalisi,
             individuo: osso.individuo,
-            NMR: osso.NMR
+            NMR: osso.NMR,
+            token: sessionStorage.getItem('access_token')
         })
+        CheckToken(data)
         return data
     }
     createDente = async function (params) {
         var osso = JSON.parse(params)
-        var URL = "https://applabanof.altervista.org/applabanof/data/creazione/createDente.php"
+        var URL = baseUrl + "data/creazione/createDente.php"
         const { data } = await axios.post(URL, {
             individuo: osso.individuo,
             tipoDente: osso.tipoDente,
@@ -433,48 +465,56 @@ export default class ConnectionManager {
             restauriOdontoiatrici: osso.restauriOdontoiatrici,
             commento: osso.commento,
             datazioneCaduta: osso.datazioneCaduta,
-            campionamento: osso.campionamento
+            campionamento: osso.campionamento,
+            token: sessionStorage.getItem('access_token')
         })
+        CheckToken(data)
         return data
     }
     createCarattereMetricoSpecifico = async function (params) {
         var json = JSON.parse(params)
-        var URL = "https://applabanof.altervista.org/applabanof/data/creazione/createCarattereMetricoSpecifico.php"
+        var URL = baseUrl + "data/creazione/createCarattereMetricoSpecifico.php"
         const { data } = await axios.post(URL, {
             individuo: json.individuo,
             tipoCarattereMetrico: json.tipoCarattereMetrico,
             lato: json.lato,
             valore: json.valore,
             unitaMisura: json.unitaMisura,
+            token: sessionStorage.getItem('access_token')
         })
+        CheckToken(data)
         return data
     }
     createCarattereNonMetricoSpecifico = async function (params) {
         var json = JSON.parse(params)
-        var URL = "https://applabanof.altervista.org/applabanof/data/creazione/createCarattereNonMetricoSpecifico.php"
+        var URL = baseUrl + "data/creazione/createCarattereNonMetricoSpecifico.php"
         const { data } = await axios.post(URL, {
             individuo: json.individuo,
             tipoCarattereNonMetrico: json.tipoCarattereNonMetrico,
             lato: json.lato,
-            valore: json.valore
+            valore: json.valore,
+            token: sessionStorage.getItem('access_token')
         })
+        CheckToken(data)
         return data
     }
     createTraumaSpecifico = async function (params) {
         var json = JSON.parse(params)
-        var URL = "https://applabanof.altervista.org/applabanof/data/creazione/createTraumaSpecifico.php"
+        var URL = baseUrl + "data/creazione/createTraumaSpecifico.php"
         const { data } = await axios.post(URL, {
             osso: json.osso,
             dente: json.dente,
             tipoTrauma: json.tipoTrauma,
             datazione: json.datazione,
-            descrizione: json.descrizione
+            descrizione: json.descrizione,
+            token: sessionStorage.getItem('access_token')
         })
+        CheckToken(data)
         return data
     }
     createPatologiaSpecifica = async function (params) {
         var json = JSON.parse(params)
-        var URL = "https://applabanof.altervista.org/applabanof/data/creazione/createPatologiaSpecifica.php"
+        var URL = baseUrl + "data/creazione/createPatologiaSpecifica.php"
         const { data } = await axios.post(URL, {
             osso: json.osso,
             dente: json.dente,
@@ -482,53 +522,65 @@ export default class ConnectionManager {
             litica: json.litica,
             proliferativa: json.proliferativa,
             descrizione: json.descrizione,
-            classePatologia: json.classePatologia
+            classePatologia: json.classePatologia,
+            token: sessionStorage.getItem('access_token')
         })
+        CheckToken(data)
         return data
     }
     createPatologiaGeneraleEPerDistretto = async function (params) {
         var json = JSON.parse(params)
-        var URL = "https://applabanof.altervista.org/applabanof/data/creazione/createPatologiaGeneraleEPerDistretto.php"
+        var URL = baseUrl + "data/creazione/createPatologiaGeneraleEPerDistretto.php"
         const { data } = await axios.post(URL, {
             patologia: json.patologia,
-            odontoiatrico: json.odontoiatrico
+            odontoiatrico: json.odontoiatrico,
+            token: sessionStorage.getItem('access_token')
         })
+        CheckToken(data)
         return data
     }
     createCarattereMetricoGeneraleEPerDistretto = async function (params) {
         var json = JSON.parse(params)
-        var URL = "https://applabanof.altervista.org/applabanof/data/creazione/createCarattereMetricoGeneraleEPerDistretto.php"
+        var URL = baseUrl + "data/creazione/createCarattereMetricoGeneraleEPerDistretto.php"
         const { data } = await axios.post(URL, {
             nome: json.nome,
-            distretto: json.distretto
+            distretto: json.distretto,
+            token: sessionStorage.getItem('access_token')
         })
+        CheckToken(data)
         return data
     }
     createCarattereNonMetricoGeneraleEPerDistretto = async function (params) {
         var json = JSON.parse(params)
-        var URL = "https://applabanof.altervista.org/applabanof/data/creazione/createCarattereNonMetricoGeneraleEPerDistretto.php"
+        var URL = baseUrl + "data/creazione/createCarattereNonMetricoGeneraleEPerDistretto.php"
         const { data } = await axios.post(URL, {
             nome: json.nome,
-            distretto: json.distretto
+            distretto: json.distretto,
+            token: sessionStorage.getItem('access_token')
         })
+        CheckToken(data)
         return data
     }
     createImage = async function (params) {
         var json = JSON.parse(params)
-        var URL = "https://applabanof.altervista.org/applabanof/data/creazione/createImage.php"
+        var URL = baseUrl + "data/creazione/createImage.php"
         const { data } = await axios.post(URL, {
             descrizione: json.descrizione,
             image: json.image,
-            individuo: json.individuo
+            individuo: json.individuo,
+            token: sessionStorage.getItem('access_token')
         })
+        CheckToken(data)
         return data
     }
     createTraumaGenerale = async function (params) {
         var json = JSON.parse(params)
-        var URL = "https://applabanof.altervista.org/applabanof/data/creazione/createTraumaGenerale.php"
+        var URL = baseUrl + "data/creazione/createTraumaGenerale.php"
         const { data } = await axios.post(URL, {
-            trauma: json.trauma
+            trauma: json.trauma,
+            token: sessionStorage.getItem('access_token')
         })
+        CheckToken(data)
         return data
     }
 
@@ -537,136 +589,168 @@ export default class ConnectionManager {
 
     deleteIndividuo = async function (params) {
         var json = JSON.parse(params)
-        var URL = "https://applabanof.altervista.org/applabanof/data/delete/deleteIndividuo.php"
+        var URL = baseUrl + "data/delete/deleteIndividuo.php"
         const { data } = await axios.post(URL, {
-            id: json.id
+            id: json.id,
+            token: sessionStorage.getItem('access_token')
         })
+        CheckToken(data)
         return data
     }
     deleteTomba = async function (params) {
         var json = JSON.parse(params)
-        var URL = "https://applabanof.altervista.org/applabanof/data/delete/deleteTomba.php"
+        var URL = baseUrl + "data/delete/deleteTomba.php"
         const { data } = await axios.post(URL, {
-            id: json.id
+            id: json.id,
+            token: sessionStorage.getItem('access_token')
         })
+        CheckToken(data)
         return data
     }
     deleteNecropoli = async function (params) {
         var json = JSON.parse(params)
-        var URL = "https://applabanof.altervista.org/applabanof/data/delete/deleteNecropoli.php"
+        var URL = baseUrl + "data/delete/deleteNecropoli.php"
         const { data } = await axios.post(URL, {
-            id: json.id
+            id: json.id,
+            token: sessionStorage.getItem('access_token')
         })
+        CheckToken(data)
         return data
     }
     deleteOsso = async function (params) {
         var json = JSON.parse(params)
-        var URL = "https://applabanof.altervista.org/applabanof/data/delete/deleteOsso.php"
+        var URL = baseUrl + "data/delete/deleteOsso.php"
         const { data } = await axios.post(URL, {
-            id: json.id
+            id: json.id,
+            token: sessionStorage.getItem('access_token')
         })
+        CheckToken(data)
         return data
     }
     deleteDente = async function (params) {
         var json = JSON.parse(params)
-        var URL = "https://applabanof.altervista.org/applabanof/data/delete/deleteDente.php"
+        var URL = baseUrl + "data/delete/deleteDente.php"
         const { data } = await axios.post(URL, {
-            id: json.id
+            id: json.id,
+            token: sessionStorage.getItem('access_token')
         })
+        CheckToken(data)
         return data
     }
     deleteTraumaSpecifico = async function (params) {
         var json = JSON.parse(params)
-        var URL = "https://applabanof.altervista.org/applabanof/data/delete/deleteTraumaSpecifico.php"
+        var URL = baseUrl + "data/delete/deleteTraumaSpecifico.php"
         const { data } = await axios.post(URL, {
-            id: json.id
+            id: json.id,
+            token: sessionStorage.getItem('access_token')
         })
+        CheckToken(data)
         return data
     }
     deletePatologiaSpecifica = async function (params) {
         var json = JSON.parse(params)
-        var URL = "https://applabanof.altervista.org/applabanof/data/delete/deletePatologiaSpecifica.php"
+        var URL = baseUrl + "data/delete/deletePatologiaSpecifica.php"
         const { data } = await axios.post(URL, {
-            id: json.id
+            id: json.id,
+            token: sessionStorage.getItem('access_token')
         })
+        CheckToken(data)
         return data
     }
     deleteCarattereMetricoSpecifico = async function (params) {
         var json = JSON.parse(params)
-        var URL = "https://applabanof.altervista.org/applabanof/data/delete/deleteCarattereMetricoSpecifico.php"
+        var URL = baseUrl + "data/delete/deleteCarattereMetricoSpecifico.php"
         const { data } = await axios.post(URL, {
-            id: json.id
+            id: json.id,
+            token: sessionStorage.getItem('access_token')
         })
+        CheckToken(data)
         return data
     }
     deleteCarattereNonMetricoSpecifico = async function (params) {
         var json = JSON.parse(params)
-        var URL = "https://applabanof.altervista.org/applabanof/data/delete/deleteCarattereNonMetricoSpecifico.php"
+        var URL = baseUrl + "data/delete/deleteCarattereNonMetricoSpecifico.php"
         const { data } = await axios.post(URL, {
-            id: json.id
+            id: json.id,
+            token: sessionStorage.getItem('access_token')
         })
+        CheckToken(data)
         return data
     }
     deletePatologiaGeneraleEPerDistretto = async function (params) {
         var json = JSON.parse(params)
-        var URL = "https://applabanof.altervista.org/applabanof/data/delete/deletePatologiaGeneraleEPerDistretto.php"
+        var URL = baseUrl + "data/delete/deletePatologiaGeneraleEPerDistretto.php"
         const { data } = await axios.post(URL, {
-            id: json.id
+            id: json.id,
+            token: sessionStorage.getItem('access_token')
         })
+        CheckToken(data)
         return data
     }
 
     deleteCarattereMetricoGeneraleEPerDistretto = async function (params) {
         var json = JSON.parse(params)
-        var URL = "https://applabanof.altervista.org/applabanof/data/delete/deleteCarattereMetricoGeneraleEPerDistretto.php"
+        var URL = baseUrl + "data/delete/deleteCarattereMetricoGeneraleEPerDistretto.php"
         const { data } = await axios.post(URL, {
-            id: json.id
+            id: json.id,
+            token: sessionStorage.getItem('access_token')
         })
+        CheckToken(data)
         return data
     }
 
     deleteCarattereNonMetricoGeneraleEPerDistretto = async function (params) {
         var json = JSON.parse(params)
-        var URL = "https://applabanof.altervista.org/applabanof/data/delete/deleteCarattereNonMetricoGeneraleEPerDistretto.php"
+        var URL = baseUrl + "data/delete/deleteCarattereNonMetricoGeneraleEPerDistretto.php"
         const { data } = await axios.post(URL, {
-            id: json.id
+            id: json.id,
+            token: sessionStorage.getItem('access_token')
         })
+        CheckToken(data)
         return data
     }
 
     deleteAccount = async function (params) {
         var json = JSON.parse(params)
-        var URL = "https://applabanof.altervista.org/applabanof/data/delete/deleteAccount.php"
+        var URL = baseUrl + "data/delete/deleteAccount.php"
         const { data } = await axios.post(URL, {
-            id: json.id
+            id: json.id,
+            token: sessionStorage.getItem('access_token')
         })
+        CheckToken(data)
         return data
     }
 
     deleteIndividuoSenzaCreatore = async function (params) {
         var json = JSON.parse(params)
-        var URL = "https://applabanof.altervista.org/applabanof/data/delete/deleteIndividuiSenzaCreatore.php"
+        var URL = baseUrl + "data/delete/deleteIndividuiSenzaCreatore.php"
         const { data } = await axios.post(URL, {
-            id: json.id
+            id: json.id,
+            token: sessionStorage.getItem('access_token')
         })
+        CheckToken(data)
         return data
     }
 
     deleteTraumaGenerale = async function (params) {
         var json = JSON.parse(params)
-        var URL = "https://applabanof.altervista.org/applabanof/data/delete/deleteTraumaGenerale.php"
+        var URL = baseUrl + "data/delete/deleteTraumaGenerale.php"
         const { data } = await axios.post(URL, {
-            id: json.id
+            id: json.id,
+            token: sessionStorage.getItem('access_token')
         })
+        CheckToken(data)
         return data
     }
 
     deleteImmagine = async function (params) {
         var json = JSON.parse(params)
-        var URL = "https://applabanof.altervista.org/applabanof/data/delete/deleteImmagine.php"
+        var URL = baseUrl + "data/delete/deleteImmagine.php"
         const { data } = await axios.post(URL, {
-            id: json.id
+            id: json.id,
+            token: sessionStorage.getItem('access_token')
         })
+        CheckToken(data)
         return data
     }
 
@@ -674,28 +758,32 @@ export default class ConnectionManager {
     //EDIT
     editTomba = async function (params) {
         var tomba = JSON.parse(params)
-        var URL = "https://applabanof.altervista.org/applabanof/data/edit/editTomba.php"
+        var URL = baseUrl + "data/edit/editTomba.php"
         const { data } = await axios.post(URL, {
             id: tomba.id,
             nome: tomba.nome,
             nMinIndividui: tomba.nMinIndividui,
             coordinate: tomba.coordinate,
-            necropoli: tomba.necropoli
+            necropoli: tomba.necropoli,
+            token: sessionStorage.getItem('access_token')
         })
+        CheckToken(data)
         return data
     }
     editNecropoli = async function (params) {
         var tomba = JSON.parse(params)
-        var URL = "https://applabanof.altervista.org/applabanof/data/edit/editNecropoli.php"
+        var URL = baseUrl + "data/edit/editNecropoli.php"
         const { data } = await axios.post(URL, {
             id: tomba.id,
-            nome: tomba.nome
+            nome: tomba.nome,
+            token: sessionStorage.getItem('access_token')
         })
+        CheckToken(data)
         return data
     }
     editIndividuo = async function (params) {
         var json = JSON.parse(params)
-        var URL = "https://applabanof.altervista.org/applabanof/data/edit/editIndividuo.php"
+        var URL = baseUrl + "data/edit/editIndividuo.php"
         const { data } = await axios.post(URL, {
             id: json.id,
             nome: json.nome,
@@ -714,14 +802,16 @@ export default class ConnectionManager {
             etaMin: json.etaMin,
             etaMax: json.etaMax,
             staturaMin: json.staturaMin,
-            staturaMax: json.staturaMax
+            staturaMax: json.staturaMax,
+            token: sessionStorage.getItem('access_token')
         })
+        CheckToken(data)
         return data
     }
 
     editCaratteristicheDeposizione = async function (params) {
         var json = JSON.parse(params)
-        var URL = "https://applabanof.altervista.org/applabanof/data/edit/editCaratteristicheDeposizione.php"
+        var URL = baseUrl + "data/edit/editCaratteristicheDeposizione.php"
         const { data } = await axios.post(URL, {
             individuo: json.individuo,
             luogoRitrovamento: json.luogoRitrovamento,
@@ -732,14 +822,16 @@ export default class ConnectionManager {
             effettiPersonali: json.effettiPersonali,
             ossaAnimali: json.ossaAnimali,
             informazioniAnteMortem: json.informazioniAnteMortem,
-            altro: json.altro
+            altro: json.altro,
+            token: sessionStorage.getItem('access_token')
         })
+        CheckToken(data)
         return data
     }
 
     editOsso = async function (params) {
         var osso = JSON.parse(params)
-        var URL = "https://applabanof.altervista.org/applabanof/data/edit/editOsso.php"
+        var URL = baseUrl + "data/edit/editOsso.php"
         const { data } = await axios.post(URL, {
             //tipoOsso: osso.tipoOsso,
             lato: osso.lato,
@@ -751,15 +843,17 @@ export default class ConnectionManager {
             indagineRadiologica: osso.indagineRadiologica,
             campionamento: osso.campionamento,
             altreAnalisi: osso.altreAnalisi,
-            id: osso.id
+            id: osso.id,
+            token: sessionStorage.getItem('access_token')
             //individuo: osso.individuo
         })
+        CheckToken(data)
         return data
     }
 
     editDente = async function (params) {
         var osso = JSON.parse(params)
-        var URL = "https://applabanof.altervista.org/applabanof/data/edit/editDente.php"
+        var URL = baseUrl + "data/edit/editDente.php"
         const { data } = await axios.post(URL, {
             //tipoOsso: osso.tipoOsso,
             integro: osso.integro,
@@ -770,54 +864,62 @@ export default class ConnectionManager {
             commento: osso.commento,
             indagineRadiologica: osso.indagineRadiologica,
             campionamento: osso.campionamento,
-            id: osso.id
+            id: osso.id,
+            token: sessionStorage.getItem('access_token')
             //individuo: osso.individuo
         })
+        CheckToken(data)
         return data
     }
 
     editCarattereMetricoSpecifico = async function (params) {
         var json = JSON.parse(params)
-        var URL = "https://applabanof.altervista.org/applabanof/data/edit/editCarattereMetricoSpecifico.php"
+        var URL = baseUrl + "data/edit/editCarattereMetricoSpecifico.php"
         const { data } = await axios.post(URL, {
             individuo: json.individuo,
             tipoCarattereMetrico: json.tipoCarattereMetrico,
             lato: json.lato,
             valore: json.valore,
-            id: json.id
+            id: json.id,
+            token: sessionStorage.getItem('access_token')
         })
+        CheckToken(data)
         return data
     }
 
     editCarattereNonMetricoSpecifico = async function (params) {
         var json = JSON.parse(params)
-        var URL = "https://applabanof.altervista.org/applabanof/data/edit/editCarattereNonMetricoSpecifico.php"
+        var URL = baseUrl + "data/edit/editCarattereNonMetricoSpecifico.php"
         const { data } = await axios.post(URL, {
             individuo: json.individuo,
             tipoCarattereMetrico: json.tipoCarattereMetrico,
             lato: json.lato,
             valore: json.valore,
-            id: json.id
+            id: json.id,
+            token: sessionStorage.getItem('access_token')
         })
+        CheckToken(data)
         return data
     }
 
     editTraumaSpecifico = async function (params) {
         var json = JSON.parse(params)
-        var URL = "https://applabanof.altervista.org/applabanof/data/edit/editTraumaSpecifico.php"
+        var URL = baseUrl + "data/edit/editTraumaSpecifico.php"
         const { data } = await axios.post(URL, {
             osso: json.osso,
             tipoTrauma: json.tipoTrauma,
             descrizione: json.descrizione,
             datazione: json.datazione,
-            id: json.id
+            id: json.id,
+            token: sessionStorage.getItem('access_token')
         })
+        CheckToken(data)
         return data
     }
 
     editPatologiaSpecifica = async function (params) {
         var json = JSON.parse(params)
-        var URL = "https://applabanof.altervista.org/applabanof/data/edit/editPatologiaSpecifica.php"
+        var URL = baseUrl + "data/edit/editPatologiaSpecifica.php"
         const { data } = await axios.post(URL, {
             osso: json.osso,
             tipoPatologia: json.tipoPatologia,
@@ -825,57 +927,81 @@ export default class ConnectionManager {
             litica: json.litica,
             proliferativa: json.proliferativa,
             classePatologia: json.classePatologia,
-            id: json.id
+            id: json.id,
+            token: sessionStorage.getItem('access_token')
         })
+        CheckToken(data)
         return data
     }
 
     editPatologiaGenerale = async function (params) {
         var json = JSON.parse(params)
-        var URL = "https://applabanof.altervista.org/applabanof/data/edit/editPatologiaGenerale.php"
+        var URL = baseUrl + "data/edit/editPatologiaGenerale.php"
         const { data } = await axios.post(URL, {
             nome: json.nome,
-            id: json.id
+            id: json.id,
+            token: sessionStorage.getItem('access_token')
         })
+        CheckToken(data)
         return data
     }
 
     editCarattereMetricoGenerale = async function (params) {
         var json = JSON.parse(params)
-        var URL = "https://applabanof.altervista.org/applabanof/data/edit/editCarattereMetricoGenerale.php"
+        var URL = baseUrl + "data/edit/editCarattereMetricoGenerale.php"
         const { data } = await axios.post(URL, {
             nome: json.nome,
-            id: json.id
+            id: json.id,
+            token: sessionStorage.getItem('access_token')
         })
+        CheckToken(data)
         return data
     }
     editCarattereNonMetricoGenerale = async function (params) {
         var json = JSON.parse(params)
-        var URL = "https://applabanof.altervista.org/applabanof/data/edit/editCarattereNonMetricoGenerale.php"
+        var URL = baseUrl + "data/edit/editCarattereNonMetricoGenerale.php"
         const { data } = await axios.post(URL, {
             nome: json.nome,
-            id: json.id
+            id: json.id,
+            token: sessionStorage.getItem('access_token')
         })
+        CheckToken(data)
         return data
     }
 
     editRuoloAccountById = async function (params) {
         var json = JSON.parse(params)
-        var URL = "https://applabanof.altervista.org/applabanof/data/edit/editRuoloAccountById.php"
+        var URL = baseUrl + "data/edit/editRuoloAccountById.php"
         const { data } = await axios.post(URL, {
             ruolo: json.ruolo,
-            id: json.id
+            id: json.id,
+            token: sessionStorage.getItem('access_token')
         })
+        CheckToken(data)
         return data
     }
 
     editTraumaGenerale = async function (params) {
         var json = JSON.parse(params)
-        var URL = "https://applabanof.altervista.org/applabanof/data/edit/editTraumaGenerale.php"
+        var URL = baseUrl + "data/edit/editTraumaGenerale.php"
         const { data } = await axios.post(URL, {
             nome: json.nome,
-            id: json.id
+            id: json.id,
+            token: sessionStorage.getItem('access_token')
         })
+        CheckToken(data)
+        return data
+    }
+
+    editDescriptionImage = async function (params) {
+        var json = JSON.parse(params)
+        var URL = baseUrl + "data/edit/editDescriptionImage.php"
+        const { data } = await axios.post(URL, {
+            descrizione: json.descrizione,
+            id: json.id,
+            token: sessionStorage.getItem('access_token')
+        })
+        CheckToken(data)
         return data
     }
 

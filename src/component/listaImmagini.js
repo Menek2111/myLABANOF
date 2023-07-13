@@ -86,6 +86,20 @@ function MyModal(props) {
 
     }
 
+    const editDescriptionImage = async (e) => {
+        var newDesc = prompt("Modifica descrizione", props.description)
+
+        if (newDesc != null) {
+            let cm = new ConnectionManager();
+            var params = { id: props.id, descrizione: newDesc }
+            let res = await cm.editDescriptionImage(JSON.stringify(params))
+            if (res.response === 'success') {
+                props.callback()
+                handleClose()
+            }
+        }
+
+    }
 
     const [show, setShow] = useState(false);
 
@@ -112,11 +126,12 @@ function MyModal(props) {
 
                     <Modal.Footer>
                         <Button variant="secondary" onClick={handleClose}>Chiudi</Button>
+                        <Button variant="outline-primary" onClick={() => editDescriptionImage()}>Modifica descrizione</Button>
                         <Button variant="outline-danger" onClick={() => deleteImmagine()}>Elimina immagine</Button>
                     </Modal.Footer>
                 </Modal.Body>
             </Modal>
-        </div>
+        </div >
 
 
     );

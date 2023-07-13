@@ -71,6 +71,7 @@ function ModalCheckPermessi(props) {
                         <Button variant='outline-primary' href='#/admin' onClick={() => handleClose()}>Accedere alla scheda amministratore</Button>
                     </div>
 
+
                     {/* #/individuo/export 
 
                     <div className='mt-4 text-center '>
