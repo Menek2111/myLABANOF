@@ -57,7 +57,7 @@ function SchedaOffline() {
             >
                 <Nav.Item style={centerMiddle}>
                     <Nav.Link >
-                        <img src={labanof} alt='Labanof logo' style={{ height: '5vh' }} />
+                        MYLABANOF
                     </Nav.Link>
                 </Nav.Item>
 
@@ -93,8 +93,7 @@ function SchedaOffline() {
                                         sessionStorage.setItem('individuoSelezionatoCreatore', ind.creatore)
                                         navigate('/individuo')
                                     }}>
-                                        <img src={indThumb} style={{ height: '5vh' }} />
-                                        <p className="w-100 text-center">{ind.nome}</p>
+                                        <p className="w-100 p-0 text-center">💀 - {ind.nome}</p>
                                     </div>
                                 </div>)) : (<></>)
                             }

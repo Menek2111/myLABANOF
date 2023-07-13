@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { useGoogleLogin } from '@react-oauth/google';
 import axios from 'axios';
 import logo from './images/myLabanof.PNG'
+import unilogo from './images/unimi.png'
 import google from './images/google-logo.png'
 import { useNavigate } from 'react-router-dom'
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -36,9 +37,77 @@ function Login() {
                 caches.delete(name);
             });
         });
-        alert('Complete Cache Cleared')
+        alert('Gli aggiornamenti più recenti sono stati installati')
         window.location.reload(false)
     };
+
+    const creaIndividuo = async (ind) => {
+        let cm = new ConnectionManager();
+        let params = {
+            nome: ind.nome,
+            creatore: localStorage.getItem('offlineId')
+        }
+        let res = await cm.createIndividuo(JSON.stringify(params)).then(
+            res => {
+                console.log('CreateIndividuo', res)
+                if (res.response === 'success') {
+                    alert('Individuo creato durante la sessione offline caricato correttamente')
+                    editIndividuo(ind, res.results)
+                    editCaratteristicheDeposizione(ind, res.results)
+                }
+            }
+        );
+        return res
+    }
+    const editIndividuo = async (ind, id) => {
+        let cm = new ConnectionManager();
+        let modifiche = {
+            id: id,
+            nome: ind.nome,
+            luogoRinvenimento: ind.luogoRinvenimento,
+            dataRinvenimento: ind.dataRinvenimento,
+            classeDiEta: ind.classeDiEta,
+            origineBiologica: ind.origineBiologica,
+            origineGeografica: ind.origineGeografica,
+            sessoBiologico: ind.sessoBiologico,
+            stato: ind.stato,
+            tomba: ind.tomba,
+            visibilita: ind.visibilita,
+            pesoIndividuo: ind.pesoIndividuo,
+            pesoCremazione: ind.pesoCremazione,
+            volumeCremazione: ind.volumeCremazione
+        }
+
+        await cm.editIndividuo(JSON.stringify(modifiche)).then(res => {
+            console.log('editIndividuo', res)
+            if (res.response === 'success') {
+                //alert('Individuo modificato')
+            }
+        })
+    }
+    const editCaratteristicheDeposizione = async (ind, id) => {
+        let cm = new ConnectionManager();
+
+        let modifiche = {
+            individuo: id,
+            luogoRitrovamento: ind.caratteristicheDellaDeposizione.luogoRitrovamento,
+            tipoSepoltura: ind.caratteristicheDellaDeposizione.tipoSepoltura,
+            tipoTerreno: ind.caratteristicheDellaDeposizione.tipoTerreno,
+            fauna: ind.caratteristicheDellaDeposizione.fauna,
+            clima: ind.caratteristicheDellaDeposizione.clima,
+            effettiPersonali: ind.caratteristicheDellaDeposizione.effettiPersonali,
+            ossaAnimali: ind.caratteristicheDellaDeposizione.ossaAnimali,
+            informazioniAnteMortem: ind.caratteristicheDellaDeposizione.informazioniAnteMortem,
+            altro: ind.caratteristicheDellaDeposizione.altro
+        }
+
+        await cm.editCaratteristicheDeposizione(JSON.stringify(modifiche)).then(res => {
+            console.log('editCaratteristicheDeposizione', res)
+            if (res.response === 'success') {
+                //alert('modificatre caratteristiche deposizione')
+            }
+        })
+    }
 
     useEffect(() => {
         function onlineHandler() {
@@ -93,6 +162,17 @@ function Login() {
                                 if (ress.userId.ruolo != 0) {
                                     localStorage.setItem('ruolo', ress.userId.ruolo)
                                     navigate('/home')
+
+                                    if (localStorage.getItem('OfflineIndividui') != null) {
+                                        let individui = JSON.parse(localStorage.getItem('OfflineIndividui'))
+                                        individui.map(
+                                            ind => {
+                                                creaIndividuo(ind)
+                                            }
+                                        )
+                                        localStorage.removeItem('OfflineIndividui')
+                                    }
+
                                 } else {
                                     alert('La richiesta di accesso è già stata effettuata, dovrai attendere la conferma da parte di un amministratore myLABANOF')
                                 }
@@ -138,16 +218,16 @@ function Login() {
 
     let checkMemorizzato = () => {
         if (localStorage.getItem('offlineId') != null) {
-            let utente = JSON.stringify(localStorage.getItem('offlineProfile'))
+            let utente = JSON.parse(localStorage.getItem('offlineProfile'))
             return (<>
                 <p>
                     Non è stata rilevata nessuna connessione di rete:
                     è possibile ultilizzare l'applicazione in modalità offline
                 </p>
-                <button>Accedi come: {utente.email}</button>
+                <button onClick={() => navigate('/offline')}>Accedi come: {utente.email}</button>
             </>)
         } else {
-            return (<p>No</p>)
+            return (<p>Non è stato trovato alcun account salvato, quindi non sarà possibile utilizzare l'applicazione MyLABANOF fino a quando la connessione non verrà ristabilita</p>)
         }
     }
 
@@ -158,20 +238,19 @@ function Login() {
 
                     <div className='row bg-white w-75 shadow rounded text-center d-flex'>
                         <div className='col-lg col-sm-12'>
-                            <img className='my-3' src={logo} style={{ height: '25vh' }} alt="logo"></img>
+
+                            {isOnline ? (<img className='my-3' src={logo} style={{ height: '25vh' }} alt="logo"></img>
+                            ) : (<></>)}
+
 
                             <div>
                                 <h4>Accedi a MyLabanof</h4>
                                 {isOnline ? (
-                                    <p>You are online.</p>
+                                    <button className='btn btn-link text-dark' style={{ position: 'absolute', top: '0', right: '0' }} onClick={() => clearCacheData()} >
+                                        Verifica aggiornamenti</button>
                                 ) : (
-                                    <p>You are offline. Please check your internet connection.</p>
+                                    <></>
                                 )}
-                                <button onClick={() => clearCacheData()} >
-                                    Clear Cache Data</button>
-                                <p>
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam nulla augue, imperdiet vel maximus id, mattis pulvinar massa. Proin non mi molestie, fermentum diam nec, malesuada sapien.
-                                </p>
                             </div>
 
 

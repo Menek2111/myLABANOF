@@ -4,6 +4,7 @@ import { useLocation } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom'
 import ConnectionManager from '../api/ConnectionManager';
 
+import { googleLogout } from '@react-oauth/google';
 
 function OfflineCheck(props) {
     const [isOnline, setIsOnline] = useState(navigator.onLine);
@@ -32,6 +33,7 @@ function OfflineCheck(props) {
                 }
             }
         );
+
     }
     const editIndividuo = async (ind, id) => {
         let cm = new ConnectionManager();
@@ -83,6 +85,7 @@ function OfflineCheck(props) {
         })
     }
     let uploadLocalData = async () => {
+
         if (localStorage.getItem('OfflineIndividui') != null) {
             let individui = JSON.parse(localStorage.getItem('OfflineIndividui'))
             individui.map(
@@ -97,20 +100,28 @@ function OfflineCheck(props) {
     const location = useLocation();
     const navigate = useNavigate();
 
+    const logOut = () => {
+        googleLogout();
+        localStorage.removeItem('profile')
+        localStorage.removeItem('userID')
+        sessionStorage.removeItem('access_token')
+        navigate('/')
+    };
+
     useEffect(() => {
         function onlineHandler() {
             setIsOnline(true);
-
             if (localStorage.getItem('offlineId') != null) {
                 alert('La connessione alla rete è stata ristabilita, verrà attivata la modalità online')
                 localStorage.setItem('isOnline', true)
-                uploadLocalData()
+                //uploadLocalData()
+
                 navigate('/home')
 
             } else {
                 alert('La connessione alla rete è stata ristabilita')
             }
-
+            logOut()
         }
 
         function offlineHandler() {
@@ -122,7 +133,7 @@ function OfflineCheck(props) {
                 navigate('/offline')
             } else {
                 alert('Non è possibile collegarsi alla rete, si consiglia di attendere')
-
+                navigate('/')
             }
         }
 

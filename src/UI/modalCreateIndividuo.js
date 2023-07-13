@@ -154,7 +154,9 @@ function ModalCreateIndividuo(props) {
         return (
             <div className='py-2'>
                 <Button style={centerMiddle} className='w-100 d-flex justify-content-start' variant="outline-primary" onClick={handleShow}>
-                    <img className='me-1 p-0 rounded' src={ind} style={{ height: '7vh' }} />
+                    {props.offline ? (<></>) : (<img className='me-1 p-0 rounded' src={ind} style={{ height: '7vh' }} />
+                    )}
+
                     <p className='m-0 ps-2'> Crea individuo</p>
                 </Button>
                 <Modal

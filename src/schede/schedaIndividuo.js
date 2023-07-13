@@ -127,6 +127,9 @@ function SchedaIndividuo(props) {
 
         } else {
             return (<div className='d-flex justify-content-around'>
+                <Button className='w-100 mx-2' variant="outline-danger" onClick={() => cancellaIndividuo()}>
+                    Cancella individuo
+                </Button>
                 <Button className='w-100 mx-2' variant="primary" onClick={() => salvaOffline()}>
                     Salva
                 </Button>
@@ -241,6 +244,16 @@ function SchedaIndividuo(props) {
                 setEditable(false)
             }
         })
+    }
+
+    const cancellaIndividuo = () => {
+        let index = sessionStorage.getItem('individuoSelezionato')
+        let array = JSON.parse(localStorage.getItem('OfflineIndividui'))
+
+        array.splice(index, 1)
+        localStorage.setItem('OfflineIndividui', JSON.stringify(array))
+        alert('Individuo eliminato correttamente')
+        navigate(-1)
     }
 
     const salvaOffline = () => {
@@ -391,18 +404,11 @@ function SchedaIndividuo(props) {
                                 <div className='col bg-white h-100 w-100 rounded border' style={{ overflowY: 'scroll' }}>
                                     <div className='row border-bottom rounded-top justify-content-between'>
                                         <div className='col-10 py-2 d-flex'>
-                                            <div style={centerMiddle}>
-                                                {individuo ? (<DropdownDistretti scheda='Individuo' id={individuo.localId} />) : (<div></div>)}
-
-                                            </div>
-                                            <div className='d-flex w-100 justify-content-center'>
-                                                <img className='mx-2' src={ind} style={{ height: '10vh' }} />
-                                                {individuo ? (<p style={centerMiddle} className=''>{individuo.nome}</p>
+                                            <div className='d-flex w-100 justify-content-start'>
+                                                {individuo ? (<p style={centerMiddle} className=''>NOME INDIVIDUO: {individuo.nome}</p>
                                                 ) : (<div></div>)}
                                             </div>
-
                                         </div>
-
                                         <div className='col-2 d-flex flex-column justify-content-center'>
                                             {individuo ? (editButton()) : (<div></div>)}
                                         </div>
