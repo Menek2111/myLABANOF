@@ -109,6 +109,11 @@ function OfflineCheck(props) {
     };
 
     useEffect(() => {
+
+        if (localStorage.getItem('userID') == null) {
+            navigate('/')
+        }
+
         function onlineHandler() {
             setIsOnline(true);
             if (localStorage.getItem('offlineId') != null) {
