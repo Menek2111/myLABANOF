@@ -149,6 +149,10 @@ function NavBar() {
         setTipoRicerca(opt)
     }
 
+    if (localStorage.getItem('isOnline') == null) {
+        localStorage.setItem('isOnline', true)
+    }
+
     if (localStorage.getItem('isOnline') == 'true') {
         return (
             <div>
