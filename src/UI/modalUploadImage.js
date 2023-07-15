@@ -131,7 +131,7 @@ function ModalUploadImage(props) {
                 </Modal.Header>
                 <Modal.Body>
                     <Form.Group controlId="formFile" className="mb-3">
-                        <Form.Label>Default file input example</Form.Label>
+                        <Form.Label>Seleziona immagine</Form.Label>
                         <Form.Control type="file" accept="image/png, image/gif, image/jpeg" onChange={(e) => handleFileInputChange(e)} />
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="formBasicPassword">
