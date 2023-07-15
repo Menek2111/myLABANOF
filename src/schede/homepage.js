@@ -77,7 +77,7 @@ function Homepage() {
 
     let checkUser = () => {
         if (localStorage.getItem('ruolo') != 0 && localStorage.getItem('ruolo') != 1) {
-            return (<div className='col-2 d-none d-sm-block d-md-none d-lg-block 	d-sm-none d-md-block' >
+            return (<div className='col-2 d-none d-sm-block d-md-none d-lg-block d-sm-none d-md-block' >
                 <SideNav />
             </div>)
         } else {
@@ -101,19 +101,18 @@ function Homepage() {
 
                     <div className={checkUserClass()} style={{ height: '89vh', overflowY: 'scroll' }}>
 
-
                         <h5 className='pt-3 border-bottom'>Necropoli <span style={{ fontSize: '0.7em' }} className='text-secondary'>(Solo quelle contenenti almeno una tomba)</span></h5>
 
-                        {necropoli ? (<ListaNecropoli colonna="col-lg-4 col-sm-5" tombe={necropoli} />) : (<div></div>)}
+                        {necropoli ? (<ListaNecropoli colonna="col-lg-4 col-sm-5 col-md-6 col-6 " tombe={necropoli} />) : (<div></div>)}
 
 
 
                         <h5 className='pt-3 border-bottom'>Tombe <span style={{ fontSize: '0.7em', display: 'none' }} className='text-secondary'>(Solo quelle contenenti almeno un individuo)</span></h5>
 
-                        {tombe ? (<ListaTombe colonna="col-lg-4 col-sm-5" tombe={tombe} />) : (<div></div>)}
+                        {tombe ? (<ListaTombe colonna="col-lg-4 col-sm-5  col-md-6 col-6" tombe={tombe} />) : (<div></div>)}
 
                         <h5 className='pt-3 border-bottom'>Individui</h5>
-                        {individui ? (<ListaIndividui pubblici={true} colonna="col-lg-4 col-sm-5" individui={individui} />) : (<Loading />)}
+                        {individui ? (<ListaIndividui pubblici={true} colonna="col-lg-4 col-sm-5 col-md-6 col-6" individui={individui} />) : (<Loading />)}
 
                     </div>
 

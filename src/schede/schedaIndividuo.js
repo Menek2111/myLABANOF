@@ -339,20 +339,18 @@ function SchedaIndividuo(props) {
                             <div className='row h-100'>
                                 <div className='col bg-white h-100 w-100 rounded border' style={{ overflowY: 'scroll' }}>
                                     <div className='row border-bottom rounded-top justify-content-between'>
-                                        <div className='col-10 py-2 d-flex'>
+                                        <div className='col-10 col-lg-10 col-md-12 col-sm-12  py-2 d-flex'>
                                             <div style={centerMiddle}>
                                                 {individuo ? (<DropdownDistretti scheda='Individuo' id={individuo.id} />) : (<div></div>)}
-
                                             </div>
                                             <div className='d-flex w-100 justify-content-center'>
                                                 <img className='mx-2' src={ind} style={{ height: '10vh' }} />
                                                 {individuo ? (<p style={centerMiddle} className=''>{individuo.nome} <br /> Creato da: {userInfo ? (userInfo.email) : (<>---</>)} <br /> Data: {individuo.dataCreazione} </p>
                                                 ) : (<div></div>)}
                                             </div>
-
                                         </div>
 
-                                        <div className='col-2 d-flex flex-column justify-content-center'>
+                                        <div className='col-2 col-lg-2 col-md-12 col-sm-12 d-flex flex-column justify-content-center'>
                                             {individuo ? (editButton()) : (<div></div>)}
                                         </div>
                                     </div>
@@ -369,10 +367,10 @@ function SchedaIndividuo(props) {
                                             </div>
                                         </div>) : (<></>)}
 
-                                        <GeneralitàIndividuo col="col-4" editable={editable} individuo={individuo} onIndividuoChange={addModificheGeneralità} callback={aggiorna} />
+                                        <GeneralitàIndividuo col="col-4 col-lg-4 col-sm-12 col-md-12 mb-1 " editable={editable} individuo={individuo} onIndividuoChange={addModificheGeneralità} callback={aggiorna} />
 
-                                        <ProfiloBiologicoIndividuo col="col-4" editable={editable} individuo={individuo} onIndividuoChange={addModificheProfiloBiologio} callback={aggiorna} />
-                                        {caratteristicheDeposizione ? (<CaratteristicheDellaDeposizione col="col-4" editable={editable} individuo={caratteristicheDeposizione} onIndividuoChange={addModificheCaratteristicheDeposizione} callback={aggiorna} />
+                                        <ProfiloBiologicoIndividuo col="col-4 col-lg-4 col-sm-12 col-md-12 mb-1" editable={editable} individuo={individuo} onIndividuoChange={addModificheProfiloBiologio} callback={aggiorna} />
+                                        {caratteristicheDeposizione ? (<CaratteristicheDellaDeposizione col="col-4 col-lg-4 col-sm-12 col-md-12 mb-1" editable={editable} individuo={caratteristicheDeposizione} onIndividuoChange={addModificheCaratteristicheDeposizione} callback={aggiorna} />
                                         ) : (
                                             <></>
                                         )}

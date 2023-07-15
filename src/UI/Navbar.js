@@ -166,7 +166,7 @@ function NavBar() {
                         <div className='d-flex'>
                             <Nav.Item style={centerMiddle}>
                                 <Nav.Link onClick={() => navigate('/home')}>
-                                    <img src={labanof} alt='Labanof logo' style={{ height: '5vh' }} />
+                                    <img src={labanof} alt='Labanof logo' style={{ width: '15vw' }} />
                                 </Nav.Link>
                             </Nav.Item>
                             <div className='py-2'>
@@ -186,7 +186,6 @@ function NavBar() {
                                                 </Dropdown.Menu>
                                             </Dropdown>
                                         </div>
-
                                         <Dropdown className='border-left w-100'>
                                             <Dropdown.Toggle variant="success" className='bg-transparent searchbar removeArrow p-0 w-100'>
                                                 <input placeholder='Cerca...' className="px-2 w-100 searchbar2 bg-transparent rounded" onChange={(e) => getResultsByQuery(e.target.value)}  ></input>

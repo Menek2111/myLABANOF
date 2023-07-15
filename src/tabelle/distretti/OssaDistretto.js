@@ -239,12 +239,14 @@ function OssaDistretto(props) {
 
 
     return (
-        <div>
+        <div className="col-12">
             <h5 className='border-bottom mb-2'>Ossa</h5>
 
             <div className="border rounded p-2">
 
-                {ossa ? (checkOssa()) : (<Loading />)}
+                {ossa ? (
+                    checkOssa()
+                ) : (<Loading />)}
 
                 {tipoOssa ? (
                     <div>

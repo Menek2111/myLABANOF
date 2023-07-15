@@ -129,7 +129,7 @@ function SchedaTomba() {
                             <div className='h-50'>
 
                                 <div className='row justify-content-center' >
-                                    <div className='col-3 d-flex flex-column justify-content-center'>
+                                    <div className='col-3 col-sm-6 col-lg-3 col-md-3 d-flex flex-column justify-content-center'>
                                         <ModalCreateTomba tomba={tombaInfo} necropoli={tombaInfo} />
                                     </div>
                                 </div>

@@ -124,7 +124,7 @@ function SchedaUtente() {
             return <>
                 <h5 className='pt-3 border-bottom'>Bozze</h5>
 
-                <ListaIndividui bozze={true} visibilità={true} all={true} colonna="col-3" individui={individui} />
+                <ListaIndividui bozze={true} visibilità={true} all={true} colonna="col-3 col-lg-3 col-sm-6 col-md-6" individui={individui} />
             </>
 
         } else {
@@ -163,7 +163,7 @@ function SchedaUtente() {
 
                                 <h5 className='pt-3 border-bottom'>Individui pubblici</h5>
 
-                                {individui ? (<ListaIndividui pubblici={true} visibilità={true} all={true} colonna="col-3" individui={individui} />) : (<Loading />)}
+                                {individui ? (<ListaIndividui pubblici={true} visibilità={true} all={true} colonna="col-3 col-lg-3 col-sm-6 col-md-6" individui={individui} />) : (<Loading />)}
 
                                 {individui ? (profile ? (checkUser()) : (<></>)) : (<Loading />)}
                             </div>

@@ -234,10 +234,10 @@ function Login() {
     return (
         <div style={{ width: '100vw', height: '100vh' }} >
             <div className='container p-3 h-100'>
-                <div className=' h-100 d-flex align-items-center justify-content-center'>
+                <div className=' h-100 row align-items-center justify-content-center'>
 
-                    <div className='row bg-white w-75 shadow rounded text-center d-flex'>
-                        <div className='col-lg col-sm-12'>
+                    <div className=' bg-white col-lg-6 col-sm-12 col-md-6 shadow rounded text-center d-flex'>
+                        <div className=''>
 
                             {isOnline ? (<img className='my-3' src={logo} style={{ height: '25vh' }} alt="logo"></img>
                             ) : (<></>)}

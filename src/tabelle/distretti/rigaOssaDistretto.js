@@ -77,11 +77,11 @@ function RigaOssaDistretto(props) {
                 </Modal.Header>
                 <Modal.Body className='row'>
 
-                    <div className='col-4'>
+                    <div className='col-4 col-lg-4 col-sm-12 mb-2'>
                         <DettagliOsso osso={props.osso} callback={props.callback} />
                     </div>
 
-                    <div className='col'>
+                    <div className='col col-lg col-sm-12 col-md-12'>
                         <Traumi osso={props.osso.id} distretto={props.osso.distretto} />
 
                         <Patologie osso={props.osso.id} distretto={props.osso.distretto} />
