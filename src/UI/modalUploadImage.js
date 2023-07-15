@@ -113,10 +113,33 @@ function ModalUploadImage(props) {
 
     };
 
+    let checkUser = () => {
+        switch (localStorage.getItem('ruolo')) {
+            case '0':
+                return <></>
+            case '1':
+                return <></>
+            case '2':
+                if (localStorage.getItem('userID') != props.creatore) {
+                    return (<div></div>)
+                } else {
+                    return (<Button variant="outline-primary" onClick={handleShow}>
+                        Carica nuova immagine
+                    </Button>)
+                }
+            case '3':
+                return (<Button variant="outline-primary" onClick={handleShow}>
+                    Carica nuova immagine
+                </Button>)
+            default:
+                return <></>
+        }
+    }
+
     return <div className='py-2'>
-        <Button variant="outline-primary" onClick={handleShow}>
-            Carica nuova immagine
-        </Button>
+
+        {checkUser()}
+
         <Modal
             show={show}
             onHide={handleClose}

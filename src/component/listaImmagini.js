@@ -43,7 +43,7 @@ function ListaImmagini(props) {
         } else {
             return <div className="row p-2 justify-content-start">
                 {image ? (image.map(img =>
-                    <MyModal image={img.image} id={img.id} description={img.descrizione} callback={aggiorna} />
+                    <MyModal image={img.image} id={img.id} description={img.descrizione} creatore={props.creatore} callback={aggiorna} />
                 )) : (<Loading />)}
             </div>
         }
@@ -54,7 +54,7 @@ function ListaImmagini(props) {
         <div className="border rounded p-2">
             <div style={centerMiddle} className="border-bottom mb-2 d-flex justify-content-between">
                 <h5 className='m-0' >Galleria individuo</h5>
-                <ModalUploadImage individuo={props.individuo} callback={aggiorna} />
+                <ModalUploadImage individuo={props.individuo} creatore={props.creatore} callback={aggiorna} />
             </div>
 
             {image ? checkListaImmagini() : (<Loading />)}
@@ -106,6 +106,31 @@ function MyModal(props) {
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
+    let checkUser = () => {
+        switch (localStorage.getItem('ruolo')) {
+            case '0':
+                return <></>
+            case '1':
+                return <></>
+            case '2':
+                if (localStorage.getItem('userID') != props.creatore) {
+                    return (<div></div>)
+                } else {
+                    return (<>
+                        <Button variant="outline-primary" onClick={() => editDescriptionImage()}>Modifica descrizione</Button>
+                        <Button variant="outline-danger" onClick={() => deleteImmagine()}>Elimina immagine</Button>
+                    </>)
+                }
+            case '3':
+                return (<>
+                    <Button variant="outline-primary" onClick={() => editDescriptionImage()}>Modifica descrizione</Button>
+                    <Button variant="outline-danger" onClick={() => deleteImmagine()}>Elimina immagine</Button>
+                </>)
+            default:
+                return <></>
+        }
+    }
+
     return (
         <div className="col-2 p-1">
             <img src={props.image} className="rounded" onClick={handleShow} style={{ height: '20vh', width: 'auto', cursor: 'pointer' }} />
@@ -126,8 +151,9 @@ function MyModal(props) {
 
                     <Modal.Footer>
                         <Button variant="secondary" onClick={handleClose}>Chiudi</Button>
-                        <Button variant="outline-primary" onClick={() => editDescriptionImage()}>Modifica descrizione</Button>
-                        <Button variant="outline-danger" onClick={() => deleteImmagine()}>Elimina immagine</Button>
+
+                        {checkUser()}
+
                     </Modal.Footer>
                 </Modal.Body>
             </Modal>

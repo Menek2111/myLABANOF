@@ -375,7 +375,7 @@ function SchedaIndividuo(props) {
                                             <></>
                                         )}
 
-                                        <ListaImmagini col="col-12 mt-5" individuo={individuo.id} callback={aggiorna} />
+                                        <ListaImmagini col="col-12 mt-5" individuo={individuo.id} creatore={individuo.creatore} callback={aggiorna} />
 
 
 

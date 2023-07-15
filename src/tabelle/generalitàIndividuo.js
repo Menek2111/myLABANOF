@@ -82,15 +82,15 @@ function GeneralitàIndividuo(props) {
                     </tr>
                     <tr>
                         <th>Peso individuo (gr)</th>
-                        <td><input id="inputLuogo" className="form-control" defaultValue={props.individuo.pesoIndividuo} onChange={(e) => setPesoIndividuo(e.target.value)} /></td>
+                        <td><input type="number" id="inputLuogo" className="form-control" defaultValue={props.individuo.pesoIndividuo} onChange={(e) => setPesoIndividuo(e.target.value)} /></td>
                     </tr>
                     <tr>
                         <th>Peso cremazione (gr)</th>
-                        <td><input id="inputLuogo" className="form-control" defaultValue={props.individuo.pesoCremazione} onChange={(e) => setPesoCremazione(e.target.value)} /></td>
+                        <td><input type="number" id="inputLuogo" className="form-control" defaultValue={props.individuo.pesoCremazione} onChange={(e) => setPesoCremazione(e.target.value)} /></td>
                     </tr>
                     <tr>
                         <th>Volume cremazione (gr)</th>
-                        <td><input id="inputLuogo" className="form-control" defaultValue={props.individuo.volumeCremazione} onChange={(e) => setVolumeCremazione(e.target.value)} /></td>
+                        <td><input type="number" id="inputLuogo" className="form-control" defaultValue={props.individuo.volumeCremazione} onChange={(e) => setVolumeCremazione(e.target.value)} /></td>
                     </tr>
                 </tbody>
             </Table>
