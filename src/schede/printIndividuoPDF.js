@@ -37,13 +37,34 @@ function PrintIndividuoPDF(props) {
         getAllInfoIndividuo().then(res => {
             console.log('getAllInfoIndividuo', res)
             if (res.response == 'success') {
-                setIndividuo(res.individuo[0])
-                setOssa(res.ossa.sort(function (a, b) { return a.idDistretto - b.idDistretto }))
-                setPatologieOssa(res.patologieOssa.sort(function (a, b) { return a.isNMR - b.isNMR }))
-                setPatologieDenti(res.patologieDenti)
-                setTraumaOssa(res.traumaOssa)
-                setTraumaDenti(res.traumaDenti)
-                setCaratteristicheDeposizione(res.caratteristicheDeposizione)
+
+                if (res.individuo[0] != null) {
+                    setIndividuo(res.individuo[0])
+                }
+
+                if (res.ossa != null) {
+                    setOssa(res.ossa.sort(function (a, b) { return a.idDistretto - b.idDistretto }))
+                }
+
+                if (res.patologieOssa != null) {
+                    setPatologieOssa(res.patologieOssa.sort(function (a, b) { return a.isNMR - b.isNMR }))
+                }
+
+                if (res.patologieDenti != null) {
+                    setPatologieDenti(res.patologieDenti)
+                }
+
+                if (res.traumaOssa) {
+                    setTraumaOssa(res.traumaOssa)
+                }
+
+                if (res.traumaDenti != null) {
+                    setTraumaDenti(res.traumaDenti)
+                }
+
+                if (res.caratteristicheDeposizione) {
+                    setCaratteristicheDeposizione(res.caratteristicheDeposizione)
+                }
 
                 setTimeout(() => {
                     window.print()
@@ -339,7 +360,7 @@ function PrintIndividuoPDF(props) {
                 </Table></>) : (<></>)}
 
 
-            {traumaDenti ? (<>
+            {traumaOssa ? (<>
 
 
                 <h5 className='w-100 text-center'>TRAUMI OSSA</h5>
