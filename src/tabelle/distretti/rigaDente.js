@@ -65,11 +65,7 @@ function RigaDente(props) {
             <td>{props.osso.commento}</td>
             <td>{props.osso.indagineRadiologica}</td>
             <td>
-                <Form.Check
-                    type="checkbox"
-                    checked={valueToBoolean(props.osso.campionamento)}
-                    disabled
-                />
+                {props.osso.campionamento}
             </td>
 
             <Modal
@@ -126,7 +122,7 @@ function DettagliOsso(props) {
     const [lvlQualita, setLvlQualita] = useState(props.osso.lvlQualita)
     const [commento, setCommento] = useState(props.osso.commento)
     const [indagineRadiologica, setIndagineRadiologica] = useState(props.osso.indagineRadiologica)
-    const [campionamento, setCampionamento] = useState(checkValue(props.osso.campionamento))
+    const [campionamento, setCampionamento] = useState(props.osso.campionamento)
     const [modificazioniOdontoiatrici, setModificazioniOdontoiatrici] = useState(checkValue(props.osso.modificazioniOdontoiatrici))
     const [restauriOdontoiatrici, setRestauriOdontoiatrici] = useState(checkValue(props.osso.restauriOdontoiatrici))
 
@@ -151,7 +147,7 @@ function DettagliOsso(props) {
             lvlQualita: lvlQualita,
             commento: commento,
             indagineRadiologica: indagineRadiologica,
-            campionamento: booleanToValue(campionamento),
+            campionamento: campionamento,
             modificazioniOdontoiatrici: booleanToValue(modificazioniOdontoiatrici),
             restauriOdontoiatrici: booleanToValue(restauriOdontoiatrici),
             id: props.osso.id
@@ -266,16 +262,8 @@ function DettagliOsso(props) {
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th>Campionamento</th>
-                                    <td>
-                                        <Form.Check
-                                            type="checkbox"
-                                            defaultChecked={campionamento}
-                                            onChange={() => {
-                                                setCampionamento((state) => !state)
-                                            }}
-                                        />
-                                    </td>
+                                    <th>Prelievi/Campionamenti</th>
+                                    <td><input className='form-control' defaultValue={props.osso.campionamento} onChange={(e) => setCampionamento(e.target.value)} /></td>
                                 </tr>
                             </tbody >
                         </Table >
@@ -339,14 +327,8 @@ function DettagliOsso(props) {
                                     <td>{props.osso.datazioneCaduta}</td>
                                 </tr>
                                 <tr>
-                                    <th>Campionamento</th>
-                                    <td>
-                                        <Form.Check
-                                            type="checkbox"
-                                            defaultChecked={campionamento}
-                                            disabled
-                                        />
-                                    </td>
+                                    <th>Prelievi/Campionamenti</th>
+                                    <td>{props.osso.campionamento}</td>
                                 </tr>
                             </tbody>
                         </Table>

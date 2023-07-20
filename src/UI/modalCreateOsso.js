@@ -186,11 +186,9 @@ function ModalCreateOsso(props) {
                                 </tr>
                                 <tr>
                                     <th>Campionamento</th>
-                                    <td>
-                                        <Form.Check
-                                            type="checkbox"
-                                            onChange={() => setCampionamento((state) => !state)} />
-                                    </td>
+                                    <td><input className='form-control' onChange={(e) => setCampionamento(e.target.value)} /></td>
+
+
                                 </tr>
                                 <tr>
                                     <th>Altre analisi</th>

@@ -76,14 +76,10 @@ function ModalChangeTheme(props) {
                         </div>
                     </div>
 
-
-
                     <div className='my-4'></div>
 
-                    <p className='border-bottom'>Font</p>
-
-
                     <div className='row justify-content-center'>
+                        <p className='border-bottom'>Font</p>
                         <div className='col-4 p-1'>
                             <div className='rounded text-center border p-3' style={{ fontFamily: 'Roboto', cursor: 'pointer' }}
                                 onClick={() => selezionaFont('Roboto')}>
