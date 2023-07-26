@@ -10,6 +10,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import ConnectionManager from './api/ConnectionManager';
 import Form from 'react-bootstrap/Form';
 
+
+
 import bg from './images/background/bg2.png'
 
 

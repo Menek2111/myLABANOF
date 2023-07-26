@@ -58,7 +58,7 @@ function ModalDeleteIndividuo(props) {
             if (res.response === 'success') {
                 alert('Eliminazione avvenuta con successo')
                 handleClose()
-                navigate(-1)
+                navigate('/utente')
             }
 
         })
