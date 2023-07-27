@@ -33,6 +33,7 @@ function ModalCreateDente(props) {
     const [campionamento, setCampionamento] = useState()
     const [modificazioniOdontoiatrici, setModificazioniOdontoiatrici] = useState()
     const [restauriOdontoiatrici, setRestauriOdontoiatrici] = useState()
+    const [datazioneCaduta, setDatazioneCaduta] = useState()
 
     let resetState = () => {
         setNome('')
@@ -44,6 +45,7 @@ function ModalCreateDente(props) {
         setCampionamento('')
         setModificazioniOdontoiatrici('')
         setRestauriOdontoiatrici('')
+        setDatazioneCaduta('')
     }
 
     const createOsso = async (event) => {
@@ -52,6 +54,7 @@ function ModalCreateDente(props) {
         let cm = new ConnectionManager();
         var params = {
             tipoDente: nome,
+            datazioneCaduta: datazioneCaduta,
             integro: integro,
             lvlIntegrita: lvlIntegrita,
             lvlQualita: lvlQualita,
@@ -105,6 +108,18 @@ function ModalCreateDente(props) {
                                         <Form.Select onChange={(e) => setNome(e.target.value)} required>
                                             <option></option>
                                             {props.tipoOssa.map(tipoOsso => (<option key={tipoOsso.id} value={tipoOsso.id}>{tipoOsso.nome}</option>))}
+                                        </Form.Select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Datazione caduta</th>
+                                    <td>
+
+                                        <Form.Select onChange={(e) => setDatazioneCaduta(e.target.value)} >
+                                            <option></option>
+                                            <option>Post</option>
+                                            <option>AnteRecente</option>
+                                            <option>AnteRemoto</option>
                                         </Form.Select>
                                     </td>
                                 </tr>

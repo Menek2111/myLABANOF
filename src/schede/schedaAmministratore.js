@@ -43,6 +43,13 @@ function SchedaAmministratore() {
     }
     const [listaPatologie, setListaPatologie] = useState([])
 
+    const getClassiPatologie = async () => {
+        let cm = new ConnectionManager();
+        let res = await cm.getClassiPatologie();
+        return res;
+    }
+    const [listaClassiPatologie, setListaClassiPatologie] = useState([])
+
     const getTraumaGenerale = async () => {
         let cm = new ConnectionManager();
         let res = await cm.getTraumaGenerale();
@@ -70,6 +77,14 @@ function SchedaAmministratore() {
         return res
     }
     const [listaUtenti, setListaUtenti] = useState()
+
+
+    const getAllOssa = async (e) => {
+        let cm = new ConnectionManager();
+        let res = await cm.getAllOssa()
+        return res
+    }
+    const [ossa, setOssa] = useState()
     //CHIAMATE PER OTTENERE I DATI (END)--------------------------------------------------
 
     let aggiorna = () => {
@@ -142,6 +157,17 @@ function SchedaAmministratore() {
                 setListaUtenti(res.results)
             }
         })
+        getClassiPatologie().then(res => {
+            if (res.response == 'success') {
+                setListaClassiPatologie(res.results)
+            }
+        })
+        getAllOssa().then(res => {
+            console.log('getallossa', res)
+            if (res.response == 'success') {
+                setOssa(res.results)
+            }
+        })
     }
 
     //USE EFFECT -------------------------------------------------------------------------
@@ -195,8 +221,9 @@ function SchedaAmministratore() {
                                     <div className='mt-5 py-2 border rounded' style={{ backgroundColor: '#fbfcfe' }}>
                                         <h3 className='border-bottom mb-3'>Gestione patologie</h3>
                                         <div className='row'>
-                                            <Patologie col="col-6" patologie={listaPatologie} odontoiatrico={false} />
-                                            <Patologie col="col-6" patologie={listaPatologie} odontoiatrico={true} />
+                                            <Patologie col="col-6" patologie={listaPatologie} odontoiatrico={false} callback={aggiorna} />
+                                            <Patologie col="col-6" patologie={listaPatologie} odontoiatrico={true} callback={aggiorna} />
+                                            {listaClassiPatologie ? (<ClassiPatologie col="col-12 mt-5" classi={listaClassiPatologie} callback={aggiorna} />) : (<></>)}
                                         </div>
                                     </div>
 
@@ -235,6 +262,13 @@ function SchedaAmministratore() {
                                             <Caratteri col='col-6' caratteri={listaCaratteriMetrici} m={true} distrettoNome='Arti inferiori' callback={aggiorna} />
                                             <Caratteri col='col-6' caratteri={listaCaratteriNonMetrici} m={false} distrettoNome='Arti inferiori' callback={aggiorna} />
 
+                                        </div>
+                                    </div>
+
+                                    <div className='mt-5 py-2 border rounded' style={{ backgroundColor: '#fbfcfe' }}>
+                                        <h3 className='border-bottom mb-3'>Gestione ossa</h3>
+                                        <div className='row'>
+                                            {ossa ? (<Ossa col='col-12' ossa={ossa} callback={aggiorna} />) : (<></>)}
                                         </div>
                                     </div>
 
@@ -727,6 +761,227 @@ function RigaAccount(props) {
             {isAdmin()}
         </td>
     </tr>)
+}
+function ClassiPatologie(props) {
+
+    const createClassePatologia = async (e) => {
+        let cm = new ConnectionManager();
+        var params = { classe: nome }
+
+        let res = await cm.createClassePatologia(JSON.stringify(params))
+        console.log('createClassePatologia', res)
+        props.callback()
+        document.getElementById('formClasse').value = ''
+    }
+    const [nome, setNome] = useState()
+
+
+    return (<div className={props.col}>
+        <Table hover striped size='sm' bordered>
+            <thead>
+                <tr>
+                    <th>Classi Patologie</th>
+                </tr>
+            </thead>
+            <tbody >
+
+                {props.classi.map(classe =>
+
+                    < ClassePatologiaGenerale classe={classe} callback={props.callback} />
+
+                )}
+                <tr>
+                    <td className='d-flex mt-4'>
+                        <Form className='d-flex w-100' onSubmit={createClassePatologia}>
+                            <input className='form-control' id="formClasse" placeholder='Nome classe patologia...' type='text' required onChange={(e) => setNome(e.target.value)} />
+                            <button className='btn btn-primary mx-1' type='submit' >Aggiungi</button>
+                        </Form>
+                    </td>
+                </tr>
+            </tbody>
+        </Table>
+    </div>)
+}
+function ClassePatologiaGenerale(props) {
+    const [nome, setNome] = useState(props.classe.nome)
+
+    const editClassePatologia = async (e) => {
+        let cm = new ConnectionManager();
+        var params = { id: props.classe.id, nome: nome }
+        let res = await cm.editClassePatologia(JSON.stringify(params))
+        console.log('editClassePatologia', res)
+        props.callback()
+    }
+
+
+    const deleteClassePatologia = async (e) => {
+        if (window.confirm('sei sicurio?')) {
+            let cm = new ConnectionManager();
+            var params = { id: props.classe.id }
+            let res = await cm.deleteClassePatologia(JSON.stringify(params))
+            console.log('deleteClassePatologia', res)
+            props.callback()
+        }
+    }
+
+    return (<tr className='w-100'>
+        <td className='d-flex w-100'>
+            <input className='form-control' type='text' defaultValue={nome} onChange={(e) => setNome(e.target.value)} />
+            <button className='btn btn-primary mx-1' onClick={() => editClassePatologia()} ><FiSave /></button>
+            <button className='btn btn-outline-danger mx-1' onClick={() => deleteClassePatologia()} ><FiTrash2 /></button>
+        </td>
+    </tr>)
+}
+
+
+
+function Ossa(props) {
+
+    const createTipoOsso = async (e) => {
+        let cm = new ConnectionManager();
+        var params = { nome: nome, distretto: distretto }
+
+        let res = await cm.createTipoOsso(JSON.stringify(params))
+        console.log('createTipoOsso', res)
+        props.callback()
+        document.getElementById('formTrauma').value = ''
+    }
+    const [nome, setNome] = useState()
+    const [distretto, setDistretto] = useState()
+
+    let getDistrettoId = (nome) => {
+        switch (nome) {
+            case 1:
+                return 'Cranio'
+            case 2:
+                return 'Denti'
+            case 3:
+                return 'Colonna'
+            case 4:
+                return 'Torace'
+            case 5:
+                return 'Arti superiori'
+            case 6:
+                return 'Arti inferiori'
+            case 7:
+                return 'NMR'
+            default:
+                return null
+        }
+    }
+
+    return (<div className={props.col}>
+        <Table hover striped size='sm' bordered>
+            <thead>
+                <tr>
+                    <th>Ossa</th>
+                    <th>Distretto</th>
+                </tr>
+            </thead>
+            <tbody >
+                {props.ossa.map(osso =>
+
+                    <OssoGenerale osso={osso} callback={props.callback} />
+
+                )}
+
+                <tr>
+                    <td className='d-flex mt-4' >
+                        <Form className='d-flex w-100' >
+                            <input className='form-control' id="formTrauma" placeholder='Nome osso...' type='text' required onChange={(e) => setNome(e.target.value)} />
+                        </Form>
+                    </td>
+                    <td className='mt-4'>
+                        <Form onSubmit={createTipoOsso} className='d-flex mt-4'>
+                            <Form.Select onChange={(e) => setDistretto(e.target.value)} required>
+                                <option></option>
+                                <option value='1'>{getDistrettoId(1)}</option>
+                                <option value='2'>{getDistrettoId(2)}</option>
+                                <option value='3'>{getDistrettoId(3)}</option>
+                                <option value='4'>{getDistrettoId(4)}</option>
+                                <option value='5'>{getDistrettoId(5)}</option>
+                                <option value='6'>{getDistrettoId(6)}</option>
+                                <option value='7'>{getDistrettoId(7)}</option>
+                            </Form.Select>
+                            <button className='btn btn-primary mx-1' type='submit' >Aggiungi</button>
+                        </Form>
+                    </td>
+                </tr >
+
+            </tbody >
+        </Table >
+    </div >)
+}
+function OssoGenerale(props) {
+    const [nome, setNome] = useState(props.osso.nome)
+    const [distretto, setDistretto] = useState(props.osso.distretto)
+
+    const editTipoOsso = async (e) => {
+        let cm = new ConnectionManager();
+        var params = { id: props.osso.id, nome: nome, distretto: distretto }
+        let res = await cm.editTipoOsso(JSON.stringify(params))
+        console.log('editTipoOsso', res)
+        props.callback()
+    }
+
+    const deleteTipoOsso = async (e) => {
+        if (window.confirm('sei sicurio?')) {
+            let cm = new ConnectionManager();
+            var params = { id: props.osso.id }
+            let res = await cm.deleteTipoOsso(JSON.stringify(params))
+            console.log('deleteTipoOsso', res)
+            props.callback()
+        }
+    }
+
+
+    let getDistrettoId = (nome) => {
+        switch (nome) {
+            case 1:
+                return 'Cranio'
+            case 2:
+                return 'Denti'
+            case 3:
+                return 'Colonna'
+            case 4:
+                return 'Torace'
+            case 5:
+                return 'Arti superiori'
+            case 6:
+                return 'Arti inferiori'
+            case 7:
+                return 'NMR'
+            default:
+                return null
+        }
+    }
+
+    let checkIfDente = () => {
+        if (props.osso.distretto == 2) {
+            return (<option value='2'>{getDistrettoId(2)}</option>)
+        } else {
+            return (<>
+                <option value='1'>{getDistrettoId(1)}</option>
+                <option value='3'>{getDistrettoId(3)}</option>
+                <option value='4'>{getDistrettoId(4)}</option>
+                <option value='5'>{getDistrettoId(5)}</option>
+                <option value='6'>{getDistrettoId(6)}</option>
+                <option value='7'>{getDistrettoId(7)}</option></>)
+        }
+    }
+
+    return (<tr className='w-100'>
+        <td >
+            <input className='form-control' type='text' defaultValue={nome} onChange={(e) => setNome(e.target.value)} />
+        </td>
+        <td className='d-flex w-100'>
+            <Form.Select defaultValue={distretto} onChange={(e) => setDistretto(e.target.value)}>
+                {checkIfDente()}
+            </Form.Select>
+            <button className='btn btn-primary mx-1' onClick={() => editTipoOsso()}><FiSave /></button>
+            <button className='btn btn-outline-danger mx-1' onClick={() => deleteTipoOsso()}><FiTrash2 /></button>
+        </td>
+    </tr >)
 }
 
 export default SchedaAmministratore;

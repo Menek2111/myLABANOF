@@ -64,7 +64,7 @@ function ModalCreateCarattereNonMetrico(props) {
 
     return (
         <div>
-            <Button onClick={handleShow}>Aggiungi carattere metrico</Button>
+            <Button onClick={handleShow}>Aggiungi carattere non metrico</Button>
             <Modal
                 show={show}
                 onHide={handleClose}
@@ -74,7 +74,7 @@ function ModalCreateCarattereNonMetrico(props) {
 
             >
                 <Modal.Header closeButton>
-                    <Modal.Title>Creazione nuovo carattere metrico</Modal.Title>
+                    <Modal.Title>Creazione nuovo carattere non metrico</Modal.Title>
                 </Modal.Header>
                 <Form onSubmit={createCarattereNonMetricoSpecifico}>
                     <Modal.Body>

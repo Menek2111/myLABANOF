@@ -231,11 +231,11 @@ function DettagliOsso(props) {
                                 </tr>
                                 <tr>
                                     <th>Livello di integrità</th>
-                                    <td><input type='number' min='0' max='3' className='form-control' defaultValue={props.osso.lvlIntegrita} onChange={(e) => setLvlIntegrita(e.target.value)} /></td>
+                                    <td><input type='number' min='0' max='6' className='form-control' defaultValue={props.osso.lvlIntegrita} onChange={(e) => setLvlIntegrita(e.target.value)} /></td>
                                 </tr>
                                 <tr>
                                     <th>Livello di qualità</th>
-                                    <td><input type='number' min='0' max='3' className='form-control' defaultValue={props.osso.lvlQualita} onChange={(e) => setLvlQualita(e.target.value)} /></td>
+                                    <td><input type='number' min='0' max='6' className='form-control' defaultValue={props.osso.lvlQualita} onChange={(e) => setLvlQualita(e.target.value)} /></td>
                                 </tr>
                                 <tr>
                                     <th>Restaurato</th>

@@ -153,11 +153,11 @@ function ModalCreateOsso(props) {
                                 </tr>
                                 <tr>
                                     <th>Livello di integrità</th>
-                                    <td><input type="number" max='3' min='0' className='form-control' onChange={(e) => setLvlIntegrita(e.target.value)} /></td>
+                                    <td><input type="number" max='6' min='0' className='form-control' onChange={(e) => setLvlIntegrita(e.target.value)} /></td>
                                 </tr>
                                 <tr>
                                     <th>Livello di qualità</th>
-                                    <td><input type="number" max='3' min='0' className='form-control' onChange={(e) => setLvlQualita(e.target.value)} /></td>
+                                    <td><input type="number" max='6' min='0' className='form-control' onChange={(e) => setLvlQualita(e.target.value)} /></td>
                                 </tr>
                                 <tr>
                                     <th>Restaurato</th>

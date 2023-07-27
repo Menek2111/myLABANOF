@@ -125,6 +125,7 @@ function DettagliOsso(props) {
     const [campionamento, setCampionamento] = useState(props.osso.campionamento)
     const [modificazioniOdontoiatrici, setModificazioniOdontoiatrici] = useState(checkValue(props.osso.modificazioniOdontoiatrici))
     const [restauriOdontoiatrici, setRestauriOdontoiatrici] = useState(checkValue(props.osso.restauriOdontoiatrici))
+    const [datazioneCaduta, setDatazioneCaduta] = useState(props.osso.datazioneCaduta)
 
     const [editable, setEditable] = useState(false)
 
@@ -150,6 +151,7 @@ function DettagliOsso(props) {
             campionamento: campionamento,
             modificazioniOdontoiatrici: booleanToValue(modificazioniOdontoiatrici),
             restauriOdontoiatrici: booleanToValue(restauriOdontoiatrici),
+            datazioneCaduta: datazioneCaduta,
             id: props.osso.id
         }
         await cm.editDente(JSON.stringify(params)).then(res => {
@@ -247,6 +249,18 @@ function DettagliOsso(props) {
                                 <tr>
                                     <th>Commento</th>
                                     <td><input className='form-control' defaultValue={props.osso.commento} onChange={(e) => setCommento(e.target.value)} /></td>
+                                </tr>
+                                <tr>
+                                    <th>Datazione caduta</th>
+                                    <td>
+                                        <Form.Select defaultValue={datazioneCaduta} onChange={(e) => setDatazioneCaduta(e.target.value)} >
+                                            <option></option>
+                                            <option>Post</option>
+                                            <option>AnteRecente</option>
+                                            <option>AnteRemoto</option>
+                                        </Form.Select>
+                                    </td>
+
                                 </tr>
                                 <tr>
                                     <th>Indagine radiologica</th>

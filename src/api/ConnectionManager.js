@@ -101,6 +101,11 @@ export default class ConnectionManager {
         const { data } = await axios.post(URL, {})
         return data
     }
+    getAllOssa = async function (params) {
+        var URL = baseUrl + "data/getAllOssa.php"
+        const { data } = await axios.post(URL, {})
+        return data
+    }
     getTombaById = async function (params) {
         var json = JSON.parse(params)
         var URL = baseUrl + "data/getTombaById.php"
@@ -583,6 +588,27 @@ export default class ConnectionManager {
         CheckToken(data)
         return data
     }
+    createClassePatologia = async function (params) {
+        var json = JSON.parse(params)
+        var URL = baseUrl + "data/creazione/CreateClassePatologia.php"
+        const { data } = await axios.post(URL, {
+            classe: json.classe,
+            token: sessionStorage.getItem('access_token')
+        })
+        CheckToken(data)
+        return data
+    }
+    createTipoOsso = async function (params) {
+        var json = JSON.parse(params)
+        var URL = baseUrl + "data/creazione/createTipoOsso.php"
+        const { data } = await axios.post(URL, {
+            nome: json.nome,
+            distretto: json.distretto,
+            token: sessionStorage.getItem('access_token')
+        })
+        CheckToken(data)
+        return data
+    }
 
 
     //DELETE
@@ -754,6 +780,27 @@ export default class ConnectionManager {
         return data
     }
 
+    deleteClassePatologia = async function (params) {
+        var json = JSON.parse(params)
+        var URL = baseUrl + "data/delete/deleteClassePatologia.php"
+        const { data } = await axios.post(URL, {
+            id: json.id,
+            token: sessionStorage.getItem('access_token')
+        })
+        CheckToken(data)
+        return data
+    }
+    deleteTipoOsso = async function (params) {
+        var json = JSON.parse(params)
+        var URL = baseUrl + "data/delete/deleteTipoOsso.php"
+        const { data } = await axios.post(URL, {
+            id: json.id,
+            token: sessionStorage.getItem('access_token')
+        })
+        CheckToken(data)
+        return data
+    }
+
 
     //EDIT
     editTomba = async function (params) {
@@ -865,6 +912,7 @@ export default class ConnectionManager {
             indagineRadiologica: osso.indagineRadiologica,
             campionamento: osso.campionamento,
             id: osso.id,
+            datazioneCaduta: osso.datazioneCaduta,
             token: sessionStorage.getItem('access_token')
             //individuo: osso.individuo
         })
@@ -998,6 +1046,31 @@ export default class ConnectionManager {
         var URL = baseUrl + "data/edit/editDescriptionImage.php"
         const { data } = await axios.post(URL, {
             descrizione: json.descrizione,
+            id: json.id,
+            token: sessionStorage.getItem('access_token')
+        })
+        CheckToken(data)
+        return data
+    }
+
+    editClassePatologia = async function (params) {
+        var json = JSON.parse(params)
+        var URL = baseUrl + "data/edit/editClassePatologia.php"
+        const { data } = await axios.post(URL, {
+            nome: json.nome,
+            id: json.id,
+            token: sessionStorage.getItem('access_token')
+        })
+        CheckToken(data)
+        return data
+    }
+
+    editTipoOsso = async function (params) {
+        var json = JSON.parse(params)
+        var URL = baseUrl + "data/edit/editTipoOsso.php"
+        const { data } = await axios.post(URL, {
+            nome: json.nome,
+            distretto: json.distretto,
             id: json.id,
             token: sessionStorage.getItem('access_token')
         })
